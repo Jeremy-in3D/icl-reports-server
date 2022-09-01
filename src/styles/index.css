@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Arimo";
+  src: url("../fonts/arimo/Arimo-Regular.ttf");
+}
+
 :root {
   --blue1: #8fe5e4ff;
   --blue2: #68d7dfff;
@@ -11,6 +16,7 @@
   padding: 0;
   margin: 0;
   direction: rtl;
+  font-family: Arimo;
 }
 
 .app {
@@ -34,7 +40,7 @@
   flex-flow: row wrap;
   align-items: flex-start;
   align-content: flex-start;
-  background-color: orange;
+  background-color: black;
   height: 100vh;
   width: 100%;
   overflow: scroll;
@@ -43,19 +49,27 @@
 .main-menu .block-item {
   background: linear-gradient(
     0.6turn,
+    var(--blue1),
     var(--blue2),
     var(--blue3),
-    var(--blue5)
+    var(--blue4)
   );
   text-align: center;
   border: 1px solid rgb(24, 22, 22);
-  flex-grow: 1;
   min-height: 250px;
   height: 50%;
-  flex-basis: 33%;
+  flex-basis: 33.33%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
 }
 
 @media only screen and (max-width: 800px) {
+  .side-menu {
+    min-width: 250px;
+  }
+
   .main-menu .block-item {
     flex-basis: 100%;
     height: 30%;
@@ -81,4 +95,23 @@
   padding: 0.5em;
   border-top: 2px solid black;
   width: 100%;
+}
+
+.main-menu-icon {
+  width: 128px;
+  height: 128px;
+}
+
+.block-item p {
+  font-size: 25px;
+  padding-top: 0.25em;
+  font-weight: 600;
+}
+
+.container {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.main-menu::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
