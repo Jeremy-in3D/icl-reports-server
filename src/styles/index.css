@@ -1,0 +1,84 @@
+:root {
+  --blue1: #8fe5e4ff;
+  --blue2: #68d7dfff;
+  --blue3: #018eacff;
+  --blue4: #006a88ff;
+  --blue5: #002846ff;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  direction: rtl;
+}
+
+.app {
+  height: 100%;
+  width: 100%;
+}
+
+.menu-flex {
+  display: flex;
+}
+
+.side-menu {
+  position: relative;
+  min-width: 300px;
+  height: 100vh;
+  background-color: rgb(49, 49, 49);
+}
+
+.main-menu {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  background-color: orange;
+  height: 100vh;
+  width: 100%;
+  overflow: scroll;
+}
+
+.main-menu .block-item {
+  background: linear-gradient(
+    0.6turn,
+    var(--blue2),
+    var(--blue3),
+    var(--blue5)
+  );
+  text-align: center;
+  border: 1px solid rgb(24, 22, 22);
+  flex-grow: 1;
+  min-height: 250px;
+  height: 50%;
+  flex-basis: 33%;
+}
+
+@media only screen and (max-width: 800px) {
+  .main-menu .block-item {
+    flex-basis: 100%;
+    height: 30%;
+  }
+}
+
+.side-menu .title {
+  padding: 0.5em;
+  color: rgb(210, 210, 210);
+  font-size: 2em;
+  border-bottom: 2px solid black;
+}
+
+.side-menu .item {
+  padding: 0.25em;
+  color: rgb(200, 200, 200);
+  font-size: 1.75em;
+}
+
+.side-menu .user {
+  position: absolute;
+  bottom: 0px;
+  padding: 0.5em;
+  border-top: 2px solid black;
+  width: 100%;
+}
