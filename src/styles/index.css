@@ -9,6 +9,27 @@
   --blue3: #018eacff;
   --blue4: #006a88ff;
   --blue5: #002846ff;
+  --linear-gradient: linear-gradient(
+    0.6turn,
+    var(--blue1),
+    var(--blue2),
+    var(--blue3),
+    var(--blue4)
+  );
+  --linear-gradient-50: linear-gradient(
+    0.6turn,
+    rgba(143, 229, 228, 0.5),
+    rgba(104, 215, 223, 0.5),
+    rgba(1, 141, 172, 0.5),
+    rgba(0, 106, 136, 0.5)
+  );
+  --linear-gradient-dark: linear-gradient(0.6turn, var(--blue4), var(--blue5));
+}
+
+html,
+body,
+#root {
+  height: 100%;
 }
 
 * {
@@ -20,8 +41,10 @@
 }
 
 .app {
+  background: var(--linear-gradient-50);
   height: 100%;
   width: 100%;
+  overflow-y: scroll;
 }
 
 .app > *:not(.dropdown-menu) {
@@ -32,7 +55,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: rgb(49, 49, 49);
+  background: var(--linear-gradient-dark);
   text-align: center;
   color: white;
   font-size: 1.5em;
@@ -102,13 +125,7 @@
 }
 
 .main-menu .block-item {
-  background: linear-gradient(
-    0.6turn,
-    var(--blue1),
-    var(--blue2),
-    var(--blue3),
-    var(--blue4)
-  );
+  background: var(--linear-gradient);
   border: 1px solid rgb(24, 22, 22);
   text-align: center;
   /* Flex Item */
@@ -216,3 +233,28 @@
   width: 760px;
 }
 /* Take Picture End */
+
+.reports {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  margin: 2em;
+  overflow-y: scroll;
+}
+
+.reports .report-button {
+  width: 500px;
+  padding: 1em;
+  margin-top: 2em;
+  border-radius: 6px;
+  border: 2px solid white;
+  font-size: 25px;
+  background-color: var(--blue5);
+  color: whitesmoke;
+}
+
+.reports .report-button:hover {
+  opacity: 90%;
+}
