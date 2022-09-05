@@ -23,7 +23,22 @@
     rgba(1, 141, 172, 0.5),
     rgba(0, 106, 136, 0.5)
   );
-  --linear-gradient-dark: linear-gradient(0.6turn, var(--blue4), var(--blue5));
+  --linear-gradient-dark: linear-gradient(
+    0.2turn,
+    var(--blue5),
+    var(--blue4),
+    var(--blue5)
+  );
+  --linear-gradient-dark-2: linear-gradient(
+    0.5turn,
+    var(--blue4),
+    var(--blue5),
+    var(--blue4)
+  );
+  --radial-gradient: radial-gradient(
+    rgba(0, 141, 172, 0.1),
+    rgba(100, 106, 136, 0.4)
+  );
 }
 
 html,
@@ -47,9 +62,15 @@ body,
   overflow-y: scroll;
 }
 
-.app > *:not(.dropdown-menu) {
-  padding-top: 50px;
+*::-webkit-scrollbar {
+  display: none;
 }
+
+.spacer {
+  height: 50px;
+}
+
+/* Dropdown Menu */
 
 .dropdown-menu {
   position: fixed;
@@ -115,6 +136,7 @@ body,
   pointer-events: none;
 }
 
+/* Main Menu */
 .main-menu {
   display: flex;
   flex-flow: row wrap;
@@ -129,8 +151,9 @@ body,
   border: 1px solid rgb(24, 22, 22);
   text-align: center;
   /* Flex Item */
-  flex-basis: 50%;
+  flex-basis: 45%;
   padding: 1.73em;
+  flex-grow: 1;
   /* Flex Container */
   display: flex;
   flex-flow: column;
@@ -140,13 +163,6 @@ body,
 
 .main-menu .block-item:hover {
   opacity: 80%;
-}
-
-@media only screen and (max-width: 800px) {
-  .main-menu .block-item {
-    flex-basis: 100%;
-    height: 30%;
-  }
 }
 
 .main-menu-icon {
@@ -160,10 +176,6 @@ body,
   font-weight: 600;
 }
 
-.container {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-}
 .main-menu::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
@@ -240,21 +252,55 @@ body,
   justify-content: center;
   align-items: center;
   background: transparent;
-  margin: 2em;
+  padding: 2em;
   overflow-y: scroll;
+  gap: 20px 20px;
 }
 
-.reports .report-button {
-  width: 500px;
-  padding: 1em;
-  margin-top: 2em;
-  border-radius: 6px;
-  border: 2px solid white;
-  font-size: 25px;
-  background-color: var(--blue5);
+.reports .report-selection {
+  max-width: 300px;
+  flex-basis: 45%;
+  height: 200px;
+  border-radius: 8px;
+  border: 3px solid gray;
+  font-size: 2.25em;
+  padding: 0.25em;
+  background: var(--linear-gradient-dark-2);
   color: whitesmoke;
 }
 
-.reports .report-button:hover {
+.reports .report-selection:hover {
   opacity: 90%;
+  transform: scale(0.98);
+}
+
+.reports .title {
+  text-align: center;
+  flex-basis: 100%;
+  font-size: 55px;
+  font-weight: 500;
+  background: var(--radial-gradient);
+  border-radius: 6px;
+  padding: 0.25em;
+  box-shadow: 0px 0px 10px 2px #888888;
+  margin-bottom: 0.5em;
+}
+
+@media only screen and (max-width: 800px) {
+  .main-menu .block-item {
+    flex-basis: 100%;
+  }
+
+  .reports .report-selection {
+    flex-basis: 100%;
+  }
+}
+
+.image-preview {
+  width: 100px;
+  height: auto;
+}
+
+form {
+  padding: 3em;
 }

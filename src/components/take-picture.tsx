@@ -1,5 +1,28 @@
+//@ts-nocheck
 import React, { useEffect } from "react";
 
+//Take picture using the device capture directly
+export const TakePicture: React.FC = () => {
+  const imgView = useRef<HTMLImageElement>(null);
+
+  return (
+    <form className="report-form">
+      <input
+        type="file"
+        accept="image/*"
+        capture
+        onChange={(e) => {
+          const file = e.currentTarget.files![0];
+          const url = window.URL.createObjectURL(file);
+          imgView.current!.src = url;
+        }}
+      />
+      <img className="image-preview" ref={imgView}></img>
+    </form>
+  );
+};
+
+//Alternative way using getUserMedia
 export const TakePicture: React.FC = () => {
   const width = 320; // We will scale the photo width to this
   let height = 0; // This will be computed based on the input stream
@@ -135,3 +158,78 @@ export const TakePicture: React.FC = () => {
     </div>
   );
 };
+
+// Save BLOB to localstorage and viceversa
+import React, { useEffect, useRef } from "react";
+
+export const ReportFirst: React.FC = () => {
+  const imgView = useRef<HTMLImageElement>(null);
+  const prevImg = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const formData = localStorage.getItem("imgCapture");
+    console.log(formData);
+    const blob = dataURItoBlob(formData);
+    const obj = window.URL.createObjectURL(blob);
+    prevImg.current!.src = obj;
+  }, []);
+
+  return (
+    <form
+      className="report-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target as HTMLFormElement);
+        //@ts-ignore
+        // const obj = Object.fromEntries(formData.entries());
+        // console.log(obj);
+        // const form = JSON.stringify(obj);
+        // console.log(form);
+        // localStorage.setItem("form", form);
+        const img = formData.get("imgCapture");
+        console.log(img);
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          localStorage.setItem("imgCapture", event.target?.result as string);
+        };
+        reader.readAsDataURL(img as Blob);
+        console.log("Submitted");
+      }}
+    >
+      <input name="Test" value={"Testing"} readOnly></input>
+      <input
+        name="imgCapture"
+        type="file"
+        accept="image/*"
+        capture
+        onChange={(e) => {
+          const file = e.currentTarget.files![0];
+          const url = window.URL.createObjectURL(file);
+          imgView.current!.src = url;
+        }}
+      />
+      <img className="image-preview" ref={imgView}></img>
+      <img ref={prevImg}></img>
+      <button>Submit</button>
+    </form>
+  );
+};
+
+function dataURItoBlob(dataURI: any) {
+  // convert base64 to raw binary data held in a string
+  var byteString = atob(dataURI.split(",")[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+  // write the bytes of the string to an ArrayBuffer
+  var arrayBuffer = new ArrayBuffer(byteString.length);
+  var _ia = new Uint8Array(arrayBuffer);
+  for (var i = 0; i < byteString.length; i++) {
+    _ia[i] = byteString.charCodeAt(i);
+  }
+
+  var dataView = new DataView(arrayBuffer);
+  var blob = new Blob([dataView], { type: mimeString });
+  return blob;
+}

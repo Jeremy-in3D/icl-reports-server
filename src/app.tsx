@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PageNotFound } from "./components/page-not-found";
 import { Reports } from "./components/reports";
+import { Spacer } from "./components/spacer";
 import { DropdownMenu } from "./dropdown-menu";
 import { Home } from "./home";
 
@@ -35,6 +36,8 @@ export const App: React.FC = () => {
   return (
     <div className="app">
       <DropdownMenu setScreen={setShowScreen} />
+      {/* Keep spacer for the dropdown menu's height since it is position fixed */}
+      <Spacer />
       {display}
     </div>
   );

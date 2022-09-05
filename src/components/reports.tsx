@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { ReportSelection } from "./report-selection";
+import { ReportFirst } from "./reports/report-first";
+
+const selections = [
+  { text: "סיור ראשון - א" },
+  { text: "סיור שני - ב" },
+  { text: "סיור שלישי - ג" },
+  { text: "סיור רביעי - ד" },
+  { text: "סיור חמישי - ה" },
+];
 
 export const Reports: React.FC = () => {
+  const [report, setReport] = useState<number | undefined>();
+
+  if (report === 0) return <ReportFirst />;
+
   return (
     <div className="reports">
-      <button className="report-button">סיור ראשון - א</button>
-      <button className="report-button">סיור שני - ב</button>
-      <button className="report-button">סיור שלישי - ג</button>
-      <button className="report-button">סיור רביעי - ד</button>
-      <button className="report-button">סיור חמישי - ה</button>
+      <p className="title">סיורי תצפית</p>
+      {selections.map((item, idx) => (
+        <ReportSelection
+          text={item.text}
+          key={idx}
+          click={() => setReport(idx)}
+        />
+      ))}
     </div>
   );
 };
