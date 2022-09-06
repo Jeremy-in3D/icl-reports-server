@@ -1,27 +1,26 @@
 import { HTMLInputTypeAttribute } from "react";
+import { surveyItems } from "../../data/survey-first-items";
 
 export class Survey {
   [key: string]: any;
-  id: number | null;
+  dateCreated: number | null;
   items: Item[] | null;
   totalItems: number | null;
   answeredQuestions: boolean[] | null;
   currentQuestion: number;
-  totalAnswered: number;
   answers: any[];
 
   constructor() {
-    this.id = null;
+    this.dateCreated = null;
     this.items = null;
     this.totalItems = null;
     this.answeredQuestions = null;
     this.currentQuestion = 0;
-    this.totalAnswered = 0;
     this.answers = [];
   }
 
   createNewSurvey(items: Item[]) {
-    this.id = Date.now();
+    this.dateCreated = Date.now();
     this.items = items;
     this.totalItems = items.length;
     this.answeredQuestions = items.map(() => false);
@@ -31,11 +30,14 @@ export class Survey {
     for (let [key, value] of Object.entries(existingData)) {
       this[key] = value;
     }
+    this.items = surveyItems;
   }
   submitAnswer(answer: any) {
-    this.answeredQuestions![this.currentQuestion] = true;
-    this.answers[this.currentQuestion] = answer;
-    this.nextQuestion();
+    if (Object.values(answer).length) {
+      this.answeredQuestions![this.currentQuestion] = true;
+      this.answers[this.currentQuestion] = answer;
+      return true;
+    } else return false;
   }
   previousQuestion() {
     if (this.currentQuestion > 0) --this.currentQuestion;
@@ -45,8 +47,16 @@ export class Survey {
     if (this.currentQuestion < this.totalItems! - 1) ++this.currentQuestion;
     return this.currentQuestion;
   }
-  saveForm() {}
-  submitForm() {}
+  saveSurvey() {
+    return {
+      dateCreated: this.dateCreated,
+      answeredQuestions: this.answeredQuestions,
+      answers: this.answers,
+      currentQuestion: this.currentQuestion,
+      totalItems: this.totalItems,
+    };
+  }
+  totalAnswered() {}
 }
 
 export type Item = {
