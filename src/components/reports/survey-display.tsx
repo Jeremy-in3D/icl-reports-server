@@ -64,14 +64,20 @@ export const SurveyDisplay: React.FC<{
           Next
         </button>
       </form>
-      <button
-        onClick={() => {
-          formRef.current?.requestSubmit();
-          localStorage.setItem("survey", JSON.stringify(instance.saveSurvey()));
-        }}
-      >
-        Save Survey
-      </button>
+      <div className="survey-bar">
+        <button
+          className=""
+          onClick={() => {
+            formRef.current?.requestSubmit();
+            localStorage.setItem(
+              "survey",
+              JSON.stringify(instance.saveSurvey())
+            );
+          }}
+        >
+          Save Survey
+        </button>
+      </div>
     </>
   );
 };
