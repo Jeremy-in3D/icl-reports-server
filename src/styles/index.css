@@ -301,6 +301,75 @@ body,
   height: auto;
 }
 
+.survey {
+  display: flex;
+  flex-flow: column wrap;
+  margin: 1em;
+  text-align: center;
+}
+
+.survey .survey-title {
+  flex-basis: 100%;
+  max-width: 700px;
+  margin: auto;
+  font-size: 1.5em;
+  background: var(--radial-gradient);
+  border-radius: 6px;
+  padding: 0.25em;
+  box-shadow: 0px 0px 5px 2px #888888;
+}
+
+.survey-btn {
+  display: block;
+  width: 70%;
+  max-width: 250px;
+  margin: 2em auto;
+  padding: 1em;
+}
+
+.survey-placement {
+  margin: 2em;
+  font-size: 20px;
+}
+
+.survey-question input {
+  display: none;
+}
+
+.survey-question {
+  /* flex-basis: 100%; */
+  width: 70%;
+  min-width: 200px;
+  max-width: 500px;
+  margin: 1em;
+}
+
+.survey-question label {
+  /* display: block;
+  min-width: 250px;
+  max-width: 500px; */
+  background-color: rgba(128, 128, 128, 0.315);
+  display: block;
+  width: 100%;
+  padding: 1em;
+  border-radius: 6px;
+}
+
+.check-with-label:checked + .label-for-check {
+  background: var(--blue5);
+  color: white;
+}
+
 form {
-  padding: 3em;
+  margin-top: 25px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.survey-page-btn {
+  flex-basis: 30%;
+  margin: 1em;
+  padding: 1em;
 }

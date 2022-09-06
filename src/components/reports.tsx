@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ReportSelection } from "./report-selection";
-import { ReportFirst } from "./reports/report-first";
+import { SurveySelection } from "./reports/survey-selection";
 
 const selections = [
   { text: "סיור ראשון - א" },
@@ -13,7 +13,7 @@ const selections = [
 export const Reports: React.FC = () => {
   const [report, setReport] = useState<number | undefined>();
 
-  if (report === 0) return <ReportFirst />;
+  if (report === 0) return <SurveySelection />;
 
   return (
     <div className="reports">
