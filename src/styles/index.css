@@ -320,14 +320,6 @@ body,
   box-shadow: 0px 0px 5px 2px #888888;
 }
 
-.survey-btn {
-  display: block;
-  width: 70%;
-  max-width: 250px;
-  margin: 2em auto;
-  padding: 1em;
-}
-
 .survey-placement {
   margin: 2em;
   font-size: 20px;
@@ -366,13 +358,37 @@ form {
 }
 
 .survey-page-btn {
-  flex-basis: 30%;
-  margin: 1em;
+  flex-basis: 40%;
+  margin: 3em 2em;
   padding: 1em;
+  background: var(--linear-gradient-dark);
+  color: white;
+  border-radius: 6px;
+}
+
+button:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc6c;
+  background: #cccccc6c;
+  color: #666666;
 }
 
 .survey-choice {
   background-color: rgba(128, 128, 128, 0.2);
   margin: 2em 0em;
   padding: 2em;
+  border-radius: 10px;
+}
+
+.survey-choice .survey-btn {
+  display: block;
+  background: var(--blue5);
+  border: 3px ridge white;
+  width: 70%;
+  max-width: 250px;
+  margin: 2em auto;
+  padding: 2em 0em;
+  font-size: 1.2em;
+  color: white;
+  border-radius: 6px;
 }

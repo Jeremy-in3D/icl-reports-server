@@ -30,6 +30,7 @@ export class Survey {
     for (let [key, value] of Object.entries(existingData)) {
       this[key] = value;
     }
+    //Currently only one survey, change to pull the correct survey based on constructor input
     this.items = surveyItems;
   }
   submitAnswer(answer: any) {
@@ -56,7 +57,6 @@ export class Survey {
       totalItems: this.totalItems,
     };
   }
-  totalAnswered() {}
 }
 
 export type Item = {
