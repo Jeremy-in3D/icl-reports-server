@@ -407,6 +407,8 @@ form {
 .michlol {
   width: 70%;
   margin: auto;
+  overflow: hidden;
+  margin: 1em auto;
 }
 
 .michlol .title {
@@ -415,13 +417,13 @@ form {
   background-color: yellow;
 }
 
-.michlol .reports {
-  max-height: 0;
+.reports {
+  display: block;
   overflow: hidden;
-  transition: all 0.25s;
   background-color: red;
+  height: 0;
 }
 
 .reports.opened {
-  max-height: 100%;
+  height: max-content;
 }

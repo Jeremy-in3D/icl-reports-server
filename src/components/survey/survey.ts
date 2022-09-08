@@ -27,14 +27,7 @@ export class Survey {
 //     return true;
 //   } else return false;
 // }
-// previousQuestion() {
-//   if (this.currentQuestion > 0) --this.currentQuestion;
-//   return this.currentQuestion;
-// }
-// nextQuestion() {
-//   if (this.currentQuestion < this.totalItems! - 1) ++this.currentQuestion;
-//   return this.currentQuestion;
-// }
+
 // saveSurvey() {
 //   return {
 //     dateCreated: this.dateCreated,

@@ -83,6 +83,11 @@ export const surveysData: SurveysData = {
         reports: ["main", "oil", "quakes"],
         mainReport: a,
       },
+      {
+        name: "Michlol - 2",
+        reports: ["main", "oil"],
+        mainReport: b,
+      },
     ],
   },
   S2: {
@@ -105,23 +110,19 @@ interface SurveysData {
 interface SurveyMichlolim {
   id: string;
   name: string;
-  michlolim: {
-    name: string;
-    reports: ("main" | "oil" | "quakes")[];
-    mainReport?: MichlolQuestion[];
-    oilReport?: any;
-    quakeReport?: any;
-  }[];
+  michlolim: Michlol[];
 }
 
-type MichlolQuestion = {
+export type Michlol = {
+  name: string;
+  reports: ("main" | "oil" | "quakes")[];
+  mainReport?: MichlolQuestion[];
+  oilReport?: any;
+  quakeReport?: any;
+};
+
+export type MichlolQuestion = {
   id: string;
   question: string;
   answerOptions: string[];
 };
-
-// {
-//   name: "Michlol - 2",
-//   reports: ["main", "oil"],
-//   mainReport: b,
-// },
