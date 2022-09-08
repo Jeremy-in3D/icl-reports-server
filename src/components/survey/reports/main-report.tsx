@@ -5,10 +5,11 @@ import { Survey } from "../survey";
 export const MainReport: React.FC<{
   michlol: Michlol;
   surveyInstance: Survey;
-}> = ({ michlol, surveyInstance }) => {
+  submit: () => void;
+}> = ({ michlol, surveyInstance, submit }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
-  const id = michlol.mainReport![currentQuestion].id;
+  const questionId = michlol.mainReport![currentQuestion].id;
   const question = michlol.mainReport![currentQuestion].question;
   const answerOptions = michlol.mainReport![currentQuestion].answerOptions;
 
@@ -19,21 +20,21 @@ export const MainReport: React.FC<{
       </p>
       <p className="survey-title">{question}</p>
       {answerOptions.map((item, idx) => {
-        const id = Math.random();
+        const name = `${michlol.id}-${questionId}`;
+        const identifier = `${michlol.id}-${questionId}-${idx}`;
+        const michlolAnswers = surveyInstance.answers[michlol.id];
+        const savedAnswer = michlolAnswers?.[questionId];
         return (
-          <div className="survey-question" key={idx}>
+          <div className="survey-question" key={identifier}>
             <input
               type="radio"
-              id={`${michlol.name}-${id}`}
-              name={`id`}
+              id={identifier}
+              name={name}
               value={item}
               className="check-with-label"
-              //   defaultChecked={answer ? answer[question] === item : false}
+              defaultChecked={savedAnswer === item && true}
             />
-            <label
-              className="label-for-check"
-              htmlFor={`${michlol.name}-${id}`}
-            >
+            <label className="label-for-check" htmlFor={identifier}>
               {item}
             </label>
           </div>
@@ -49,11 +50,14 @@ export const MainReport: React.FC<{
       </button>
       <button
         className="survey-page-btn"
-        type={"button"}
         disabled={
           surveyInstance.currentQuestion + 1 === michlol.mainReport!.length
         }
-        onClick={() => setCurrentQuestion((prevState: number) => ++prevState)}
+        type={"button"}
+        onClick={() => {
+          submit();
+          setCurrentQuestion((prevState: number) => ++prevState);
+        }}
       >
         Next
       </button>

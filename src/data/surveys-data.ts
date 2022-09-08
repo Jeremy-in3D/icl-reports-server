@@ -79,11 +79,13 @@ export const surveysData: SurveysData = {
     name: "First Survey",
     michlolim: [
       {
+        id: "M1",
         name: "Michlol - 1",
         reports: ["main", "oil", "quakes"],
         mainReport: a,
       },
       {
+        id: "M2",
         name: "Michlol - 2",
         reports: ["main", "oil"],
         mainReport: b,
@@ -95,6 +97,7 @@ export const surveysData: SurveysData = {
     name: "Second Survey",
     michlolim: [
       {
+        id: "M1",
         name: "Michlol - 1",
         reports: ["main", "oil", "quakes"],
         mainReport: a,
@@ -114,6 +117,7 @@ interface SurveyMichlolim {
 }
 
 export type Michlol = {
+  id: string;
   name: string;
   reports: ("main" | "oil" | "quakes")[];
   mainReport?: MichlolQuestion[];

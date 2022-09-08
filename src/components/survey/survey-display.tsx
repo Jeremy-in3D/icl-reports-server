@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { surveysData } from "../../data/surveys-data";
 import { MainReport } from "./reports/main-report";
 import { OilReport } from "./reports/oil-report";
@@ -13,8 +13,11 @@ export const SurveyDisplay: React.FC<{
 
   return (
     <div className="survey">
+      {/* Survey Name */}
       <div className="name">{surveyName}</div>
+      {/* Map each Michlol */}
       {michlolim.map((michlol, idx) => {
+        const formRef = useRef<HTMLFormElement>(null);
         const [openTab, setOpenTab] = useState(false);
         const openClass = openTab ? "opened" : "closed";
 
@@ -23,13 +26,31 @@ export const SurveyDisplay: React.FC<{
             <div
               onClick={() => setOpenTab((prevState) => !prevState)}
               className="title"
-            >{`This is ${michlol.name}`}</div>
+            >
+              {/* Michlol Title */}
+              {michlol.name}
+            </div>
             <div className={`reports ${openClass}`}>
-              <form>
+              <form
+                ref={formRef}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target as HTMLFormElement);
+                  //@ts-ignore
+                  const obj = Object.fromEntries(formData);
+                  const entries = Object.entries(obj);
+                  const [key, value] = entries[0];
+                  const [michlolId, questionId] = key.split("-");
+                  surveyInstance.setAnswer(michlolId, questionId, value);
+                }}
+              >
                 {michlol.reports.includes("main") && (
                   <MainReport
                     michlol={michlol}
                     surveyInstance={surveyInstance}
+                    submit={() => {
+                      formRef.current?.requestSubmit();
+                    }}
                   />
                 )}
                 {michlol.reports.includes("oil") && <OilReport />}
