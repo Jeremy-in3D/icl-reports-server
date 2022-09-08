@@ -1,37 +1,36 @@
 import React, { useRef, useState } from "react";
-import { surveyItems } from "../../data/survey-first-items";
 import { Survey } from "./survey";
 import { SurveyDisplay } from "./survey-display";
 
-export const SurveySelection: React.FC = () => {
+export const SurveyView: React.FC<{
+  id: string;
+}> = ({ id }) => {
   const [viewSurvey, setViewSurvey] = useState(false);
-  const surveyInstance = useRef(new Survey());
+  const surveyInstance = useRef(new Survey(id)).current;
 
   //Check for existing report in local storage, disable button accordingly
-  const existingReport = localStorage.getItem("survey");
-  const parsedReport = JSON.parse(existingReport!) as Survey;
+  const existingSurvey = localStorage.getItem(id);
+  const parsedReport = JSON.parse(existingSurvey!) as Survey;
   const existingDetails = {
     dateCreated: new Date(parsedReport?.dateCreated ?? 0),
   };
 
   return (
-    <div className="survey">
+    <div className="survey-view">
       {viewSurvey ? (
-        <SurveyDisplay instance={surveyInstance.current} />
+        <SurveyDisplay surveyInstance={surveyInstance} />
       ) : (
         <>
+          <p>{`Survey: ${id}`}</p>
           <div className="survey-choice">
             <button
               className="survey-btn"
-              disabled={existingReport === null}
-              onClick={() => {
-                surveyInstance.current.loadExistingSurvey(existingReport);
-                setViewSurvey(true);
-              }}
+              disabled={existingSurvey === null}
+              onClick={() => {}}
             >
-              Continue Existing Report
+              Continue Existing Survey
             </button>
-            {existingReport && (
+            {existingSurvey && (
               <div>
                 Date Created: {existingDetails.dateCreated.toLocaleString()}
               </div>
@@ -41,13 +40,13 @@ export const SurveySelection: React.FC = () => {
             <button
               className="survey-btn"
               onClick={() => {
-                surveyInstance.current.createNewSurvey(surveyItems);
+                surveyInstance.createNewSurvey();
                 setViewSurvey(true);
               }}
             >
-              Create New Report
+              Create New Survey
             </button>
-            <p>This will delete any existing report for this Sior</p>
+            <p>This will delete any existing report for this Survey</p>
           </div>
         </>
       )}

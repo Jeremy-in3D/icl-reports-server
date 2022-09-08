@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PageNotFound } from "./components/page-not-found";
-import { Reports } from "./components/reports";
+import { Surveys } from "./components/survey/surveys";
 import { Spacer } from "./components/spacer";
 import { DropdownMenu } from "./dropdown-menu";
 import { Home } from "./home";
@@ -12,8 +12,8 @@ export const App: React.FC = () => {
     case "Home":
       display = <Home setScreen={setShowScreen} />;
       break;
-    case "Reports":
-      display = <Reports />;
+    case "Surveys":
+      display = <Surveys />;
       break;
     // case "Search":
     //   display = <Reports />;

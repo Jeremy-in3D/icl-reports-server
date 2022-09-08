@@ -83,14 +83,11 @@ body,
   font-size: 1.5em;
   z-index: 6;
   transition: height 0.25s;
+  height: 50px;
 }
 
 .opened {
   height: 100%;
-}
-
-.closed {
-  height: 50px;
 }
 
 .toggle-dropdown {
@@ -247,7 +244,7 @@ body,
 }
 /* Take Picture End */
 
-.reports {
+.surveys-selections {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -256,10 +253,9 @@ body,
   margin: 1em;
   overflow-y: scroll;
   gap: 20px 20px;
-  /* height: 100%; */
 }
 
-.reports .report-selection {
+.surveys-selections .survey-selection {
   max-width: 300px;
   flex-basis: 45%;
   height: 200px;
@@ -271,12 +267,12 @@ body,
   color: whitesmoke;
 }
 
-.reports .report-selection:hover {
+.surveys-selections .survey-selection:hover {
   opacity: 90%;
   transform: scale(0.98);
 }
 
-.reports .title {
+.surveys-selections .title {
   text-align: center;
   flex-basis: 100%;
   font-size: 55px;
@@ -288,92 +284,11 @@ body,
   margin-bottom: 0.5em;
 }
 
-@media only screen and (max-width: 800px) {
-  .main-menu .block-item {
-    flex-basis: 100%;
-  }
-
-  .reports .report-selection {
-    flex-basis: 100%;
-  }
-}
-
-.image-preview {
-  width: 100px;
-  height: auto;
-}
-
-.survey {
+.survey-view {
   display: flex;
   flex-flow: column wrap;
   text-align: center;
   justify-content: flex-start;
-}
-
-.survey .survey-title {
-  width: 90%;
-  max-width: 700px;
-  min-width: 250px;
-  margin: 0em auto;
-  font-size: 1.5em;
-  background: var(--radial-gradient);
-  border-radius: 6px;
-  padding: 0.25em;
-  box-shadow: 0px 0px 5px 2px #888888;
-}
-
-.survey-placement {
-  margin: 1em;
-  font-size: 20px;
-}
-
-.survey-question input {
-  display: none;
-}
-
-.survey-question {
-  width: 70%;
-  min-width: 200px;
-  max-width: 500px;
-  margin: 1em;
-}
-
-.survey-question label {
-  background-color: rgba(128, 128, 128, 0.315);
-  display: block;
-  width: 100%;
-  padding: 1em;
-  border-radius: 6px;
-}
-
-.check-with-label:checked + .label-for-check {
-  background: var(--blue5);
-  color: white;
-}
-
-form {
-  margin-top: 25px;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-.survey-page-btn {
-  flex-basis: 40%;
-  margin: 3em 1em;
-  padding: 1em;
-  background: var(--linear-gradient-dark-2);
-  color: white;
-  border-radius: 6px;
-  /* font-size: 20px; */
-}
-
-button:disabled {
-  border: 1px solid #999999;
-  background-color: #cccccc6c;
-  background: #cccccc6c;
-  color: #666666;
 }
 
 .survey-choice {
@@ -396,6 +311,73 @@ button:disabled {
   border-radius: 6px;
 }
 
+.survey .name {
+  width: 90%;
+  min-width: 250px;
+  margin: 1em auto;
+  font-size: 1.5em;
+  background: var(--radial-gradient);
+  border-radius: 6px;
+  padding: 0.25em;
+  box-shadow: 0px 0px 5px 2px #888888;
+}
+
+.check-with-label:checked + .label-for-check {
+  background: var(--blue5);
+  color: white;
+}
+
+button:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc6c;
+  background: #cccccc6c;
+  color: #666666;
+}
+
+/* Temp Classes */
+
+.survey-question input {
+  display: none;
+}
+
+.survey-question {
+  width: 70%;
+  min-width: 200px;
+  max-width: 500px;
+  margin: 1em;
+}
+
+.survey-question label {
+  background-color: rgba(128, 128, 128, 0.315);
+  display: block;
+  width: 100%;
+  padding: 1em;
+  border-radius: 6px;
+}
+
+.survey-placement {
+  margin: 1em;
+  font-size: 20px;
+}
+
+form {
+  margin-top: 25px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.survey-page-btn {
+  flex-basis: 40%;
+  margin: 3em 1em;
+  padding: 1em;
+  background: var(--linear-gradient-dark-2);
+  color: white;
+  border-radius: 6px;
+  /* font-size: 20px; */
+}
+
 .survey-bar {
   position: absolute;
   bottom: 0;
@@ -410,4 +392,36 @@ button:disabled {
   width: 100px;
   background: var(--linear-gradient);
   font-size: 1.1em;
+}
+
+@media only screen and (max-width: 800px) {
+  .main-menu .block-item {
+    flex-basis: 100%;
+  }
+
+  .surveys .survey-selection {
+    flex-basis: 100%;
+  }
+}
+
+.michlol {
+  width: 70%;
+  margin: auto;
+}
+
+.michlol .title {
+  padding: 0.75em;
+  width: 100%;
+  background-color: yellow;
+}
+
+.michlol .reports {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.25s;
+  background-color: red;
+}
+
+.reports.opened {
+  max-height: 100%;
 }
