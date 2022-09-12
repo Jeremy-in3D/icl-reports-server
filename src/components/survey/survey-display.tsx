@@ -15,15 +15,15 @@ export const SurveyDisplay: React.FC<{
   return (
     <div className="survey">
       {/* Survey Name */}
-      <div className="name">{surveyName}</div>
+      <h1 className="name">{surveyName}</h1>
       {/* Map each Michlol */}
       {michlolim.map((michlol, idx) => {
         const formRef = useRef<HTMLFormElement>(null);
-        const [openTab, setOpenTab] = useState(false);
-        const [markComplete, setMarkComplete] = useState(false);
+        const [isOpen, setIsOpen] = useState(false);
+        const [isComplete, setIsComplete] = useState(false);
 
         useEffect(() => {
-          surveyInstance.completedMichlol[michlol.id] && setMarkComplete(true);
+          surveyInstance.completedMichlol[michlol.id] && setIsComplete(true);
         }, []);
 
         return (
@@ -40,23 +40,20 @@ export const SurveyDisplay: React.FC<{
             />
             <div className="michlol">
               <div
-                onClick={() => setOpenTab((prevState) => !prevState)}
-                className={`title ${markComplete ? "complete" : "incomplete"}`}
+                onClick={() => setIsOpen((prevState) => !prevState)}
+                className={`title ${isComplete ? "complete" : "incomplete"}`}
               >
                 {/* Michlol Title */}
                 {michlol.name}
               </div>
-              <div className={`reports ${openTab ? "opened" : "closed"}`}>
+              <div className={`reports ${isOpen ? "opened" : "closed"}`}>
                 <form
                   ref={formRef}
                   onSubmit={(e) => {
                     e.preventDefault();
                     const formData = new FormData(e.target as HTMLFormElement);
-                    //@ts-ignore
-                    const obj = Object.fromEntries(formData);
-                    const entries = Object.entries(obj);
-                    if (entries.length) {
-                      const [key, value] = entries[0];
+                    const formObj = Object.fromEntries(formData as any);
+                    for (let [key, value] of Object.entries(formObj)) {
                       const [michlolId, questionId] = key.split("-");
                       surveyInstance.setAnswer(michlolId, questionId, value);
                     }
@@ -71,8 +68,8 @@ export const SurveyDisplay: React.FC<{
                       }}
                       close={() => {
                         surveyInstance.setCompletedMichlol(michlol.id);
-                        setMarkComplete(true);
-                        setOpenTab(false);
+                        setIsComplete(true);
+                        setIsOpen(false);
                       }}
                     />
                   )}
