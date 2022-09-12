@@ -25,7 +25,7 @@ export const SurveyDisplay: React.FC<{
         const completeClass = markComplete ? "complete" : "incomplete";
 
         useEffect(() => {
-          surveyInstance.completed[michlol.id] && setMarkComplete(true);
+          surveyInstance.completedMichlol[michlol.id] && setMarkComplete(true);
         }, []);
 
         return (
@@ -72,7 +72,7 @@ export const SurveyDisplay: React.FC<{
                         formRef.current?.requestSubmit();
                       }}
                       close={() => {
-                        surveyInstance.setComplete(michlol.id);
+                        surveyInstance.setCompletedMichlol(michlol.id);
                         setMarkComplete(true);
                         setOpenTab(false);
                       }}

@@ -2,27 +2,23 @@ export class Survey {
   [key: string]: any;
   id: string;
   answers: SurveyAnswers;
-  completed: { [id: string]: boolean };
+  completedMichlol: { [id: string]: boolean };
 
   constructor(id: string) {
     this.id = id;
     this.answers = {};
-    this.completed = {};
+    this.completedMichlol = {};
   }
-
   createNewSurvey() {
     this.dateCreated = Date.now();
   }
-
   setAnswer(michlol: string, questionId: string, answer: string) {
     if (!this.answers[michlol]) this.answers[michlol] = {};
     this.answers[michlol][questionId] = answer;
   }
-
-  setComplete(michlol: string) {
-    this.completed[michlol] = true;
+  setCompletedMichlol(michlol: string) {
+    this.completedMichlol[michlol] = true;
   }
-
   saveSurvey() {
     return this;
   }
