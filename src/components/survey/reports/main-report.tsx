@@ -58,7 +58,9 @@ export const MainReport: React.FC<{
         onClick={() => {
           submit();
           if (currentQuestion + 1 !== michlol.mainReport!.length) {
-            setCurrentQuestion((prevState: number) => ++prevState);
+            //If answers exists after submit
+            if (surveyInstance.answers[michlol.id]?.[questionId])
+              setCurrentQuestion((prevState: number) => ++prevState);
           } else close();
         }}
       >

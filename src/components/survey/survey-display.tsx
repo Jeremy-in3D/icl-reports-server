@@ -21,8 +21,6 @@ export const SurveyDisplay: React.FC<{
         const formRef = useRef<HTMLFormElement>(null);
         const [openTab, setOpenTab] = useState(false);
         const [markComplete, setMarkComplete] = useState(false);
-        const openClass = openTab ? "opened" : "closed";
-        const completeClass = markComplete ? "complete" : "incomplete";
 
         useEffect(() => {
           surveyInstance.completedMichlol[michlol.id] && setMarkComplete(true);
@@ -43,12 +41,12 @@ export const SurveyDisplay: React.FC<{
             <div className="michlol">
               <div
                 onClick={() => setOpenTab((prevState) => !prevState)}
-                className={`title ${completeClass}`}
+                className={`title ${markComplete ? "complete" : "incomplete"}`}
               >
                 {/* Michlol Title */}
                 {michlol.name}
               </div>
-              <div className={`reports ${openClass}`}>
+              <div className={`reports ${openTab ? "opened" : "closed"}`}>
                 <form
                   ref={formRef}
                   onSubmit={(e) => {

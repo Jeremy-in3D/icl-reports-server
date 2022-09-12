@@ -104,6 +104,42 @@ export const surveysData: SurveysData = {
       },
     ],
   },
+  S3: {
+    id: "S3",
+    name: "Third Survey",
+    michlolim: [
+      {
+        id: "M1",
+        name: "Michlol - 1",
+        reports: ["main", "oil", "quakes"],
+        mainReport: a,
+      },
+    ],
+  },
+  S4: {
+    id: "S4",
+    name: "Fourth Survey",
+    michlolim: [
+      {
+        id: "M1",
+        name: "Michlol - 1",
+        reports: ["main", "oil", "quakes"],
+        mainReport: a,
+      },
+    ],
+  },
+  S5: {
+    id: "S5",
+    name: "Fifth Survey",
+    michlolim: [
+      {
+        id: "M1",
+        name: "Michlol - 1",
+        reports: ["main", "oil", "quakes"],
+        mainReport: a,
+      },
+    ],
+  },
 };
 
 interface SurveysData {

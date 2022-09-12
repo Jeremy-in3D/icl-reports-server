@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
+import { useExistingSurvey } from "../../helpers/use-existing-survey";
 import { Survey } from "./survey";
+import { SurveyChoice } from "./survey-choice";
 import { SurveyDisplay } from "./survey-display";
 
 export const SurveyView: React.FC<{
@@ -7,13 +9,7 @@ export const SurveyView: React.FC<{
 }> = ({ id }) => {
   const [viewSurvey, setViewSurvey] = useState(false);
   const surveyInstance = useRef(new Survey(id)).current;
-
-  //Check for existing report in local storage, disable button accordingly
-  const existingSurvey = localStorage.getItem(id);
-  const parsedReport = JSON.parse(existingSurvey!) as Survey;
-  const existingDetails = {
-    dateCreated: new Date(parsedReport?.dateCreated ?? 0),
-  };
+  const [existingSurvey, existingDetails] = useExistingSurvey(id);
 
   return (
     <div className="survey-view">
@@ -22,35 +18,26 @@ export const SurveyView: React.FC<{
       ) : (
         <>
           <p>{`Survey: ${id}`}</p>
-          <div className="survey-choice">
-            <button
-              className="survey-btn"
-              disabled={existingSurvey === null}
-              onClick={() => {
-                surveyInstance.loadExistingSurvey(localStorage.getItem(id));
-                setViewSurvey(true);
-              }}
-            >
-              Continue Existing Survey
-            </button>
-            {existingSurvey && (
-              <div>
-                Date Created: {existingDetails.dateCreated.toLocaleString()}
-              </div>
-            )}
-          </div>
-          <div className="survey-choice">
-            <button
-              className="survey-btn"
-              onClick={() => {
-                surveyInstance.createNewSurvey();
-                setViewSurvey(true);
-              }}
-            >
-              Create New Survey
-            </button>
+          <SurveyChoice
+            text="Continue existing survey"
+            disabled={existingSurvey === null}
+            onClick={() => {
+              surveyInstance.loadExistingSurvey(localStorage.getItem(id));
+              setViewSurvey(true);
+            }}
+          >
+            {existingDetails}
+          </SurveyChoice>
+          <SurveyChoice
+            text="Create new survey"
+            disabled={false}
+            onClick={() => {
+              surveyInstance.createNewSurvey();
+              setViewSurvey(true);
+            }}
+          >
             <p>This will delete any existing report for this Survey</p>
-          </div>
+          </SurveyChoice>
         </>
       )}
     </div>
