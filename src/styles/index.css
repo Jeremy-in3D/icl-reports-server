@@ -405,8 +405,8 @@ form {
 }
 
 .michlol {
+  display: inline-block;
   width: 70%;
-  margin: auto;
   overflow: hidden;
   margin: 1em auto;
 }
@@ -414,16 +414,26 @@ form {
 .michlol .title {
   padding: 0.75em;
   width: 100%;
-  background-color: yellow;
+  background-color: chocolate;
+}
+
+.michlol .title.complete {
+  background-color: green;
 }
 
 .reports {
   display: block;
   overflow: hidden;
-  background-color: red;
+  background-color: whitesmoke;
   height: 0;
 }
 
 .reports.opened {
   height: max-content;
+}
+
+.save {
+  width: 50px;
+  height: auto;
+  display: inline-block;
 }

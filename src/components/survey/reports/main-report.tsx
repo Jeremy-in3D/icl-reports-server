@@ -6,7 +6,8 @@ export const MainReport: React.FC<{
   michlol: Michlol;
   surveyInstance: Survey;
   submit: () => void;
-}> = ({ michlol, surveyInstance, submit }) => {
+  close: () => void;
+}> = ({ michlol, surveyInstance, submit, close }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const questionId = michlol.mainReport![currentQuestion].id;
@@ -56,7 +57,9 @@ export const MainReport: React.FC<{
         type={"button"}
         onClick={() => {
           submit();
-          setCurrentQuestion((prevState: number) => ++prevState);
+          if (currentQuestion + 1 !== michlol.mainReport!.length) {
+            setCurrentQuestion((prevState: number) => ++prevState);
+          } else close();
         }}
       >
         Next

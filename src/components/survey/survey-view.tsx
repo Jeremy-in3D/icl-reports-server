@@ -26,7 +26,10 @@ export const SurveyView: React.FC<{
             <button
               className="survey-btn"
               disabled={existingSurvey === null}
-              onClick={() => {}}
+              onClick={() => {
+                surveyInstance.loadExistingSurvey(localStorage.getItem(id));
+                setViewSurvey(true);
+              }}
             >
               Continue Existing Survey
             </button>

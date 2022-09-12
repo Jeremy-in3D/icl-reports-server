@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { surveysData } from "../../data/surveys-data";
 import { MainReport } from "./reports/main-report";
 import { OilReport } from "./reports/oil-report";
 import { QuakeReport } from "./reports/quake-report";
 import { Survey } from "./survey";
+const save = new URL("../../../assets/icons/save.png", import.meta.url);
 
 export const SurveyDisplay: React.FC<{
   surveyInstance: Survey;
@@ -19,43 +20,68 @@ export const SurveyDisplay: React.FC<{
       {michlolim.map((michlol, idx) => {
         const formRef = useRef<HTMLFormElement>(null);
         const [openTab, setOpenTab] = useState(false);
+        const [markComplete, setMarkComplete] = useState(false);
         const openClass = openTab ? "opened" : "closed";
+        const completeClass = markComplete ? "complete" : "incomplete";
+
+        useEffect(() => {
+          surveyInstance.completed[michlol.id] && setMarkComplete(true);
+        }, []);
 
         return (
-          <div className="michlol" key={idx}>
-            <div
-              onClick={() => setOpenTab((prevState) => !prevState)}
-              className="title"
-            >
-              {/* Michlol Title */}
-              {michlol.name}
-            </div>
-            <div className={`reports ${openClass}`}>
-              <form
-                ref={formRef}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.target as HTMLFormElement);
-                  //@ts-ignore
-                  const obj = Object.fromEntries(formData);
-                  const entries = Object.entries(obj);
-                  const [key, value] = entries[0];
-                  const [michlolId, questionId] = key.split("-");
-                  surveyInstance.setAnswer(michlolId, questionId, value);
-                }}
+          <div key={idx}>
+            <img
+              onClick={() => {
+                localStorage.setItem(
+                  surveyInstance.id,
+                  JSON.stringify(surveyInstance.saveSurvey())
+                );
+              }}
+              className="save"
+              src={save.href}
+            />
+            <div className="michlol">
+              <div
+                onClick={() => setOpenTab((prevState) => !prevState)}
+                className={`title ${completeClass}`}
               >
-                {michlol.reports.includes("main") && (
-                  <MainReport
-                    michlol={michlol}
-                    surveyInstance={surveyInstance}
-                    submit={() => {
-                      formRef.current?.requestSubmit();
-                    }}
-                  />
-                )}
-                {michlol.reports.includes("oil") && <OilReport />}
-                {michlol.reports.includes("quakes") && <QuakeReport />}
-              </form>
+                {/* Michlol Title */}
+                {michlol.name}
+              </div>
+              <div className={`reports ${openClass}`}>
+                <form
+                  ref={formRef}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.target as HTMLFormElement);
+                    //@ts-ignore
+                    const obj = Object.fromEntries(formData);
+                    const entries = Object.entries(obj);
+                    if (entries.length) {
+                      const [key, value] = entries[0];
+                      const [michlolId, questionId] = key.split("-");
+                      surveyInstance.setAnswer(michlolId, questionId, value);
+                    }
+                  }}
+                >
+                  {michlol.reports.includes("main") && (
+                    <MainReport
+                      michlol={michlol}
+                      surveyInstance={surveyInstance}
+                      submit={() => {
+                        formRef.current?.requestSubmit();
+                      }}
+                      close={() => {
+                        surveyInstance.setComplete(michlol.id);
+                        setMarkComplete(true);
+                        setOpenTab(false);
+                      }}
+                    />
+                  )}
+                  {michlol.reports.includes("oil") && <OilReport />}
+                  {michlol.reports.includes("quakes") && <QuakeReport />}
+                </form>
+              </div>
             </div>
           </div>
         );
@@ -63,30 +89,3 @@ export const SurveyDisplay: React.FC<{
     </div>
   );
 };
-
-// onSubmit={(e) => {
-//     e.preventDefault();
-//     const formData = new FormData(e.target as HTMLFormElement);
-//     //@ts-ignore
-//     const answeredQuestion = Object.fromEntries(formData);
-//     const result = instance.submitAnswer(answeredQuestion);
-//     result && instance.nextQuestion();
-//     setCurrentQuestion(instance.currentQuestion);
-//   }}
-
-{
-  /* <div className="survey-bar">
-<button
-  className=""
-  onClick={() => {
-    formRef.current?.requestSubmit();
-    localStorage.setItem(
-      "survey",
-      JSON.stringify(instance.saveSurvey())
-    );
-  }}
->
-  Save Survey
-</button>
-</div> */
-}
