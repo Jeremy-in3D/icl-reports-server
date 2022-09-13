@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { surveysData } from "../../data/surveys-data";
 import { MainReport } from "./reports/main-report";
+import { MichlolStatus } from "./reports/michlol-status";
 import { OilReport } from "./reports/oil-report";
 import { QuakeReport } from "./reports/quake-report";
 import { Survey } from "./survey";
@@ -19,7 +20,6 @@ export const SurveyDisplay: React.FC<{
       {/* Map each Michlol */}
       {michlolim.map((michlol, idx) => {
         const formRef = useRef<HTMLFormElement>(null);
-        const textArea = useRef<HTMLTextAreaElement>(null);
         const [isOpen, setIsOpen] = useState(false);
         const [isComplete, setIsComplete] = useState(false);
 
@@ -48,6 +48,10 @@ export const SurveyDisplay: React.FC<{
                 {michlol.name}
               </div>
               <div className={`reports ${isOpen ? "opened" : "closed"}`}>
+                <MichlolStatus
+                  michlolId={michlol.id}
+                  surveyInstance={surveyInstance}
+                />
                 <form
                   ref={formRef}
                   onSubmit={(e) => {
@@ -68,9 +72,11 @@ export const SurveyDisplay: React.FC<{
                         formRef.current?.requestSubmit();
                       }}
                       close={() => {
-                        surveyInstance.setCompletedMichlol(michlol.id);
-                        setIsComplete(true);
-                        setIsOpen(false);
+                        if (surveyInstance.isMichlolComplete(michlol.id)) {
+                          surveyInstance.setCompletedMichlol(michlol.id);
+                          setIsComplete(true);
+                          setIsOpen(false);
+                        }
                       }}
                     />
                   )}
@@ -79,16 +85,14 @@ export const SurveyDisplay: React.FC<{
                 </form>
                 <p>Michlol Notes:</p>
                 <textarea
-                  ref={textArea}
-                  name={"text"}
                   maxLength={50}
                   rows={4}
                   cols={25}
                   defaultValue={surveyInstance.answers[michlol.id]?.text ?? ""}
-                  onChange={() => {
+                  onChange={(e) => {
                     surveyInstance.setFreeText(
                       michlol.id,
-                      textArea.current?.value ?? ""
+                      e.target.value ?? ""
                     );
                   }}
                 ></textarea>

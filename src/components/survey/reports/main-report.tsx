@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Michlol } from "../../../data/surveys-data";
+import { RadioQuestion } from "../inputs/radio-question";
 import { Survey } from "../survey";
 
 export const MainReport: React.FC<{
@@ -26,19 +27,14 @@ export const MainReport: React.FC<{
         const michlolAnswers = surveyInstance.answers[michlol.id]?.["main"];
         const savedAnswer = michlolAnswers?.[questionId];
         return (
-          <div className="survey-question" key={identifier}>
-            <input
-              type="radio"
-              id={identifier}
-              name={name}
-              value={item}
-              className="check-with-label"
-              defaultChecked={savedAnswer === item && true}
-            />
-            <label className="label-for-check" htmlFor={identifier}>
-              {item}
-            </label>
-          </div>
+          <RadioQuestion
+            key={idx}
+            text={item}
+            name={name}
+            id={identifier}
+            value={item}
+            checked={savedAnswer === item}
+          />
         );
       })}
       <button
@@ -57,7 +53,7 @@ export const MainReport: React.FC<{
         type={"button"}
         onClick={() => {
           submit();
-          if (surveyInstance.answers[michlol.id]["main"]?.[questionId]) {
+          if (surveyInstance.answers[michlol.id]?.["main"]?.[questionId]) {
             if (currentQuestion + 1 !== michlol.mainReport!.length) {
               setCurrentQuestion((prevState: number) => ++prevState);
             } else close();

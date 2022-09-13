@@ -334,20 +334,18 @@ button:disabled {
   color: #666666;
 }
 
-/* Temp Classes */
-
-.survey-question input {
+.radio-question input {
   display: none;
 }
 
-.survey-question {
+.radio-question {
   width: 70%;
   min-width: 200px;
   max-width: 500px;
   margin: 1em;
 }
 
-.survey-question label {
+.radio-question label {
   background-color: rgba(128, 128, 128, 0.315);
   display: block;
   width: 100%;
