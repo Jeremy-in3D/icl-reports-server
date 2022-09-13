@@ -19,6 +19,7 @@ export const SurveyDisplay: React.FC<{
       {/* Map each Michlol */}
       {michlolim.map((michlol, idx) => {
         const formRef = useRef<HTMLFormElement>(null);
+        const textArea = useRef<HTMLTextAreaElement>(null);
         const [isOpen, setIsOpen] = useState(false);
         const [isComplete, setIsComplete] = useState(false);
 
@@ -76,6 +77,21 @@ export const SurveyDisplay: React.FC<{
                   {michlol.reports.includes("oil") && <OilReport />}
                   {michlol.reports.includes("quakes") && <QuakeReport />}
                 </form>
+                <p>Michlol Notes:</p>
+                <textarea
+                  ref={textArea}
+                  name={"text"}
+                  maxLength={50}
+                  rows={4}
+                  cols={25}
+                  defaultValue={surveyInstance.answers[michlol.id]?.text ?? ""}
+                  onChange={() => {
+                    surveyInstance.setFreeText(
+                      michlol.id,
+                      textArea.current?.value ?? ""
+                    );
+                  }}
+                ></textarea>
               </div>
             </div>
           </div>

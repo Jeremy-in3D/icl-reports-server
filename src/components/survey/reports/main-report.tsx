@@ -23,7 +23,7 @@ export const MainReport: React.FC<{
       {answerOptions.map((item, idx) => {
         const name = `${michlol.id}-${questionId}`;
         const identifier = `${michlol.id}-${questionId}-${idx}`;
-        const michlolAnswers = surveyInstance.answers[michlol.id];
+        const michlolAnswers = surveyInstance.answers[michlol.id]?.["main"];
         const savedAnswer = michlolAnswers?.[questionId];
         return (
           <div className="survey-question" key={identifier}>
@@ -57,14 +57,16 @@ export const MainReport: React.FC<{
         type={"button"}
         onClick={() => {
           submit();
-          if (currentQuestion + 1 !== michlol.mainReport!.length) {
-            //If answers exists after submit
-            if (surveyInstance.answers[michlol.id]?.[questionId])
+          if (surveyInstance.answers[michlol.id]["main"]?.[questionId]) {
+            if (currentQuestion + 1 !== michlol.mainReport!.length) {
               setCurrentQuestion((prevState: number) => ++prevState);
-          } else close();
+            } else close();
+          }
         }}
       >
-        Next
+        {currentQuestion + 1 !== michlol.mainReport!.length
+          ? "Next"
+          : "Complete"}
       </button>
     </div>
   );

@@ -13,9 +13,14 @@ export class Survey {
     this.dateCreated = Date.now();
   }
   setAnswer(michlol: string, questionId: string, answer: string) {
-    if (!this.answers[michlol]) this.answers[michlol] = {};
-    this.answers[michlol][questionId] = answer;
+    if (!this.answers[michlol]) this.answers[michlol] = { main: {} };
+    this.answers[michlol]["main"][questionId] = answer;
   }
+  setFreeText(michlol: string, answer: string) {
+    if (!this.answers[michlol]) this.answers[michlol] = { main: {} };
+    this.answers[michlol]["text"] = answer;
+  }
+
   setCompletedMichlol(michlol: string) {
     this.completedMichlol[michlol] = true;
   }
@@ -31,5 +36,10 @@ export class Survey {
 }
 
 interface SurveyAnswers {
-  [michlol: string]: { [questionId: string]: string };
+  [michlol: string]: {
+    text?: string;
+    main: {
+      [questionId: string]: string;
+    };
+  };
 }
