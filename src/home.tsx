@@ -7,7 +7,7 @@ import {
   settingsReportIcon,
   shareReportIcon,
   statisticsReportIcon,
-} from "./imports";
+} from "./data/imports";
 
 const buttons = [
   { text: 'דו"ח מכלולים', imgPath: addReportIcon.href, screen: "Surveys" },
