@@ -4,6 +4,7 @@ import { Surveys } from "./components/survey/surveys";
 import { Spacer } from "./components/misc/spacer";
 import { DropdownMenu } from "./components/dropdown-menu";
 import { Home } from "./home";
+import { Engineer } from "./components/engineer/engineer";
 
 export const App: React.FC = () => {
   const [showScreen, setShowScreen] = useState("Home");
@@ -12,8 +13,11 @@ export const App: React.FC = () => {
     case "Home":
       display = <Home setScreen={setShowScreen} />;
       break;
-    case "Surveys":
+    case "Survey":
       display = <Surveys />;
+      break;
+    case "Engineer":
+      display = <Engineer />;
       break;
     // case "Search":
     //   display = <Reports />;

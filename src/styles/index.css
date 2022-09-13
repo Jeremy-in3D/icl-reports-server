@@ -138,8 +138,6 @@ body,
 .main-menu {
   display: flex;
   flex-flow: row wrap;
-  align-items: flex-start;
-  align-content: flex-start;
   background-color: black;
   overflow: scroll;
 }
@@ -149,9 +147,9 @@ body,
   border: 1px solid rgb(24, 22, 22);
   text-align: center;
   /* Flex Item */
-  flex-basis: 45%;
-  padding: 1.73em;
-  flex-grow: 1;
+  min-height: 150px;
+  flex-basis: 50%;
+  padding: 0.5em;
   /* Flex Container */
   display: flex;
   flex-flow: column;
@@ -159,13 +157,9 @@ body,
   justify-content: center;
 }
 
-.main-menu .block-item:hover {
-  opacity: 80%;
-}
-
 .main-menu-icon {
-  width: 128px;
-  height: 128px;
+  width: 64px;
+  height: 64px;
 }
 
 .block-item p {
@@ -393,10 +387,9 @@ form {
 }
 
 @media only screen and (max-width: 800px) {
-  .main-menu .block-item {
-    flex-basis: 50%;
+  .main-menu {
+    flex-flow: column wrap;
   }
-
   .surveys .survey-selection {
     flex-basis: 100%;
   }

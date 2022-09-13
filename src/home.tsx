@@ -10,7 +10,8 @@ import {
 } from "./data/imports";
 
 const buttons = [
-  { text: 'דו"ח מכלולים', imgPath: addReportIcon.href, screen: "Surveys" },
+  { text: 'דו"ח מכלולים', imgPath: addReportIcon.href, screen: "Survey" },
+  { text: 'דו"ח מהנדס', imgPath: addReportIcon.href, screen: "Engineer" },
   { text: "חיפוש דוחות", imgPath: searchReportIcon.href, screen: "Search" },
   {
     text: "מסך התראות",
