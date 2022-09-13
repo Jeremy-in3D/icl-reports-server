@@ -27,12 +27,11 @@ export class Survey {
       this.answers[michlol] = { status: "", answers: {} };
     this.answers[michlol]["text"] = answer;
   }
-  setCompletedMichlol(michlol: string) {
-    this.completedMichlol[michlol] = true;
-  }
-  isMichlolComplete(michlol: string) {
+  isMichlolComplete(michlol: string, reportLength: number) {
     const status = this.answers[michlol].status;
-    if (status.length) {
+    const answers = Object.entries(this.answers[michlol].answers);
+    if (answers.length === reportLength && status.length) {
+      this.completedMichlol[michlol] = true;
       return true;
     }
   }

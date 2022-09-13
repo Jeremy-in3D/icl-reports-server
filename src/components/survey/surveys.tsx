@@ -11,18 +11,18 @@ const selections = [
 ];
 
 export const Surveys: React.FC = () => {
-  const [survey, setSurvey] = useState<string | undefined>();
+  const [surveyId, setSurveyId] = useState<string | undefined>();
 
-  if (survey) return <SurveyView id={survey} />;
+  if (surveyId) return <SurveyView surveyId={surveyId} />;
 
   return (
     <div className="surveys-selections">
       <p className="title">סיורי תצפית</p>
       {selections.map((item, idx) => (
         <SurveySelection
-          text={item.text}
-          click={() => setSurvey(selections[idx].id)}
           key={idx}
+          text={item.text}
+          click={() => setSurveyId(item.id)}
         />
       ))}
     </div>
