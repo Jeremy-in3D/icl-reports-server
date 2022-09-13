@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { PageNotFound } from "./components/page-not-found";
+import { PageNotFound } from "./components/misc/page-not-found";
 import { Surveys } from "./components/survey/surveys";
-import { Spacer } from "./components/spacer";
-import { DropdownMenu } from "./dropdown-menu";
+import { Spacer } from "./components/misc/spacer";
+import { DropdownMenu } from "./components/dropdown-menu";
 import { Home } from "./home";
 
 export const App: React.FC = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { BlockItem } from "./components/block-item";
+import { BlockItem } from "./components/misc/block-item";
 import {
   addReportIcon,
   notificationReportIcon,

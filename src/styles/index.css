@@ -394,7 +394,7 @@ form {
 
 @media only screen and (max-width: 800px) {
   .main-menu .block-item {
-    flex-basis: 100%;
+    flex-basis: 50%;
   }
 
   .surveys .survey-selection {
