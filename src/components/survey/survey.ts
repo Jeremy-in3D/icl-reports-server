@@ -14,17 +14,17 @@ export class Survey {
   }
   setAnswer(michlol: string, questionId: string, answer: string) {
     if (!this.answers[michlol])
-      this.answers[michlol] = { status: "", main: {} };
-    this.answers[michlol]["main"][questionId] = answer;
+      this.answers[michlol] = { status: "", answers: {} };
+    this.answers[michlol]["answers"][questionId] = answer;
   }
   setMichlolStatus(michlol: string, answer: string) {
     if (!this.answers[michlol])
-      this.answers[michlol] = { status: "", main: {} };
+      this.answers[michlol] = { status: "", answers: {} };
     this.answers[michlol]["status"] = answer;
   }
   setFreeText(michlol: string, answer: string) {
     if (!this.answers[michlol])
-      this.answers[michlol] = { status: "", main: {} };
+      this.answers[michlol] = { status: "", answers: {} };
     this.answers[michlol]["text"] = answer;
   }
   setCompletedMichlol(michlol: string) {
@@ -51,7 +51,7 @@ interface SurveyAnswers {
   [michlol: string]: {
     text?: string;
     status: string;
-    main: {
+    answers: {
       [questionId: string]: string;
     };
   };

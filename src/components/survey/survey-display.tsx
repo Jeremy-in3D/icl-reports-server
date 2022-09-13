@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { surveysData } from "../../data/surveys-data";
-import { MainReport } from "./reports/main-report";
+import { MichlolReport } from "./reports/michlol-report";
 import { MichlolStatus } from "./reports/michlol-status";
-import { OilReport } from "./reports/oil-report";
-import { QuakeReport } from "./reports/quake-report";
 import { Survey } from "./survey";
+import { MichlolText } from "./reports/michlol-text";
 const save = new URL("../../../assets/icons/save.png", import.meta.url);
 
 export const SurveyDisplay: React.FC<{
@@ -15,9 +14,7 @@ export const SurveyDisplay: React.FC<{
 
   return (
     <div className="survey">
-      {/* Survey Name */}
       <h1 className="name">{surveyName}</h1>
-      {/* Map each Michlol */}
       {michlolim.map((michlol, idx) => {
         const formRef = useRef<HTMLFormElement>(null);
         const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +25,7 @@ export const SurveyDisplay: React.FC<{
         }, []);
 
         return (
-          <div key={idx}>
+          <div className="michlol" key={idx}>
             <img
               onClick={() => {
                 localStorage.setItem(
@@ -39,64 +36,26 @@ export const SurveyDisplay: React.FC<{
               className="save"
               src={save.href}
             />
-            <div className="michlol">
-              <div
-                onClick={() => setIsOpen((prevState) => !prevState)}
-                className={`title ${isComplete ? "complete" : "incomplete"}`}
-              >
-                {/* Michlol Title */}
-                {michlol.name}
-              </div>
-              <div className={`reports ${isOpen ? "opened" : "closed"}`}>
-                <MichlolStatus
-                  michlolId={michlol.id}
-                  surveyInstance={surveyInstance}
-                />
-                <form
-                  ref={formRef}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const formData = new FormData(e.target as HTMLFormElement);
-                    const formObj = Object.fromEntries(formData as any);
-                    for (let [key, value] of Object.entries(formObj)) {
-                      const [michlolId, questionId] = key.split("-");
-                      surveyInstance.setAnswer(michlolId, questionId, value);
-                    }
-                  }}
-                >
-                  {michlol.reports.includes("main") && (
-                    <MainReport
-                      michlol={michlol}
-                      surveyInstance={surveyInstance}
-                      submit={() => {
-                        formRef.current?.requestSubmit();
-                      }}
-                      close={() => {
-                        if (surveyInstance.isMichlolComplete(michlol.id)) {
-                          surveyInstance.setCompletedMichlol(michlol.id);
-                          setIsComplete(true);
-                          setIsOpen(false);
-                        }
-                      }}
-                    />
-                  )}
-                  {michlol.reports.includes("oil") && <OilReport />}
-                  {michlol.reports.includes("quakes") && <QuakeReport />}
-                </form>
-                <p>Michlol Notes:</p>
-                <textarea
-                  maxLength={50}
-                  rows={4}
-                  cols={25}
-                  defaultValue={surveyInstance.answers[michlol.id]?.text ?? ""}
-                  onChange={(e) => {
-                    surveyInstance.setFreeText(
-                      michlol.id,
-                      e.target.value ?? ""
-                    );
-                  }}
-                ></textarea>
-              </div>
+            <div
+              onClick={() => setIsOpen((prevState) => !prevState)}
+              className={`title ${isComplete ? "complete" : "incomplete"}`}
+            >
+              {/* Michlol Title */}
+              {michlol.name}
+            </div>
+            <div className={`reports ${isOpen ? "opened" : "closed"}`}>
+              <MichlolStatus
+                michlolId={michlol.id}
+                surveyInstance={surveyInstance}
+              />
+              <MichlolReport
+                surveyInstance={surveyInstance}
+                formRef={formRef}
+                michlol={michlol}
+                setIsComplete={setIsComplete}
+                setIsOpen={setIsOpen}
+              />
+              <MichlolText surveyInstance={surveyInstance} michlol={michlol} />
             </div>
           </div>
         );

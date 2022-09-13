@@ -3,7 +3,7 @@ import { Michlol } from "../../../data/surveys-data";
 import { RadioQuestion } from "../inputs/radio-question";
 import { Survey } from "../survey";
 
-export const MainReport: React.FC<{
+export const ReportDisplay: React.FC<{
   michlol: Michlol;
   surveyInstance: Survey;
   submit: () => void;
@@ -24,7 +24,7 @@ export const MainReport: React.FC<{
       {answerOptions.map((item, idx) => {
         const name = `${michlol.id}-${questionId}`;
         const identifier = `${michlol.id}-${questionId}-${idx}`;
-        const michlolAnswers = surveyInstance.answers[michlol.id]?.["main"];
+        const michlolAnswers = surveyInstance.answers[michlol.id]?.answers;
         const savedAnswer = michlolAnswers?.[questionId];
         return (
           <RadioQuestion
@@ -53,7 +53,7 @@ export const MainReport: React.FC<{
         type={"button"}
         onClick={() => {
           submit();
-          if (surveyInstance.answers[michlol.id]?.["main"]?.[questionId]) {
+          if (surveyInstance.answers[michlol.id]?.answers?.[questionId]) {
             if (currentQuestion + 1 !== michlol.mainReport!.length) {
               setCurrentQuestion((prevState: number) => ++prevState);
             } else close();
