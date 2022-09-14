@@ -1,7 +1,7 @@
 import React from "react";
 import { surveysData } from "../../data/surveys-data";
 import { MichlolReport } from "./reports/michlol-report";
-import { Survey } from "./survey";
+import { Survey } from "../../classes/survey";
 
 export const SurveyDisplay: React.FC<{
   surveyInstance: Survey;

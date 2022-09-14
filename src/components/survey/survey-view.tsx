@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useExistingSurvey } from "../../helpers/use-existing-survey";
-import { Survey } from "./survey";
+import { Survey } from "../../classes/survey";
 import { SurveyChoice } from "./survey-choice";
 import { SurveyDisplay } from "./survey-display";
 
@@ -12,7 +12,7 @@ export const SurveyView: React.FC<{
   const [existingSurvey, existingDetails] = useExistingSurvey(surveyId);
 
   return (
-    <div className="survey-view" onClick={() => setViewSurvey(true)}>
+    <div className="survey-view">
       {viewSurvey ? (
         <SurveyDisplay surveyInstance={surveyInstance} />
       ) : (
@@ -20,15 +20,21 @@ export const SurveyView: React.FC<{
           <p>{`Survey: ${surveyId}`}</p>
           <SurveyChoice
             text="Continue existing survey"
-            disabled={existingSurvey === null}
-            onClick={() => surveyInstance.loadExistingSurvey(existingSurvey)}
+            disabled={existingSurvey === undefined}
+            onClick={() => {
+              surveyInstance.loadExistingSurvey(existingSurvey);
+              setViewSurvey(true);
+            }}
           >
             {existingDetails}
           </SurveyChoice>
           <SurveyChoice
             text="Create new survey"
             disabled={false}
-            onClick={() => surveyInstance.createNewSurvey()}
+            onClick={() => {
+              surveyInstance.createNewSurvey();
+              setViewSurvey(true);
+            }}
           >
             <p>This will delete any existing report for this Survey</p>
           </SurveyChoice>

@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Michlol } from "../../../data/surveys-data";
-import { Survey } from "../survey";
+import { Survey } from "../../../classes/survey";
 import { QuestionsDisplay } from "./questions-display";
 
 export const MichlolQuestions: React.FC<{
@@ -11,6 +11,9 @@ export const MichlolQuestions: React.FC<{
 
   return (
     <form
+      onChange={(e) => {
+        e.currentTarget.requestSubmit();
+      }}
       onSubmit={(e) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
@@ -18,10 +21,6 @@ export const MichlolQuestions: React.FC<{
         for (let [key, value] of Object.entries(formObj)) {
           const [michlolId, questionId] = key.split("-");
           surveyInstance.setAnswer(michlolId, questionId, value);
-          setCurrentQuestion((prevState) => {
-            if (prevState + 1 === michlol.mainReport!.length) return 0;
-            else return ++prevState;
-          });
         }
       }}
     >

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Michlol } from "../../../data/surveys-data";
-import { Survey } from "../survey";
+import { Survey } from "../../../classes/survey";
 import { MichlolQuestions } from "./michlol-questions";
 import { MichlolStatus } from "./michlol-status";
 import { MichlolText } from "./michlol-text";
-const save = new URL("../../../../assets/icons/save.png", import.meta.url);
 
 export const MichlolReport: React.FC<{
   surveyInstance: Survey;
@@ -19,16 +18,6 @@ export const MichlolReport: React.FC<{
 
   return (
     <div className="michlol">
-      <img
-        onClick={() => {
-          localStorage.setItem(
-            surveyInstance.id,
-            JSON.stringify(surveyInstance.saveSurvey())
-          );
-        }}
-        className="save"
-        src={save.href}
-      />
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
         className={`title ${isComplete ? "complete" : "incomplete"}`}
@@ -44,9 +33,13 @@ export const MichlolReport: React.FC<{
           onClick={() => {
             const michlolComplete = surveyInstance.isMichlolComplete(
               michlol.id,
-              michlol.mainReport.length
+              michlol.questions.length
             );
             if (michlolComplete) {
+              localStorage.setItem(
+                surveyInstance.id,
+                JSON.stringify(surveyInstance.saveSurvey())
+              );
               setIsComplete(true);
               setIsOpen(false);
             }

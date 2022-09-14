@@ -1,6 +1,6 @@
 import React from "react";
 import { RadioQuestion } from "../inputs/radio-question";
-import { Survey } from "../survey";
+import { Survey } from "../../../classes/survey";
 
 export const MichlolStatus: React.FC<{
   surveyInstance: Survey;

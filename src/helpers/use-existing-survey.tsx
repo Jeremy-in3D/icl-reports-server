@@ -1,4 +1,4 @@
-import { Survey } from "../components/survey/survey";
+import { Survey } from "../classes/survey";
 
 export const useExistingSurvey = (id: string) => {
   const existingSurvey = localStorage.getItem(id);

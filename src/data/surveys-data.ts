@@ -81,12 +81,12 @@ export const surveysData: SurveysData = {
       {
         id: "M1",
         name: "Michlol - 1",
-        mainReport: a,
+        questions: a,
       },
       {
         id: "M2",
         name: "Michlol - 2",
-        mainReport: b,
+        questions: b,
       },
     ],
   },
@@ -97,7 +97,7 @@ export const surveysData: SurveysData = {
       {
         id: "M1",
         name: "Michlol - 1",
-        mainReport: a,
+        questions: a,
       },
     ],
   },
@@ -108,7 +108,7 @@ export const surveysData: SurveysData = {
       {
         id: "M1",
         name: "Michlol - 1",
-        mainReport: a,
+        questions: a,
       },
     ],
   },
@@ -119,7 +119,7 @@ export const surveysData: SurveysData = {
       {
         id: "M1",
         name: "Michlol - 1",
-        mainReport: a,
+        questions: a,
       },
     ],
   },
@@ -130,7 +130,7 @@ export const surveysData: SurveysData = {
       {
         id: "M1",
         name: "Michlol - 1",
-        mainReport: a,
+        questions: a,
       },
     ],
   },
@@ -149,7 +149,7 @@ interface SurveyMichlolim {
 export type Michlol = {
   id: string;
   name: string;
-  mainReport: MichlolQuestion[];
+  questions: MichlolQuestion[];
 };
 
 export type MichlolQuestion = {

@@ -322,10 +322,10 @@ body,
 }
 
 button:disabled {
-  border: 1px solid #999999;
-  background-color: #cccccc6c;
-  background: #cccccc6c;
-  color: #666666;
+  border: 1px solid #999999 !important;
+  background-color: #cccccc6c !important;
+  background: #cccccc6c !important;
+  color: #666666 !important;
 }
 
 .radio-question input {
@@ -355,7 +355,7 @@ button:disabled {
 form {
   margin-top: 25px;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   align-items: center;
   justify-content: center;
 }

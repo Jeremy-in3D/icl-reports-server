@@ -1,6 +1,6 @@
 import React from "react";
 import { Michlol } from "../../../data/surveys-data";
-import { Survey } from "../survey";
+import { Survey } from "../../../classes/survey";
 
 export const MichlolText: React.FC<{
   surveyInstance: Survey;
