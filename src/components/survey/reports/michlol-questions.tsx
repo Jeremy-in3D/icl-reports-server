@@ -18,6 +18,10 @@ export const MichlolQuestions: React.FC<{
         for (let [key, value] of Object.entries(formObj)) {
           const [michlolId, questionId] = key.split("-");
           surveyInstance.setAnswer(michlolId, questionId, value);
+          setCurrentQuestion((prevState) => {
+            if (prevState + 1 === michlol.mainReport!.length) return 0;
+            else return ++prevState;
+          });
         }
       }}
     >

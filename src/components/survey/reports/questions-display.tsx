@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Michlol } from "../../../data/surveys-data";
 import { RadioQuestion } from "../inputs/radio-question";
 import { Survey } from "../survey";
@@ -39,13 +39,7 @@ export const QuestionsDisplay: React.FC<{
       >
         Previous
       </button>
-      <button
-        className="survey-page-btn"
-        disabled={currentQuestion + 1 === michlol.mainReport!.length}
-        onClick={() => setQuestion((prevState) => ++prevState)}
-      >
-        Next
-      </button>
+      <button className="survey-page-btn">Next</button>
     </div>
   );
 };
