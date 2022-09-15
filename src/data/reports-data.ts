@@ -73,74 +73,76 @@ const b = [
   },
 ];
 
-export const surveysData: SurveysData = {
-  S1: {
-    id: "S1",
-    name: "First Survey",
-    michlolim: [
-      {
-        id: "M1",
-        name: "Michlol - 1",
-        questions: a,
-      },
-      {
-        id: "M2",
-        name: "Michlol - 2",
-        questions: b,
-      },
-    ],
-  },
-  S2: {
-    id: "S2",
-    name: "Second Survey",
-    michlolim: [
-      {
-        id: "M1",
-        name: "Michlol - 1",
-        questions: a,
-      },
-    ],
-  },
-  S3: {
-    id: "S3",
-    name: "Third Survey",
-    michlolim: [
-      {
-        id: "M1",
-        name: "Michlol - 1",
-        questions: a,
-      },
-    ],
-  },
-  S4: {
-    id: "S4",
-    name: "Fourth Survey",
-    michlolim: [
-      {
-        id: "M1",
-        name: "Michlol - 1",
-        questions: a,
-      },
-    ],
-  },
-  S5: {
-    id: "S5",
-    name: "Fifth Survey",
-    michlolim: [
-      {
-        id: "M1",
-        name: "Michlol - 1",
-        questions: a,
-      },
-    ],
-  },
+export const reportsData: ReportsData = {
+  surveys: [
+    {
+      id: "S1",
+      name: "סיור ראשון - א",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          questions: a,
+        },
+        {
+          id: "M2",
+          name: "Michlol - 2",
+          questions: b,
+        },
+      ],
+    },
+    {
+      id: "S2",
+      name: "סיור שני - ב",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          questions: a,
+        },
+      ],
+    },
+    {
+      id: "S3",
+      name: "סיור שלישי - ג",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          questions: a,
+        },
+      ],
+    },
+    {
+      id: "S4",
+      name: "סיור רביעי - ד",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          questions: a,
+        },
+      ],
+    },
+    {
+      id: "S5",
+      name: "סיור חמישי - ה",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          questions: a,
+        },
+      ],
+    },
+  ],
 };
 
-interface SurveysData {
-  [id: string]: SurveyMichlolim;
+interface ReportsData {
+  surveys: Survey[];
 }
 
-interface SurveyMichlolim {
+interface Survey {
   id: string;
   name: string;
   michlolim: Michlol[];

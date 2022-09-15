@@ -1,10 +1,10 @@
 import React from "react";
 
-export const SurveySelection: React.FC<{
+export const ReportsAvailable: React.FC<{
   text: string;
   click: () => void;
 }> = ({ text, click }) => (
-  <button className="survey-selection" onClick={click}>
+  <button className="report-available" onClick={click}>
     {text}
   </button>
 );

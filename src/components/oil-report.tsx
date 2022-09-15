@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { RadioQuestion } from "../survey/inputs/radio-question";
+import { RadioQuestion } from "./misc/radio-question";
 
 export const OilReport: React.FC = () => {
   const dateRef = useRef<HTMLInputElement>(null);

@@ -1,9 +1,9 @@
 import React from "react";
-import { Michlol } from "../../../data/surveys-data";
-import { Survey } from "../../../classes/survey";
+import { Michlol } from "../../data/reports-data";
+import { CreateReport } from "../../classes/create-report";
 
 export const MichlolText: React.FC<{
-  surveyInstance: Survey;
+  surveyInstance: CreateReport;
   michlol: Michlol;
 }> = ({ surveyInstance, michlol }) => {
   return (

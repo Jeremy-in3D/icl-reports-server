@@ -1,9 +1,9 @@
 import React from "react";
-import { RadioQuestion } from "../inputs/radio-question";
-import { Survey } from "../../../classes/survey";
+import { RadioQuestion } from "../misc/radio-question";
+import { CreateReport } from "../../classes/create-report";
 
 export const MichlolStatus: React.FC<{
-  surveyInstance: Survey;
+  surveyInstance: CreateReport;
   michlolId: string;
 }> = ({ surveyInstance, michlolId }) => {
   const michlolAnswer = surveyInstance.answers[michlolId]?.["status"];

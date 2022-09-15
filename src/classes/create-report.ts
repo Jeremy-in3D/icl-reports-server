@@ -1,4 +1,4 @@
-export class Survey {
+export class CreateReport {
   [key: string]: any;
   id: string;
   answers: SurveyAnswers;

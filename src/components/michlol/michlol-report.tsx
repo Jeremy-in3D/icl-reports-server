@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Michlol } from "../../../data/surveys-data";
-import { Survey } from "../../../classes/survey";
+import { Michlol } from "../../data/reports-data";
+import { CreateReport } from "../../classes/create-report";
 import { MichlolQuestions } from "./michlol-questions";
 import { MichlolStatus } from "./michlol-status";
 import { MichlolText } from "./michlol-text";
 
 export const MichlolReport: React.FC<{
-  surveyInstance: Survey;
+  reportInstance: CreateReport;
   michlol: Michlol;
-}> = ({ surveyInstance, michlol }) => {
+}> = ({ reportInstance: surveyInstance, michlol }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 

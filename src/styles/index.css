@@ -238,7 +238,7 @@ body,
 }
 /* Take Picture End */
 
-.surveys-selections {
+.report {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -249,7 +249,7 @@ body,
   gap: 20px 20px;
 }
 
-.surveys-selections .survey-selection {
+.report-available {
   max-width: 300px;
   flex-basis: 45%;
   height: 200px;
@@ -261,38 +261,26 @@ body,
   color: whitesmoke;
 }
 
-.surveys-selections .survey-selection:hover {
+.report-available:hover {
   opacity: 90%;
   transform: scale(0.98);
 }
 
-.surveys-selections .title {
-  text-align: center;
-  flex-basis: 100%;
-  font-size: 55px;
-  font-weight: 500;
-  background: var(--radial-gradient);
-  border-radius: 6px;
-  padding: 0.25em;
-  box-shadow: 0px 0px 10px 2px #888888;
-  margin-bottom: 0.5em;
-}
-
-.survey-view {
+.report-options {
   display: flex;
   flex-flow: column wrap;
   text-align: center;
   justify-content: flex-start;
 }
 
-.survey-choice {
+.report-option {
   background-color: rgba(128, 128, 128, 0.2);
   margin: 2em 0em;
   padding: 2em;
   border-radius: 10px;
 }
 
-.survey-choice .survey-btn {
+.report-option button {
   display: block;
   background: var(--blue5);
   border: 3px ridge white;
@@ -303,17 +291,6 @@ body,
   font-size: 1.2em;
   color: white;
   border-radius: 6px;
-}
-
-.survey .name {
-  width: 90%;
-  min-width: 250px;
-  margin: 1em auto;
-  font-size: 1.5em;
-  background: var(--radial-gradient);
-  border-radius: 6px;
-  padding: 0.25em;
-  box-shadow: 0px 0px 5px 2px #888888;
 }
 
 .check-with-label:checked + .label-for-check {

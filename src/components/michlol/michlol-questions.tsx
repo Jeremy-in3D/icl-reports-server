@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Michlol } from "../../../data/surveys-data";
-import { Survey } from "../../../classes/survey";
+import { Michlol } from "../../data/reports-data";
+import { CreateReport } from "../../classes/create-report";
 import { QuestionsDisplay } from "./questions-display";
 
 export const MichlolQuestions: React.FC<{
-  surveyInstance: Survey;
+  surveyInstance: CreateReport;
   michlol: Michlol;
 }> = ({ surveyInstance, michlol }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);

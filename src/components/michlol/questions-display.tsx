@@ -1,11 +1,11 @@
 import React from "react";
-import { Michlol } from "../../../data/surveys-data";
-import { RadioQuestion } from "../inputs/radio-question";
-import { Survey } from "../../../classes/survey";
+import { Michlol } from "../../data/reports-data";
+import { RadioQuestion } from "../misc/radio-question";
+import { CreateReport } from "../../classes/create-report";
 
 export const QuestionsDisplay: React.FC<{
   michlol: Michlol;
-  surveyInstance: Survey;
+  surveyInstance: CreateReport;
   currentQuestion: number;
   setQuestion: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ michlol, surveyInstance, currentQuestion, setQuestion }) => {

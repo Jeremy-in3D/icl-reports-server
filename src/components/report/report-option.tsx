@@ -1,14 +1,14 @@
 import React from "react";
 
-export const SurveyChoice: React.FC<{
+export const ReportOption: React.FC<{
   text: string;
   disabled: boolean;
   onClick: () => void;
   children?: React.ReactNode;
 }> = ({ text, disabled, onClick, children }) => {
   return (
-    <div className="survey-choice">
-      <button className="survey-btn" disabled={disabled} onClick={onClick}>
+    <div className="report-option">
+      <button disabled={disabled} onClick={onClick}>
         {text}
       </button>
       {children}
