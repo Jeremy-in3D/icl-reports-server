@@ -3,9 +3,9 @@ import { Michlol } from "../../data/reports-data";
 import { CreateReport } from "../../classes/create-report";
 
 export const MichlolText: React.FC<{
-  surveyInstance: CreateReport;
+  reportInstance: CreateReport;
   michlol: Michlol;
-}> = ({ surveyInstance, michlol }) => {
+}> = ({ reportInstance, michlol }) => {
   return (
     <div>
       <p>Michlol Notes:</p>
@@ -13,9 +13,9 @@ export const MichlolText: React.FC<{
         maxLength={50}
         rows={4}
         cols={25}
-        defaultValue={surveyInstance.answers[michlol.id]?.text ?? ""}
+        defaultValue={reportInstance.answers[michlol.id]?.text ?? ""}
         onChange={(e) => {
-          surveyInstance.setFreeText(michlol.id, e.target.value ?? "");
+          reportInstance.setFreeText(michlol.id, e.target.value ?? "");
         }}
       ></textarea>
     </div>

@@ -5,13 +5,13 @@ import { CreateReport } from "../../classes/create-report";
 
 export const QuestionsDisplay: React.FC<{
   michlol: Michlol;
-  surveyInstance: CreateReport;
+  reportInstance: CreateReport;
   currentQuestion: number;
   setQuestion: React.Dispatch<React.SetStateAction<number>>;
-}> = ({ michlol, surveyInstance, currentQuestion, setQuestion }) => {
+}> = ({ michlol, reportInstance, currentQuestion, setQuestion }) => {
   const { id, question, answerOptions } = michlol.questions![currentQuestion];
   const name = `${michlol.id}-${id}`;
-  const savedAnswer = surveyInstance.answers[michlol.id]?.answers?.[id];
+  const savedAnswer = reportInstance.answers[michlol.id]?.answers?.[id];
 
   return (
     <div className="main-report">
@@ -44,7 +44,7 @@ export const QuestionsDisplay: React.FC<{
         type={"button"}
         onClick={() => {
           setQuestion((prevState) => {
-            if (surveyInstance.answers[michlol.id]?.answers?.[id]) {
+            if (reportInstance.answers[michlol.id]?.answers?.[id]) {
               if (prevState + 1 === michlol.questions!.length) return 0;
               else return ++prevState;
             } else return prevState;

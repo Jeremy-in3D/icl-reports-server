@@ -8,12 +8,12 @@ import { MichlolText } from "./michlol-text";
 export const MichlolReport: React.FC<{
   reportInstance: CreateReport;
   michlol: Michlol;
-}> = ({ reportInstance: surveyInstance, michlol }) => {
+}> = ({ reportInstance, michlol }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    surveyInstance.completedMichlol[michlol.id] && setIsComplete(true);
+    reportInstance.completedMichlol[michlol.id] && setIsComplete(true);
   }, []);
 
   return (
@@ -24,21 +24,21 @@ export const MichlolReport: React.FC<{
       >
         {michlol.name}
       </div>
-      <div className={`reports ${isOpen ? "opened" : "closed"}`}>
-        <MichlolStatus michlolId={michlol.id} surveyInstance={surveyInstance} />
-        <MichlolQuestions surveyInstance={surveyInstance} michlol={michlol} />
-        <MichlolText surveyInstance={surveyInstance} michlol={michlol} />
+      <div className={`michlol-report ${isOpen ? "opened" : "closed"}`}>
+        <MichlolStatus michlolId={michlol.id} reportInstance={reportInstance} />
+        <MichlolQuestions reportInstance={reportInstance} michlol={michlol} />
+        <MichlolText reportInstance={reportInstance} michlol={michlol} />
         <button
           className="survey-page-btn"
           onClick={() => {
-            const michlolComplete = surveyInstance.isMichlolComplete(
+            const michlolComplete = reportInstance.isMichlolComplete(
               michlol.id,
               michlol.questions.length
             );
             if (michlolComplete) {
               localStorage.setItem(
-                surveyInstance.id,
-                JSON.stringify(surveyInstance.saveSurvey())
+                reportInstance.id,
+                JSON.stringify(reportInstance.saveSurvey())
               );
               setIsComplete(true);
               setIsOpen(false);

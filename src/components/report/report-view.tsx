@@ -6,8 +6,9 @@ import { reportsData } from "../../data/reports-data";
 export const ReportView: React.FC<{
   reportInstance: CreateReport;
 }> = ({ reportInstance }) => {
-  const { name, michlolim } = reportsData.surveys.find(
-    (survey) => survey.id === reportInstance.id
+  const type = getReportType(reportInstance.id);
+  const { name, michlolim } = reportsData[type].find(
+    (report) => report.id === reportInstance.id
   )!;
 
   return (
@@ -23,3 +24,9 @@ export const ReportView: React.FC<{
     </div>
   );
 };
+
+function getReportType(id: string) {
+  if (id.includes("S")) return "survey";
+  if (id.includes("O")) return "oil";
+  else return "quake";
+}

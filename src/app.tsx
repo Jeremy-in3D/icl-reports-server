@@ -6,16 +6,14 @@ import { DropdownMenu } from "./components/dropdown-menu";
 import { Home } from "./home";
 
 export const App: React.FC = () => {
-  const [showScreen, setShowScreen] = useState("Home");
+  const [showScreen, setShowScreen] = useState("home");
   let display;
   switch (showScreen) {
-    case "Home":
+    case "home":
       display = <Home setScreen={setShowScreen} />;
       break;
-    case "Survey":
-    case "Oil":
-    case "Quake":
-      display = <Report type={showScreen} />;
+    case "report":
+      display = <Report />;
       break;
     default:
       display = <PageNotFound />;

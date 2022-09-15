@@ -4,9 +4,9 @@ import { CreateReport } from "../../classes/create-report";
 import { QuestionsDisplay } from "./questions-display";
 
 export const MichlolQuestions: React.FC<{
-  surveyInstance: CreateReport;
+  reportInstance: CreateReport;
   michlol: Michlol;
-}> = ({ surveyInstance, michlol }) => {
+}> = ({ reportInstance, michlol }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   return (
@@ -20,12 +20,12 @@ export const MichlolQuestions: React.FC<{
         const formObj = Object.fromEntries(formData as any);
         const { id: questionId } = michlol.questions[currentQuestion];
         const value = formObj[questionId];
-        surveyInstance.setAnswer(michlol.id, questionId, value);
+        reportInstance.setAnswer(michlol.id, questionId, value);
       }}
     >
       <QuestionsDisplay
         michlol={michlol}
-        surveyInstance={surveyInstance}
+        reportInstance={reportInstance}
         currentQuestion={currentQuestion}
         setQuestion={setCurrentQuestion}
       />

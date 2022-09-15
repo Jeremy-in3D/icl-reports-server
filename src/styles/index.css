@@ -238,8 +238,7 @@ body,
 }
 /* Take Picture End */
 
-.report {
-  display: flex;
+.reports {
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
@@ -324,11 +323,6 @@ button:disabled {
   border-radius: 6px;
 }
 
-.survey-placement {
-  margin: 1em;
-  font-size: 20px;
-}
-
 form {
   margin-top: 25px;
   display: flex;
@@ -389,19 +383,13 @@ form {
   background-color: green;
 }
 
-.reports {
+.michlol-report {
   display: block;
   overflow: hidden;
   background-color: whitesmoke;
   height: 0;
 }
 
-.reports.opened {
+.michlol-report.opened {
   height: max-content;
-}
-
-.save {
-  width: 50px;
-  height: auto;
-  display: inline-block;
 }

@@ -74,7 +74,7 @@ const b = [
 ];
 
 export const reportsData: ReportsData = {
-  surveys: [
+  survey: [
     {
       id: "S1",
       name: "סיור ראשון - א",
@@ -136,10 +136,48 @@ export const reportsData: ReportsData = {
       ],
     },
   ],
+  oil: [
+    {
+      id: "O",
+      name: "סיור ראשון - א",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          questions: a,
+        },
+        {
+          id: "M2",
+          name: "Michlol - 2",
+          questions: b,
+        },
+      ],
+    },
+  ],
+  quake: [
+    {
+      id: "Q",
+      name: "סיור ראשון - א",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          questions: a,
+        },
+        {
+          id: "M2",
+          name: "Michlol - 2",
+          questions: b,
+        },
+      ],
+    },
+  ],
 };
 
 interface ReportsData {
-  surveys: Survey[];
+  survey: Survey[];
+  oil: Survey[];
+  quake: Survey[];
 }
 
 interface Survey {

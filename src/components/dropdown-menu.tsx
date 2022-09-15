@@ -14,7 +14,7 @@ export const DropdownMenu: React.FC<{
             className="dropdown-items"
             onClick={() => setIsOpened((prevState) => !prevState)}
           >
-            <div className="item" onClick={() => setScreen("Home")}>
+            <div className="item" onClick={() => setScreen("home")}>
               מסך בית
             </div>
             <div className="item">התחברות \ החלף משתמש</div>

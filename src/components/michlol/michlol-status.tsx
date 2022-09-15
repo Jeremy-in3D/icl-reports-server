@@ -3,10 +3,10 @@ import { RadioQuestion } from "../misc/radio-question";
 import { CreateReport } from "../../classes/create-report";
 
 export const MichlolStatus: React.FC<{
-  surveyInstance: CreateReport;
+  reportInstance: CreateReport;
   michlolId: string;
-}> = ({ surveyInstance, michlolId }) => {
-  const michlolAnswer = surveyInstance.answers[michlolId]?.["status"];
+}> = ({ reportInstance, michlolId }) => {
+  const michlolAnswer = reportInstance.answers[michlolId]?.["status"];
 
   return (
     <form
@@ -16,7 +16,7 @@ export const MichlolStatus: React.FC<{
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData as any);
         const value = formObj[michlolId];
-        surveyInstance.setMichlolStatus(michlolId, value);
+        reportInstance.setMichlolStatus(michlolId, value);
       }}
     >
       <h2>Michlol Status:</h2>

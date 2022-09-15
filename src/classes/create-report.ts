@@ -28,8 +28,11 @@ export class CreateReport {
     this.answers[michlol]["text"] = answer;
   }
   isMichlolComplete(michlol: string, reportLength: number) {
-    const status = this.answers[michlol]?.status;
-    const answers = Object.entries(this.answers[michlol]?.answers ?? {});
+    const answers = Object.entries(
+      this.answers[michlol]?.answers ?? { status: "", answers: {} }
+    );
+    console.log(answers);
+    console.log(answers.length);
     if (answers.length === reportLength && status.length) {
       this.completedMichlol[michlol] = true;
       return true;
