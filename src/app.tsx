@@ -14,26 +14,17 @@ export const App: React.FC = () => {
       display = <Home setScreen={setShowScreen} />;
       break;
     case "Survey":
+      //Change to a report Component that gets different props based on the case
       display = <Surveys />;
       break;
-    case "Engineer":
+    case "Oil":
+      //Change to a report Component that gets different props based on the case
       display = <Engineer />;
       break;
-    // case "Search":
-    //   display = <Reports />;
-    //   break;
-    // case "Notifications":
-    //   display = <Reports />;
-    //   break;
-    // case "Export":
-    //   display = <Reports />;
-    //   break;
-    // case "Statistics":
-    //   display = <Reports />;
-    //   break;
-    // case "Options":
-    //   display = <Reports />;
-    //   break;
+    case "Quake":
+      //Change to a report Component that gets different props based on the case
+      display = <Engineer />;
+      break;
     default:
       display = <PageNotFound />;
   }

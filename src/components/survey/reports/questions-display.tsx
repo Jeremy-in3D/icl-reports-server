@@ -24,7 +24,7 @@ export const QuestionsDisplay: React.FC<{
           <RadioQuestion
             key={idx}
             text={item}
-            name={name}
+            name={id}
             id={`${name}-${idx}`}
             value={item}
             checked={savedAnswer === item}

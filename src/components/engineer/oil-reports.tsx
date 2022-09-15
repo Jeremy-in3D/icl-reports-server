@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
-import { Oil } from "../../classes/oil";
+import { Survey } from "../../classes/survey";
 import { useExistingSurvey } from "../../helpers/use-existing-survey";
 import { SurveyChoice } from "../survey/survey-choice";
 import { OilReport } from "./oil-report";
 
 export const OilReports: React.FC = () => {
   const [viewSurvey, setViewSurvey] = useState(false);
-  const oilReportInstance = useRef(new Oil("O"));
+  const surveyInstance = useRef(new Survey("O"));
   const [existingSurvey, existingDetails] = useExistingSurvey(
-    oilReportInstance.current.id
+    surveyInstance.current.id
   );
 
   return (

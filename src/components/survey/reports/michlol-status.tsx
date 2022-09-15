@@ -15,9 +15,8 @@ export const MichlolStatus: React.FC<{
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData as any);
-        for (let [key, value] of Object.entries(formObj)) {
-          surveyInstance.setMichlolStatus(michlolId, value);
-        }
+        const value = formObj[michlolId];
+        surveyInstance.setMichlolStatus(michlolId, value);
       }}
     >
       <h2>Michlol Status:</h2>

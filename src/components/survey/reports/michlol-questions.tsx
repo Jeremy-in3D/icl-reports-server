@@ -18,10 +18,9 @@ export const MichlolQuestions: React.FC<{
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData as any);
-        for (let [key, value] of Object.entries(formObj)) {
-          const [michlolId, questionId] = key.split("-");
-          surveyInstance.setAnswer(michlolId, questionId, value);
-        }
+        const { id: questionId } = michlol.questions[currentQuestion];
+        const value = formObj[questionId];
+        surveyInstance.setAnswer(michlol.id, questionId, value);
       }}
     >
       <QuestionsDisplay
