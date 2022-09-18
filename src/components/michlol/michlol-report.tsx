@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Michlol } from "../../data/reports-data";
 import { CreateReport } from "../../classes/create-report";
 import { MichlolQuestions } from "./michlol-questions";
