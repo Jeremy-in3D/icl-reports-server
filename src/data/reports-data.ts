@@ -77,7 +77,7 @@ export const reportsData: ReportsData = {
   survey: [
     {
       id: "S1",
-      name: "סיור ראשון - א",
+      name: 'דו"ח סיור',
       michlolim: [
         {
           id: "M1",
@@ -93,70 +93,24 @@ export const reportsData: ReportsData = {
         },
       ],
     },
-    {
-      id: "S2",
-      name: "סיור שני - ב",
-      michlolim: [
-        {
-          id: "M1",
-          name: "Michlol - 1",
-          contents: ["status", "textarea"],
-          questions: a,
-        },
-      ],
-    },
-    {
-      id: "S3",
-      name: "סיור שלישי - ג",
-      michlolim: [
-        {
-          id: "M1",
-          name: "Michlol - 1",
-          contents: ["status", "textarea"],
-          questions: a,
-        },
-      ],
-    },
-    {
-      id: "S4",
-      name: "סיור רביעי - ד",
-      michlolim: [
-        {
-          id: "M1",
-          name: "Michlol - 1",
-          contents: ["status", "textarea"],
-          questions: a,
-        },
-      ],
-    },
-    {
-      id: "S5",
-      name: "סיור חמישי - ה",
-      michlolim: [
-        {
-          id: "M1",
-          name: "Michlol - 1",
-          contents: ["status", "textarea"],
-          questions: a,
-        },
-      ],
-    },
   ],
   oil: [
     {
       id: "O",
-      name: "סיור ראשון - א",
+      name: 'דו"ח שמנים',
       michlolim: [
         {
           id: "M1",
           name: "Michlol - 1",
           contents: ["status", "textarea"],
+          oil: { machineNumber: 456 },
           questions: a,
         },
         {
           id: "M2",
-          name: "Michlol - 2",
+          name: "Oil - 2",
           contents: ["status", "textarea"],
+          oil: { machineNumber: 123 },
           questions: b,
         },
       ],
@@ -165,18 +119,20 @@ export const reportsData: ReportsData = {
   quake: [
     {
       id: "Q",
-      name: "סיור ראשון - א",
+      name: 'דו"ח רעידות',
       michlolim: [
         {
           id: "M1",
           name: "Michlol - 1",
-          contents: ["status", "textarea"],
+          contents: ["status", "oil", "textarea"],
+
           questions: a,
         },
         {
           id: "M2",
           name: "Michlol - 2",
-          contents: ["status", "textarea"],
+          contents: ["status", "oil", "textarea"],
+
           questions: b,
         },
       ],
@@ -201,6 +157,7 @@ export type Michlol = {
   id: string;
   name: string;
   contents: Inputs[];
+  oil?: { machineNumber: number };
   questions?: MichlolQuestion[];
 };
 
@@ -210,4 +167,4 @@ export type MichlolQuestion = {
   answerOptions: string[];
 };
 
-export type Inputs = "textarea" | "questions" | "status";
+export type Inputs = "textarea" | "questions" | "status" | "oil";
