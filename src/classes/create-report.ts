@@ -1,42 +1,51 @@
+import { Inputs } from "../data/reports-data";
+
 export class CreateReport {
   [key: string]: any;
   id: string;
-  answers: SurveyAnswers;
-  completedMichlol: { [id: string]: boolean };
+  michlolim: michlolAnswers;
+  michlolCompleted: { [id: string]: boolean };
 
   constructor(id: string) {
     this.id = id;
-    this.answers = {};
-    this.completedMichlol = {};
+    this.michlolim = {};
+    this.michlolCompleted = {};
   }
   createNewSurvey() {
     this.dateCreated = Date.now();
   }
-  setAnswer(michlol: string, questionId: string, answer: string) {
-    if (!this.answers[michlol])
-      this.answers[michlol] = { status: "", answers: {} };
-    this.answers[michlol]["answers"][questionId] = answer;
-  }
-  setMichlolStatus(michlol: string, answer: string) {
-    if (!this.answers[michlol])
-      this.answers[michlol] = { status: "", answers: {} };
-    this.answers[michlol]["status"] = answer;
-  }
-  setFreeText(michlol: string, answer: string) {
-    if (!this.answers[michlol])
-      this.answers[michlol] = { status: "", answers: {} };
-    this.answers[michlol]["text"] = answer;
-  }
-  isMichlolComplete(michlol: string, reportLength: number) {
-    const answers = Object.entries(
-      this.answers[michlol]?.answers ?? { status: "", answers: {} }
-    );
-    console.log(answers);
-    console.log(answers.length);
-    if (answers.length === reportLength && status.length) {
-      this.completedMichlol[michlol] = true;
-      return true;
+  setValue(
+    michlol: string,
+    identifier: string,
+    value: string,
+    answer?: boolean
+  ) {
+    const michlolim = this.michlolim;
+    if (!michlolim[michlol]) michlolim[michlol] = { answers: {} };
+    if (!answer) {
+      michlolim[michlol][identifier] = value;
+    } else {
+      michlolim[michlol]["answers"][identifier] = value;
     }
+  }
+  isMichlolComplete(
+    michlol: string,
+    content: Inputs[],
+    reportLength: number | undefined
+  ) {
+    const complete = content.map((content) => {
+      const michlolim = this.michlolim;
+      if (content === "status") {
+        if (michlolim[michlol]?.[content] !== undefined) return true;
+      } else if (content === "questions") {
+        const answers = Object.entries(michlolim[michlol]?.answers ?? {});
+        if (answers.length === reportLength) return true;
+      } else if (content === "textarea") {
+        return true;
+      }
+    });
+    const areAnyIncomplete = complete.filter((item) => item !== true);
+    return areAnyIncomplete.length ? false : true;
   }
   saveSurvey() {
     return this;
@@ -49,12 +58,13 @@ export class CreateReport {
   }
 }
 
-interface SurveyAnswers {
+interface michlolAnswers {
   [michlol: string]: {
+    [id: string]: string | {} | undefined;
+    status?: string;
     text?: string;
-    status: string;
     answers: {
-      [questionId: string]: string;
+      [id: string]: string;
     };
   };
 }

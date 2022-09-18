@@ -82,11 +82,13 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
+          contents: ["status", "questions", "textarea"],
           questions: a,
         },
         {
           id: "M2",
           name: "Michlol - 2",
+          contents: ["status", "questions", "textarea"],
           questions: b,
         },
       ],
@@ -98,6 +100,7 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
+          contents: ["status", "textarea"],
           questions: a,
         },
       ],
@@ -109,6 +112,7 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
+          contents: ["status", "textarea"],
           questions: a,
         },
       ],
@@ -120,6 +124,7 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
+          contents: ["status", "textarea"],
           questions: a,
         },
       ],
@@ -131,6 +136,7 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
+          contents: ["status", "textarea"],
           questions: a,
         },
       ],
@@ -144,11 +150,13 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
+          contents: ["status", "textarea"],
           questions: a,
         },
         {
           id: "M2",
           name: "Michlol - 2",
+          contents: ["status", "textarea"],
           questions: b,
         },
       ],
@@ -162,11 +170,13 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
+          contents: ["status", "textarea"],
           questions: a,
         },
         {
           id: "M2",
           name: "Michlol - 2",
+          contents: ["status", "textarea"],
           questions: b,
         },
       ],
@@ -190,7 +200,8 @@ interface Survey {
 export type Michlol = {
   id: string;
   name: string;
-  questions: MichlolQuestion[];
+  contents: Inputs[];
+  questions?: MichlolQuestion[];
 };
 
 export type MichlolQuestion = {
@@ -198,3 +209,5 @@ export type MichlolQuestion = {
   question: string;
   answerOptions: string[];
 };
+
+export type Inputs = "textarea" | "questions" | "status";

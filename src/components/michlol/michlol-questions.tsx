@@ -18,9 +18,9 @@ export const MichlolQuestions: React.FC<{
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData as any);
-        const { id: questionId } = michlol.questions[currentQuestion];
+        const { id: questionId } = michlol.questions![currentQuestion];
         const value = formObj[questionId];
-        reportInstance.setAnswer(michlol.id, questionId, value);
+        reportInstance.setValue(michlol.id, questionId, value, true);
       }}
     >
       <QuestionsDisplay

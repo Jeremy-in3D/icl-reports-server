@@ -13,7 +13,7 @@ export const MichlolReport: React.FC<{
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    reportInstance.completedMichlol[michlol.id] && setIsComplete(true);
+    reportInstance.michlolCompleted[michlol.id] && setIsComplete(true);
   }, []);
 
   return (
@@ -25,15 +25,25 @@ export const MichlolReport: React.FC<{
         {michlol.name}
       </div>
       <div className={`michlol-report ${isOpen ? "opened" : "closed"}`}>
-        <MichlolStatus michlolId={michlol.id} reportInstance={reportInstance} />
-        <MichlolQuestions reportInstance={reportInstance} michlol={michlol} />
-        <MichlolText reportInstance={reportInstance} michlol={michlol} />
+        {michlol.contents.includes("status") && (
+          <MichlolStatus
+            michlolId={michlol.id}
+            reportInstance={reportInstance}
+          />
+        )}
+        {michlol.contents.includes("questions") && (
+          <MichlolQuestions reportInstance={reportInstance} michlol={michlol} />
+        )}
+        {michlol.contents.includes("textarea") && (
+          <MichlolText reportInstance={reportInstance} michlol={michlol} />
+        )}
         <button
           className="survey-page-btn"
           onClick={() => {
             const michlolComplete = reportInstance.isMichlolComplete(
               michlol.id,
-              michlol.questions.length
+              michlol.contents,
+              michlol.questions?.length
             );
             if (michlolComplete) {
               localStorage.setItem(

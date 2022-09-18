@@ -13,9 +13,9 @@ export const MichlolText: React.FC<{
         maxLength={50}
         rows={4}
         cols={25}
-        defaultValue={reportInstance.answers[michlol.id]?.text ?? ""}
+        defaultValue={reportInstance.michlolim[michlol.id]?.text ?? ""}
         onChange={(e) => {
-          reportInstance.setFreeText(michlol.id, e.target.value ?? "");
+          reportInstance.setValue(michlol.id, "text", e.target.value);
         }}
       ></textarea>
     </div>

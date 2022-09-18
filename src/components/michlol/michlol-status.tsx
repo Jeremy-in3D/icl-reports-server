@@ -6,7 +6,7 @@ export const MichlolStatus: React.FC<{
   reportInstance: CreateReport;
   michlolId: string;
 }> = ({ reportInstance, michlolId }) => {
-  const michlolAnswer = reportInstance.answers[michlolId]?.["status"];
+  const michlolAnswer = reportInstance.michlolim[michlolId]?.["status"];
 
   return (
     <form
@@ -15,8 +15,8 @@ export const MichlolStatus: React.FC<{
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData as any);
-        const value = formObj[michlolId];
-        reportInstance.setMichlolStatus(michlolId, value);
+        const value = formObj[`${michlolId}-status`];
+        reportInstance.setValue(michlolId, "status", value);
       }}
     >
       <h2>Michlol Status:</h2>
