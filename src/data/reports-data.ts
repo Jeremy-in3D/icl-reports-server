@@ -175,6 +175,7 @@ export const reportsData: ReportsData = {
 };
 
 interface ReportsData {
+  [id: string]: Survey[];
   survey: Survey[];
   oil: Survey[];
   quake: Survey[];
