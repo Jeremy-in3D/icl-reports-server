@@ -82,7 +82,7 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
-          contents: ["status", "questions", "textarea"],
+          contents: ["status", "textarea"],
           questions: a,
         },
         {

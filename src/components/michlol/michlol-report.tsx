@@ -10,11 +10,7 @@ export const MichlolReport: React.FC<{
   michlol: Michlol;
 }> = ({ reportInstance, michlol }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
-
-  useEffect(() => {
-    reportInstance.michlolCompleted[michlol.id] && setIsComplete(true);
-  }, []);
+  const isComplete = reportInstance.michlolCompleted[michlol.id];
 
   return (
     <div className="michlol">
@@ -50,7 +46,6 @@ export const MichlolReport: React.FC<{
                 reportInstance.id,
                 JSON.stringify(reportInstance.saveSurvey())
               );
-              setIsComplete(true);
               setIsOpen(false);
             }
           }}

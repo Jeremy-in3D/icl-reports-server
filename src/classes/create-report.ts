@@ -45,6 +45,8 @@ export class CreateReport {
       }
     });
     const areAnyIncomplete = complete.filter((item) => item !== true);
+    //Set Michlol completed if true
+    if (!areAnyIncomplete.length) this.michlolCompleted[michlol] = true;
     return areAnyIncomplete.length ? false : true;
   }
   saveSurvey() {
