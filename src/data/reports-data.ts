@@ -122,13 +122,13 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
-          contents: ["status", "textarea"],
+          contents: ["quake", "textarea"],
           quake: { machine: "1234" },
         },
         {
           id: "M2",
           name: "Michlol - 2",
-          contents: ["status", "textarea"],
+          contents: ["quake", "textarea"],
           quake: { machine: "5678" },
         },
       ],

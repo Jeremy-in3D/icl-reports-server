@@ -55,23 +55,25 @@ export const MichlolOil: React.FC<{
         ></input>
 
         <h3>Machine Status:</h3>
-        {possibleAnswers.map((answer) => (
+        {possibleAnswers.map((answer, idx) => (
           <RadioQuestion
             text={answer}
             name={`${michlolId}-status`}
             id={`${michlolId}-status-${answer}`}
             value={answer}
             checked={answer === michlolStatusAnswer}
+            key={idx}
           />
         ))}
         <h3>Wear and Tear</h3>
-        {possibleAnswers.map((answer) => (
+        {possibleAnswers.map((answer, idx) => (
           <RadioQuestion
             text={answer}
             name={`${michlolId}-wear`}
             id={`${michlolId}-wear-${answer}`}
             value={answer}
             checked={answer === michlolWearAnswer}
+            key={idx}
           />
         ))}
       </form>

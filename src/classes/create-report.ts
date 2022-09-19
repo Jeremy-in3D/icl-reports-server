@@ -48,13 +48,23 @@ export class CreateReport {
           michlolim[michlol]?.["machine"] !== undefined
         )
           return true;
+      } else if (content === "quake") {
+        if (
+          michlolim[michlol]?.["status"] !== undefined &&
+          michlolim[michlol]?.["MHI"] !== "0" &&
+          michlolim[michlol]?.["machine"] !== undefined
+        )
+          return true;
       } else if (content === "textarea") {
         return true;
       }
     });
     const areAnyIncomplete = complete.filter((item) => item !== true);
     //Set Michlol completed if true
-    if (!areAnyIncomplete.length) this.michlolCompleted[michlol] = true;
+    if (!areAnyIncomplete.length) {
+      this.michlolCompleted[michlol] = true;
+      this.michlolim[michlol].dateCompleted = Date.now();
+    }
     return areAnyIncomplete.length ? false : true;
   }
   saveSurvey() {
@@ -75,6 +85,7 @@ interface michlolAnswers {
     text?: string;
     machine?: string;
     wear?: string;
+    mhi?: string;
     answers: {
       [id: string]: string;
     };

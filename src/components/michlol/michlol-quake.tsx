@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CreateReport } from "../../classes/create-report";
 import { Michlol } from "../../data/reports-data";
 import { RadioQuestion } from "../misc/radio-question";
@@ -10,9 +10,10 @@ export const MichlolQuake: React.FC<{
   michlol: Michlol;
 }> = ({ reportInstance, michlol }) => {
   const michlolId = michlol.id;
-  const dateRef = useRef<HTMLInputElement>(null);
+  const michlolMhiAnswer = reportInstance.michlolim[michlolId]?.["mhi"];
   const michlolStatusAnswer = reportInstance.michlolim[michlolId]?.["status"];
-  const michlolWearAnswer = reportInstance.michlolim[michlolId]?.["wear"];
+  const dateRef = useRef<HTMLInputElement>(null);
+  const [mhiLevel, setMhiLevel] = useState(michlolMhiAnswer ?? "0");
 
   useEffect(() => {
     const now = new Date();
@@ -54,25 +55,31 @@ export const MichlolQuake: React.FC<{
           hidden={true}
         ></input>
         <h3>Machine Status:</h3>
-        {possibleAnswers.map((answer) => (
+        {possibleAnswers.map((answer, idx) => (
           <RadioQuestion
             text={answer}
             name={`${michlolId}-status`}
             id={`${michlolId}-status-${answer}`}
             value={answer}
             checked={answer === michlolStatusAnswer}
+            key={idx}
           />
         ))}
-        <h3>Wear and Tear</h3>
-        {possibleAnswers.map((answer) => (
-          <RadioQuestion
-            text={answer}
-            name={`${michlolId}-wear`}
-            id={`${michlolId}-wear-${answer}`}
-            value={answer}
-            checked={answer === michlolWearAnswer}
-          />
-        ))}
+        <h3>MHI</h3>
+        <input
+          onChange={(e) => {
+            setMhiLevel(e.currentTarget.value);
+          }}
+          type={"range"}
+          min={0}
+          max={10}
+          name={`${michlolId}-mhi`}
+          id={`${michlolId}-mhi`}
+          defaultValue={
+            michlolMhiAnswer ? Number.parseInt(michlolMhiAnswer) : 0
+          }
+        ></input>
+        <div>{mhiLevel}</div>
       </form>
     </div>
   );
