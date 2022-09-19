@@ -4,6 +4,7 @@ import { CreateReport } from "../../classes/create-report";
 import { MichlolQuestions } from "./michlol-questions";
 import { MichlolStatus } from "./michlol-status";
 import { MichlolText } from "./michlol-text";
+import { OilMichlol } from "./michlol-oil";
 
 export const MichlolReport: React.FC<{
   reportInstance: CreateReport;
@@ -21,18 +22,42 @@ export const MichlolReport: React.FC<{
         {michlol.name}
       </div>
       <div className={`michlol-report ${isOpen ? "opened" : "closed"}`}>
-        {michlol.contents.includes("status") && (
-          <MichlolStatus
-            michlolId={michlol.id}
-            reportInstance={reportInstance}
-          />
-        )}
-        {michlol.contents.includes("questions") && (
-          <MichlolQuestions reportInstance={reportInstance} michlol={michlol} />
-        )}
-        {michlol.contents.includes("textarea") && (
-          <MichlolText reportInstance={reportInstance} michlol={michlol} />
-        )}
+        {michlol.contents.map((item, idx) => {
+          switch (item) {
+            case "questions":
+              return (
+                <MichlolQuestions
+                  reportInstance={reportInstance}
+                  michlol={michlol}
+                  key={idx}
+                />
+              );
+            case "status":
+              return (
+                <MichlolStatus
+                  michlol={michlol}
+                  reportInstance={reportInstance}
+                  key={idx}
+                />
+              );
+            case "textarea":
+              return (
+                <MichlolText
+                  reportInstance={reportInstance}
+                  michlol={michlol}
+                  key={idx}
+                />
+              );
+            case "oil":
+              return (
+                <OilMichlol
+                  reportInstance={reportInstance}
+                  michlol={michlol}
+                  key={idx}
+                />
+              );
+          }
+        })}
         <button
           className="survey-page-btn"
           onClick={() => {

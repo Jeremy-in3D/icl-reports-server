@@ -102,16 +102,14 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
-          contents: ["status", "textarea"],
+          contents: ["oil", "textarea"],
           oil: { machineNumber: 456 },
-          questions: a,
         },
         {
           id: "M2",
-          name: "Oil - 2",
-          contents: ["status", "textarea"],
+          name: "Michlol - 2",
+          contents: ["oil", "textarea"],
           oil: { machineNumber: 123 },
-          questions: b,
         },
       ],
     },
@@ -124,14 +122,14 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "Michlol - 1",
-          contents: ["status", "oil", "textarea"],
+          contents: ["status", "textarea"],
 
           questions: a,
         },
         {
           id: "M2",
           name: "Michlol - 2",
-          contents: ["status", "oil", "textarea"],
+          contents: ["status", "textarea"],
 
           questions: b,
         },

@@ -40,6 +40,13 @@ export class CreateReport {
       } else if (content === "questions") {
         const answers = Object.entries(michlolim[michlol]?.answers ?? {});
         if (answers.length === reportLength) return true;
+      } else if (content === "oil") {
+        if (
+          michlolim[michlol]?.["status"] !== undefined &&
+          michlolim[michlol]?.["wear"] !== undefined &&
+          michlolim[michlol]?.["machine"] !== undefined
+        )
+          return true;
       } else if (content === "textarea") {
         return true;
       }
@@ -65,6 +72,8 @@ interface michlolAnswers {
     [id: string]: string | {} | undefined;
     status?: string;
     text?: string;
+    machine?: string;
+    wear?: string;
     answers: {
       [id: string]: string;
     };

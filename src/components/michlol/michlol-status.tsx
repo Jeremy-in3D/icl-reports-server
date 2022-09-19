@@ -1,11 +1,13 @@
 import React from "react";
 import { RadioQuestion } from "../misc/radio-question";
 import { CreateReport } from "../../classes/create-report";
+import { Michlol } from "../../data/reports-data";
 
 export const MichlolStatus: React.FC<{
   reportInstance: CreateReport;
-  michlolId: string;
-}> = ({ reportInstance, michlolId }) => {
+  michlol: Michlol;
+}> = ({ reportInstance, michlol }) => {
+  const michlolId = michlol.id;
   const michlolAnswer = reportInstance.michlolim[michlolId]?.["status"];
 
   return (
