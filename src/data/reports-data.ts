@@ -103,13 +103,13 @@ export const reportsData: ReportsData = {
           id: "M1",
           name: "Michlol - 1",
           contents: ["oil", "textarea"],
-          oil: { machineNumber: 456 },
+          oil: { machine: "456" },
         },
         {
           id: "M2",
           name: "Michlol - 2",
           contents: ["oil", "textarea"],
-          oil: { machineNumber: 123 },
+          oil: { machine: "123" },
         },
       ],
     },
@@ -123,15 +123,13 @@ export const reportsData: ReportsData = {
           id: "M1",
           name: "Michlol - 1",
           contents: ["status", "textarea"],
-
-          questions: a,
+          quake: { machine: "1234" },
         },
         {
           id: "M2",
           name: "Michlol - 2",
           contents: ["status", "textarea"],
-
-          questions: b,
+          quake: { machine: "5678" },
         },
       ],
     },
@@ -155,7 +153,8 @@ export type Michlol = {
   id: string;
   name: string;
   contents: Inputs[];
-  oil?: { machineNumber: number };
+  oil?: { machine: string };
+  quake?: { machine: string };
   questions?: MichlolQuestion[];
 };
 
@@ -165,4 +164,4 @@ export type MichlolQuestion = {
   answerOptions: string[];
 };
 
-export type Inputs = "textarea" | "questions" | "status" | "oil";
+export type Inputs = "textarea" | "questions" | "status" | "oil" | "quake";

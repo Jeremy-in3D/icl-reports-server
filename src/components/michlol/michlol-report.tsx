@@ -4,7 +4,8 @@ import { CreateReport } from "../../classes/create-report";
 import { MichlolQuestions } from "./michlol-questions";
 import { MichlolStatus } from "./michlol-status";
 import { MichlolText } from "./michlol-text";
-import { OilMichlol } from "./michlol-oil";
+import { MichlolOil } from "./michlol-oil";
+import { MichlolQuake } from "./michlol-quake";
 
 export const MichlolReport: React.FC<{
   reportInstance: CreateReport;
@@ -50,7 +51,15 @@ export const MichlolReport: React.FC<{
               );
             case "oil":
               return (
-                <OilMichlol
+                <MichlolOil
+                  reportInstance={reportInstance}
+                  michlol={michlol}
+                  key={idx}
+                />
+              );
+            case "quake":
+              return (
+                <MichlolQuake
                   reportInstance={reportInstance}
                   michlol={michlol}
                   key={idx}

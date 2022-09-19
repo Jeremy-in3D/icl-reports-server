@@ -5,7 +5,7 @@ import { RadioQuestion } from "../misc/radio-question";
 
 const possibleAnswers = ["critical", "high", "medium", "normal"];
 
-export const MichlolOil: React.FC<{
+export const MichlolQuake: React.FC<{
   reportInstance: CreateReport;
   michlol: Michlol;
 }> = ({ reportInstance, michlol }) => {
@@ -40,20 +40,19 @@ export const MichlolOil: React.FC<{
           }
         }}
       >
-        <h2>Oil Reports</h2>
+        <h2>Quake Report</h2>
         <h3>Date:</h3>
         <h1>{dateRef.current?.value}</h1>
         <input ref={dateRef} type={"date"} hidden={true} readOnly></input>
         <h3>Machine #:</h3>
-        <h1>{michlol.oil?.machine}</h1>
+        <h1>{michlol.quake?.machine}</h1>
         <input
           name={`${michlolId}-machine`}
           type={"text"}
-          value={michlol.oil?.machine}
+          value={michlol.quake?.machine}
           readOnly
           hidden={true}
         ></input>
-
         <h3>Machine Status:</h3>
         {possibleAnswers.map((answer) => (
           <RadioQuestion

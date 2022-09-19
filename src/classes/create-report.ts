@@ -1,5 +1,6 @@
 import { Inputs } from "../data/reports-data";
 
+//Refactor to have all types of reports multiple choice questions to work off the questions property
 export class CreateReport {
   [key: string]: any;
   id: string;
