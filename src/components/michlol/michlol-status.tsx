@@ -16,8 +16,8 @@ export const MichlolStatus: React.FC<{
       onSubmit={(e) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
-        const formObj = Object.fromEntries(formData as any);
-        const value = formObj[`${michlolId}-status`];
+        const formObj = Object.fromEntries(formData);
+        const value = formObj[`${michlolId}-status`] as string;
         reportInstance.setValue(michlolId, "status", value);
       }}
     >

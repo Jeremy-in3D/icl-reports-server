@@ -20,8 +20,10 @@ export const ReportSelect: React.FC<{
         text="Continue existing"
         disabled={existingReport === undefined}
         onClick={() => {
-          reportInstance.loadExistingSurvey(existingReport);
-          setReportView(true);
+          if (typeof existingReport === "string") {
+            reportInstance.loadExistingSurvey(existingReport);
+            setReportView(true);
+          }
         }}
       >
         {existingReportDetails}

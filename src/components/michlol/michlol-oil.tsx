@@ -33,10 +33,10 @@ export const MichlolOil: React.FC<{
         onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
-          const formObj = Object.fromEntries(formData as any);
+          const formObj = Object.fromEntries(formData);
           for (const [key, value] of Object.entries(formObj)) {
             const criteria = key.split("-")[1];
-            reportInstance.setValue(michlolId, criteria, value);
+            reportInstance.setValue(michlolId, criteria, value as string);
           }
         }}
       >

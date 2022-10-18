@@ -20,9 +20,9 @@ export const MichlolQuestions: React.FC<{
       onSubmit={(e) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
-        const formObj = Object.fromEntries(formData as any);
+        const formObj = Object.fromEntries(formData);
         const { id: questionId } = michlol.questions![currentQuestion];
-        const value = formObj[questionId];
+        const value = formObj[questionId] as string;
         reportInstance.setValue(michlol.id, questionId, value, true);
       }}
     >

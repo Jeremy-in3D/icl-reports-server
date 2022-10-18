@@ -34,6 +34,7 @@ export class CreateReport {
     content: Inputs[],
     reportLength: number | undefined
   ) {
+    //  Refactor both the way each type of report renders its content to be more dynamic, then refactor the way I check for completion
     const complete = content.map((content) => {
       const michlolim = this.michlolim;
       if (content === "status") {
@@ -70,7 +71,7 @@ export class CreateReport {
   saveSurvey() {
     return this;
   }
-  loadExistingSurvey(data: any) {
+  loadExistingSurvey(data: string) {
     const existingData = JSON.parse(data);
     for (let [key, value] of Object.entries(existingData)) {
       this[key] = value;
