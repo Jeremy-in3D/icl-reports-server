@@ -5,19 +5,20 @@ import { ReportOption } from "./report-option";
 import { ReportView } from "./report-view";
 
 export const ReportSelect: React.FC<{
-  reportId: string;
-}> = ({ reportId }) => {
+  id: string;
+  name: string;
+}> = ({ id, name }) => {
   const [reportView, setReportView] = useState(false);
-  const reportInstance = useRef(new CreateReport(reportId)).current;
-  const [existingReport, existingReportDetails] = isExistingReport(reportId);
+  const reportInstance = useRef(new CreateReport(id, name)).current;
+  const [existingReport, existingReportDetails] = isExistingReport(id);
 
   if (reportView) return <ReportView reportInstance={reportInstance} />;
 
   return (
     <div className="report-options">
-      <p>{`Report: ${reportId}`}</p>
+      <h1 className="page-title">{name}</h1>
       <ReportOption
-        text="Continue existing"
+        text='המשיך בדו"ח הקיים'
         disabled={existingReport === undefined}
         onClick={() => {
           if (typeof existingReport === "string") {
@@ -29,14 +30,14 @@ export const ReportSelect: React.FC<{
         {existingReportDetails}
       </ReportOption>
       <ReportOption
-        text="Create new"
+        text='ליצור דו"ח חדש'
         disabled={false}
         onClick={() => {
           reportInstance.createNewSurvey();
           setReportView(true);
         }}
       >
-        <p>This will delete any existing report for this --------</p>
+        <p>בשמירה הראשונה ימחק הדוח הקיים</p>
       </ReportOption>
     </div>
   );

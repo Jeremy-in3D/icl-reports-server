@@ -4,11 +4,13 @@ import { Inputs } from "../data/reports-data";
 export class CreateReport {
   [key: string]: any;
   id: string;
+  name: string;
   michlolim: michlolAnswers;
   michlolCompleted: { [id: string]: boolean };
 
-  constructor(id: string) {
+  constructor(id: string, name: string) {
     this.id = id;
+    this.name = name;
     this.michlolim = {};
     this.michlolCompleted = {};
   }

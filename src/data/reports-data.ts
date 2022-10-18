@@ -77,7 +77,7 @@ export const reportsData: ReportsData = {
   survey: [
     {
       id: "S1",
-      name: 'דו"ח סיור',
+      name: "מפעל למלה",
       michlolim: [
         {
           id: "M1",
@@ -95,7 +95,61 @@ export const reportsData: ReportsData = {
     },
     {
       id: "S2",
-      name: '2דו"ח סיור',
+      name: "מפעל למטה",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          contents: ["status", "textarea"],
+          questions: a,
+        },
+        {
+          id: "M2",
+          name: "Michlol - 2",
+          contents: ["status", "questions", "textarea"],
+          questions: b,
+        },
+      ],
+    },
+    {
+      id: "S2",
+      name: "מפעל למטה",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          contents: ["status", "textarea"],
+          questions: a,
+        },
+        {
+          id: "M2",
+          name: "Michlol - 2",
+          contents: ["status", "questions", "textarea"],
+          questions: b,
+        },
+      ],
+    },
+    {
+      id: "S2",
+      name: "מפעל למטה",
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          contents: ["status", "textarea"],
+          questions: a,
+        },
+        {
+          id: "M2",
+          name: "Michlol - 2",
+          contents: ["status", "questions", "textarea"],
+          questions: b,
+        },
+      ],
+    },
+    {
+      id: "S2",
+      name: "מפעל למטה",
       michlolim: [
         {
           id: "M1",
@@ -112,7 +166,7 @@ export const reportsData: ReportsData = {
       ],
     },
   ],
-  oil: [
+  engineerReports: [
     {
       id: "O",
       name: 'דו"ח שמנים',
@@ -131,8 +185,6 @@ export const reportsData: ReportsData = {
         },
       ],
     },
-  ],
-  quake: [
     {
       id: "Q",
       name: 'דו"ח רעידות',
@@ -157,8 +209,7 @@ export const reportsData: ReportsData = {
 interface ReportsData {
   [id: string]: Survey[];
   survey: Survey[];
-  oil: Survey[];
-  quake: Survey[];
+  engineerReports: Survey[];
 }
 
 interface Survey {

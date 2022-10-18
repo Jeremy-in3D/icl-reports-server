@@ -72,12 +72,10 @@ body,
 }
 
 .page-title {
-  width: 85%;
-  margin: auto;
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 0.25em;
-  border-radius: 5px;
-  font-size: 40px;
+  background: var(--linear-gradient);
+  padding: 0.15em;
+  border-radius: 3px;
+  font-size: 50px;
 }
 
 .main-menu {
@@ -99,16 +97,6 @@ body,
   margin-right: 0.5em;
   width: 64px;
   height: 64px;
-}
-
-.bottom-bar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  /* Height is 10vh because main screen is 90vh */
-  height: 10vh;
 }
 
 .block-item p {
@@ -190,25 +178,33 @@ body,
 
 .reports {
   max-width: 120ch;
-  margin: 0.5em auto;
+  margin: 0 auto;
   text-align: center;
   overflow-y: scroll;
+}
+
+.reports-section {
+  margin: 1em 0em;
+}
+
+.reports-section-title {
+  font-weight: 700;
 }
 
 .report-button {
   max-width: 250px;
   width: 150px;
-  height: 150px;
+  height: 100px;
   margin: 0.25em;
-  border-radius: 8px;
-  background-color: rgba(10, 10, 10, 0.3);
-  backdrop-filter: blur(5px);
+  border-radius: 6px;
+  font-size: 1.2em;
+  background: rgba(10, 10, 10, 0.25);
   color: whitesmoke;
+  border: 2px solid black;
 }
 
 .report-button:hover {
-  opacity: 90%;
-  transform: scale(0.98);
+  border: 2px solid yellow;
 }
 
 .report-options {
@@ -220,22 +216,9 @@ body,
 
 .report-option {
   background-color: rgba(128, 128, 128, 0.2);
-  margin: 2em 0em;
+  margin: 1em 1em;
   padding: 2em;
   border-radius: 10px;
-}
-
-.report-option button {
-  display: block;
-  background: var(--blue5);
-  border: 3px ridge white;
-  width: 70%;
-  max-width: 250px;
-  margin: 2em auto;
-  padding: 2em 0em;
-  font-size: 1.2em;
-  color: white;
-  border-radius: 6px;
 }
 
 .check-with-label:checked + .label-for-check {

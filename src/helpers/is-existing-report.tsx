@@ -6,7 +6,10 @@ export const isExistingReport = (id: string) => {
     const parsedReport = JSON.parse(existingSurvey) as CreateReport;
     const existingDate = new Date(parsedReport.dateCreated);
     const existingDetails = (
-      <div>Date Created: {existingDate.toLocaleString()}</div>
+      <div>
+        תאריך יצירה:{" "}
+        <p style={{ direction: "ltr" }}>{existingDate.toLocaleString()}</p>
+      </div>
     );
     return [existingSurvey, existingDetails];
   }

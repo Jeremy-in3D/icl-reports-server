@@ -17,7 +17,7 @@ export const DropdownMenu: React.FC<{
             <div className="item" onClick={() => setScreen("home")}>
               מסך בית
             </div>
-            <div className="item">התחברות \ החלף משתמש</div>
+            <div className="item">התחברות</div>
             <div className="item">הגדרות</div>
           </div>
           <div className="user">אליה והל</div>

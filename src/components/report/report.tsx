@@ -3,15 +3,16 @@ import { ReportSelect } from "./report-select";
 import { ReportsAvailable } from "./reports-available";
 import { reportsData } from "../../data/reports-data";
 
-const titles = ['דו"ח סיור', 'דו"ח שמנים', 'דו"ח רעידות'];
+const titles = ["מכלולים", "מהנדס"];
 
 export const Report: React.FC<{}> = () => {
-  const [report, setReport] = useState("");
+  const [reportId, setReportId] = useState("");
+  const [reportName, setReportName] = useState("");
 
-  if (report)
+  if (reportId)
     return (
       <div className="report">
-        <ReportSelect reportId={report} />
+        <ReportSelect id={reportId} name={reportName} />
       </div>
     );
 
@@ -22,7 +23,10 @@ export const Report: React.FC<{}> = () => {
         <ReportsAvailable
           key={idx}
           text={report.name}
-          click={() => setReport(report.id)}
+          click={() => {
+            setReportId(report.id);
+            setReportName(report.name);
+          }}
         />
       ))
     );
@@ -30,10 +34,10 @@ export const Report: React.FC<{}> = () => {
 
   return (
     <div className="reports">
-      <p className="page-title">דוחות</p>
+      <p className="page-title">יצור דו"ח</p>
       {display.map((item, idx) => (
-        <div key={idx}>
-          <h1>{titles[idx]}</h1>
+        <div className="reports-section" key={idx}>
+          <h1 className="reports-section-title">{titles[idx]}</h1>
           {item}
         </div>
       ))}
