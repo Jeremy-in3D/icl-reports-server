@@ -30,15 +30,17 @@ export const Home: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ setScreen }) => {
   return (
-    <div className="main-menu">
-      {buttons.map((item, idx) => (
-        <BlockItem
-          text={item.text}
-          imgPath={item.imgPath}
-          key={idx}
-          onClick={() => setScreen(item.screen)}
-        />
-      ))}
+    <div className="home-screen">
+      <div className="main-menu">
+        {buttons.map((item, idx) => (
+          <BlockItem
+            text={item.text}
+            imgPath={item.imgPath}
+            key={idx}
+            onClick={() => setScreen(item.screen)}
+          />
+        ))}
+      </div>
     </div>
   );
 };

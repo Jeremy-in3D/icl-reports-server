@@ -93,6 +93,24 @@ export const reportsData: ReportsData = {
         },
       ],
     },
+    {
+      id: "S2",
+      name: '2דו"ח סיור',
+      michlolim: [
+        {
+          id: "M1",
+          name: "Michlol - 1",
+          contents: ["status", "textarea"],
+          questions: a,
+        },
+        {
+          id: "M2",
+          name: "Michlol - 2",
+          contents: ["status", "questions", "textarea"],
+          questions: b,
+        },
+      ],
+    },
   ],
   oil: [
     {

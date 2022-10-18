@@ -9,7 +9,7 @@ export const DropdownMenu: React.FC<{
     <div className={`dropdown-menu ${isOpened ? "opened" : "closed"}`}>
       {isOpened ? (
         <div>
-          <p className="title">מארכת דוחות</p>
+          <p className="title">מערכת דוחות</p>
           <div
             className="dropdown-items"
             onClick={() => setIsOpened((prevState) => !prevState)}

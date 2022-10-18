@@ -30,6 +30,7 @@ export const Report: React.FC<{}> = () => {
 
   return (
     <div className="reports">
+      <p className="page-title">דוחות</p>
       {display.map((item, idx) => (
         <div key={idx}>
           <h1>{titles[idx]}</h1>

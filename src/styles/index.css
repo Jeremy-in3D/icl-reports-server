@@ -71,100 +71,50 @@ body,
   height: 50px;
 }
 
-/* Dropdown Menu */
-
-.dropdown-menu {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: var(--linear-gradient-dark);
-  text-align: center;
-  color: white;
-  font-size: 1.5em;
-  z-index: 6;
-  transition: height 0.25s;
-  height: 50px;
-}
-
-.opened {
-  height: 100%;
-}
-
-.toggle-dropdown {
-  position: absolute;
-  bottom: 0;
-  padding: 1em;
-  width: 100%;
-}
-
-.toggle-dropdown.closed {
-  padding: 0.5em;
-  width: 100%;
-}
-
-.dropdown-menu .title {
-  font-size: 2.25em;
-  padding: 0.5em;
-  color: rgb(210, 210, 210);
-  border-bottom: 2px solid black;
-}
-
-.dropdown-menu .item {
-  text-align: start;
-  font-size: 1.5em;
-  margin: 0.75em;
+.page-title {
+  width: 85%;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.2);
   padding: 0.25em;
-  border-radius: 7px;
-  color: rgb(200, 200, 200);
-  background-color: rgba(128, 128, 128, 0.1);
-  pointer-events: all;
+  border-radius: 5px;
+  font-size: 40px;
 }
 
-.dropdown-menu .item:hover {
-  color: var(--blue3);
-}
-
-.dropdown-menu .user {
-  font-size: 2em;
-  padding: 0.5em;
-  border-top: 2px solid black;
-}
-
-.dropdown-items {
-  pointer-events: none;
-}
-
-/* Main Menu */
 .main-menu {
   display: flex;
-  flex-flow: row wrap;
-  background-color: black;
-  overflow: scroll;
+  flex-flow: column nowrap;
 }
 
 .main-menu .block-item {
   background: var(--linear-gradient);
-  border: 1px solid rgb(24, 22, 22);
-  text-align: center;
-  /* Flex Item */
-  min-height: 150px;
-  flex-basis: 50%;
-  padding: 0.5em;
-  /* Flex Container */
+  padding: 0.5em 0;
+  border-bottom: 1px solid black;
   display: flex;
-  flex-flow: column;
+  flex-flow: row wrap;
   align-items: center;
-  justify-content: center;
+  height: 100px;
 }
 
 .main-menu-icon {
+  margin-right: 0.5em;
   width: 64px;
   height: 64px;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* Height is 10vh because main screen is 90vh */
+  height: 10vh;
 }
 
 .block-item p {
   font-size: 25px;
   padding-top: 0.25em;
+  padding-right: 0.5em;
   font-weight: 600;
 }
 
@@ -239,28 +189,24 @@ body,
 /* Take Picture End */
 
 .reports {
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-  margin: 1em;
+  max-width: 120ch;
+  margin: 0.5em auto;
+  text-align: center;
   overflow-y: scroll;
-  gap: 20px 20px;
 }
 
-.report-available {
-  max-width: 300px;
-  flex-basis: 45%;
-  height: 200px;
+.report-button {
+  max-width: 250px;
+  width: 150px;
+  height: 150px;
+  margin: 0.25em;
   border-radius: 8px;
-  border: 3px solid gray;
-  font-size: 2.25em;
-  padding: 0.25em;
-  background: var(--linear-gradient-dark-2);
+  background-color: rgba(10, 10, 10, 0.3);
+  backdrop-filter: blur(5px);
   color: whitesmoke;
 }
 
-.report-available:hover {
+.report-button:hover {
   opacity: 90%;
   transform: scale(0.98);
 }
@@ -338,7 +284,6 @@ form {
   background: var(--linear-gradient-dark-2);
   color: white;
   border-radius: 6px;
-  /* font-size: 20px; */
 }
 
 .survey-bar {
@@ -358,12 +303,9 @@ form {
 }
 
 @media only screen and (max-width: 800px) {
-  .main-menu {
-    flex-flow: column wrap;
-  }
-  .surveys .survey-selection {
+  /* .surveys .survey-selection {
     flex-basis: 100%;
-  }
+  } */
 }
 
 .michlol {
@@ -392,4 +334,68 @@ form {
 
 .michlol-report.opened {
   height: max-content;
+}
+
+/* Dropdown Menu */
+
+.dropdown-menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: var(--linear-gradient-dark);
+  text-align: center;
+  color: white;
+  font-size: 1.5em;
+  z-index: 6;
+  transition: height 0.25s;
+  height: 50px;
+}
+
+.opened {
+  height: 100%;
+}
+
+.toggle-dropdown {
+  position: absolute;
+  bottom: 0;
+  padding: 0.5em;
+  width: 100%;
+  border: 2px solid black;
+}
+
+.toggle-dropdown.closed {
+  padding: 0.5em;
+  width: 100%;
+}
+
+.dropdown-menu .title {
+  font-size: 2.25em;
+  padding: 0.5em;
+  color: rgb(210, 210, 210);
+  border-bottom: 2px solid black;
+}
+
+.dropdown-menu .item {
+  text-align: start;
+  font-size: 1.5em;
+  margin: 0.75em;
+  padding: 0.25em;
+  border-radius: 7px;
+  color: rgb(200, 200, 200);
+  background-color: rgba(128, 128, 128, 0.1);
+  pointer-events: all;
+}
+
+.dropdown-menu .item:hover {
+  color: var(--blue3);
+}
+
+.dropdown-menu .user {
+  font-size: 2em;
+  padding: 0.5em;
+  border-top: 2px solid black;
+}
+
+.dropdown-items {
+  pointer-events: none;
 }
