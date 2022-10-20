@@ -81,6 +81,11 @@ export const MichlolReport: React.FC<{
                 JSON.stringify(reportInstance.saveSurvey())
               );
               setIsOpen(false);
+              fetch("/save-report", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(reportInstance.saveSurvey()),
+              });
             }
           }}
         >
