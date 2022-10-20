@@ -12,7 +12,7 @@ module.exports = class MongoDB {
       console.log("Connected successfully to server");
       if (type === "insert") await this.insertDoc(payload);
     } catch (e) {
-      throw new Error(e);
+      console.log("Error", e);
     } finally {
       await this.client.close();
       console.log("Connection to server closed successfully");
@@ -24,7 +24,7 @@ module.exports = class MongoDB {
       const insert = await this.collection.insertOne(payload);
       console.log(`A document was inserted with the _id: ${insert.insertedId}`);
     } catch (e) {
-      throw new Error(e);
+      console.log("Error", e);
     }
   }
 };
