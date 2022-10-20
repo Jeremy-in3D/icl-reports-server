@@ -9,17 +9,13 @@ module.exports = class MongoDB {
   async action(type, payload) {
     try {
       await this.client.connect();
-      // Establish and verify connection
       console.log("Connected successfully to server");
-      if (type === "insert") {
-        await this.insertDoc(payload);
-      }
+      if (type === "insert") await this.insertDoc(payload);
     } catch (e) {
-      console.log("Error", e);
+      throw new Error(e);
     } finally {
-      // Ensures that the client will close when you finish/error
       await this.client.close();
-      console.log("Connection closed successfully");
+      console.log("Connection to server closed successfully");
     }
   }
 

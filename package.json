@@ -14,6 +14,7 @@
     "servermon": "nodemon server.js"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongodb": "^4.11.0",
     "react": "^18.2.0",
