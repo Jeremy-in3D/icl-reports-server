@@ -21,7 +21,20 @@ export const ReportView: React.FC<{
           key={idx}
         />
       ))}
-      <button className="michlol-complete-btn">סיים</button>
+      <button
+        onClick={() => {
+          const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
+          if (answer)
+            fetch("/save-report", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(reportInstance.saveSurvey()),
+            });
+        }}
+        className="report-complete-btn"
+      >
+        שלח תשובות וסיים דוח
+      </button>
     </>
   );
 };

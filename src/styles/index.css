@@ -313,7 +313,7 @@ button:disabled {
 }
 
 .michlol-report.opened {
-  max-height: 1200px;
+  max-height: 2000px;
 }
 
 .michlol-content-wrapper {
@@ -343,9 +343,10 @@ button:disabled {
 }
 
 .michlol-questions-numbers {
-  margin: 0.5em auto;
+  margin: 0.25em;
   text-align: center;
-  font-size: 1.1em;
+  font-size: 1.2em;
+  padding: 0.25em;
 }
 
 .michlol-questions-nav {
@@ -361,6 +362,17 @@ button:disabled {
   display: block;
   background: rgba(25, 175, 25, 0.658);
   padding: 0.75em 0.5em;
+  margin: 1em auto;
+  color: white;
+  border-radius: 6px;
+  font-size: 1.1em;
+}
+
+.report-complete-btn {
+  display: block;
+  background: gray;
+  padding: 1em 1em;
+  border: 2px solid black;
   margin: 1em auto;
   color: white;
   border-radius: 6px;

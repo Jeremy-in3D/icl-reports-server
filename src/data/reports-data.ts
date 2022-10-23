@@ -174,7 +174,7 @@ export const reportsData: ReportsData = {
         {
           id: "M1",
           name: "מיכלול 1",
-          contents: ["oil", "textarea"],
+          contents: ["oil", "status", "textarea"],
           oil: { machine: "456" },
         },
         {
