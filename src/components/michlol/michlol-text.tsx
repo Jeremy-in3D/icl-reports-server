@@ -7,9 +7,10 @@ export const MichlolText: React.FC<{
   michlol: Michlol;
 }> = ({ reportInstance, michlol }) => {
   return (
-    <div>
-      <p>Michlol Notes:</p>
+    <div className="michlol-content-wrapper">
+      <h2 className="michlol-subheading">הערות</h2>
       <textarea
+        className="michlol-text"
         maxLength={50}
         rows={4}
         cols={25}

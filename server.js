@@ -23,7 +23,7 @@ app.post("/save-report", async (req, res) => {
     await mongo.action("insert", req.body);
     res.send("Document Inserted Successfully");
   } catch (e) {
-    throw new Error(e);
+    console.log("Error", e)
   }
 });
 

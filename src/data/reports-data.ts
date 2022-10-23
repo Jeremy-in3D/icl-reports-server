@@ -1,75 +1,75 @@
 const a = [
   {
     id: "Q01",
-    question: "This is a first form question",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 1",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q02",
-    question: "This is a second form question",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 2",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q03",
-    question: "This is a third form question",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 3",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q04",
-    question: "This is a four form question",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 4",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q05",
-    question: "This is a five form question",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 5",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q06",
-    question: "This is a six form question",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 6",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q07",
-    question: "This is a seven form question",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 7",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
 ];
 const b = [
   {
     id: "Q01",
-    question: "This is a first form question 2",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 1",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q02",
-    question: "This is a second form question 2",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 2",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q03",
-    question: "This is a third form question 2",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 3",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q04",
-    question: "This is a four form question 2",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 4",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q05",
-    question: "This is a five form question 2",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 5",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q06",
-    question: "This is a six form question 2",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 6",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
   {
     id: "Q07",
-    question: "This is a seven form question 2",
-    answerOptions: ["One", "Two", "Three", "Four"],
+    question: "פה השאלה לענות תהיה 7",
+    answerOptions: ["אחד", "שתיים", "שלוש", "ארבע"],
   },
 ];
 
@@ -81,13 +81,13 @@ export const reportsData: ReportsData = {
       michlolim: [
         {
           id: "M1",
-          name: "Michlol - 1",
+          name: "מיכלול 1",
           contents: ["status", "textarea"],
           questions: a,
         },
         {
           id: "M2",
-          name: "Michlol - 2",
+          name: "מיכלול 2",
           contents: ["status", "questions", "textarea"],
           questions: b,
         },
@@ -99,105 +99,107 @@ export const reportsData: ReportsData = {
       michlolim: [
         {
           id: "M1",
-          name: "Michlol - 1",
+          name: "מיכלול 1",
           contents: ["status", "textarea"],
           questions: a,
         },
         {
           id: "M2",
-          name: "Michlol - 2",
+          name: "מיכלול 2",
           contents: ["status", "questions", "textarea"],
           questions: b,
         },
       ],
     },
     {
-      id: "S2",
+      id: "S3",
       name: "מפעל למטה",
       michlolim: [
         {
           id: "M1",
-          name: "Michlol - 1",
+          name: "מיכלול 1",
           contents: ["status", "textarea"],
           questions: a,
         },
         {
           id: "M2",
-          name: "Michlol - 2",
+          name: "מיכלול 2",
           contents: ["status", "questions", "textarea"],
           questions: b,
         },
       ],
     },
     {
-      id: "S2",
+      id: "S4",
       name: "מפעל למטה",
       michlolim: [
         {
           id: "M1",
-          name: "Michlol - 1",
+          name: "מיכלול 1",
           contents: ["status", "textarea"],
           questions: a,
         },
         {
           id: "M2",
-          name: "Michlol - 2",
+          name: "מיכלול 2",
           contents: ["status", "questions", "textarea"],
           questions: b,
         },
       ],
     },
     {
-      id: "S2",
+      id: "S5",
       name: "מפעל למטה",
       michlolim: [
         {
           id: "M1",
-          name: "Michlol - 1",
+          name: "מיכלול 1",
           contents: ["status", "textarea"],
           questions: a,
         },
         {
           id: "M2",
-          name: "Michlol - 2",
+          name: "מיכלול 2",
           contents: ["status", "questions", "textarea"],
           questions: b,
         },
       ],
     },
   ],
-  engineerReports: [
+  oil: [
     {
       id: "O",
       name: 'דו"ח שמנים',
       michlolim: [
         {
           id: "M1",
-          name: "Michlol - 1",
+          name: "מיכלול 1",
           contents: ["oil", "textarea"],
           oil: { machine: "456" },
         },
         {
           id: "M2",
-          name: "Michlol - 2",
+          name: "מיכלול 2",
           contents: ["oil", "textarea"],
           oil: { machine: "123" },
         },
       ],
     },
+  ],
+  quake: [
     {
       id: "Q",
       name: 'דו"ח רעידות',
       michlolim: [
         {
           id: "M1",
-          name: "Michlol - 1",
+          name: "מיכלול 1",
           contents: ["quake", "textarea"],
           quake: { machine: "1234" },
         },
         {
           id: "M2",
-          name: "Michlol - 2",
+          name: "מיכלול 2",
           contents: ["quake", "textarea"],
           quake: { machine: "5678" },
         },
@@ -209,7 +211,8 @@ export const reportsData: ReportsData = {
 interface ReportsData {
   [id: string]: Survey[];
   survey: Survey[];
-  engineerReports: Survey[];
+  oil: Survey[];
+  quake: Survey[];
 }
 
 interface Survey {

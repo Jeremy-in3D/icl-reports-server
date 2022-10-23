@@ -12,6 +12,7 @@ export const MichlolStatus: React.FC<{
 
   return (
     <form
+      className="michlol-content-wrapper"
       onChange={(e) => e.currentTarget.requestSubmit()}
       onSubmit={(e) => {
         e.preventDefault();
@@ -21,30 +22,30 @@ export const MichlolStatus: React.FC<{
         reportInstance.setValue(michlolId, "status", value);
       }}
     >
-      <h2>Michlol Status:</h2>
+      <h2 className="michlol-subheading">מצב מיכלול:</h2>
       <RadioQuestion
-        text={"Critical"}
+        text={"קריטי"}
         name={`${michlolId}-status`}
         id={`${michlolId}-critical`}
         value={"critical"}
         checked={"critical" === michlolAnswer}
       />
       <RadioQuestion
-        text={"High"}
+        text={"גבוה"}
         name={`${michlolId}-status`}
         id={`${michlolId}-high`}
         value={"high"}
         checked={"high" === michlolAnswer}
       />
       <RadioQuestion
-        text={"Medium"}
+        text={"בינוני"}
         name={`${michlolId}-status`}
         id={`${michlolId}-medium`}
         value={"medium"}
         checked={"medium" === michlolAnswer}
       />
       <RadioQuestion
-        text={"Normal"}
+        text={"נורמלי"}
         name={`${michlolId}-status`}
         id={`${michlolId}-normal`}
         value={"normal"}

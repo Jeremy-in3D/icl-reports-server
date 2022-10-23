@@ -14,6 +14,7 @@ export const MichlolQuestions: React.FC<{
 
   return (
     <form
+      className="michlol-content-wrapper"
       onChange={(e) => {
         e.currentTarget.requestSubmit();
       }}
@@ -26,33 +27,34 @@ export const MichlolQuestions: React.FC<{
         reportInstance.setValue(michlol.id, questionId, value, true);
       }}
     >
-      <div className="main-report">
-        <p className="survey-placement">
-          {` ${currentQuestion + 1}  מי  ${michlol.questions!.length}`}
-        </p>
-        <p className="survey-title">{question}</p>
-        {answerOptions.map((item, idx) => {
-          return (
-            <RadioQuestion
-              key={idx}
-              text={item}
-              name={id}
-              id={`${name}-${idx}`}
-              value={item}
-              checked={savedAnswer === item}
-            />
-          );
-        })}
+      <h2 className="michlol-subheading">שאלות מיכלול:</h2>
+      <p className="michlol-questions-numbers">
+        {`שאלה ${currentQuestion + 1}  מי  ${michlol.questions!.length}`}
+      </p>
+      <p className="michlol-questions-question">{question}</p>
+      {answerOptions.map((item, idx) => {
+        return (
+          <RadioQuestion
+            key={idx}
+            text={item}
+            name={id}
+            id={`${name}-${idx}`}
+            value={item}
+            checked={savedAnswer === item}
+          />
+        );
+      })}
+      <div className="michlol-questions-nav">
         <button
-          className="survey-page-btn"
+          className="michlol-questions-btn"
           disabled={currentQuestion === 0}
           type={"button"}
           onClick={() => setCurrentQuestion((prevState) => --prevState)}
         >
-          Previous
+          חזור
         </button>
         <button
-          className="survey-page-btn"
+          className="michlol-questions-btn"
           type={"button"}
           onClick={() => {
             setCurrentQuestion((prevState) => {
@@ -63,7 +65,7 @@ export const MichlolQuestions: React.FC<{
             });
           }}
         >
-          Next
+          הבא
         </button>
       </div>
     </form>

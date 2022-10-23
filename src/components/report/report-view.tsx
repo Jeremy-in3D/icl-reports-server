@@ -12,8 +12,8 @@ export const ReportView: React.FC<{
   )!;
 
   return (
-    <div>
-      <h1>{name}</h1>
+    <>
+      <h1 className="page-title">{name}</h1>
       {michlolim.map((michlol, idx) => (
         <MichlolReport
           reportInstance={reportInstance}
@@ -21,7 +21,8 @@ export const ReportView: React.FC<{
           key={idx}
         />
       ))}
-    </div>
+      <button className="michlol-complete-btn">סיים</button>
+    </>
   );
 };
 

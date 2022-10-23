@@ -18,11 +18,17 @@ export const MichlolReport: React.FC<{
     <div className="michlol">
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
-        className={`title ${isComplete ? "complete" : "incomplete"}`}
+        className={`bar ${isComplete ? "complete" : "incomplete"} ${
+          isOpen ? "opened" : "closed"
+        }`}
       >
         {michlol.name}
       </div>
-      <div className={`michlol-report ${isOpen ? "opened" : "closed"}`}>
+      <div
+        className={`michlol-report ${isComplete ? "complete" : "incomplete"} ${
+          isOpen ? "opened" : "closed"
+        }`}
+      >
         {michlol.contents.map((item, idx) => {
           switch (item) {
             case "questions":
@@ -68,7 +74,7 @@ export const MichlolReport: React.FC<{
           }
         })}
         <button
-          className="survey-page-btn"
+          className="michlol-complete-btn"
           onClick={() => {
             const michlolComplete = reportInstance.isMichlolComplete(
               michlol.id,
@@ -89,7 +95,7 @@ export const MichlolReport: React.FC<{
             }
           }}
         >
-          Complete
+          סיים
         </button>
       </div>
     </div>
