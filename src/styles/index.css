@@ -304,7 +304,6 @@ button:disabled {
   align-items: center;
   background-color: whitesmoke;
   border-bottom: 4px solid orangered;
-  overflow: hidden;
   max-height: 0;
   transition: max-height 0.6s ease-out;
 }
@@ -314,7 +313,7 @@ button:disabled {
 }
 
 .michlol-report.opened {
-  max-height: 1000px;
+  max-height: 1200px;
 }
 
 .michlol-content-wrapper {
