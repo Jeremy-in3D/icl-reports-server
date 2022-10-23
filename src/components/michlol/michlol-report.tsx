@@ -76,23 +76,17 @@ export const MichlolReport: React.FC<{
         <button
           className="michlol-complete-btn"
           onClick={() => {
-            const michlolComplete = reportInstance.isMichlolComplete(
-              michlol.id,
-              michlol.contents,
-              michlol.questions?.length
+            reportInstance.michlolCompleted[michlol.id] = true;
+            localStorage.setItem(
+              reportInstance.id,
+              JSON.stringify(reportInstance.saveSurvey())
             );
-            if (michlolComplete) {
-              localStorage.setItem(
-                reportInstance.id,
-                JSON.stringify(reportInstance.saveSurvey())
-              );
-              setIsOpen(false);
-              fetch("/save-report", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(reportInstance.saveSurvey()),
-              });
-            }
+            setIsOpen(false);
+            fetch("/save-report", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(reportInstance.saveSurvey()),
+            });
           }}
         >
           סיים

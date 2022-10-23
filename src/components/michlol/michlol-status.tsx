@@ -27,29 +27,29 @@ export const MichlolStatus: React.FC<{
         text={"קריטי"}
         name={`${michlolId}-status`}
         id={`${michlolId}-critical`}
-        value={"critical"}
-        checked={"critical" === michlolAnswer}
+        value={"קריטי"}
+        checked={"קריטי" === michlolAnswer}
       />
       <RadioQuestion
         text={"גבוה"}
         name={`${michlolId}-status`}
         id={`${michlolId}-high`}
-        value={"high"}
-        checked={"high" === michlolAnswer}
+        value={"גבוה"}
+        checked={"גבוה" === michlolAnswer}
       />
       <RadioQuestion
         text={"בינוני"}
         name={`${michlolId}-status`}
         id={`${michlolId}-medium`}
-        value={"medium"}
-        checked={"medium" === michlolAnswer}
+        value={"בינוני"}
+        checked={"בינוני" === michlolAnswer}
       />
       <RadioQuestion
         text={"נורמלי"}
         name={`${michlolId}-status`}
         id={`${michlolId}-normal`}
-        value={"normal"}
-        checked={"normal" === michlolAnswer}
+        value={"נורמלי"}
+        checked={"נורמלי" === michlolAnswer}
       />
     </form>
   );

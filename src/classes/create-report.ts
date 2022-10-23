@@ -1,6 +1,3 @@
-import { Inputs } from "../data/reports-data";
-
-//Refactor to have all types of reports multiple choice questions to work off the questions property
 export class CreateReport {
   [key: string]: any;
   id: string;
@@ -30,45 +27,6 @@ export class CreateReport {
     } else {
       michlolim[michlol]["answers"][identifier] = value;
     }
-  }
-  isMichlolComplete(
-    michlol: string,
-    content: Inputs[],
-    reportLength: number | undefined
-  ) {
-    //  Refactor both the way each type of report renders its content to be more dynamic, then refactor the way I check for completion
-    const complete = content.map((content) => {
-      const michlolim = this.michlolim;
-      if (content === "status") {
-        if (michlolim[michlol]?.[content] !== undefined) return true;
-      } else if (content === "questions") {
-        const answers = Object.entries(michlolim[michlol]?.answers ?? {});
-        if (answers.length === reportLength) return true;
-      } else if (content === "oil") {
-        if (
-          michlolim[michlol]?.["status"] !== undefined &&
-          michlolim[michlol]?.["wear"] !== undefined &&
-          michlolim[michlol]?.["machine"] !== undefined
-        )
-          return true;
-      } else if (content === "quake") {
-        if (
-          michlolim[michlol]?.["status"] !== undefined &&
-          michlolim[michlol]?.["MHI"] !== "0" &&
-          michlolim[michlol]?.["machine"] !== undefined
-        )
-          return true;
-      } else if (content === "textarea") {
-        return true;
-      }
-    });
-    const areAnyIncomplete = complete.filter((item) => item !== true);
-    //Set Michlol completed if true
-    if (!areAnyIncomplete.length) {
-      this.michlolCompleted[michlol] = true;
-      this.michlolim[michlol].dateCompleted = Date.now();
-    }
-    return areAnyIncomplete.length ? false : true;
   }
   saveSurvey() {
     return this;

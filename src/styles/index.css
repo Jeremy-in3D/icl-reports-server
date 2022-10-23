@@ -72,7 +72,7 @@ body,
 }
 
 .page-title {
-  background: var(--linear-gradient-dark);
+  background: linear-gradient(#084879, #0e2c42);
   color: white;
   padding: 0.15em;
   border-radius: 3px;
