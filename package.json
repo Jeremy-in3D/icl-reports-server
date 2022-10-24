@@ -11,7 +11,7 @@
     "watch": "webpack --watch",
     "dev": "webpack serve --open",
     "start": "node server.js",
-    "servermon": "nodemon server.js"
+    "server-watch": "node --watch server.js"
   },
   "dependencies": {
     "dotenv": "^16.0.3",

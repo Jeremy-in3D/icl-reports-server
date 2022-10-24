@@ -4,12 +4,14 @@ export class CreateReport {
   name: string;
   michlolim: michlolAnswers;
   michlolCompleted: { [id: string]: boolean };
+  dateUploaded: number | null;
 
   constructor(id: string, name: string) {
     this.id = id;
     this.name = name;
     this.michlolim = {};
     this.michlolCompleted = {};
+    this.dateUploaded = null;
   }
   createNewSurvey() {
     this.dateCreated = Date.now();
@@ -29,6 +31,7 @@ export class CreateReport {
     }
   }
   saveSurvey() {
+    this.dateUploaded = Date.now();
     return this;
   }
   loadExistingSurvey(data: string) {

@@ -257,7 +257,7 @@ button:disabled {
 
 .michlol {
   display: block;
-  width: 90%;
+  width: 98%;
   overflow: hidden;
   margin: 1em auto;
   border-radius: 5px;
@@ -317,7 +317,7 @@ button:disabled {
 }
 
 .michlol-content-wrapper {
-  width: 90%;
+  width: 95%;
   margin: 0.5em;
   background-color: #99999934;
   padding: 0.5em;

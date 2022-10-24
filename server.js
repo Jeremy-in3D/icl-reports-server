@@ -18,12 +18,29 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
 
+app.get("/find-reports", async (req, res) => {
+  try {
+    await mongo.connect();
+    const results = await mongo.findDocs();
+    res.json(results);
+  } catch (e) {
+    res.status("500");
+    res.send("Error", e);
+  } finally {
+    await mongo.client.close();
+  }
+});
+
 app.post("/save-report", async (req, res) => {
   try {
-    await mongo.action("insert", req.body);
+    await mongo.connect();
+    await mongo.insertDoc(req.body);
     res.send("Document Inserted Successfully");
   } catch (e) {
-    console.log("Error", e)
+    res.status("500");
+    res.send("Error", e);
+  } finally {
+    await mongo.close();
   }
 });
 

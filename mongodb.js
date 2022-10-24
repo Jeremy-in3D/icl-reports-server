@@ -6,16 +6,24 @@ module.exports = class MongoDB {
     this.collection = this.client.db("icl").collection("reports");
   }
 
-  async action(type, payload) {
+  async connect() {
+    await this.client.connect();
+  }
+
+  async close() {
+    await this.client.close();
+  }
+
+  async findDocs() {
     try {
-      await this.client.connect();
-      console.log("Connected successfully to server");
-      if (type === "insert") await this.insertDoc(payload);
+      const find = this.collection
+        .find({})
+        .filter({ dateUploaded: { $gt: 1 } })
+        .project({ _id: 1 });
+      return await find.toArray();
+      // console.log(`A document was inserted with the _id: ${insert.insertedId}`);
     } catch (e) {
       console.log("Error", e);
-    } finally {
-      await this.client.close();
-      console.log("Connection to server closed successfully");
     }
   }
 
