@@ -20,7 +20,9 @@ module.exports = class MongoDB {
         .find({})
         .project({ _id: 1, name: 1, dateUploaded: 1 })
         .sort({ dateUploaded: -1 });
-      return await find.toArray();
+      const data = await find.toArray();
+      await find.close();
+      return data;
       // console.log(`A document was inserted with the _id: ${insert.insertedId}`);
     } catch (e) {
       console.log("Error", e);

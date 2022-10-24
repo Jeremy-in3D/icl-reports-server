@@ -444,11 +444,10 @@ button:disabled {
 }
 
 /* Search Results */
-
 .search-results {
   background-color: rgba(128, 128, 128, 0.336);
   margin: 0.5em;
-  padding: 0.5em;
+  padding: 0 0.5em 1em 0.5em;
   border-radius: 5px;
 }
 
@@ -483,8 +482,6 @@ button:disabled {
   width: 100%;
   background: #e7e7e7b9;
   padding: 0.25em;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   border: 1px solid black;
   text-align: center;
 }
@@ -497,4 +494,9 @@ button:disabled {
 
 .search-item:nth-of-type(2n) {
   background: #9e9e9eb9;
+}
+
+.search-item:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
