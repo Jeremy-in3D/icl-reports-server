@@ -18,8 +18,8 @@ module.exports = class MongoDB {
     try {
       const find = this.collection
         .find({})
-        .filter({ dateUploaded: { $gt: 1 } })
-        .project({ _id: 1 });
+        .project({ _id: 1, name: 1, dateUploaded: 1 })
+        .sort({ dateUploaded: -1 });
       return await find.toArray();
       // console.log(`A document was inserted with the _id: ${insert.insertedId}`);
     } catch (e) {
