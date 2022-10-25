@@ -14,16 +14,31 @@ module.exports = class MongoDB {
     await this.client.close();
   }
 
-  async findDocs() {
+  async pullDocs() {
     try {
       const find = this.collection
         .find({})
         .project({ _id: 1, name: 1, dateUploaded: 1 })
+        .sort({ dateUploaded: -1 })
+        .limit(10);
+      console.log(`Database was searched successfully`);
+      return await find.toArray();
+    } catch (e) {
+      console.log("Error", e);
+    }
+  }
+
+  async searchDocs(data) {
+    const { startDate, endDate } = data;
+    try {
+      const find = this.collection
+        .find({
+          dateUploaded: { $gt: startDate, $lt: endDate },
+        })
+        .project({ _id: 1, name: 1, dateUploaded: 1 })
         .sort({ dateUploaded: -1 });
-      const data = await find.toArray();
-      await find.close();
-      return data;
-      // console.log(`A document was inserted with the _id: ${insert.insertedId}`);
+      console.log(`Database was searched successfully`);
+      return await find.toArray();
     } catch (e) {
       console.log("Error", e);
     }

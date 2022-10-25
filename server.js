@@ -18,36 +18,53 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
 
-app.get("/find-reports", async (req, res) => {
+app.get("/pull-reports", async (req, res) => {
   try {
-    await mongo.connect();
-    const results = await mongo.findDocs();
+    const results = await mongo.pullDocs();
     res.json(results);
   } catch (e) {
-    res.status("500");
-    res.send("Error", e);
-  } finally {
-    await mongo.client.close();
+    res.status(500).send(e);
+  }
+});
+
+app.post("/search-reports", async (req, res) => {
+  const data = JSON.parse(req.body);
+  try {
+    const results = await mongo.searchDocs(data);
+    res.json(results);
+  } catch (e) {
+    res.status(500).send(e);
   }
 });
 
 app.post("/save-report", async (req, res) => {
   try {
-    await mongo.connect();
     await mongo.insertDoc(req.body);
     res.send("Document Inserted Successfully");
   } catch (e) {
-    res.status("500");
-    res.send("Error", e);
-  } finally {
-    await mongo.close();
+    res.status(500).send(e);
   }
 });
 
-const httpServer = http.createServer(app);
-httpServer.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+(async () => {
+  try {
+    await mongo.connect();
+    const httpServer = http.createServer(app);
+    httpServer.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+    httpServer.addListener("close", () => mongo.close());
+  } catch (e) {
+    console.log("Error", e);
+  }
+})();
+
+//Close the MongoDB connection on process close
+process.on("SIGINT", () => {
+  mongo.close();
+  console.log("Process Closed");
 });
+//Add connection referesh for mongodb
 
 //---------------------HTTPS
 // const httpsServer = https.createServer(credentials, app);

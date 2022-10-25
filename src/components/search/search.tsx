@@ -1,38 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { getDateString } from "../../helpers/dates";
+
+const openIcon = new URL("../../../assets/icons/open-btn.png", import.meta.url);
 
 export const Search: React.FC = () => {
   const [searchResults, setSearchResults] = useState<any>(null);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const result = await fetch("/find-reports");
-  //     const data = await result.json();
-  //     setSearchResults(data);
-  //   })();
-  // }, []);
-
-  var curr = new Date(); // get current date
-  var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-  var last = first + 6; // last day is the first day + 6
-
-  var firstday = new Date(curr.setDate(first)).toDateString();
-  var lastday = new Date(curr.setDate(last)).toUTCString();
-  console.log(firstday);
-  console.log(lastday);
-
-  // To make it work when you have different months - var lastday = new Date(curr.setDate(first.getDate()+6)).toUTCString();
+  const currentDate = useRef(new Date(Date.now()));
+  const startDateRef = useRef<HTMLInputElement>(null);
+  const endDateRef = useRef<HTMLInputElement>(null);
 
   return (
     <div>
       <h1 className="page-title">חיפוש דוחות</h1>
-      <div className="search-input">
-        <h2></h2>
+      <div className="search-inputs">
+        <div className="search-date-wrapper">
+          <h2 className="search-date">מתאריך</h2>
+          <input
+            ref={startDateRef}
+            className="search-date-input"
+            type={"date"}
+            defaultValue={getDateString(currentDate.current)}
+          ></input>
+        </div>
+        <div className="search-date-wrapper">
+          <h2 className="search-date">לתאריך</h2>
+          <input
+            ref={endDateRef}
+            className="search-date-input"
+            type={"date"}
+            defaultValue={getDateString(currentDate.current)}
+          ></input>
+        </div>
       </div>
+      <button
+        className="search-btn"
+        onClick={async () => {
+          const result = await fetch("/search-reports", {
+            method: "POST",
+            body: JSON.stringify({
+              startDate: startDateRef.current!.valueAsNumber,
+              endDate: endDateRef.current!.valueAsNumber + 86400000, //Add 1 day in ms to the endDate so it includes the full day
+            }),
+          });
+          const data = await result.json();
+          setSearchResults(data);
+        }}
+      >
+        Search
+      </button>
       <div className="search-results">
         <h1 className="search-title">תוצאות</h1>
         <div className="search-headers">
           <p className="search-header">שם</p>
           <p className="search-header">תאריך</p>
+          <p className="search-header">פתיחה</p>
         </div>
         <div className="search-items">
           {searchResults &&
@@ -42,6 +63,15 @@ export const Search: React.FC = () => {
                 <p className="search-item-date">
                   {new Date(item.dateUploaded).toDateString()}
                 </p>
+                <div>
+                  <img
+                    onClick={() => {
+                      console.log(item);
+                    }}
+                    className="search-item-btn"
+                    src={openIcon.href}
+                  ></img>
+                </div>
               </div>
             ))}
         </div>

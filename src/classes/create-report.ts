@@ -1,3 +1,5 @@
+import { getDateString } from "../helpers/dates";
+
 export class CreateReport {
   [key: string]: any;
   id: string;
@@ -32,6 +34,7 @@ export class CreateReport {
   }
   saveSurvey() {
     this.dateUploaded = Date.now();
+    this.date = getDateString(new Date(Date.now()));
     return this;
   }
   loadExistingSurvey(data: string) {
