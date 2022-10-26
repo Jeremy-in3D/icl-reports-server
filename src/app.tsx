@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { DropdownMenu } from "./components/dropdown-menu";
+import { Export } from "./components/export/export";
 import { PageNotFound } from "./components/misc/page-not-found";
 import { Spacer } from "./components/misc/spacer";
 import { Report } from "./components/report/report";
@@ -18,6 +19,9 @@ export const App: React.FC = () => {
       break;
     case "search":
       display = <Search />;
+      break;
+    case "export":
+      display = <Export />;
       break;
     default:
       display = <PageNotFound />;

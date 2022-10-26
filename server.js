@@ -5,6 +5,8 @@ const http = require("http");
 const express = require("express");
 const path = require("path");
 const MongoDB = require("./mongodb.js");
+const XLSX = require("xlsx");
+const sampleData = require("./assets/test-data.json");
 
 const mongo = new MongoDB(process.env.MONGO_URI);
 
@@ -17,6 +19,10 @@ const app = express();
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
+
+app.get("/export-report", (req, res) => {
+  res.send(sampleData);
+});
 
 app.get("/pull-reports", async (req, res) => {
   try {
