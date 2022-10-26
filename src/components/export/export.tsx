@@ -1,5 +1,13 @@
 import React, { useEffect } from "react";
-import { read, utils, writeFile } from "xlsx";
+import { utils, writeFile } from "xlsx";
+
+//Use header option to decide the order of the data
+//Skip header skips writing the headers in its own row
+//Origin enables you to pick the starting point of the JSON addition
+//Data will be added from the json objects based on the header and placed accordingly
+
+//Check if extra keys that dont have a header are added automatically,
+// if so, then create an array of exportable data and filter by it
 
 export const Export: React.FC = () => {
   useEffect(() => {
