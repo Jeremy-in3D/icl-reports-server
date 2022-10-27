@@ -33,6 +33,7 @@ export const Home: React.FC<{
 }> = ({ setScreen }) => {
   return (
     <div className="home-screen">
+
       {buttons.map((item, idx) => (
         <BlockItem
           text={item.text}

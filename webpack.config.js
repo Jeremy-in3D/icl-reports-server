@@ -12,6 +12,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "Development",
+      favicon: "./src/favicon.png",
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
