@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { DropdownMenu } from "./components/dropdown-menu";
 import { Export } from "./components/export/export";
 import { PageNotFound } from "./components/misc/page-not-found";
-import { Spacer } from "./components/misc/spacer";
 import { Report } from "./components/report/report";
 import { Search } from "./components/search/search";
 import { Home } from "./home";
+
+const logo = new URL("../assets/logo.webp", import.meta.url);
+const home = new URL(
+  "../assets/icons/bar-icons/home-icon.png",
+  import.meta.url
+);
 
 export const App: React.FC = () => {
   const [showScreen, setShowScreen] = useState("home");
@@ -28,9 +32,10 @@ export const App: React.FC = () => {
   }
   return (
     <div className="app ">
-      <DropdownMenu setScreen={setShowScreen} />
-      {/* Keep spacer for the dropdown menu's height since it is position fixed */}
-      <Spacer />
+      <div className="top-bar">
+        <img className="icon" src={home.href}></img>
+        <img className="icon logo" src={logo.href}></img>
+      </div>
       {display}
     </div>
   );

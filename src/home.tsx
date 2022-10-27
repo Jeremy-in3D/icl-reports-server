@@ -9,6 +9,8 @@ import {
   statisticsReportIcon,
 } from "./data/imports";
 
+const background = new URL("../assets/background.jpg", import.meta.url);
+
 const buttons = [
   { text: 'יצור דו"ח', imgPath: addReportIcon.href, screen: "report" },
   { text: "חיפוש דוחות", imgPath: searchReportIcon.href, screen: "search" },
@@ -31,16 +33,14 @@ export const Home: React.FC<{
 }> = ({ setScreen }) => {
   return (
     <div className="home-screen">
-      <div className="main-menu">
-        {buttons.map((item, idx) => (
-          <BlockItem
-            text={item.text}
-            imgPath={item.imgPath}
-            key={idx}
-            onClick={() => setScreen(item.screen)}
-          />
-        ))}
-      </div>
+      {buttons.map((item, idx) => (
+        <BlockItem
+          text={item.text}
+          imgPath={item.imgPath}
+          key={idx}
+          onClick={() => setScreen(item.screen)}
+        />
+      ))}
     </div>
   );
 };

@@ -57,18 +57,33 @@ body,
 
 .app {
   position: fixed;
-  background: var(--linear-gradient-50);
   height: 100%;
   width: 100%;
   overflow-y: scroll;
+  background: rgba(150, 150, 150, 0.2);
 }
 
 *::-webkit-scrollbar {
   display: none;
 }
 
-.spacer {
-  height: 50px;
+.top-bar {
+  position: sticky;
+  background-color: whitesmoke;
+  padding: 0.5em;
+  box-shadow: 0px 0px 5px black;
+  margin-bottom: 0.5em;
+}
+
+.logo {
+  position: absolute;
+  left: 1em;
+}
+
+.icon {
+  margin: auto;
+  height: 40px;
+  object-fit: contain;
 }
 
 .page-title {
@@ -81,25 +96,28 @@ body,
   text-align: center;
 }
 
-.main-menu {
+.home-screen {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row wrap;
 }
 
-.main-menu .block-item {
-  background: var(--linear-gradient);
-  padding: 0.5em 0;
-  border-bottom: 1px solid black;
+.home-screen .block-item {
+  flex-basis: 100%;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  height: 100px;
+  background: url("../../assets/abstract-background.jpg");
+  background-size: cover;
+  padding: 0.5em 0;
+  margin: 0.5em;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px black;
 }
 
-.main-menu-icon {
+.block-item-icon {
   margin-right: 0.5em;
-  width: 64px;
-  height: 64px;
+  width: 50px;
+  height: 50px;
 }
 
 .block-item p {
@@ -109,7 +127,7 @@ body,
   font-weight: 600;
 }
 
-.main-menu::-webkit-scrollbar {
+.home-screen::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
@@ -377,70 +395,6 @@ button:disabled {
   color: white;
   border-radius: 6px;
   font-size: 1.1em;
-}
-
-/* Dropdown Menu */
-
-.dropdown-menu {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: var(--linear-gradient-dark);
-  text-align: center;
-  color: white;
-  font-size: 1.5em;
-  z-index: 6;
-  transition: height 0.25s;
-  height: 50px;
-}
-
-.opened {
-  height: 100%;
-}
-
-.toggle-dropdown {
-  position: absolute;
-  bottom: 0;
-  padding: 0.5em;
-  width: 100%;
-  border: 2px solid black;
-}
-
-.toggle-dropdown.closed {
-  padding: 0.5em;
-  width: 100%;
-}
-
-.dropdown-menu .title {
-  font-size: 2.25em;
-  padding: 0.5em;
-  color: rgb(210, 210, 210);
-  border-bottom: 2px solid black;
-}
-
-.dropdown-menu .item {
-  text-align: start;
-  font-size: 1.5em;
-  margin: 0.75em;
-  padding: 0.25em;
-  border-radius: 7px;
-  color: rgb(200, 200, 200);
-  background-color: rgba(128, 128, 128, 0.1);
-  pointer-events: all;
-}
-
-.dropdown-menu .item:hover {
-  color: var(--blue3);
-}
-
-.dropdown-menu .user {
-  font-size: 2em;
-  padding: 0.5em;
-  border-top: 2px solid black;
-}
-
-.dropdown-items {
-  pointer-events: none;
 }
 
 /* Search Results */

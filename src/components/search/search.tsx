@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { getDateString } from "../../helpers/dates";
 
-const openIcon = new URL("../../../assets/icons/open-btn.png", import.meta.url);
+const openIcon = new URL(
+  "../../../assets/icons/report-icons/open-btn.png",
+  import.meta.url
+);
 
 export const Search: React.FC = () => {
   const [searchResults, setSearchResults] = useState<any>(null);
