@@ -1,7 +1,7 @@
 import React from "react";
-import { MichlolReport } from "../michlol/michlol-report";
 import { CreateReport } from "../../classes/create-report";
 import { reportsData } from "../../data/reports-data";
+import { MichlolReport } from "./michlol-report";
 
 export const ReportView: React.FC<{
   reportInstance: CreateReport;
