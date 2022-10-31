@@ -17,12 +17,12 @@ export const QuestionsList: React.FC<{
 }) => (
   <>
     {questions.map((question, idx) => {
+      let style;
       const isAnswered =
         reportInstance.michlolim[michlolId]?.answers?.[question.id];
-      let style;
       if (idx === currentQuestion) style = "current";
-      if (isAnswered) style = "green";
-      style = "red";
+      else if (isAnswered) style = "green";
+      else style = "red";
 
       return (
         <div

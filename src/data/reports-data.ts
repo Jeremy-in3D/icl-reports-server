@@ -45,11 +45,12 @@ type Options = {
   range: { start: number; end: number; step: number };
   text: null;
 };
+export type OptionsTypes = Options[QuestionTypes];
 export type Question = {
   id: string;
   type: QuestionTypes;
   question: string;
-  options: Options[QuestionTypes];
+  options: OptionsTypes;
 };
 
 export type Michlol = {
@@ -59,6 +60,9 @@ export type Michlol = {
 };
 
 //Test...
-type Test<T extends QuestionTypes> = Options[T];
+// type Test<T extends QuestionTypes> = Options[T];
 
-export type OptionsTypes = Options[QuestionTypes];
+// function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
+//   return obj[key];
+// }
+// type K = ReturnType<Predicate>;
