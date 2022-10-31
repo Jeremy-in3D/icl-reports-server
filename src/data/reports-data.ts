@@ -39,13 +39,13 @@ export const reportsData = {
   quake: [],
 };
 
-type QuestionTypes = "mc" | "range" | "text";
+export type QuestionTypes = "mc" | "range" | "text";
 type Options = {
   mc: string[];
   range: { start: number; end: number; step: number };
   text: null;
 };
-type Question = {
+export type Question = {
   id: string;
   type: QuestionTypes;
   question: string;
@@ -57,3 +57,8 @@ export type Michlol = {
   name: string;
   questions: Question[];
 };
+
+//Test...
+type Test<T extends QuestionTypes> = Options[T];
+
+export type OptionsTypes = Options[QuestionTypes];
