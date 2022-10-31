@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { CreateReport } from "../../classes/create-report";
 import { Michlol } from "../../data/reports-data";
+import { InputRadio } from "./input-radio";
+import { InputRange } from "./input-range";
+import { InputTextArea } from "./input-textarea";
 
 export const MichlolReport: React.FC<{
   reportInstance: CreateReport;
@@ -8,20 +11,44 @@ export const MichlolReport: React.FC<{
 }> = ({ reportInstance, michlol: { id: michlolId, name, questions } }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const { id, question, type, options } = questions[currentQuestion];
+  const {
+    id: questionId,
+    question,
+    type,
+    options,
+  } = questions[currentQuestion];
   const isComplete = reportInstance.michlolCompleted[michlolId];
   const completedClass = `${isComplete ? "complete" : "incomplete"}`;
   const openClass = `${isOpen ? "opened" : "closed"}`;
-  const savedAnswer = reportInstance.michlolim[michlolId]?.answers?.[id];
 
   function getQuestionContent() {
     switch (type) {
       case "mc":
-        return <p>mc</p>;
+        return (
+          <InputRadio
+            reportInstance={reportInstance}
+            michlolId={michlolId}
+            questionId={questionId}
+            options={options as string[]}
+          />
+        );
       case "range":
-        return <p>range</p>;
+        return (
+          <InputRange
+            reportInstance={reportInstance}
+            michlolId={michlolId}
+            questionId={questionId}
+            options={options as InputRange}
+          />
+        );
       case "text":
-        return <p>text</p>;
+        return (
+          <InputTextArea
+            reportInstance={reportInstance}
+            michlolId={michlolId}
+            questionId={questionId}
+          />
+        );
     }
   }
 
@@ -33,28 +60,29 @@ export const MichlolReport: React.FC<{
       >
         {name}
       </div>
-      <div className={`michlol-report ${completedClass} ${openClass}`}>
+      <div className={`michlol-contents ${completedClass} ${openClass}`}>
         <h2 className="michlol-subheading">שאלות מיכלול</h2>
         {questions.map((question, idx) => {
           const style = getStyle();
           function getStyle() {
+            const isAnswered =
+              reportInstance.michlolim[michlolId]?.answers?.[question.id];
             if (idx === currentQuestion) return "current";
-            if (savedAnswer) return "green";
+            if (isAnswered) return "green";
             return "red";
           }
 
           return (
             <div
-              className={`test ${style}`}
+              className={`m-question-marker ${style}`}
               key={idx}
               onClick={() => setCurrentQuestion(idx)}
             >
-              {idx}
+              {idx + 1}
             </div>
           );
         })}
         <form
-          className="michlol-content-wrapper"
           onChange={(e) => {
             e.currentTarget.requestSubmit();
           }}
@@ -62,17 +90,14 @@ export const MichlolReport: React.FC<{
             e.preventDefault();
             const formData = new FormData(e.target as HTMLFormElement);
             const formObj = Object.fromEntries(formData);
-            const value = formObj[id] as string;
-            reportInstance.setValue(michlolId, id, value);
+            const value = formObj[`${michlolId}-${questionId}`] as string;
+            reportInstance.setValue(michlolId, questionId, value);
           }}
         >
-          <p className="michlol-questions-numbers">
-            {`שאלה ${currentQuestion + 1}  מי  ${questions.length}`}
-          </p>
-          <p className="michlol-questions-question">{question}</p>
+          <p>{`שאלה ${currentQuestion + 1}  מי  ${questions.length}`}</p>
+          <p>{question}</p>
           {getQuestionContent()}
           <button
-            className="michlol-questions-btn"
             disabled={currentQuestion === 0}
             type={"button"}
             onClick={() => setCurrentQuestion((prevState) => --prevState)}
@@ -80,7 +105,6 @@ export const MichlolReport: React.FC<{
             חזור
           </button>
           <button
-            className="michlol-questions-btn"
             type={"button"}
             disabled={currentQuestion + 1 === questions!.length}
             onClick={() => setCurrentQuestion((prevState) => ++prevState)}
@@ -90,7 +114,6 @@ export const MichlolReport: React.FC<{
         </form>
 
         <button
-          className="michlol-complete-btn"
           onClick={() => {
             reportInstance.michlolCompleted[michlolId] = true;
             localStorage.setItem(

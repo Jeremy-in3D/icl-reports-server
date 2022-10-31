@@ -17,7 +17,7 @@ const questionBank: {
     id: "question 3",
     type: "text",
     question: "פה השאלה לענות תהיה 3",
-    options: 123,
+    options: null,
   },
 };
 
@@ -43,7 +43,7 @@ type QuestionTypes = "mc" | "range" | "text";
 type Options = {
   mc: string[];
   range: { start: number; end: number; step: number };
-  text: number;
+  text: null;
 };
 type Question = {
   id: string;

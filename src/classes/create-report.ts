@@ -18,6 +18,7 @@ export class CreateReport {
   createNewSurvey() {
     this.dateCreated = Date.now();
   }
+
   setValue(michlol: string, questionId: string, value: string) {
     const michlolim = this.michlolim;
     if (!michlolim[michlol]) michlolim[michlol] = { answers: {} };

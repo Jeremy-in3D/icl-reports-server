@@ -31,7 +31,6 @@ export const ReportView: React.FC<{
               body: JSON.stringify(reportInstance.saveSurvey()),
             });
         }}
-        className="report-complete-btn"
       >
         שלח תשובות וסיים דוח
       </button>
