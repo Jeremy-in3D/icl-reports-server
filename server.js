@@ -1,5 +1,5 @@
 require("dotenv").config();
-// const fs = require("fs");
+const fs = require("fs");
 const http = require("http");
 const express = require("express");
 const path = require("path");
@@ -8,6 +8,7 @@ const sampleData = require("./assets/test-data.json");
 const MongoDB = require("./server/mongodb.js");
 const mongo = new MongoDB(process.env.MONGO_URI);
 const streamToBuffer = require("./server/helpers/streamToBuffer.js");
+const { Buffer } = require("node:buffer");
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -20,30 +21,32 @@ const blobServiceClient = BlobServiceClient.fromConnectionString(
   BLOB_CONNECTION_STRING
 );
 
-app.get("/upload-blob", async (req, res) => {
+app.post("/upload-blob", async (req, res) => {
+  //change how you create the buffer content
+  const buf = Buffer.from(JSON.stringify(req.body));
+  console.log(buf);
   const containerClient = blobServiceClient.getContainerClient("images");
   const content = "Hello world!";
   const blobName = "newblob" + Date.now();
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-  const uploadBlobResponse = await blockBlobClient.upload(
-    content,
-    content.length
-  );
+  const uploadBlobResponse = await blockBlobClient.upload(buf, buf.length);
   const blobId = uploadBlobResponse.requestId;
   console.log(`Upload block blob ${blobName} successfully - ${blobId}`);
   res.send(`Upload block blob ${blobName} successfully - ${blobId}`);
 });
 
-app.get("/get-blob", async (req, res) => {
+app.post("/get-blob", async (req, res) => {
+  console.log(req.body);
   const containerClient = blobServiceClient.getContainerClient("images");
-  const blobClient = containerClient.getBlobClient("newblob1667391427423");
+  const blobClient = containerClient.getBlobClient(req.body);
 
   const downloadBlockBlobResponse = await blobClient.download();
+  console.log(downloadBlockBlobResponse);
   const downloaded = (
     await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)
   ).toString();
   console.log("Downloaded blob content:", downloaded);
-  res.send(downloaded);
+  res.send(downloadBlockBlobResponse);
 });
 
 app.get("/export-report", (req, res) => {

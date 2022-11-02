@@ -18,7 +18,7 @@ export const ReportFirst: React.FC = () => {
         const form = JSON.stringify(obj);
         console.log(form);
         localStorage.setItem("form", form);
-        console.log("Submitted");
+        console.log("Submitted"); 
       }}
     >
       <input name="Test" value={"Testing"} readOnly></input>

@@ -4,6 +4,7 @@ import { PageNotFound } from "./components/misc/page-not-found";
 import { Report } from "./components/report/report";
 import { Search } from "./components/search/search";
 import { Home } from "./home";
+import { TakePicture } from "./take-pic";
 
 const logo = new URL("../assets/logo.webp", import.meta.url);
 const home = new URL(
@@ -25,7 +26,7 @@ export const App: React.FC = () => {
       display = <Search />;
       break;
     case "export":
-      display = <Export />;
+      display = <TakePicture />;
       break;
     default:
       display = <PageNotFound />;
