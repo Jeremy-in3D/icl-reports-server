@@ -59,10 +59,26 @@ export type Michlol = {
   questions: Question[];
 };
 
-//Test...
-// type Test<T extends QuestionTypes> = Options[T];
+//Incorporate below solution into project
+type ValueType = {
+  text: string;
+  numeric: number;
+};
 
-// function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
-//   return obj[key];
-// }
-// type K = ReturnType<Predicate>;
+type VALUETYPEKEYS = keyof ValueType;
+type Question1 = {
+  [KEY in keyof ValueType]: { type: KEY; value: ValueType[KEY][] };
+}[keyof ValueType];
+type Question2 =
+  | { type: "text"; value: string[] }
+  | { type: "numberic"; value: number[] };
+
+const myQuestion: Record<string, Question1> = {
+  first: { type: "text", value: ["a"] },
+};
+
+for (const q of Object.values(myQuestion)) {
+  if (q.type === "text") {
+    //
+  }
+}
