@@ -5,14 +5,46 @@ const express = require("express");
 const path = require("path");
 const { BlobServiceClient } = require("@azure/storage-blob");
 const sampleData = require("./assets/test-data.json");
-const MongoDB = require("./mongodb.js");
+const MongoDB = require("./server/mongodb.js");
 const mongo = new MongoDB(process.env.MONGO_URI);
+const streamToBuffer = require("./server/helpers/streamToBuffer.js");
 
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
+
+const BLOB_CONNECTION_STRING = process.env.BLOB_CONNECTION_STRING || "";
+const blobServiceClient = BlobServiceClient.fromConnectionString(
+  BLOB_CONNECTION_STRING
+);
+
+app.get("/upload-blob", async (req, res) => {
+  const containerClient = blobServiceClient.getContainerClient("images");
+  const content = "Hello world!";
+  const blobName = "newblob" + Date.now();
+  const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+  const uploadBlobResponse = await blockBlobClient.upload(
+    content,
+    content.length
+  );
+  const blobId = uploadBlobResponse.requestId;
+  console.log(`Upload block blob ${blobName} successfully - ${blobId}`);
+  res.send(`Upload block blob ${blobName} successfully - ${blobId}`);
+});
+
+app.get("/get-blob", async (req, res) => {
+  const containerClient = blobServiceClient.getContainerClient("images");
+  const blobClient = containerClient.getBlobClient("newblob1667391427423");
+
+  const downloadBlockBlobResponse = await blobClient.download();
+  const downloaded = (
+    await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)
+  ).toString();
+  console.log("Downloaded blob content:", downloaded);
+  res.send(downloaded);
+});
 
 app.get("/export-report", (req, res) => {
   res.send(sampleData);
@@ -46,19 +78,9 @@ app.post("/save-report", async (req, res) => {
   }
 });
 
-const BLOB_CONNECTION_STRING = process.env.BLOB_CONNECTION_STRING || "";
-// Note - Account connection string can only be used in node.
-const blobServiceClient = BlobServiceClient.fromConnectionString(
-  BLOB_CONNECTION_STRING
-);
-
 (async () => {
   try {
     // await mongo.connect();
-    let i = 1;
-    for await (const container of blobServiceClient.listContainers()) {
-      console.log(`Container ${i++}: ${container.name}`);
-    }
     const httpServer = http.createServer(app);
     httpServer.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
