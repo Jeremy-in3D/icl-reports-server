@@ -9,6 +9,7 @@ const MongoDB = require("./server/mongodb.js");
 const mongo = new MongoDB(process.env.MONGO_URI);
 const streamToBuffer = require("./server/helpers/streamToBuffer.js");
 const { Buffer } = require("node:buffer");
+const { Stream } = require("stream");
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -22,31 +23,27 @@ const blobServiceClient = BlobServiceClient.fromConnectionString(
 );
 
 app.post("/upload-blob", async (req, res) => {
-  //change how you create the buffer content
-  const buf = Buffer.from(JSON.stringify(req.body));
-  console.log(buf);
+  // const buffer = Buffer.from(req.body);
+  // const blob = new Blob([req.body]);
+  // const arrayBuffer = await blob.arrayBuffer();
+  // const buffer = Buffer.from(arrayBuffer);
   const containerClient = blobServiceClient.getContainerClient("images");
-  const content = "Hello world!";
   const blobName = "newblob" + Date.now();
-  const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-  const uploadBlobResponse = await blockBlobClient.upload(buf, buf.length);
+  const blobClient = containerClient.getBlockBlobClient(blobName);
+  const uploadBlobResponse = await blobClient.uploadStream(
+    buffer,
+    buffer.length
+  );
   const blobId = uploadBlobResponse.requestId;
   console.log(`Upload block blob ${blobName} successfully - ${blobId}`);
   res.send(`Upload block blob ${blobName} successfully - ${blobId}`);
 });
 
 app.post("/get-blob", async (req, res) => {
-  console.log(req.body);
   const containerClient = blobServiceClient.getContainerClient("images");
   const blobClient = containerClient.getBlobClient(req.body);
-
-  const downloadBlockBlobResponse = await blobClient.download();
-  console.log(downloadBlockBlobResponse);
-  const downloaded = (
-    await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)
-  ).toString();
-  console.log("Downloaded blob content:", downloaded);
-  res.send(downloadBlockBlobResponse);
+  const buffer = await blobClient.downloadToBuffer();
+  res.send(buffer);
 });
 
 app.get("/export-report", (req, res) => {
