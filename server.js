@@ -1,50 +1,53 @@
 require("dotenv").config();
-const fs = require("fs");
+const path = require("path");
 const http = require("http");
 const express = require("express");
-const path = require("path");
+const fileUpload = require("express-fileupload");
 const { BlobServiceClient } = require("@azure/storage-blob");
-const sampleData = require("./assets/test-data.json");
+const streamToBuffer = require("./server/helpers/streamToBuffer.js");
 const MongoDB = require("./server/mongodb.js");
 const mongo = new MongoDB(process.env.MONGO_URI);
-const streamToBuffer = require("./server/helpers/streamToBuffer.js");
-const { Buffer } = require("node:buffer");
-const { Stream } = require("stream");
 
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
+app.use(express.urlencoded({ extended: true }));
 
 const BLOB_CONNECTION_STRING = process.env.BLOB_CONNECTION_STRING || "";
 const blobServiceClient = BlobServiceClient.fromConnectionString(
   BLOB_CONNECTION_STRING
 );
 
-app.post("/upload-blob", async (req, res) => {
-  // const buffer = Buffer.from(req.body);
-  // const blob = new Blob([req.body]);
-  // const arrayBuffer = await blob.arrayBuffer();
-  // const buffer = Buffer.from(arrayBuffer);
-  const containerClient = blobServiceClient.getContainerClient("images");
-  const blobName = "newblob" + Date.now();
-  const blobClient = containerClient.getBlockBlobClient(blobName);
-  const uploadBlobResponse = await blobClient.uploadStream(
-    buffer,
-    buffer.length
-  );
-  const blobId = uploadBlobResponse.requestId;
-  console.log(`Upload block blob ${blobName} successfully - ${blobId}`);
-  res.send(`Upload block blob ${blobName} successfully - ${blobId}`);
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "dist/index.html"));
+// });
 
-app.post("/get-blob", async (req, res) => {
+app.post("/get-image", async (req, res) => {
   const containerClient = blobServiceClient.getContainerClient("images");
   const blobClient = containerClient.getBlobClient(req.body);
-  const buffer = await blobClient.downloadToBuffer();
-  res.send(buffer);
+  const downloadBlockBlobResponse = await blobClient.download();
+  const downloaded = await streamToBuffer(
+    downloadBlockBlobResponse.readableStreamBody
+  );
+  res.send(downloaded);
 });
+
+app.post(
+  "/upload-image",
+  fileUpload({ createParentPath: true }),
+  async (req, res) => {
+    const buffer = req.files["imgFile"].data;
+    const containerClient = blobServiceClient.getContainerClient("images");
+    const blobName = "newblob" + Date.now();
+    const blobClient = containerClient.getBlockBlobClient(blobName);
+    const uploadBlobResponse = await blobClient.upload(buffer, buffer.length);
+    const blobId = uploadBlobResponse.requestId;
+    console.log(`Upload block blob ${blobName} successfully - ${blobId}`);
+    res.send(`Upload block blob ${blobName} successfully - ${blobId}`);
+  }
+);
 
 app.get("/export-report", (req, res) => {
   res.send(sampleData);
@@ -80,7 +83,7 @@ app.post("/save-report", async (req, res) => {
 
 (async () => {
   try {
-    // await mongo.connect();
+    await mongo.connect();
     const httpServer = http.createServer(app);
     httpServer.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
@@ -90,7 +93,6 @@ app.post("/save-report", async (req, res) => {
   }
 })();
 
-//Add connection referesh for mongodb
 //---------------------HTTPS
 // const privateKey = fs.readFileSync("certs/server.key", "utf8");
 // const certificate = fs.readFileSync("certs/server.crt", "utf8");
@@ -101,14 +103,5 @@ app.post("/save-report", async (req, res) => {
 //   console.log(`Server is listening on port ${port}`);
 // });
 
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "dist/index.html"));
-// });
-
-// const uri =
-//   "mongodb+srv://in3dtech:in3dtech360@cluster0.9ynclka.mongodb.net/?retryWrites=true&w=majority";
-
 // MONGO_URI =
 //   "mongodb+srv://in3dtech:in3dtech360@cluster0.9ynclka.mongodb.net/?retryWrites=true&w=majority";
-// BLOB_CONNECTION_STRING =
-//   "BlobEndpoint=https://iclreports.blob.core.windows.net/;QueueEndpoint=https://iclreports.queue.core.windows.net/;FileEndpoint=https://iclreports.file.core.windows.net/;TableEndpoint=https://iclreports.table.core.windows.net/;SharedAccessSignature=sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2022-11-02T16:44:26Z&st=2022-11-02T08:44:26Z&spr=https,http&sig=i51%2ByquhN6St9VXrOZUMYe%2FGB6JZEThCbczQ8wAjslw%3D";
