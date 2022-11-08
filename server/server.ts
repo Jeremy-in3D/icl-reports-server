@@ -15,8 +15,6 @@ const port = process.env.PORT || 8080;
 const app = express();
 
 const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
-console.log(__dirname);
-// const string = path.join(__dirname, "../../", "dist");
 
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
