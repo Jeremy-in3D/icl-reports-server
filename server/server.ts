@@ -1,5 +1,5 @@
-import * as dotenv from "dotenv";
-import * as url from "url";
+import dotenv from "dotenv";
+import url from "url";
 import express from "express";
 import path from "path";
 import http from "http";
@@ -13,7 +13,6 @@ const mongoUri = process.env.MONGO_URI || "";
 const mongo = new MongoDB(mongoUri);
 const port = process.env.PORT || 8080;
 const app = express();
-
 const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
 
 app.use(express.static(path.join(__dirname, "dist")));
