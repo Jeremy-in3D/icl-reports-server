@@ -1,4 +1,5 @@
 import * as dotenv from "dotenv";
+import * as url from "url";
 import express from "express";
 import path from "path";
 import http from "http";
@@ -12,12 +13,12 @@ const mongoUri = process.env.MONGO_URI || "";
 const mongo = new MongoDB(mongoUri);
 const port = process.env.PORT || 8080;
 const app = express();
-const __dirname = new URL("../../", import.meta.url);
+
+const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
 console.log(__dirname);
+// const string = path.join(__dirname, "../../", "dist");
 
-console.log(path.join(__dirname.pathname, "dist"));
-
-app.use(express.static(path.join(__dirname.href, "dist")));
+app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +29,8 @@ const blobServiceClient = BlobServiceClient.fromConnectionString(
 );
 
 // app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "dist/index.html"));
+//   res.sendFile(`${string}/index.html`);
+//   res.send("Hello World");
 // });
 
 app.post("/get-image", async (req, res) => {
