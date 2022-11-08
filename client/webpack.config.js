@@ -40,6 +40,6 @@ module.exports = {
   devtool: "source-map",
   output: {
     clean: true,
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "../", "dist"),
   },
 };

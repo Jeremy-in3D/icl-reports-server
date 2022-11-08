@@ -1,7 +1,7 @@
-module.exports = async function streamToBuffer(readableStream) {
+export async function streamToBuffer(readableStream: any) {
   return new Promise((resolve, reject) => {
-    const chunks = [];
-    readableStream.on("data", (data) => {
+    const chunks: any = [];
+    readableStream.on("data", (data: any) => {
       chunks.push(data instanceof Buffer ? data : Buffer.from(data));
     });
     readableStream.on("end", () => {
@@ -9,4 +9,4 @@ module.exports = async function streamToBuffer(readableStream) {
     });
     readableStream.on("error", reject);
   });
-};
+}

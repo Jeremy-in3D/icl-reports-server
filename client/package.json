@@ -1,7 +1,6 @@
 {
   "name": "icl-reports",
   "version": "1.0.0",
-  "main": "server.js",
   "keywords": [],
   "author": "In3DTech",
   "license": "ISC",
@@ -9,16 +8,9 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "dev": "webpack serve --open",
-    "start": "node server.js",
-    "server-watch": "node --watch server.js"
+    "dev": "webpack serve --open"
   },
   "dependencies": {
-    "@azure/storage-blob": "^12.12.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-fileupload": "^1.4.0",
-    "mongodb": "^4.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.0/xlsx-0.19.0.tgz"

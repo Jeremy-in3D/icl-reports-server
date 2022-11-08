@@ -1,7 +1,10 @@
-const { MongoClient } = require("mongodb");
+import { Collection, MongoClient } from "mongodb";
 
-module.exports = class MongoDB {
-  constructor(uri) {
+export class MongoDB {
+  client: MongoClient;
+  collection: Collection;
+
+  constructor(uri: string) {
     this.client = new MongoClient(uri);
     this.collection = this.client.db("icl").collection("reports");
   }
@@ -28,7 +31,7 @@ module.exports = class MongoDB {
     }
   }
 
-  async searchDocs(data) {
+  async searchDocs(data: { startDate: number; endDate: number }) {
     const { startDate, endDate } = data;
     try {
       const find = this.collection
@@ -44,7 +47,7 @@ module.exports = class MongoDB {
     }
   }
 
-  async insertDoc(payload) {
+  async insertDoc(payload: any) {
     try {
       const insert = await this.collection.insertOne(payload);
       console.log(`A document was inserted with the _id: ${insert.insertedId}`);
@@ -52,4 +55,4 @@ module.exports = class MongoDB {
       console.log("Error", e);
     }
   }
-};
+}
