@@ -5,14 +5,13 @@ import { ReportOption } from "./report-option";
 import { ReportView } from "./report-view";
 
 export const ReportSelect: React.FC<{
-  id: string;
-  name: string;
-}> = ({ id, name }) => {
+  report: { id: string; name: string };
+}> = ({ report: { id, name } }) => {
   const [reportView, setReportView] = useState(false);
   const reportInstance = useRef(new CreateReport(id, name)).current;
   const [existingReport, existingReportDetails] = isExistingReport(id);
 
-  if (reportView) return <ReportView reportInstance={reportInstance} />;
+  // if (reportView) return <ReportView reportInstance={reportInstance} />;
 
   return (
     <div className="report-options">

@@ -7,20 +7,17 @@ export const ReportView: React.FC<{
   reportInstance: CreateReport;
 }> = ({ reportInstance }) => {
   const type = getReportType(reportInstance.id);
-  const { name, michlolim } = reportsData[type].find(
-    (report) => report.id === reportInstance.id
-  )!;
 
   return (
     <>
-      <h1 className="page-title">{name}</h1>
+      {/* <h1 className="page-title">{name}</h1>
       {michlolim.map((michlol, idx) => (
         <MichlolReport
           reportInstance={reportInstance}
           michlol={michlol}
           key={idx}
         />
-      ))}
+      ))} */}
       <button
         onClick={() => {
           const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");

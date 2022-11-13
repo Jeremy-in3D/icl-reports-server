@@ -21,23 +21,63 @@ const questionBank: {
   },
 };
 
-export const reportsData = {
-  survey: [
-    {
-      id: "S1",
-      name: "מפעל למלה",
-      michlolim: [
-        {
-          id: "S1-M1",
-          name: "מיכלול 1",
-          questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
-        },
-      ],
-    },
-  ],
-  oil: [],
-  quake: [],
-};
+export const reportsData = [
+  {
+    id: "S1",
+    name: "מפעל למלה",
+    michlolim: [
+      {
+        id: "S1-M1",
+        name: "מיכלול 1",
+        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+      },
+    ],
+  },
+  {
+    id: "S1",
+    name: "מפעל למלה",
+    michlolim: [
+      {
+        id: "S1-M1",
+        name: "מיכלול 1",
+        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+      },
+    ],
+  },
+  {
+    id: "S1",
+    name: "מפעל למלה",
+    michlolim: [
+      {
+        id: "S1-M1",
+        name: "מיכלול 1",
+        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+      },
+    ],
+  },
+  {
+    id: "S1",
+    name: "מפעל למלה",
+    michlolim: [
+      {
+        id: "S1-M1",
+        name: "מיכלול 1",
+        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+      },
+    ],
+  },
+  {
+    id: "S1",
+    name: "מפעל למלה",
+    michlolim: [
+      {
+        id: "S1-M1",
+        name: "מיכלול 1",
+        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+      },
+    ],
+  },
+];
 
 export type QuestionTypes = "mc" | "range" | "text";
 type Options = {
@@ -65,7 +105,6 @@ type ValueType = {
   numeric: number;
 };
 
-type VALUETYPEKEYS = keyof ValueType;
 type Question1 = {
   [KEY in keyof ValueType]: { type: KEY; value: ValueType[KEY][] };
 }[keyof ValueType];

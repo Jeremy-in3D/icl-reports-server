@@ -33,8 +33,20 @@ export const App: React.FC = () => {
   return (
     <div className="app ">
       <div className="top-bar">
-        <img className="icon" src={home.href}></img>
-        <img className="icon logo" src={logo.href}></img>
+        <img
+          className="icon"
+          src={home.href}
+          onClick={() => {
+            setShowScreen("home");
+          }}
+        ></img>
+        <img
+          className="icon logo"
+          src={logo.href}
+          onClick={() => {
+            setShowScreen("home");
+          }}
+        ></img>
       </div>
       {display}
     </div>

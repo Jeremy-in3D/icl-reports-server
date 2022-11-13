@@ -9,36 +9,12 @@
   --blue3: #018eacff;
   --blue4: #006a88ff;
   --blue5: #002846ff;
-  --linear-gradient: linear-gradient(
-    0.6turn,
-    var(--blue1),
-    var(--blue2),
-    var(--blue3),
-    var(--blue4)
-  );
-  --linear-gradient-50: linear-gradient(
-    0.6turn,
-    rgba(143, 229, 228, 0.5),
-    rgba(104, 215, 223, 0.5),
-    rgba(1, 141, 172, 0.5),
-    rgba(0, 106, 136, 0.5)
-  );
-  --linear-gradient-dark: linear-gradient(
-    0.2turn,
-    var(--blue5),
-    var(--blue4),
-    var(--blue5)
-  );
-  --linear-gradient-dark-2: linear-gradient(
-    0.5turn,
-    var(--blue4),
-    var(--blue5),
-    var(--blue4)
-  );
-  --radial-gradient: radial-gradient(
-    rgba(0, 141, 172, 0.1),
-    rgba(100, 106, 136, 0.4)
-  );
+  --blue1opaque: rgba(143, 229, 228, 0.5);
+  --blue2opaque: rgba(104, 215, 223, 0.5);
+  --blue3opaque: rgba(1, 141, 172, 0.5);
+  --blue4opaque: rgba(0, 106, 136, 0.5);
+  --blue5opaque: rgba(0, 40, 70, 0.5);
+  --radial-gradient: radial-gradient(var(--blue5), var(--blue4), var(--blue2));
 }
 
 html,
@@ -87,13 +63,14 @@ body,
 }
 
 .page-title {
-  background: linear-gradient(#084879, #0e2c42);
+  background: var(--radial-gradient);
   color: white;
   padding: 0.15em;
-  border-radius: 3px;
+  border-radius: 6px;
   font-size: 2.5em;
   margin: 0.25em;
   text-align: center;
+  box-shadow: 2px 2px 5px black;
 }
 
 .home-screen {
@@ -154,27 +131,26 @@ body,
   overflow-y: scroll;
 }
 
-.reports-section {
-  margin: 1em 0em;
+.reports-selections {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
-.reports-section-title {
-  font-weight: 700;
-}
-
-.report-button {
+.reports-selections-btn {
+  flex-basis: 45%;
   max-width: 250px;
-  width: 150px;
   height: 100px;
   margin: 0.25em;
   border-radius: 6px;
-  font-size: 1.2em;
-  background: rgba(10, 10, 10, 0.25);
-  color: whitesmoke;
-  border: 2px solid black;
+  font-size: 1.6em;
+  font-weight: 700;
+  background: url("../../assets/abstract-background2.jpg");
+  background-size: cover;
+  border: 3px solid black;
 }
 
-.report-button:hover {
+.reports-selections-btn:hover {
   border: 2px solid yellow;
 }
 
