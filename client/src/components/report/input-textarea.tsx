@@ -28,7 +28,7 @@ export const InputTextArea: React.FC<{
         }}
         defaultValue={string}
       ></textarea>
-      <p className="test">{`נותרו ${charactersLeft}`}</p>
+      <p className="text-area-note">{`נותרו ${charactersLeft} תווים`}</p>
       <input
         ref={inputRef}
         className="text-input"

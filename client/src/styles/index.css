@@ -250,8 +250,8 @@ textarea {
   resize: none;
 }
 
-.test {
-  width: 70%;
+.text-area-note {
+  width: 80%;
   text-align: right;
   margin: auto;
   font-size: 0.8em;
@@ -259,7 +259,7 @@ textarea {
 }
 
 .text-area {
-  width: 70%;
+  width: 80%;
 }
 
 .text-input {
