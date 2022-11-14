@@ -352,6 +352,7 @@ textarea {
   display: flex;
   flex-flow: column wrap;
   align-items: center;
+  height: 400px;
 }
 
 .michlol-question {
@@ -364,6 +365,32 @@ textarea {
   text-overflow: clip;
 }
 
+.form-movements {
+  margin: 1em;
+}
+
+.form-movement-btn {
+  margin: 0 1em;
+  padding: 1em;
+  background: var(--blue3opaque);
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.michlol-submit-btn {
+  display: block;
+  margin: 1em auto;
+  padding: 0.5em;
+  width: 80%;
+  font-size: 1.4em;
+  font-weight: bold;
+  background: linear-gradient(0.15turn, rgb(20, 92, 20), rgb(63, 233, 72));
+  border-radius: 5px;
+  border: 1px solid black;
+  box-shadow: 0px 0px 5px 1px black;
+}
 /* Search Results */
 .search-results {
   background-color: rgba(128, 128, 128, 0.336);

@@ -42,22 +42,27 @@ export const MichlolForm: React.FC<{
           type={type}
           options={options}
         />
-        <button
-          disabled={currentQuestion === 0}
-          type={"button"}
-          onClick={() => setCurrentQuestion((prevState) => --prevState)}
-        >
-          חזור
-        </button>
-        <button
-          type={"button"}
-          disabled={currentQuestion + 1 === questions!.length}
-          onClick={() => setCurrentQuestion((prevState) => ++prevState)}
-        >
-          הבא
-        </button>
+        <div className="form-movements">
+          <button
+            className="form-movement-btn"
+            disabled={currentQuestion === 0}
+            type={"button"}
+            onClick={() => setCurrentQuestion((prevState) => --prevState)}
+          >
+            חזור
+          </button>
+          <button
+            className="form-movement-btn"
+            type={"button"}
+            disabled={currentQuestion + 1 === questions!.length}
+            onClick={() => setCurrentQuestion((prevState) => ++prevState)}
+          >
+            הבא
+          </button>
+        </div>
       </form>
       <button
+        className="michlol-submit-btn"
         onClick={() => {
           reportInstance.michlolCompleted[michlolId] = true;
           localStorage.setItem(
@@ -67,7 +72,7 @@ export const MichlolForm: React.FC<{
           setIsOpen(false);
         }}
       >
-        סיים מיכלול
+        שמור מיכלול
       </button>
     </>
   );
