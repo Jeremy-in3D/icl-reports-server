@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Export } from "./components/export/export";
-import { PageNotFound } from "./components/misc/page-not-found";
+import { PageNotFound } from "./components/page-not-found";
 import { Report } from "./components/report/report";
 import { Search } from "./components/search/search";
 import { Home } from "./home";

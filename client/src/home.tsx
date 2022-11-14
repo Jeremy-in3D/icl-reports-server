@@ -1,5 +1,5 @@
 import React from "react";
-import { BlockItem } from "./components/misc/block-item";
+import { HomeSelection } from "./components/home-selection";
 import {
   addReportIcon,
   notificationReportIcon,
@@ -32,7 +32,7 @@ export const Home: React.FC<{
   return (
     <div className="home-screen">
       {buttons.map((item, idx) => (
-        <BlockItem
+        <HomeSelection
           text={item.text}
           imgPath={item.imgPath}
           key={idx}

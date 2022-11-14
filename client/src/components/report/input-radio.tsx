@@ -1,6 +1,5 @@
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
-import { RadioQuestion } from "../misc/radio-question";
 
 export const InputRadio: React.FC<{
   reportInstance: CreateReport;
@@ -12,17 +11,25 @@ export const InputRadio: React.FC<{
     reportInstance.michlolim[michlolId]?.answers?.[questionId];
 
   return (
-    <div>
+    <div className="radio-wrapper">
       {options.map((choice, idx) => {
         return (
-          <RadioQuestion
-            key={idx}
-            text={choice}
-            name={`${michlolId}-${questionId}`}
-            id={`${michlolId}-${questionId}-${idx}`}
-            value={choice}
-            checked={savedAnswer === choice}
-          />
+          <div className="radio-question" key={idx}>
+            <input
+              type="radio"
+              name={`${michlolId}-${questionId}`}
+              id={`${michlolId}-${questionId}-${idx}`}
+              value={choice}
+              defaultChecked={savedAnswer === choice}
+              className="radio-for-label"
+            />
+            <label
+              className="label-for-radio"
+              htmlFor={`${michlolId}-${questionId}-${idx}`}
+            >
+              {choice}
+            </label>
+          </div>
         );
       })}
     </div>

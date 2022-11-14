@@ -1,6 +1,6 @@
 import React from "react";
 
-export const BlockItem: React.FC<{
+export const HomeSelection: React.FC<{
   text: string;
   imgPath: string;
   onClick: () => void;

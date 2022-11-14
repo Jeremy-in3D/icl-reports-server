@@ -28,13 +28,13 @@ export const MichlolForm: React.FC<{
   return (
     <>
       <form
+        className="michlol-form"
         onChange={(e) => e.currentTarget.requestSubmit()}
         onSubmit={(e) =>
           handleFormSubmit(e, reportInstance, michlolId, questionId)
         }
       >
-        <p>{`שאלה ${currentQuestion + 1}  מי  ${questions.length}`}</p>
-        <p>{question}</p>
+        <p className="michlol-question">{question}</p>
         <QuestionInput
           reportInstance={reportInstance}
           michlolId={michlolId}

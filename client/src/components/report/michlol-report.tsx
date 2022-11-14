@@ -23,14 +23,15 @@ export const MichlolReport: React.FC<{
         {name}
       </div>
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
-        <h2 className="michlol-subheading">שאלות</h2>
-        <QuestionsList
-          reportInstance={reportInstance}
-          michlolId={michlolId}
-          questions={questions}
-          currentQuestion={currentQuestion}
-          setCurrentQuestion={setCurrentQuestion}
-        />
+        <div className="michlol-questions-array">
+          <QuestionsList
+            reportInstance={reportInstance}
+            michlolId={michlolId}
+            questions={questions}
+            currentQuestion={currentQuestion}
+            setCurrentQuestion={setCurrentQuestion}
+          />
+        </div>
         <MichlolForm
           reportInstance={reportInstance}
           michlolId={michlolId}

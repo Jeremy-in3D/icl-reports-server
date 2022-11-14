@@ -17,7 +17,7 @@ export const ReportSelect: React.FC<{
     <div className="report-options">
       <h1 className="page-title">{report.name}</h1>
       <ReportOption
-        text='המשיך בדו"ח הקיים'
+        text='המשך בדו"ח הקיים'
         disabled={existingReport === undefined}
         onClick={() => {
           if (typeof existingReport === "string") {
@@ -29,7 +29,7 @@ export const ReportSelect: React.FC<{
         {existingReportDetails}
       </ReportOption>
       <ReportOption
-        text='ליצור דו"ח חדש'
+        text='צור דו"ח חדש'
         disabled={false}
         onClick={() => {
           reportInstance.createNewSurvey();

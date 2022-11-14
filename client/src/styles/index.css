@@ -150,9 +150,8 @@ body,
   font-size: 1.6em;
   font-weight: 600;
   background: url("../../assets/abstract-background2.jpg");
-  background-size: cover;
-  background-position: center;
-  border: 2px solid black;
+  border: 2px solid gray;
+  color: white;
 }
 
 .reports-selections-btn:hover {
@@ -162,9 +161,10 @@ body,
 .report-option {
   font-size: 1.3em;
   font-weight: 500;
-  background-color: rgba(20, 20, 20, 0.7);
+  background: url("../../assets/abstract-background2.jpg");
+  border-radius: 3px;
   margin: 1em;
-  padding: 1em 0em;
+  padding: 0.5em 0em;
   height: 250px;
   text-align: center;
   display: flex;
@@ -181,12 +181,7 @@ body,
   padding: 1em;
   margin: 1em;
   border-radius: 5px;
-  border: none;
-}
-
-.check-with-label:checked + .label-for-check {
-  background: var(--blue5);
-  color: white;
+  border: 2px solid black;
 }
 
 button:disabled {
@@ -196,23 +191,35 @@ button:disabled {
   color: #666666 !important;
 }
 
+.radio-wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.radio-question {
+  margin: 0.5em 0;
+  flex-basis: 70%;
+}
+
 .radio-question input {
   display: none;
 }
 
-.radio-question {
-  width: 70%;
-  min-width: 200px;
-  max-width: 500px;
-  margin: 1em;
-}
-
-.radio-question label {
+.label-for-radio {
   background-color: rgba(128, 128, 128, 0.315);
   display: block;
-  width: 100%;
+  word-break: break-all;
+  min-height: fit-content;
+  text-align: center;
   padding: 1em;
-  border-radius: 6px;
+  border-radius: 5px;
+}
+
+.radio-for-label:checked + .label-for-radio {
+  background: var(--blue5);
+  color: white;
 }
 
 /* Michlol */
@@ -224,17 +231,11 @@ button:disabled {
   border-radius: 5px;
 }
 
-.michlol-subheading {
-  font-size: 1.5em;
-  border-bottom: 1px solid black;
-  margin-bottom: 0.5em;
-}
-
 .michlol .bar {
   position: relative;
   padding: 0.75em;
   width: 100%;
-  background: linear-gradient(#db4812, #dd673d);
+  background: linear-gradient(#db1212, #dd503d);
 }
 
 .michlol .bar.closed::after {
@@ -259,9 +260,38 @@ button:disabled {
   background: linear-gradient(#1f8b3a, #46815f);
 }
 
+.michlol-questions-array {
+  padding: 0.25em;
+}
+
+.m-question-marker {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  margin: 0.2em;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.m-question-marker.current {
+  background-color: rgba(255, 255, 0, 0.5);
+}
+
+.m-question-marker.green {
+  background-color: rgba(0, 128, 0, 0.5);
+}
+
+.m-question-marker.red {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
 .michlol-contents {
   background-color: whitesmoke;
-  border-bottom: 4px solid orangered;
+  border-bottom: 4px solid rgb(255, 0, 0);
   max-height: 0;
   transition: max-height 0.6s ease-out;
 }
@@ -274,26 +304,16 @@ button:disabled {
   max-height: 2000px;
 }
 
-.m-question-marker {
-  display: inline-flex;
-  justify-content: center;
+.michlol-form {
+  display: flex;
+  flex-flow: column wrap;
   align-items: center;
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  margin: 0.2em;
 }
 
-.m-question-marker.current {
-  background-color: yellow;
-}
-
-.m-question-marker.green {
-  background-color: green;
-}
-
-.m-question-marker.red {
-  background-color: red;
+.michlol-question {
+  font-size: 1.4em;
+  font-weight: 600;
+  margin: 0.25em;
 }
 
 /* Search Results */
