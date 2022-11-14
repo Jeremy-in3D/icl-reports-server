@@ -1,7 +1,9 @@
+//@ts-nocheck
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
 import { Question } from "../../data/reports-data";
 import { QuestionInput } from "./question-content";
+import { questionBank } from "../../data/reports-data";
 
 export const MichlolForm: React.FC<{
   reportInstance: CreateReport;
@@ -18,13 +20,16 @@ export const MichlolForm: React.FC<{
   setCurrentQuestion,
   setIsOpen,
 }) => {
+  //Maybe factor the filter out to the previous layer, and prop down the already ready formQuestions
+  const formQuestions = questionBank.filter(
+    (question) => !questions.includes(question.id)
+  );
   const {
     id: questionId,
     question,
     type,
     options,
-  } = questions[currentQuestion];
-
+  } = formQuestions[currentQuestion];
   return (
     <>
       <p className="michlol-question">{question}</p>

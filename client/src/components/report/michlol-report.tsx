@@ -14,6 +14,7 @@ export const MichlolReport: React.FC<{
   const completedClass = `${isComplete ? "complete" : "incomplete"}`;
   const openClass = `${isOpen ? "opened" : "closed"}`;
 
+  console.log(questions);
   return (
     <div className="michlol">
       <div

@@ -1,25 +1,25 @@
-const questionBank: {
-  [id: string]: Question;
-} = {
-  Q01: {
+//@ts-nocheck
+
+export const questionBank = [
+  {
     id: "question 1",
     type: "mc",
     question: "מה המספר האוהב שלך?",
     options: ["אחד", "שתים", "שלוש", "ארבע"],
   },
-  Q02: {
+  {
     id: "question 2",
     type: "range",
     question: "מאחד את עשר כמה אוהב חיות?",
     options: { start: 0, end: 10, step: 1 },
   },
-  Q03: {
+  {
     id: "question 3",
     type: "text",
     question: "מה על הראש שלך?",
     options: null,
   },
-};
+];
 
 export const reportsData = [
   {
@@ -29,49 +29,49 @@ export const reportsData = [
       {
         id: "S1-M1",
         name: "מיכלול 1",
-        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+        questions: ["question1", "question2", "question3"] as any,
       },
     ],
   },
   {
-    id: "S1",
+    id: "S2",
     name: "מפעל למטה",
     michlolim: [
       {
-        id: "S1-M1",
+        id: "S2-M1",
         name: "מיכלול 1",
         questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
       },
     ],
   },
   {
-    id: "S1",
+    id: "S3",
     name: "חדר מנוע",
     michlolim: [
       {
-        id: "S1-M1",
+        id: "S3-M1",
         name: "מיכלול 1",
         questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
       },
     ],
   },
   {
-    id: "S1",
+    id: "S4",
     name: "גינה בחוץ",
     michlolim: [
       {
-        id: "S1-M1",
+        id: "S4-M1",
         name: "מיכלול 1",
         questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
       },
     ],
   },
   {
-    id: "S1",
+    id: "S5",
     name: "מרתף",
     michlolim: [
       {
-        id: "S1-M1",
+        id: "S5-M1",
         name: "מיכלול 1",
         questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
       },
