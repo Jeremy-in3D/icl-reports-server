@@ -14,7 +14,7 @@ export const InputRadio: React.FC<{
     <div className="radio-wrapper">
       {options.map((choice, idx) => {
         return (
-          <div className="radio-question" key={idx}>
+          <div className="radio-inputs" key={idx}>
             <input
               type="radio"
               name={`${michlolId}-${questionId}`}

@@ -12,18 +12,20 @@ export const InputRange: React.FC<{
   const [level, setLevel] = useState(savedAnswer ?? "0");
 
   return (
-    <div>
-      <input
-        name={`${michlolId}-${questionId}`}
-        type={"range"}
-        min={options.start}
-        max={options.end}
-        step={options.step}
-        defaultValue={savedAnswer ? Number.parseInt(savedAnswer) : 0}
-        onChange={(e) => setLevel(e.target.value)}
-      ></input>
-      <div>{level}</div>
-    </div>
+    <>
+      <span className="range-value">{level}</span>
+      <div className="range-wrapper">
+        <input
+          name={`${michlolId}-${questionId}`}
+          type={"range"}
+          min={options.start}
+          max={options.end}
+          step={options.step}
+          defaultValue={savedAnswer ? Number.parseInt(savedAnswer) : 0}
+          onChange={(e) => setLevel(e.target.value)}
+        ></input>
+      </div>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CreateReport } from "../../classes/create-report";
 
 export const InputTextArea: React.FC<{
@@ -6,16 +6,37 @@ export const InputTextArea: React.FC<{
   michlolId: string;
   questionId: string;
 }> = ({ reportInstance, michlolId, questionId }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [charactersLeft, setCharactersLeft] = useState<number>(100);
+  const [string, setString] = useState(
+    reportInstance.michlolim[michlolId]?.answers?.[questionId] ?? ""
+  );
+
+  useEffect(() => {
+    setCharactersLeft(100 - string.length);
+  }, [string]);
+
   return (
-    <div>
+    <div className="free-text">
+      <textarea
+        maxLength={100}
+        rows={4}
+        className="text-area"
+        onChange={(e) => {
+          inputRef.current!.value = e.currentTarget.value;
+          setString(e.currentTarget.value);
+        }}
+        defaultValue={string}
+      ></textarea>
+      <p className="test">{`נותרו ${charactersLeft}`}</p>
       <input
+        ref={inputRef}
+        className="text-input"
         name={`${michlolId}-${questionId}`}
         type={"text"}
-        maxLength={50}
+        maxLength={100}
         autoComplete={"off"}
-        defaultValue={
-          reportInstance.michlolim[michlolId]?.answers?.[questionId] ?? ""
-        }
+        defaultValue={string}
       ></input>
     </div>
   );

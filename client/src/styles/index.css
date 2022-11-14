@@ -198,12 +198,12 @@ button:disabled {
   justify-content: center;
 }
 
-.radio-question {
+.radio-inputs {
   margin: 0.5em 0;
   flex-basis: 70%;
 }
 
-.radio-question input {
+.radio-inputs input {
   display: none;
 }
 
@@ -218,8 +218,52 @@ button:disabled {
 }
 
 .radio-for-label:checked + .label-for-radio {
-  background: var(--blue5);
+  background: var(--blue4);
   color: white;
+}
+
+.range-wrapper {
+  background-color: rgba(0, 0, 0, 0.623);
+  padding: 1em;
+  margin: 0.5em 2em;
+  border-radius: 2em;
+}
+
+.range-value {
+  margin: 0.5em;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+input[type="range"] {
+  height: 4.5px;
+  position: relative;
+  bottom: 2px;
+}
+
+.free-text {
+  width: 100%;
+  text-align: center;
+}
+
+textarea {
+  resize: none;
+}
+
+.test {
+  width: 70%;
+  text-align: right;
+  margin: auto;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.text-area {
+  width: 70%;
+}
+
+.text-input {
+  display: none;
 }
 
 /* Michlol */
@@ -312,8 +356,12 @@ button:disabled {
 
 .michlol-question {
   font-size: 1.4em;
-  font-weight: 600;
-  margin: 0.25em;
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 5px;
+  background: var(--blue5);
+  color: white;
+  text-overflow: clip;
 }
 
 /* Search Results */

@@ -27,6 +27,7 @@ export const MichlolForm: React.FC<{
 
   return (
     <>
+      <p className="michlol-question">{question}</p>
       <form
         className="michlol-form"
         onChange={(e) => e.currentTarget.requestSubmit()}
@@ -34,7 +35,6 @@ export const MichlolForm: React.FC<{
           handleFormSubmit(e, reportInstance, michlolId, questionId)
         }
       >
-        <p className="michlol-question">{question}</p>
         <QuestionInput
           reportInstance={reportInstance}
           michlolId={michlolId}
@@ -83,5 +83,7 @@ function handleFormSubmit(
   const formData = new FormData(e.target as HTMLFormElement);
   const formObj = Object.fromEntries(formData);
   const value = formObj[`${michlolId}-${questionId}`] as string;
+  console.log(formObj);
+  console.log(value);
   reportInstance.setValue(michlolId, questionId, value);
 }
