@@ -35,7 +35,7 @@ export const reportsData = [
   },
   {
     id: "S1",
-    name: "מפעל למלה",
+    name: "מפעל למטה",
     michlolim: [
       {
         id: "S1-M1",
@@ -46,7 +46,7 @@ export const reportsData = [
   },
   {
     id: "S1",
-    name: "מפעל למלה",
+    name: "חדר מנוע",
     michlolim: [
       {
         id: "S1-M1",
@@ -57,7 +57,7 @@ export const reportsData = [
   },
   {
     id: "S1",
-    name: "מפעל למלה",
+    name: "גינה בחוץ",
     michlolim: [
       {
         id: "S1-M1",
@@ -68,7 +68,7 @@ export const reportsData = [
   },
   {
     id: "S1",
-    name: "מפעל למלה",
+    name: "מרתף",
     michlolim: [
       {
         id: "S1-M1",

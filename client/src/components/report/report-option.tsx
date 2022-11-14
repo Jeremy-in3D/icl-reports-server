@@ -8,7 +8,11 @@ export const ReportOption: React.FC<{
 }> = ({ text, disabled, onClick, children }) => {
   return (
     <div className="report-option">
-      <button className="report-button" disabled={disabled} onClick={onClick}>
+      <button
+        className="report-option-button"
+        disabled={disabled}
+        onClick={onClick}
+      >
         {text}
       </button>
       {children}

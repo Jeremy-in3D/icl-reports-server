@@ -6,16 +6,16 @@ import { ReportView } from "./report-view";
 
 export const ReportSelect: React.FC<{
   report: { id: string; name: string };
-}> = ({ report: { id, name } }) => {
+}> = ({ report }) => {
   const [reportView, setReportView] = useState(false);
-  const reportInstance = useRef(new CreateReport(id, name)).current;
-  const [existingReport, existingReportDetails] = isExistingReport(id);
+  const reportInstance = useRef(new CreateReport(report)).current;
+  const [existingReport, existingReportDetails] = isExistingReport(report.id);
 
-  // if (reportView) return <ReportView reportInstance={reportInstance} />;
+  if (reportView) return <ReportView reportInstance={reportInstance} />;
 
   return (
     <div className="report-options">
-      <h1 className="page-title">{name}</h1>
+      <h1 className="page-title">{report.name}</h1>
       <ReportOption
         text='המשיך בדו"ח הקיים'
         disabled={existingReport === undefined}

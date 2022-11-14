@@ -15,6 +15,10 @@
   --blue4opaque: rgba(0, 106, 136, 0.5);
   --blue5opaque: rgba(0, 40, 70, 0.5);
   --radial-gradient: radial-gradient(var(--blue5), var(--blue4), var(--blue2));
+  --radial-gradient-dark: radial-gradient(
+    rgba(0, 141, 172, 0.2),
+    rgba(100, 106, 136, 0.4)
+  );
 }
 
 html,
@@ -49,6 +53,7 @@ body,
   padding: 0.5em;
   box-shadow: 0px 0px 5px black;
   margin-bottom: 0.5em;
+  height: 60px;
 }
 
 .logo {
@@ -139,33 +144,44 @@ body,
 
 .reports-selections-btn {
   flex-basis: 45%;
-  max-width: 250px;
-  height: 100px;
   margin: 0.25em;
+  padding: 0.5em;
   border-radius: 6px;
   font-size: 1.6em;
-  font-weight: 700;
+  font-weight: 600;
   background: url("../../assets/abstract-background2.jpg");
   background-size: cover;
-  border: 3px solid black;
+  background-position: center;
+  border: 2px solid black;
 }
 
 .reports-selections-btn:hover {
   border: 2px solid yellow;
 }
 
-.report-options {
-  display: flex;
-  flex-flow: column wrap;
+.report-option {
+  font-size: 1.3em;
+  font-weight: 500;
+  background-color: rgba(20, 20, 20, 0.7);
+  margin: 1em;
+  padding: 1em 0em;
+  height: 250px;
   text-align: center;
-  justify-content: flex-start;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  color: white;
 }
 
-.report-option {
-  background-color: rgba(128, 128, 128, 0.2);
-  margin: 1em 1em;
-  padding: 2em;
-  border-radius: 10px;
+.report-option-button {
+  max-width: 250px;
+  font-size: 1.2em;
+  font-weight: 600;
+  padding: 1em;
+  margin: 1em;
+  border-radius: 5px;
+  border: none;
 }
 
 .check-with-label:checked + .label-for-check {
@@ -295,7 +311,7 @@ button:disabled {
 }
 
 .search-headers {
-  background: var(--radial-gradient);
+  background: var(--radial-gradient-dark);
   padding: 0em 0.25em;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -344,6 +360,7 @@ button:disabled {
 .search-inputs {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
 }
 
 .search-date-wrapper {

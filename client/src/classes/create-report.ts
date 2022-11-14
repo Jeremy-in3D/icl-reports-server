@@ -8,9 +8,9 @@ export class CreateReport {
   michlolCompleted: { [id: string]: boolean };
   dateUploaded: number | null;
 
-  constructor(id: string, name: string) {
-    this.id = id;
-    this.name = name;
+  constructor(report: { id: string; name: string }) {
+    this.id = report.id;
+    this.name = report.name;
     this.michlolim = {};
     this.michlolCompleted = {};
     this.dateUploaded = null;
