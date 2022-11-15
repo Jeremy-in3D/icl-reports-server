@@ -1,28 +1,28 @@
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
+import { QuestionBank } from "../../data/reports-data";
 import { QuestionContent } from "./question-content";
-import { questionBank } from "../../data/reports-data";
 
 export const MichlolForm: React.FC<{
   reportInstance: CreateReport;
   michlolId: string;
-  questions: any;
-  currentQuestion: number;
-  setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
+  questions: string[];
+  currentQuestion: QuestionBank[number];
+  questionNumber: number;
+  setQuestionNumber: React.Dispatch<React.SetStateAction<number>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({
   reportInstance,
   michlolId,
   questions,
   currentQuestion,
-  setCurrentQuestion,
+  questionNumber,
+  setQuestionNumber,
   setIsOpen,
 }) => {
   //Maybe factor the filter out to the previous layer, and prop down the already ready formQuestions
-  const formQuestions = questionBank.filter(
-    (question) => !questions.includes(question.id)
-  );
-  const { id: questionId, question } = formQuestions[currentQuestion];
+
+  const { question, id: questionId } = currentQuestion;
   return (
     <>
       <p className="michlol-question">{question}</p>
@@ -37,22 +37,22 @@ export const MichlolForm: React.FC<{
           reportInstance={reportInstance}
           michlolId={michlolId}
           questionId={questionId}
-          question={formQuestions[currentQuestion]}
+          question={currentQuestion}
         />
         <div className="form-movements">
           <button
             className="form-movement-btn"
-            disabled={currentQuestion === 0}
+            disabled={questionNumber === 0}
             type={"button"}
-            onClick={() => setCurrentQuestion((prevState) => --prevState)}
+            onClick={() => setQuestionNumber((prevState) => --prevState)}
           >
             חזור
           </button>
           <button
             className="form-movement-btn"
             type={"button"}
-            disabled={currentQuestion + 1 === questions!.length}
-            onClick={() => setCurrentQuestion((prevState) => ++prevState)}
+            disabled={questionNumber + 1 === questions!.length}
+            onClick={() => setQuestionNumber((prevState) => ++prevState)}
           >
             הבא
           </button>
@@ -85,7 +85,5 @@ function handleFormSubmit(
   const formData = new FormData(e.target as HTMLFormElement);
   const formObj = Object.fromEntries(formData);
   const value = formObj[`${michlolId}-${questionId}`] as string;
-  console.log(formObj);
-  console.log(value);
   reportInstance.setValue(michlolId, questionId, value);
 }

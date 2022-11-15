@@ -1,16 +1,18 @@
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
-import { Question } from "../../data/reports-data";
+import { QuestionBank } from "../../data/reports-data";
 
 export const QuestionsList: React.FC<{
   reportInstance: CreateReport;
   michlolId: string;
-  questions: Question[];
-  currentQuestion: number;
-  setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
+  questions: string[];
+  questionNumber: number;
+  setQuestionNumber: React.Dispatch<React.SetStateAction<number>>;
+  currentQuestion: QuestionBank[number];
 }> = ({
   questions,
-  setCurrentQuestion,
+  questionNumber,
+  setQuestionNumber,
   reportInstance,
   michlolId,
   currentQuestion,
@@ -19,8 +21,8 @@ export const QuestionsList: React.FC<{
     {questions.map((question, idx) => {
       let style;
       const isAnswered =
-        reportInstance.michlolim[michlolId]?.answers?.[question.id];
-      if (idx === currentQuestion) style = "current";
+        reportInstance.michlolim[michlolId]?.answers?.[currentQuestion.id];
+      if (idx === questionNumber) style = "current";
       else if (isAnswered) style = "green";
       else style = "red";
 
@@ -28,7 +30,7 @@ export const QuestionsList: React.FC<{
         <div
           className={`m-question-marker ${style}`}
           key={idx}
-          onClick={() => setCurrentQuestion(idx)}
+          onClick={() => setQuestionNumber(idx)}
         >
           {idx + 1}
         </div>

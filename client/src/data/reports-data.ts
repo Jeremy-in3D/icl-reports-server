@@ -29,6 +29,11 @@ export const reportsData = [
         name: "מיכלול 1",
         questions: ["question1", "question2", "question3"],
       },
+      {
+        id: "S1-M2",
+        name: "מיכלול 2",
+        questions: ["question1", "question2"],
+      },
     ],
   },
   {

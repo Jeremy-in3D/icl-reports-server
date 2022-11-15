@@ -3,18 +3,22 @@ import { CreateReport } from "../../classes/create-report";
 import { Michlol } from "../../data/reports-data";
 import { MichlolForm } from "./michlol-form";
 import { QuestionsList } from "./questions-list";
+import { questionBank } from "../../data/reports-data";
 
 export const MichlolReport: React.FC<{
   reportInstance: CreateReport;
   michlol: Michlol;
 }> = ({ reportInstance, michlol: { id: michlolId, name, questions } }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(0);
   const isComplete = reportInstance.michlolCompleted[michlolId];
   const completedClass = `${isComplete ? "complete" : "incomplete"}`;
   const openClass = `${isOpen ? "opened" : "closed"}`;
+  const formQuestions = questionBank.filter(
+    (question) => !questions.includes(question.id)
+  );
+  const currentQuestion = formQuestions[questionNumber];
 
-  console.log(questions);
   return (
     <div className="michlol">
       <div
@@ -29,17 +33,19 @@ export const MichlolReport: React.FC<{
             reportInstance={reportInstance}
             michlolId={michlolId}
             questions={questions}
+            questionNumber={questionNumber}
+            setQuestionNumber={setQuestionNumber}
             currentQuestion={currentQuestion}
-            setCurrentQuestion={setCurrentQuestion}
           />
         </div>
         <MichlolForm
           reportInstance={reportInstance}
           michlolId={michlolId}
           questions={questions}
-          currentQuestion={currentQuestion}
-          setCurrentQuestion={setCurrentQuestion}
+          questionNumber={questionNumber}
+          setQuestionNumber={setQuestionNumber}
           setIsOpen={setIsOpen}
+          currentQuestion={currentQuestion}
         />
       </div>
     </div>
