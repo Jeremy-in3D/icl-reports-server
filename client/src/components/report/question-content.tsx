@@ -1,25 +1,24 @@
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
-import { OptionsTypes, QuestionTypes } from "../../data/reports-data";
+import { QuestionBank } from "../../data/reports-data";
 import { InputRadio } from "./input-radio";
 import { InputRange } from "./input-range";
 import { InputTextArea } from "./input-textarea";
 
-export const QuestionInput: React.FC<{
+export const QuestionContent: React.FC<{
   reportInstance: CreateReport;
   michlolId: string;
   questionId: string;
-  type: QuestionTypes;
-  options: OptionsTypes;
-}> = ({ reportInstance, michlolId, questionId, type, options }) => {
-  switch (type) {
+  question: QuestionBank[number];
+}> = ({ reportInstance, michlolId, questionId, question }) => {
+  switch (question.type) {
     case "mc":
       return (
         <InputRadio
           reportInstance={reportInstance}
           michlolId={michlolId}
           questionId={questionId}
-          options={options as string[]}
+          options={question.options}
         />
       );
     case "range":
@@ -28,7 +27,7 @@ export const QuestionInput: React.FC<{
           reportInstance={reportInstance}
           michlolId={michlolId}
           questionId={questionId}
-          options={options as InputRange}
+          options={question.options}
         />
       );
     case "text":

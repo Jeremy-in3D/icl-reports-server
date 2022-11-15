@@ -1,6 +1,4 @@
-//@ts-nocheck
-
-export const questionBank = [
+export const questionBank: QuestionBank = [
   {
     id: "question 1",
     type: "mc",
@@ -29,7 +27,7 @@ export const reportsData = [
       {
         id: "S1-M1",
         name: "מיכלול 1",
-        questions: ["question1", "question2", "question3"] as any,
+        questions: ["question1", "question2", "question3"],
       },
     ],
   },
@@ -40,7 +38,7 @@ export const reportsData = [
       {
         id: "S2-M1",
         name: "מיכלול 1",
-        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+        questions: ["question1", "question2", "question3"],
       },
     ],
   },
@@ -51,7 +49,7 @@ export const reportsData = [
       {
         id: "S3-M1",
         name: "מיכלול 1",
-        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+        questions: ["question1", "question2", "question3"],
       },
     ],
   },
@@ -62,7 +60,7 @@ export const reportsData = [
       {
         id: "S4-M1",
         name: "מיכלול 1",
-        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+        questions: ["question1", "question2", "question3"],
       },
     ],
   },
@@ -73,51 +71,32 @@ export const reportsData = [
       {
         id: "S5-M1",
         name: "מיכלול 1",
-        questions: [questionBank.Q01, questionBank.Q02, questionBank.Q03],
+        questions: ["question1", "question2", "question3"],
       },
     ],
   },
 ];
-
-export type QuestionTypes = "mc" | "range" | "text";
-type Options = {
-  mc: string[];
-  range: { start: number; end: number; step: number };
-  text: null;
-};
-export type OptionsTypes = Options[QuestionTypes];
-export type Question = {
-  id: string;
-  type: QuestionTypes;
-  question: string;
-  options: OptionsTypes;
-};
-
 export type Michlol = {
   id: string;
   name: string;
-  questions: Question[];
+  questions: string[];
 };
 
-//Incorporate below solution into project
 type ValueType = {
-  text: string;
-  numeric: number;
+  mc: string[];
+  text: null;
+  range: {
+    start: number;
+    end: number;
+    step: number;
+  };
 };
 
-type Question1 = {
-  [KEY in keyof ValueType]: { type: KEY; value: ValueType[KEY][] };
-}[keyof ValueType];
-type Question2 =
-  | { type: "text"; value: string[] }
-  | { type: "numberic"; value: number[] };
-
-const myQuestion: Record<string, Question1> = {
-  first: { type: "text", value: ["a"] },
-};
-
-for (const q of Object.values(myQuestion)) {
-  if (q.type === "text") {
-    //
-  }
-}
+export type QuestionBank = {
+  [KEY in keyof ValueType]: {
+    type: KEY;
+    options: ValueType[KEY];
+    id: string;
+    question: string;
+  };
+}[keyof ValueType][];

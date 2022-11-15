@@ -1,14 +1,12 @@
-//@ts-nocheck
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
-import { Question } from "../../data/reports-data";
-import { QuestionInput } from "./question-content";
+import { QuestionContent } from "./question-content";
 import { questionBank } from "../../data/reports-data";
 
 export const MichlolForm: React.FC<{
   reportInstance: CreateReport;
   michlolId: string;
-  questions: Question[];
+  questions: any;
   currentQuestion: number;
   setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,12 +22,7 @@ export const MichlolForm: React.FC<{
   const formQuestions = questionBank.filter(
     (question) => !questions.includes(question.id)
   );
-  const {
-    id: questionId,
-    question,
-    type,
-    options,
-  } = formQuestions[currentQuestion];
+  const { id: questionId, question } = formQuestions[currentQuestion];
   return (
     <>
       <p className="michlol-question">{question}</p>
@@ -40,12 +33,11 @@ export const MichlolForm: React.FC<{
           handleFormSubmit(e, reportInstance, michlolId, questionId)
         }
       >
-        <QuestionInput
+        <QuestionContent
           reportInstance={reportInstance}
           michlolId={michlolId}
           questionId={questionId}
-          type={type}
-          options={options}
+          question={formQuestions[currentQuestion]}
         />
         <div className="form-movements">
           <button
