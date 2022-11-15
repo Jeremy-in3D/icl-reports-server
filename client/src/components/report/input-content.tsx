@@ -5,7 +5,7 @@ import { InputRadio } from "./input-radio";
 import { InputRange } from "./input-range";
 import { InputTextArea } from "./input-textarea";
 
-export const QuestionContent: React.FC<{
+export const InputContent: React.FC<{
   reportInstance: CreateReport;
   michlolId: string;
   questionId: string;

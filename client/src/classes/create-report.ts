@@ -29,7 +29,7 @@ export class CreateReport {
   saveSurvey() {
     this.dateUploaded = Date.now();
     this.date = getDateString(new Date(Date.now()));
-    return this;
+    return JSON.stringify(this);
   }
 
   loadExistingSurvey(data: string) {

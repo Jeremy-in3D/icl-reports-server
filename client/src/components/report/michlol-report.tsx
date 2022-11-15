@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { CreateReport } from "../../classes/create-report";
 import { Michlol } from "../../data/reports-data";
 import { MichlolForm } from "./michlol-form";
@@ -11,17 +11,16 @@ export const MichlolReport: React.FC<{
 }> = ({ reportInstance, michlol }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(0);
-  const { id: michlolId, name, questions } = michlol;
-  const isComplete = reportInstance.michlolCompleted[michlolId];
+  const isComplete = reportInstance.michlolCompleted[michlol.id];
   const completedClass = `${isComplete ? "complete" : "incomplete"}`;
   const openClass = `${isOpen ? "opened" : "closed"}`;
-  const formQuestions = questionBank.filter((question) =>
-    questions.includes(question.id)
-  );
-  const currentQuestion = formQuestions[questionNumber];
+  const currentQuestion = questionBank.filter((question) =>
+    michlol.questions.includes(question.id)
+  )[questionNumber];
+  console.log(currentQuestion);
 
   function checkAnswer(question: string) {
-    if (reportInstance.michlolim[michlolId]?.answers?.[question]) return true;
+    if (reportInstance.michlolim[michlol.id]?.answers?.[question]) return true;
     return false;
   }
 
@@ -31,19 +30,19 @@ export const MichlolReport: React.FC<{
         onClick={() => setIsOpen((prevState) => !prevState)}
         className={`bar ${completedClass} ${openClass}`}
       >
-        {name}
+        {michlol.name}
       </div>
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
         <QuestionsList
-          questions={questions}
+          questions={michlol.questions}
           questionNumber={questionNumber}
           checkAnswer={checkAnswer}
           setQuestionNumber={setQuestionNumber}
         />
         <MichlolForm
           reportInstance={reportInstance}
-          michlolId={michlolId}
-          questions={questions}
+          michlolId={michlol.id}
+          questions={michlol.questions}
           questionNumber={questionNumber}
           currentQuestion={currentQuestion}
           setIsOpen={setIsOpen}
