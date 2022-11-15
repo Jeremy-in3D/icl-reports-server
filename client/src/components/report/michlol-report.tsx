@@ -20,6 +20,11 @@ export const MichlolReport: React.FC<{
   );
   const currentQuestion = formQuestions[questionNumber];
 
+  function checkAnswer(question: string) {
+    if (reportInstance.michlolim[michlolId]?.answers?.[question]) return true;
+    return false;
+  }
+
   return (
     <div className="michlol">
       <div
@@ -29,23 +34,20 @@ export const MichlolReport: React.FC<{
         {name}
       </div>
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
-        <div className="michlol-questions-array">
-          <QuestionsList
-            reportInstance={reportInstance}
-            michlolId={michlolId}
-            questions={questions}
-            questionNumber={questionNumber}
-            setQuestionNumber={setQuestionNumber}
-          />
-        </div>
+        <QuestionsList
+          questions={questions}
+          questionNumber={questionNumber}
+          checkAnswer={checkAnswer}
+          setQuestionNumber={setQuestionNumber}
+        />
         <MichlolForm
           reportInstance={reportInstance}
           michlolId={michlolId}
           questions={questions}
           questionNumber={questionNumber}
-          setQuestionNumber={setQuestionNumber}
-          setIsOpen={setIsOpen}
           currentQuestion={currentQuestion}
+          setIsOpen={setIsOpen}
+          setQuestionNumber={setQuestionNumber}
         />
       </div>
     </div>
