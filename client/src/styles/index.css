@@ -267,6 +267,19 @@ textarea {
 }
 
 /* Michlol */
+
+.michlolim-selections {
+  margin: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+}
+
+.michlol-selection {
+  background-color: red;
+  padding: 0.5em;
+}
+
 .michlol {
   display: block;
   width: 98%;

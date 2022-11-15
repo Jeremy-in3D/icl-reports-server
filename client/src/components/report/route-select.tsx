@@ -11,7 +11,6 @@ export const RouteSelect: React.FC<{
   const [routeView, setRouteView] = useState(false);
   const routeData = useRef(new Route(route)).current;
   const [existingReport, existingReportDetails] = isExistingReport(route.id);
-  console.log(routeData);
   if (routeView) return <RouteView routeData={routeData} />;
 
   return (

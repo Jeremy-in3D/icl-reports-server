@@ -1,24 +1,29 @@
 export const routes: Routes = [
   {
-    id: "S1",
+    id: "R1",
     name: "מסלול מספר 1",
     michlolim: [
       {
-        id: "S1-M1",
+        id: "R1-M1",
         name: "מסוע משקולת",
-        machines: ["R-2010-050-209"],
+        machines: { "R-2010-050-209": ["123"] },
+      },
+      {
+        id: "R1-M2",
+        name: "מגרסה",
+        machines: { "R-2010-050-205": ["123"] },
       },
     ],
   },
 ];
-export type Michlol = {
+export type MichlolContents = {
   id: string;
   name: string;
-  machines: string[];
+  machines: { [id: string]: string[] };
 };
 
 export type Routes = {
   id: string;
   name: string;
-  michlolim: Michlol[];
+  michlolim: MichlolContents[];
 }[];
