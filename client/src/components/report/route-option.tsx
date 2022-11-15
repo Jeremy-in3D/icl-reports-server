@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ReportOption: React.FC<{
+export const RouteOption: React.FC<{
   text: string;
   disabled: boolean;
   onClick: () => void;

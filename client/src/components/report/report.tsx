@@ -1,31 +1,29 @@
 import React, { useState } from "react";
-import { ReportSelect } from "./report-select";
-import { reports } from "../../data/reports-data";
+import { Routes, routes } from "../../data/reports-data";
+import { RouteSelect } from "./route-select";
 
-export const Report: React.FC<{}> = () => {
-  const [report, setReport] = useState<{ id: string; name: string } | null>(
-    null
-  );
+export const Report: React.FC = () => {
+  const [route, setRoute] = useState<Routes[number] | null>(null);
 
-  if (report)
+  if (route)
     return (
       <div className="report">
-        <ReportSelect report={report} />
+        <RouteSelect route={route} />
       </div>
     );
 
-  const options = Object.values(reports);
+  const possibleRoutes = Object.values(routes);
   return (
     <div className="reports">
       <p className="page-title">יצור דו"ח</p>
-      <div className="reports-selections">
-        {options.map((option, idx) => (
+      <div className="routes-selections">
+        {possibleRoutes.map((route, idx) => (
           <button
-            className="reports-selections-btn"
-            onClick={() => setReport(option)}
+            className="routes-selection-btn"
+            onClick={() => setRoute(route)}
             key={idx}
           >
-            {option.name}
+            {route.name}
           </button>
         ))}
       </div>

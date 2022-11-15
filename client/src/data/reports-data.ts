@@ -1,61 +1,12 @@
-export const reports: Reports = [
+export const routes: Routes = [
   {
     id: "S1",
-    name: "מפעל למלה",
+    name: "מסלול מספר 1",
     michlolim: [
       {
         id: "S1-M1",
-        name: "מיכלול 1",
-        questions: ["question1", "question2", "question3"],
-      },
-      {
-        id: "S1-M2",
-        name: "מיכלול 2",
-        questions: ["question1", "question2"],
-      },
-    ],
-  },
-  {
-    id: "S2",
-    name: "מפעל למטה",
-    michlolim: [
-      {
-        id: "S2-M1",
-        name: "מיכלול 1",
-        questions: ["question1", "question2", "question3"],
-      },
-    ],
-  },
-  {
-    id: "S3",
-    name: "חדר מנוע",
-    michlolim: [
-      {
-        id: "S3-M1",
-        name: "מיכלול 1",
-        questions: ["question1", "question2", "question3"],
-      },
-    ],
-  },
-  {
-    id: "S4",
-    name: "גינה בחוץ",
-    michlolim: [
-      {
-        id: "S4-M1",
-        name: "מיכלול 1",
-        questions: ["question1", "question2", "question3"],
-      },
-    ],
-  },
-  {
-    id: "S5",
-    name: "מרתף",
-    michlolim: [
-      {
-        id: "S5-M1",
-        name: "מיכלול 1",
-        questions: ["question1", "question2", "question3"],
+        name: "מסוע משקולת",
+        machines: ["R-2010-050-209"],
       },
     ],
   },
@@ -63,10 +14,10 @@ export const reports: Reports = [
 export type Michlol = {
   id: string;
   name: string;
-  questions: string[];
+  machines: string[];
 };
 
-type Reports = {
+export type Routes = {
   id: string;
   name: string;
   michlolim: Michlol[];

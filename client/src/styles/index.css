@@ -136,13 +136,13 @@ body,
   overflow-y: scroll;
 }
 
-.reports-selections {
+.routes-selections {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
 }
 
-.reports-selections-btn {
+.routes-selection-btn {
   flex-basis: 45%;
   margin: 0.25em;
   padding: 0.5em;
@@ -154,7 +154,7 @@ body,
   color: white;
 }
 
-.reports-selections-btn:hover {
+.routes-selection-btn:hover {
   border: 2px solid yellow;
 }
 

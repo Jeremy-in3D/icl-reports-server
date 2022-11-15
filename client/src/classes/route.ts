@@ -1,6 +1,6 @@
 import { getDateString } from "../helpers/dates";
 
-export class CreateReport {
+export class Route {
   [key: string]: any;
   id: string;
   name: string;
