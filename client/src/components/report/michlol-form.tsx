@@ -1,6 +1,7 @@
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
 import { QuestionBank } from "../../data/question-bank";
+import { FormNavigation } from "./form-navigation";
 import { InputContent } from "./input-content";
 import { ReportMovementButton } from "./report-movement-btn";
 
@@ -38,18 +39,11 @@ export const MichlolForm: React.FC<{
           questionId={questionId}
           question={currentQuestion}
         />
-        <div className="form-movements">
-          <ReportMovementButton
-            text={"חזור"}
-            disabled={questionNumber === 0}
-            onClick={() => setQuestionNumber((prevState) => --prevState)}
-          />
-          <ReportMovementButton
-            text={"הבא"}
-            disabled={questionNumber + 1 === questions!.length}
-            onClick={() => setQuestionNumber((prevState) => ++prevState)}
-          />
-        </div>
+        <FormNavigation
+          questionNumber={questionNumber}
+          questions={questions}
+          setQuestionNumber={setQuestionNumber}
+        />
       </form>
       <button
         className="michlol-submit-btn"
