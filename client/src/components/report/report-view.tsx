@@ -1,6 +1,6 @@
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
-import { reportsData } from "../../data/reports-data";
+import { reports } from "../../data/reports-data";
 import { MichlolReport } from "./michlol-report";
 
 export const ReportView: React.FC<{
@@ -9,13 +9,13 @@ export const ReportView: React.FC<{
   return (
     <>
       <h1 className="page-title">{reportInstance.name}</h1>
-      {reportsData
+      {reports
         .find((report) => report.id === reportInstance.id)
         ?.michlolim.map((michlol, idx) => (
           <MichlolReport
+            key={idx}
             reportInstance={reportInstance}
             michlol={michlol}
-            key={idx}
           />
         ))}
       <button

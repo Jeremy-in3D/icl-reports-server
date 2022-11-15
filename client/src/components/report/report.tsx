@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ReportSelect } from "./report-select";
-import { reportsData } from "../../data/reports-data";
+import { reports } from "../../data/reports-data";
 
 export const Report: React.FC<{}> = () => {
   const [report, setReport] = useState<{ id: string; name: string } | null>(
@@ -14,7 +14,7 @@ export const Report: React.FC<{}> = () => {
       </div>
     );
 
-  const options = Object.values(reportsData);
+  const options = Object.values(reports);
   return (
     <div className="reports">
       <p className="page-title">יצור דו"ח</p>

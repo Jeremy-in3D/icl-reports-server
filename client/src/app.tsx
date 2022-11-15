@@ -6,10 +6,6 @@ import { Search } from "./components/search/search";
 import { Home } from "./home";
 
 const logo = new URL("../assets/logo.webp", import.meta.url);
-const home = new URL(
-  "../assets/icons/bar-icons/home-icon.png",
-  import.meta.url
-);
 
 export const App: React.FC = () => {
   const [showScreen, setShowScreen] = useState("home");

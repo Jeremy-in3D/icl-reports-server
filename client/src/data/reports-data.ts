@@ -1,25 +1,4 @@
-export const questionBank: QuestionBank = [
-  {
-    id: "question 1",
-    type: "mc",
-    question: "מה המספר האוהב שלך?",
-    options: ["אחד", "שתים", "שלוש", "ארבע"],
-  },
-  {
-    id: "question 2",
-    type: "range",
-    question: "מאחד את עשר כמה אוהב חיות?",
-    options: { start: 0, end: 10, step: 1 },
-  },
-  {
-    id: "question 3",
-    type: "text",
-    question: "מה על הראש שלך?",
-    options: null,
-  },
-];
-
-export const reportsData = [
+export const reports: Reports = [
   {
     id: "S1",
     name: "מפעל למלה",
@@ -87,21 +66,8 @@ export type Michlol = {
   questions: string[];
 };
 
-type ValueType = {
-  mc: string[];
-  text: null;
-  range: {
-    start: number;
-    end: number;
-    step: number;
-  };
-};
-
-export type QuestionBank = {
-  [KEY in keyof ValueType]: {
-    type: KEY;
-    options: ValueType[KEY];
-    id: string;
-    question: string;
-  };
-}[keyof ValueType][];
+type Reports = {
+  id: string;
+  name: string;
+  michlolim: Michlol[];
+}[];

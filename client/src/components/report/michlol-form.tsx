@@ -1,6 +1,6 @@
 import React from "react";
 import { CreateReport } from "../../classes/create-report";
-import { QuestionBank } from "../../data/reports-data";
+import { QuestionBank } from "../../data/question-bank";
 import { QuestionContent } from "./question-content";
 
 export const MichlolForm: React.FC<{
