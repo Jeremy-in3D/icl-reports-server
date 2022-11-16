@@ -267,7 +267,6 @@ textarea {
 }
 
 /* Michlol */
-
 .michlolim-selections {
   margin: 1em;
   display: flex;
@@ -280,7 +279,7 @@ textarea {
   padding: 0.5em;
 }
 
-.michlol {
+.machine {
   display: block;
   width: 98%;
   overflow: hidden;
@@ -288,14 +287,14 @@ textarea {
   border-radius: 5px;
 }
 
-.michlol .bar {
+.machine .bar {
   position: relative;
   padding: 0.75em;
   width: 100%;
   background: linear-gradient(#db1212, #dd503d);
 }
 
-.michlol .bar.closed::after {
+.machine .bar.closed::after {
   padding-left: 1em;
   font-weight: 700;
   color: white;
@@ -304,7 +303,7 @@ textarea {
   content: "ᐸ";
 }
 
-.michlol .bar.opened::after {
+.machine .bar.opened::after {
   content: "ᐯ";
   padding-left: 1em;
   font-weight: 700;
@@ -313,12 +312,8 @@ textarea {
   left: 0;
 }
 
-.michlol .bar.complete {
+.machine .bar.complete {
   background: linear-gradient(#1f8b3a, #46815f);
-}
-
-.michlol-questions-array {
-  padding: 0.25em;
 }
 
 .m-question-marker {
@@ -361,14 +356,14 @@ textarea {
   max-height: 2000px;
 }
 
-.michlol-form {
+.machine-form {
   display: flex;
   flex-flow: column wrap;
   align-items: center;
   height: 400px;
 }
 
-.michlol-question {
+.machine-question {
   font-size: 1.4em;
   margin: 0.5em;
   padding: 0.5em;
@@ -392,7 +387,7 @@ textarea {
   font-weight: bold;
 }
 
-.michlol-submit-btn {
+.machine-submit-btn {
   display: block;
   margin: 1em auto;
   padding: 0.5em;

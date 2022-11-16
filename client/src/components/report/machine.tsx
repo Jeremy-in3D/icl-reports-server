@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
 import { questionBank } from "../../data/question-bank";
+import { MachineForm } from "./machine-area-form";
 import { MachineAreas } from "./machine-areas";
 
 //Refactor to pull equipment check from database instead of static
@@ -15,15 +16,13 @@ export const Machine: React.FC<{
   const isComplete = false;
   const completedClass = `${isComplete ? "complete" : "incomplete"}`;
   const openClass = `${isOpen ? "opened" : "closed"}`;
-  const equipmentCheck = questionBank.find(
+  const currentQuestion = questionBank.find(
     (option) => option.id === questions[view]
-  );
-  console.log(equipmentCheck);
-
-  //Take Equipment Check and Render its questions
+  )!;
+  console.log(currentQuestion);
 
   return (
-    <div className="michlol">
+    <div className="machine">
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
         className={`bar ${completedClass} ${openClass}`}
@@ -32,16 +31,11 @@ export const Machine: React.FC<{
       </div>
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
         <MachineAreas questions={questions} setView={setView} />
-        {/*
-        <MichlolForm
-          reportInstance={routeData}
-          michlolId={michlol.id}
-          questions={michlol.questions}
-          questionNumber={questionNumber}
-          currentQuestion={currentQuestion}
+        <MachineForm
+          routeData={routeData}
           setIsOpen={setIsOpen}
-          setQuestionNumber={setQuestionNumber}
-        /> */}
+          area={currentQuestion}
+        />
       </div>
     </div>
   );

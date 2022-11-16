@@ -8,7 +8,7 @@ export const questionBank: QuestionBank = [
         options: false,
         alert: false,
       },
-      { text: "קיימים נזילות ממעטפת המשפך ", options: false, alert: false },
+      { text: "קיימים נזילות ממעטפת המשפך", options: false, alert: false },
       {
         text: "קיימים מגוני צד מפורקים לאורך הסרט",
         alert: false,
@@ -28,15 +28,28 @@ export const questionBank: QuestionBank = [
         options: false,
         alert: false,
       },
-      { text: "קיימים נזילות ממעטפת המשפך ", options: false, alert: false },
       {
-        text: "קיימים מגוני צד מפורקים לאורך הסרט",
-        alert: false,
+        text: "מנוע המסוע חם",
         options: true,
-        choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
       },
-      { text: "קיימים מרעדים לא תקינים", options: false, alert: false },
-      { text: " מצב הסקרטינג נדרשת הנמכה/החלפה", options: false, alert: false },
+      {
+        text: "מכסה המאוור או מאוורר המנוע שבורים",
+        alert: false,
+        options: false,
+      },
+      {
+        text: "קיימים רעשים חריגים מהמנוע",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים ברגים משוחררים בבסיס המנוע או הממסרה",
+        options: false,
+        alert: true,
+      },
     ],
   },
   {
@@ -114,7 +127,7 @@ export const questionBank: QuestionBank = [
   // },
 ];
 
-type QuestionTypes =
+export type QuestionTypes =
   | { text: string; alert: boolean; options: true; choices: string[] }
   | { text: string; alert: boolean; options: false };
 
