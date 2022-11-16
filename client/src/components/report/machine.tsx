@@ -19,7 +19,6 @@ export const Machine: React.FC<{
   const currentQuestion = questionBank.find(
     (option) => option.id === questions[view]
   )!;
-  console.log(currentQuestion);
 
   return (
     <div className="machine">
@@ -32,7 +31,7 @@ export const Machine: React.FC<{
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
         <MachineAreas questions={questions} setView={setView} />
         <MachineForm
-          key={currentQuestion.id}
+          key={`${name}-${currentQuestion.id}`}
           routeData={routeData}
           setIsOpen={setIsOpen}
           area={currentQuestion}

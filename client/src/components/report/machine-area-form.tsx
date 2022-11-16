@@ -8,7 +8,6 @@ export const MachineForm: React.FC<{
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   area: QuestionBank[number];
 }> = ({ routeData, setIsOpen, area }) => {
-  console.log(area);
   const [isFirstChecked, setIsFirstChecked] = useState(false);
 
   function ifFirstChecked(idx: number) {
