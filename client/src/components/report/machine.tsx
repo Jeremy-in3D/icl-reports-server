@@ -32,6 +32,7 @@ export const Machine: React.FC<{
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
         <MachineAreas questions={questions} setView={setView} />
         <MachineForm
+          key={currentQuestion.id}
           routeData={routeData}
           setIsOpen={setIsOpen}
           area={currentQuestion}

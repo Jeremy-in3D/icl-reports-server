@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route } from "../../classes/route";
 import { QuestionBank } from "../../data/question-bank";
 import { CheckboxInput } from "./checkbox-input";
@@ -9,7 +9,12 @@ export const MachineForm: React.FC<{
   area: QuestionBank[number];
 }> = ({ routeData, setIsOpen, area }) => {
   console.log(area);
+  const [isFirstChecked, setIsFirstChecked] = useState(false);
 
+  function ifFirstChecked(idx: number) {
+    if (idx !== 0 && isFirstChecked) return true;
+    return false;
+  }
   return (
     <>
       <p className="machine-question">{area.name}</p>
@@ -26,6 +31,9 @@ export const MachineForm: React.FC<{
             key={`${area.id}-${area.name}-${idx}`}
             option={option}
             area={area}
+            idx={idx}
+            check={() => ifFirstChecked(idx)}
+            setFirstChecked={setIsFirstChecked}
           />
         ))}
       </form>

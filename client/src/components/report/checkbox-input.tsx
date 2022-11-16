@@ -4,7 +4,10 @@ import { QuestionBank, QuestionTypes } from "../../data/question-bank";
 export const CheckboxInput: React.FC<{
   option: QuestionTypes;
   area: QuestionBank[number];
-}> = ({ option, area }) => {
+  idx: number;
+  check: () => boolean;
+  setFirstChecked: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ option, area, idx, check, setFirstChecked }) => {
   const [checked, setChecked] = useState(false);
   const { text, options } = option;
   let secondary;
@@ -13,6 +16,7 @@ export const CheckboxInput: React.FC<{
       secondary = option.choices;
     }
   }
+
   return (
     <div>
       <input
@@ -20,11 +24,24 @@ export const CheckboxInput: React.FC<{
         name={`${area.id}-${area.name}-${text}`}
         value={text}
         onChange={(e) => {
+          if (idx === 0) setFirstChecked((prevState) => !prevState);
           setChecked(true);
         }}
+        disabled={check()}
       />
       <label>{text}</label>
-      {secondary && secondary.map((choice, idx) => <p key={idx}>{choice}</p>)}
+      {secondary &&
+        secondary.map((choice, i) => (
+          <div key={`${area.id}-${area.name}-${text}-${choice}-${i}`}>
+            <input
+              type={"checkbox"}
+              name={`${area.id}-${area.name}-${text}-${choice}`}
+              value={choice}
+              disabled={check()}
+            ></input>
+            <label>{choice}</label>
+          </div>
+        ))}
     </div>
   );
 };
