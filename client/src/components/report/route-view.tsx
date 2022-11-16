@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
 import { routes } from "../../data/reports-data";
-import { Equipment } from "./equipment";
+import { Machine } from "./machine";
 
 export const RouteView: React.FC<{
   routeData: Route;
@@ -22,7 +22,7 @@ export const RouteView: React.FC<{
         ))}
       </div>
       {machines.map(([name, questions], i) => (
-        <Equipment
+        <Machine
           key={i}
           routeData={routeData}
           name={name}

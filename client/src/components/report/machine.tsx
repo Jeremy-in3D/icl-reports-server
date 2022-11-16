@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
+import { questionBank } from "../../data/question-bank";
+import { MachineAreas } from "./machine-areas";
 
-export const Equipment: React.FC<{
+//Refactor to pull equipment check from database instead of static
+
+export const Machine: React.FC<{
   routeData: Route;
   name: string;
   questions: string[];
@@ -11,15 +15,12 @@ export const Equipment: React.FC<{
   const isComplete = false;
   const completedClass = `${isComplete ? "complete" : "incomplete"}`;
   const openClass = `${isOpen ? "opened" : "closed"}`;
-  // const currentQuestion = questionBank.filter((question) =>
-  //   michlol.questions.includes(question.id)
-  // )[questionNumber];
-  // console.log(currentQuestion);
+  const equipmentCheck = questionBank.find(
+    (option) => option.id === questions[view]
+  );
+  console.log(equipmentCheck);
 
-  // function checkAnswer(question: string) {
-  //   if (routeData.michlolim[michlol.id]?.answers?.[question]) return true;
-  //   return false;
-  // }
+  //Take Equipment Check and Render its questions
 
   return (
     <div className="michlol">
@@ -30,15 +31,8 @@ export const Equipment: React.FC<{
         {name}
       </div>
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
-        {questions.map((question, i) => (
-          <p key={i}>{question}</p>
-        ))}
-        {/* <QuestionsList
-          questions={michlol.questions}
-          questionNumber={questionNumber}
-          checkAnswer={checkAnswer}
-          setQuestionNumber={setQuestionNumber}
-        />
+        <MachineAreas questions={questions} setView={setView} />
+        {/*
         <MichlolForm
           reportInstance={routeData}
           michlolId={michlol.id}

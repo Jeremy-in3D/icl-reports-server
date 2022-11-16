@@ -6,7 +6,7 @@ export const routes: Routes = [
       {
         id: "R1-M1",
         name: "מסוע משקולת",
-        machines: { "R-2010-050-209": ["123"] },
+        machines: { "R-2010-050-209": ["1", "2", "3", "4", "5"] },
       },
       {
         id: "R1-M2",
