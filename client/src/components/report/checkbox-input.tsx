@@ -10,12 +10,12 @@ export const CheckboxInput: React.FC<{
 }> = ({ option, area, idx, check, setFirstChecked }) => {
   const [checked, setChecked] = useState(false);
   const { text, options } = option;
-  let secondary;
+  let secondary = null;
   if (checked) {
     if (options) {
       secondary = option.choices;
     }
-  }
+  } else secondary = null;
 
   return (
     <div>
@@ -25,7 +25,7 @@ export const CheckboxInput: React.FC<{
         value={text}
         onChange={(e) => {
           if (idx === 0) setFirstChecked((prevState) => !prevState);
-          setChecked(true);
+          setChecked((prevState) => !prevState);
         }}
         disabled={check()}
       />
