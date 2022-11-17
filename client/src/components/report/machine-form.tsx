@@ -7,7 +7,8 @@ export const MachineForm: React.FC<{
   routeData: Route;
   area: MachineAreas[number];
   machineName: string;
-}> = ({ routeData, area, machineName }) => {
+  michlolId: string;
+}> = ({ routeData, area, machineName, michlolId }) => {
   const [isValid, setIsValid] = useState(false);
 
   function checkIfValid(idx: number) {
@@ -20,18 +21,15 @@ export const MachineForm: React.FC<{
       <form
         className="machine-form"
         // onChange={(e) => e.currentTarget.requestSubmit()}
-        onSubmit={(e) => handleFormSubmit(e, machineName)}
+        onSubmit={(e) =>
+          handleFormSubmit(e, routeData, michlolId, area.name, machineName)
+        }
       >
         {area.checkboxes.map((checkbox, idx) => {
-          const info = {
-            index: idx,
-            area: area,
-          };
-
           return (
             <CheckboxInput
               key={`${area.id}-${idx}`}
-              info={info}
+              index={idx}
               checkbox={checkbox}
               check={() => checkIfValid(idx)}
               setValid={setIsValid}
@@ -48,13 +46,18 @@ export const MachineForm: React.FC<{
 
 function handleFormSubmit(
   e: React.FormEvent<HTMLFormElement>,
+  routeData: Route,
+  michlolName: string,
+  name: string,
   machineName: string
 ) {
   e.preventDefault();
   const formData = new FormData(e.target as HTMLFormElement);
   const formObj = Object.fromEntries(formData);
-  console.log(formObj);
-  console.log(machineName);
-  // const value = formObj[`${michlolId}-${questionId}`] as string;
-  // reportInstance.setValue(michlolId, questionId, value);
+  const sorted: any = {};
+  for (const [key, value] of Object.entries(formObj)) {
+    sorted[key] = value;
+  }
+  routeData.setValue(michlolName, name, machineName, sorted);
+  console.log(routeData.michlolim);
 }

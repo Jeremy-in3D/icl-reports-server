@@ -5,7 +5,6 @@ export class Route {
   id: string;
   name: string;
   michlolim: michlolAnswers;
-  michlolCompleted: { [id: string]: boolean };
   dateUploaded: number | null;
 
   constructor(report: { id: string; name: string }) {
@@ -19,11 +18,16 @@ export class Route {
     this.dateCreated = Date.now();
   }
 
-  setValue(michlol: string, questionId: string, value: string) {
-    const michlolim = this.michlolim;
-    if (!michlolim[michlol]) michlolim[michlol] = { answers: {} };
-    const answers = michlolim[michlol].answers;
-    answers[questionId] = value;
+  setValue(
+    michlolId: string,
+    michlolName: string,
+    machineId: string,
+    value: { [id: string]: FormDataEntryValue }
+  ) {
+    if (!this.michlolim[michlolId]) this.michlolim[michlolId] = {};
+    if (!this.michlolim[michlolId][machineId])
+      this.michlolim[michlolId][machineId] = {};
+    this.michlolim[michlolId][machineId][michlolName] = value;
   }
 
   saveSurvey() {
@@ -45,7 +49,5 @@ export class Route {
 }
 
 interface michlolAnswers {
-  [id: string]: {
-    answers: { [id: string]: string };
-  };
+  [michlolId: string]: { [machineId: string]: any };
 }

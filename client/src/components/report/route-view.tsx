@@ -21,7 +21,12 @@ export const RouteView: React.FC<{
         ))}
       </div>
       {machines.map((machine, i) => (
-        <Machine key={i} routeData={routeData} machine={machine} />
+        <Machine
+          key={i}
+          routeData={routeData}
+          machine={machine}
+          michlolName={route?.michlolim[view].name!}
+        />
       ))}
       {/* Save Survey */}
       {/* <button

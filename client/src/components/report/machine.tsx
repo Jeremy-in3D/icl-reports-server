@@ -7,7 +7,8 @@ import { MachineAreasList } from "./machine-areas-list";
 export const Machine: React.FC<{
   routeData: Route;
   machine: [string, string[]];
-}> = ({ routeData, machine: [machineName, areaIds] }) => {
+  michlolName: string;
+}> = ({ routeData, machine: [machineName, areaIds], michlolName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
   const isComplete = routeData.isMachineComplete(machineName);
@@ -30,6 +31,7 @@ export const Machine: React.FC<{
           key={`${machineName}-${currentArea.id}`}
           area={currentArea}
           machineName={machineName}
+          michlolId={michlolName}
         />
       </div>
     </div>
