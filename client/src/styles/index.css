@@ -361,15 +361,23 @@ textarea {
   display: flex;
   flex-flow: row wrap;
   padding: 0.5em;
-  height: 400px;
 }
 
 .form-checkbox {
   flex-basis: 100%;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
 }
 
 .form-checkbox label {
   padding-right: 0.2em;
+}
+
+.form-secondary {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
 }
 
 .form-secondary-checkbox {

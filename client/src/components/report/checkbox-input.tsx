@@ -29,21 +29,24 @@ export const CheckboxInput: React.FC<{
         disabled={check()}
       />
       <label>{text}</label>
-      {secondary &&
-        secondary.map((choice, i) => (
-          <div
-            key={`${area.id}-${area.name}-${text}-${choice}-${i}`}
-            className="form-secondary-checkbox"
-          >
-            <input
-              type={"checkbox"}
-              name={`${area.id}-${area.name}-${text}-${choice}`}
-              value={choice}
-              disabled={check()}
-            ></input>
-            <label>{choice}</label>
-          </div>
-        ))}
+      {secondary && (
+        <div className="form-secondary">
+          {secondary.map((choice, i) => (
+            <div
+              key={`${area.id}-${area.name}-${text}-${choice}-${i}`}
+              className="form-secondary-checkbox"
+            >
+              <input
+                type={"checkbox"}
+                name={`${area.id}-${area.name}-${text}-${choice}`}
+                value={choice}
+                disabled={check()}
+              ></input>
+              <label>{choice}</label>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
