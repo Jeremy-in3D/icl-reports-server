@@ -19,6 +19,7 @@ export const CheckboxInput: React.FC<{
   return (
     <div className="form-checkbox">
       <input
+        className="checkbox"
         type={"checkbox"}
         name={`${area.id}-${area.name}-${text}`}
         value={text}
@@ -37,6 +38,7 @@ export const CheckboxInput: React.FC<{
               className="form-secondary-checkbox"
             >
               <input
+                className="checkbox"
                 type={"checkbox"}
                 name={`${area.id}-${area.name}-${text}-${choice}`}
                 value={choice}

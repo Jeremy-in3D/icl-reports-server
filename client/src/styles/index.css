@@ -365,23 +365,31 @@ textarea {
 
 .form-checkbox {
   flex-basis: 100%;
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
+  margin: 0.5em 0;
+}
+
+.form-checkbox input {
+  vertical-align: middle;
+}
+
+.checkbox {
+  height: 20px;
+  width: 20px;
 }
 
 .form-checkbox label {
   padding-right: 0.2em;
+  vertical-align: middle;
 }
 
 .form-secondary {
   display: flex;
   flex-flow: row wrap;
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
+  margin: 0.5em 0;
 }
 
 .form-secondary-checkbox {
-  padding-right: 1em;
+  padding-right: 0.5em;
 }
 
 .machine-area {
