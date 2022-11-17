@@ -7,8 +7,7 @@ export const MachineForm: React.FC<{
   routeData: Route;
   area: MachineAreas[number];
   machineName: string;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ routeData, setIsOpen, area, machineName }) => {
+}> = ({ routeData, area, machineName }) => {
   const [isValid, setIsValid] = useState(false);
 
   function checkIfValid(idx: number) {
@@ -39,15 +38,7 @@ export const MachineForm: React.FC<{
             />
           );
         })}
-        <button
-          className="machine-submit-btn"
-          type={"submit"}
-          onClick={() => {
-            // reportInstance.michlolCompleted[michlolId] = true;
-            // localStorage.setItem(reportInstance.id, reportInstance.saveSurvey());
-            // setIsOpen(false);
-          }}
-        >
+        <button className="machine-submit-btn" type={"submit"}>
           שמור מכונה
         </button>
       </form>

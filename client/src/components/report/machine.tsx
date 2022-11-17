@@ -28,7 +28,6 @@ export const Machine: React.FC<{
         <MachineForm
           routeData={routeData}
           key={`${machineName}-${currentArea.id}`}
-          setIsOpen={setIsOpen}
           area={currentArea}
           machineName={machineName}
         />
