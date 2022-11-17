@@ -8,7 +8,8 @@ export const MachineForm: React.FC<{
   area: MachineAreas[number];
   machineName: string;
   michlolId: string;
-}> = ({ routeData, area, machineName, michlolId }) => {
+  updateView: () => void;
+}> = ({ routeData, area, machineName, michlolId, updateView }) => {
   const [isValid, setIsValid] = useState(false);
 
   function checkIfValid(idx: number) {
@@ -21,9 +22,10 @@ export const MachineForm: React.FC<{
       <form
         className="machine-form"
         // onChange={(e) => e.currentTarget.requestSubmit()}
-        onSubmit={(e) =>
-          handleFormSubmit(e, routeData, michlolId, area.name, machineName)
-        }
+        onSubmit={(e) => {
+          handleFormSubmit(e, routeData, michlolId, area.name, machineName);
+          updateView();
+        }}
       >
         {area.checkboxes.map((checkbox, idx) => {
           return (
@@ -48,7 +50,7 @@ function handleFormSubmit(
   e: React.FormEvent<HTMLFormElement>,
   routeData: Route,
   michlolName: string,
-  name: string,
+  areaName: string,
   machineName: string
 ) {
   e.preventDefault();
@@ -58,6 +60,5 @@ function handleFormSubmit(
   for (const [key, value] of Object.entries(formObj)) {
     sorted[key] = value;
   }
-  routeData.setValue(michlolName, name, machineName, sorted);
-  console.log(routeData.michlolim);
+  routeData.setValue(michlolName, machineName, areaName, sorted);
 }

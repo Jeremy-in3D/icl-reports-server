@@ -19,15 +19,15 @@ export class Route {
   }
 
   setValue(
-    michlolId: string,
     michlolName: string,
-    machineId: string,
+    machineName: string,
+    areaName: string,
     value: { [id: string]: FormDataEntryValue }
   ) {
-    if (!this.michlolim[michlolId]) this.michlolim[michlolId] = {};
-    if (!this.michlolim[michlolId][machineId])
-      this.michlolim[michlolId][machineId] = {};
-    this.michlolim[michlolId][machineId][michlolName] = value;
+    if (!this.michlolim[michlolName]) this.michlolim[michlolName] = {};
+    if (!this.michlolim[michlolName][machineName])
+      this.michlolim[michlolName][machineName] = {};
+    this.michlolim[michlolName][machineName][areaName] = value;
   }
 
   saveSurvey() {
@@ -43,7 +43,17 @@ export class Route {
     }
   }
 
-  isMachineComplete(machineId: string) {
+  isMachineAnswered(michlolName: string, machineName: string) {
+    if (this.michlolim[michlolName]?.[machineName]) return true;
+    return false;
+  }
+
+  isMachineAreaAnswered(
+    michlolName: string,
+    machineName: string,
+    areaName: string
+  ) {
+    if (this.michlolim[michlolName]?.[machineName]?.[areaName]) return true;
     return false;
   }
 }
