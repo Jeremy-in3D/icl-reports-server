@@ -15,14 +15,18 @@ export const RouteView: React.FC<{
       <h1 className="page-title">{routeData.name}</h1>
       <div className="michlolim-selections">
         {route?.michlolim.map((michlol, i) => (
-          <div className="michlol-selection" key={i} onClick={() => setView(i)}>
+          <div
+            className={`michlol-selection ${view === i && "current"}`}
+            key={i}
+            onClick={() => setView(i)}
+          >
             {michlol.name}
           </div>
         ))}
       </div>
       {machines.map((machine, i) => (
         <Machine
-          key={i}
+          key={`${route?.id}-${view}-${i}`}
           routeData={routeData}
           machine={machine}
           michlolName={route?.michlolim[view].name!}

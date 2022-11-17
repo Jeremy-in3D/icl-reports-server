@@ -275,8 +275,14 @@ textarea {
 }
 
 .michlol-selection {
-  background-color: red;
   padding: 0.5em;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: rgb(241, 236, 236);
+}
+
+.michlol-selection.current {
+  background-color: rgba(255, 255, 0, 0.5);
 }
 
 .machine {
