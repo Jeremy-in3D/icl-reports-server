@@ -7,15 +7,25 @@ export const MachineForm: React.FC<{
   routeData: Route;
   area: MachineAreas[number];
   machineName: string;
-  michlolId: string;
+  michlolName: string;
   updateView: () => void;
-}> = ({ routeData, area, machineName, michlolId, updateView }) => {
+}> = ({ routeData, area, machineName, michlolName, updateView }) => {
   const [isValid, setIsValid] = useState(false);
 
   function checkIfValid(idx: number) {
     if (idx !== 0 && isValid) return true;
     return false;
   }
+
+  //Only look if is a loaded survey otherwise no localstorage
+  function checkIfChecked(idx: string) {
+    const answered = localStorage.getItem("R1");
+    const ans = JSON.parse(answered!);
+    if (ans.michlolim[michlolName]?.[machineName]?.[area.name]?.[idx])
+      return true;
+    return false;
+  }
+
   return (
     <>
       <p className="machine-area">{area.name}</p>
@@ -23,7 +33,7 @@ export const MachineForm: React.FC<{
         className="machine-form"
         // onChange={(e) => e.currentTarget.requestSubmit()}
         onSubmit={(e) => {
-          handleFormSubmit(e, routeData, michlolId, area.name, machineName);
+          handleFormSubmit(e, routeData, michlolName, area.name, machineName);
           updateView();
         }}
       >
@@ -35,6 +45,7 @@ export const MachineForm: React.FC<{
               checkbox={checkbox}
               check={() => checkIfValid(idx)}
               setValid={setIsValid}
+              checked2={checkIfChecked}
             />
           );
         })}
@@ -61,4 +72,5 @@ function handleFormSubmit(
     sorted[key] = value;
   }
   routeData.setValue(michlolName, machineName, areaName, sorted);
+  localStorage.setItem(routeData.id, routeData.saveSurvey());
 }

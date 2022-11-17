@@ -4,6 +4,8 @@ import { machineAreas } from "../../data/machine-areas";
 import { MachineForm } from "./machine-form";
 import { MachineAreasList } from "./machine-areas-list";
 
+//Only load Machine contents if it is open for performance
+
 export const Machine: React.FC<{
   routeData: Route;
   machine: [string, string[]];
@@ -43,7 +45,7 @@ export const Machine: React.FC<{
           key={`${machineName}-${currentArea.id}`}
           area={currentArea}
           machineName={machineName}
-          michlolId={michlolName}
+          michlolName={michlolName}
           updateView={updateView}
         />
       </div>

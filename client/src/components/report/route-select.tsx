@@ -33,6 +33,7 @@ export const RouteSelect: React.FC<{
         disabled={false}
         onClick={() => {
           routeData.createNewSurvey();
+          localStorage.setItem(routeData.id, routeData.saveSurvey());
           setRouteView(true);
         }}
       >

@@ -32,20 +32,20 @@ export const RouteView: React.FC<{
           michlolName={route?.michlolim[view].name!}
         />
       ))}
-      {/* Save Survey */}
-      {/* <button
-      onClick={() => {
-        const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
-        if (answer)
-          fetch("/save-report", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(reportInstance.saveSurvey()),
-          });
-      }}
-    >
-      שלח תשובות וסיים דוח
-    </button> */}
+      <button
+        onClick={() => {
+          // const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
+          // if (answer)
+          //   fetch("/save-report", {
+          //     method: "POST",
+          //     headers: { "Content-Type": "application/json" },
+          //     body: routeData.saveSurvey(),
+          //   });
+          localStorage.setItem(routeData.id, routeData.saveSurvey());
+        }}
+      >
+        שמור מסלול
+      </button>
     </>
   );
 };

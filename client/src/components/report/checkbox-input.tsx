@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CheckBox } from "../../data/machine-areas";
 
 export const CheckboxInput: React.FC<{
@@ -6,8 +6,10 @@ export const CheckboxInput: React.FC<{
   index: number;
   check: () => boolean;
   setValid: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ checkbox, index, check, setValid }) => {
+  checked2: (idx: string) => boolean;
+}> = ({ checkbox, index, check, setValid, checked2 }) => {
   const [checked, setChecked] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { text, options } = checkbox;
   let secondary = null;
   if (checked) {
@@ -16,9 +18,18 @@ export const CheckboxInput: React.FC<{
     }
   } else secondary = null;
 
+  useEffect(() => {
+    if (checked2(`${index}`)) {
+      if (index === 0) setValid((prevState) => !prevState);
+      setChecked(true);
+      inputRef.current!.checked = true;
+    }
+  }, []);
+
   return (
     <div className="form-checkbox">
       <input
+        ref={inputRef}
         className="checkbox"
         type={"checkbox"}
         name={`${index}`}
@@ -40,6 +51,7 @@ export const CheckboxInput: React.FC<{
                 name={`${index}-${i}`}
                 value={choice}
                 disabled={check()}
+                defaultChecked={checked2(`${index}-${i}`)}
               ></input>
               <label>{choice}</label>
             </div>
