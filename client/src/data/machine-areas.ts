@@ -1,8 +1,8 @@
-export const questionBank: QuestionBank = [
+export const machineAreas: MachineAreas = [
   {
     id: "1",
     name: "משפך קבלה",
-    questions: [
+    checkboxes: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -22,7 +22,7 @@ export const questionBank: QuestionBank = [
   {
     id: "2",
     name: "מנוע",
-    questions: [
+    checkboxes: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -55,7 +55,7 @@ export const questionBank: QuestionBank = [
   {
     id: "3",
     name: "ממסרה",
-    questions: [
+    checkboxes: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -75,7 +75,7 @@ export const questionBank: QuestionBank = [
   {
     id: "4",
     name: "סרט",
-    questions: [
+    checkboxes: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -95,7 +95,7 @@ export const questionBank: QuestionBank = [
   {
     id: "5",
     name: "תופים",
-    questions: [
+    checkboxes: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -127,14 +127,14 @@ export const questionBank: QuestionBank = [
   // },
 ];
 
-export type QuestionTypes =
+export type CheckBox =
   | { text: string; alert: boolean; options: true; choices: string[] }
   | { text: string; alert: boolean; options: false };
 
-export type QuestionBank = {
+export type MachineAreas = {
   id: string;
   name: string;
-  questions: QuestionTypes[];
+  checkboxes: CheckBox[];
 }[];
 
 //Try and refactor new type to this old ones structure below, note, instead of the key being a string.. check if theres a way to do with a boolean

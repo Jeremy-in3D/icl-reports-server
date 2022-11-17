@@ -1,24 +1,19 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
-import { questionBank } from "../../data/question-bank";
-import { MachineForm } from "./machine-area-form";
-import { MachineAreas } from "./machine-areas";
-
-//Refactor to pull equipment check from database instead of static
+import { machineAreas } from "../../data/machine-areas";
+import { MachineForm } from "./machine-form";
+import { MachineAreasList } from "./machine-areas-list";
 
 export const Machine: React.FC<{
   routeData: Route;
-  name: string;
-  questions: string[];
-}> = ({ routeData, name, questions }) => {
+  machine: [string, string[]];
+}> = ({ routeData, machine: [machineName, areaIds] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
-  const isComplete = false;
+  const isComplete = routeData.isMachineComplete(machineName);
   const completedClass = `${isComplete ? "complete" : "incomplete"}`;
   const openClass = `${isOpen ? "opened" : "closed"}`;
-  const currentQuestion = questionBank.find(
-    (option) => option.id === questions[view]
-  )!;
+  const currentArea = machineAreas.find((area) => area.id === areaIds[view])!;
 
   return (
     <div className="machine">
@@ -26,15 +21,16 @@ export const Machine: React.FC<{
         onClick={() => setIsOpen((prevState) => !prevState)}
         className={`bar ${completedClass} ${openClass}`}
       >
-        {name}
+        {machineName}
       </div>
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
-        <MachineAreas questions={questions} setView={setView} />
+        <MachineAreasList areaIds={areaIds} setView={setView} />
         <MachineForm
-          key={`${name}-${currentQuestion.id}`}
           routeData={routeData}
+          key={`${machineName}-${currentArea.id}`}
           setIsOpen={setIsOpen}
-          area={currentQuestion}
+          area={currentArea}
+          machineName={machineName}
         />
       </div>
     </div>

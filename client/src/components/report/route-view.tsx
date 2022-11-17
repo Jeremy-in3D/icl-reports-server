@@ -6,28 +6,22 @@ import { Machine } from "./machine";
 export const RouteView: React.FC<{
   routeData: Route;
 }> = ({ routeData }) => {
-  const michlolim = routes.find((report) => report.id === routeData.id)
-    ?.michlolim!;
   const [view, setView] = useState(0);
-  const machines = Object.entries(michlolim[view].machines);
+  const route = routes.find((route) => route.id === routeData.id);
+  const machines = Object.entries(route?.michlolim[view].machines!);
 
   return (
     <>
       <h1 className="page-title">{routeData.name}</h1>
       <div className="michlolim-selections">
-        {michlolim.map((michlol, i) => (
+        {route?.michlolim.map((michlol, i) => (
           <div className="michlol-selection" key={i} onClick={() => setView(i)}>
             {michlol.name}
           </div>
         ))}
       </div>
-      {machines.map(([name, questions], i) => (
-        <Machine
-          key={i}
-          routeData={routeData}
-          name={name}
-          questions={questions}
-        />
+      {machines.map((machine, i) => (
+        <Machine key={i} routeData={routeData} machine={machine} />
       ))}
       {/* Save Survey */}
       {/* <button

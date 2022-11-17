@@ -1,30 +1,29 @@
 import React, { useState } from "react";
-import { QuestionBank, QuestionTypes } from "../../data/question-bank";
+import { MachineAreas, CheckBox } from "../../data/machine-areas";
 
 export const CheckboxInput: React.FC<{
-  option: QuestionTypes;
-  area: QuestionBank[number];
-  idx: number;
+  checkbox: CheckBox;
+  info: { index: number; area: MachineAreas[number] };
   check: () => boolean;
-  setFirstChecked: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ option, area, idx, check, setFirstChecked }) => {
+  setValid: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ checkbox, info: { index, area }, check, setValid }) => {
   const [checked, setChecked] = useState(false);
-  const { text, options } = option;
+  const { text, options } = checkbox;
   let secondary = null;
   if (checked) {
     if (options) {
-      secondary = option.choices;
+      secondary = checkbox.choices;
     }
   } else secondary = null;
 
   return (
-    <div>
+    <div className="form-checkbox">
       <input
         type={"checkbox"}
         name={`${area.id}-${area.name}-${text}`}
         value={text}
         onChange={(e) => {
-          if (idx === 0) setFirstChecked((prevState) => !prevState);
+          if (index === 0) setValid((prevState) => !prevState);
           setChecked((prevState) => !prevState);
         }}
         disabled={check()}
@@ -32,7 +31,10 @@ export const CheckboxInput: React.FC<{
       <label>{text}</label>
       {secondary &&
         secondary.map((choice, i) => (
-          <div key={`${area.id}-${area.name}-${text}-${choice}-${i}`}>
+          <div
+            key={`${area.id}-${area.name}-${text}-${choice}-${i}`}
+            className="form-secondary-checkbox"
+          >
             <input
               type={"checkbox"}
               name={`${area.id}-${area.name}-${text}-${choice}`}

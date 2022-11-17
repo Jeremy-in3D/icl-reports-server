@@ -1,12 +1,12 @@
 import React from "react";
-import { questionBank } from "../../data/question-bank";
+import { machineAreas } from "../../data/machine-areas";
 
-export const MachineAreas: React.FC<{
-  questions: string[];
+export const MachineAreasList: React.FC<{
+  areaIds: string[];
   setView: React.Dispatch<React.SetStateAction<number>>;
-}> = ({ questions, setView }) => {
-  const areas = questions.map((question) =>
-    questionBank.find((q) => q.id === question)
+}> = ({ areaIds, setView }) => {
+  const areas = areaIds.map(
+    (areaId) => machineAreas.find((area) => area.id === areaId)!
   );
 
   return (

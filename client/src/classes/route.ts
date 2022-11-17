@@ -38,6 +38,10 @@ export class Route {
       this[key] = value;
     }
   }
+
+  isMachineComplete(machineId: string) {
+    return false;
+  }
 }
 
 interface michlolAnswers {
