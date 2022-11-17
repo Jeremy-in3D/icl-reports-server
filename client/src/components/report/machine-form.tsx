@@ -67,10 +67,11 @@ function handleFormSubmit(
   e.preventDefault();
   const formData = new FormData(e.target as HTMLFormElement);
   const formObj = Object.fromEntries(formData);
-  const sorted: any = {};
+  const sorted: { [id: string]: FormDataEntryValue } = {};
   for (const [key, value] of Object.entries(formObj)) {
     sorted[key] = value;
   }
-  routeData.setValue(michlolName, machineName, areaName, sorted);
+  if (Object.keys(sorted).length)
+    routeData.setValue(michlolName, machineName, areaName, sorted);
   localStorage.setItem(routeData.id, routeData.saveSurvey());
 }
