@@ -7,11 +7,13 @@ import { RouteOption } from "./route-option";
 
 export const RouteSelect: React.FC<{
   route: Routes[number];
-}> = ({ route }) => {
+  setScreen: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ route, setScreen }) => {
   const [routeView, setRouteView] = useState(false);
   const routeData = useRef(new Route(route)).current;
   const [existingReport, existingReportDetails] = isExistingReport(route.id);
-  if (routeView) return <RouteView routeData={routeData} />;
+  if (routeView)
+    return <RouteView routeData={routeData} setScreen={setScreen} />;
 
   return (
     <div className="report-options">
@@ -29,7 +31,7 @@ export const RouteSelect: React.FC<{
         {existingReportDetails}
       </RouteOption>
       <RouteOption
-        text='צור דו"ח חדש'
+        text='יצירה דו"ח חדש'
         disabled={false}
         onClick={() => {
           routeData.createNewSurvey();
@@ -37,7 +39,7 @@ export const RouteSelect: React.FC<{
           setRouteView(true);
         }}
       >
-        <p>בשמירה הראשונה ימחק הדוח הקיים</p>
+        <p>ימחק הדוח הקיים</p>
       </RouteOption>
     </div>
   );

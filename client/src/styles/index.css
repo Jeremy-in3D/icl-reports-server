@@ -161,8 +161,8 @@ body,
 .report-option {
   font-size: 1.3em;
   font-weight: 500;
-  background: url("../../assets/abstract-background2.jpg");
-  border-radius: 3px;
+  background: linear-gradient(grey, black);
+  border-radius: 6px;
   margin: 1em;
   padding: 0.5em 0em;
   height: 250px;
@@ -181,7 +181,7 @@ body,
   padding: 1em;
   margin: 1em;
   border-radius: 5px;
-  border: 2px solid black;
+  border: 2px solid var(--blue4);
 }
 
 button:disabled {
@@ -268,10 +268,25 @@ textarea {
 
 /* Michlol */
 .michlolim-selections {
-  margin: 1em;
   display: flex;
   flex-flow: row wrap;
   gap: 10px;
+}
+
+.michlolim-header {
+  flex-basis: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.25em;
+}
+
+.machines-header {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.25em;
+  margin-top: 0.75em;
 }
 
 .michlol-selection {
@@ -283,6 +298,10 @@ textarea {
 
 .michlol-selection.current {
   background-color: rgba(255, 255, 0, 0.5);
+}
+
+.michlol-selection.idle {
+  background-color: rgba(216, 191, 191, 0.5);
 }
 
 .machine {
@@ -299,6 +318,7 @@ textarea {
   padding: 0.75em;
   width: 100%;
   background: linear-gradient(#db1212, #dd503d);
+  font-weight: bold;
 }
 
 .machine .bar.closed::after {
@@ -427,7 +447,7 @@ textarea {
   display: block;
   margin: 1em auto;
   padding: 0.5em;
-  width: 80%;
+  width: 60%;
   font-size: 1.4em;
   font-weight: bold;
   background: linear-gradient(0.15turn, rgb(20, 92, 20), rgb(63, 233, 72));
@@ -532,4 +552,18 @@ textarea {
 .search-item-btn {
   width: 30px;
   margin: 0 auto;
+}
+
+.route-submit-btn {
+  display: block;
+  margin: auto;
+  padding: 0.5em;
+  margin: 1em auto;
+  width: 60%;
+  font-size: 1.4em;
+  font-weight: bold;
+  background: linear-gradient(0.15turn, var(--blue2), var(--blue4));
+  border-radius: 5px;
+  border: 1px solid black;
+  box-shadow: 0px 0px 5px 1px black;
 }

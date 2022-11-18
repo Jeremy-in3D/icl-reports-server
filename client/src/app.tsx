@@ -15,7 +15,7 @@ export const App: React.FC = () => {
       display = <Home setScreen={setShowScreen} />;
       break;
     case "report":
-      display = <Report />;
+      display = <Report setScreen={setShowScreen} />;
       break;
     case "search":
       display = <Search />;

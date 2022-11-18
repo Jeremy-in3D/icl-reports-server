@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { Routes, routes } from "../../data/reports-data";
 import { RouteSelect } from "./route-select";
 
-export const Report: React.FC = () => {
+export const Report: React.FC<{
+  setScreen: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ setScreen }) => {
   const [route, setRoute] = useState<Routes[number] | null>(null);
 
   if (route)
     return (
       <div className="report">
-        <RouteSelect route={route} />
+        <RouteSelect route={route} setScreen={setScreen} />
       </div>
     );
 
