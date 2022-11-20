@@ -4,27 +4,13 @@ import { CheckBox } from "../../data/machine-parts";
 export const CheckboxInput: React.FC<{
   checkbox: CheckBox;
   index: number;
-  check: () => boolean;
+  checkDisabled: () => boolean;
+  checkDefault: (idx: string) => boolean;
   setValid: React.Dispatch<React.SetStateAction<boolean>>;
-  checked2: (idx: string) => boolean;
-}> = ({ checkbox, index, check, setValid, checked2 }) => {
-  const [checked, setChecked] = useState(false);
+}> = ({ checkbox, index, checkDisabled, checkDefault, setValid }) => {
+  const [showSecondary, setShowSecondary] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { text, options } = checkbox;
-  let secondary = null;
-  if (checked) {
-    if (options) {
-      secondary = checkbox.choices;
-    }
-  } else secondary = null;
-
-  useEffect(() => {
-    if (checked2(`${index}`)) {
-      if (index === 0) setValid((prevState) => !prevState);
-      setChecked(true);
-      inputRef.current!.checked = true;
-    }
-  }, []);
 
   return (
     <div className="form-checkbox">
@@ -36,22 +22,23 @@ export const CheckboxInput: React.FC<{
         value={text}
         onChange={(e) => {
           if (index === 0) setValid((prevState) => !prevState);
-          setChecked((prevState) => !prevState);
+          setShowSecondary((prevState) => !prevState);
         }}
-        disabled={check()}
+        defaultChecked={checkDefault(`${index}`)}
+        disabled={checkDisabled()}
       />
       <label>{text}</label>
-      {secondary && (
+      {showSecondary && options && (
         <div className="form-secondary">
-          {secondary.map((choice, i) => (
+          {checkbox.choices?.map((choice, i) => (
             <div key={`${i}`} className="form-secondary-checkbox">
               <input
                 className="checkbox"
                 type={"checkbox"}
                 name={`${index}-${i}`}
                 value={choice}
-                disabled={check()}
-                defaultChecked={checked2(`${index}-${i}`)}
+                defaultChecked={checkDefault(`${index}-${i}`)}
+                disabled={checkDisabled()}
               ></input>
               <label>{choice}</label>
             </div>
@@ -61,3 +48,10 @@ export const CheckboxInput: React.FC<{
     </div>
   );
 };
+
+// useEffect(() => {
+//   if (checkDefault(`${index}`)) {
+//     if (index === 0) setValid((prevState) => !prevState);
+//     inputRef.current!.checked = true;
+//   }
+// }, []);

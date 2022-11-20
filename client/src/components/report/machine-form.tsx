@@ -12,17 +12,13 @@ export const MachineForm: React.FC<{
 }> = ({ routeData, part, machineName, michlolName, updateView }) => {
   const [isValid, setIsValid] = useState(false);
 
-  function checkIfValid(idx: number) {
-    if (idx !== 0 && isValid) return true;
+  function isDisabled(index: number) {
+    if (index !== 0 && isValid) return true;
     return false;
   }
 
-  function checkIfChecked(idx: string) {
-    const answered = localStorage.getItem("R1");
-    const ans = JSON.parse(answered!);
-    if (ans.michlolim[michlolName]?.[machineName]?.[part.name]?.[idx])
-      return true;
-    return false;
+  function isDefault(index: string) {
+    return routeData.isQuestionAnswered(machineName, part.name, index);
   }
 
   return (
@@ -42,9 +38,9 @@ export const MachineForm: React.FC<{
               key={`${part.id}-${idx}`}
               index={idx}
               checkbox={checkbox}
-              check={() => checkIfValid(idx)}
+              checkDisabled={() => isDisabled(idx)}
+              checkDefault={isDefault}
               setValid={setIsValid}
-              checked2={checkIfChecked}
             />
           );
         })}

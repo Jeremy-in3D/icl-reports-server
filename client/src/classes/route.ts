@@ -61,6 +61,11 @@ export class Route {
     if (this.machines[machineName]?.data?.[partName]) return true;
     return false;
   }
+
+  isQuestionAnswered(machineName: string, partName: string, index: string) {
+    if (this.machines[machineName]?.data?.[partName]?.[index]) return true;
+    return false;
+  }
 }
 
 interface Machines {
