@@ -5,7 +5,7 @@ import { RouteView } from "./route-view";
 import { isExistingReport } from "../../helpers/is-existing-report";
 import { RouteOption } from "./route-option";
 
-export const RouteSelect: React.FC<{
+export const RouteReport: React.FC<{
   route: Routes[number];
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ route, setScreen }) => {
@@ -14,8 +14,11 @@ export const RouteSelect: React.FC<{
   const [existingReport, existingReportDetails] = isExistingReport(
     route.routeId
   );
+
   if (routeView)
-    return <RouteView routeData={routeData} setScreen={setScreen} />;
+    return (
+      <RouteView route={route} routeData={routeData} setScreen={setScreen} />
+    );
 
   return (
     <div className="report-options">
@@ -25,7 +28,7 @@ export const RouteSelect: React.FC<{
         disabled={existingReport === undefined}
         onClick={() => {
           if (typeof existingReport === "string") {
-            routeData.loadExistingSurvey(existingReport);
+            routeData.loadReport(existingReport);
             setRouteView(true);
           }
         }}
@@ -36,8 +39,7 @@ export const RouteSelect: React.FC<{
         text='יצירה דו"ח חדש'
         disabled={false}
         onClick={() => {
-          routeData.createNewSurvey();
-          localStorage.setItem(routeData.id, routeData.saveSurvey());
+          routeData.newReport();
           setRouteView(true);
         }}
       >

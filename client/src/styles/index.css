@@ -317,7 +317,6 @@ textarea {
   position: relative;
   padding: 0.75em;
   width: 100%;
-  background: linear-gradient(#db1212, #dd503d);
   font-weight: bold;
 }
 
@@ -341,6 +340,14 @@ textarea {
 
 .machine .bar.complete {
   background: linear-gradient(#1f8b3a, #46815f);
+}
+
+.machine .bar.incomplete {
+  background: linear-gradient(#db1212, #dd503d);
+}
+
+.machine .bar.partial {
+  background: linear-gradient(#dba512, #ddc03d);
 }
 
 .m-question-marker {
@@ -566,4 +573,8 @@ textarea {
   border-radius: 5px;
   border: 1px solid black;
   box-shadow: 0px 0px 5px 1px black;
+}
+
+.report-details {
+  direction: ltr;
 }

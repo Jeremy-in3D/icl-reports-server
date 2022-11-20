@@ -4,8 +4,6 @@ import { machineParts } from "../../data/machine-parts";
 import { MachineForm } from "./machine-form";
 import { MachinePartsList } from "./machine-parts-list";
 
-//Only load Machine contents if it is open for performance
-
 export const Machine: React.FC<{
   routeData: Route;
   machine: [string, string[]];
@@ -13,13 +11,13 @@ export const Machine: React.FC<{
 }> = ({ routeData, machine: [machineName, parts], michlolName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
-  const isComplete = routeData.isMachineAnswered(michlolName, machineName);
-  function areaAnswered(areaName: string) {
-    return routeData.isMachineAreaAnswered(michlolName, machineName, areaName);
-  }
-  const completedClass = `${isComplete ? "complete" : "incomplete"}`;
-  const openClass = `${isOpen ? "opened" : "closed"}`;
+  const isComplete = routeData.isMachineComplete(machineName);
+  const openStyle = `${isOpen ? "opened" : "closed"}`;
   const currentPart = machineParts.find((part) => part.id === parts[view])!;
+
+  function isPartComplete(partName: string) {
+    return routeData.isPartComplete(machineName, partName);
+  }
   function updateView() {
     if (view + 1 < parts.length) setView((prevState) => ++prevState);
     else setView(0);
@@ -29,16 +27,16 @@ export const Machine: React.FC<{
     <div className="machine">
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
-        className={`bar ${completedClass} ${openClass}`}
+        className={`bar ${isComplete} ${openStyle}`}
       >
         {machineName}
       </div>
-      <div className={`michlol-contents ${completedClass} ${openClass}`}>
+      <div className={`michlol-contents ${isComplete} ${openStyle}`}>
         <MachinePartsList
-          checkAnswered={areaAnswered}
-          parts={parts}
-          setView={setView}
           view={view}
+          setView={setView}
+          parts={parts}
+          checkPart={isPartComplete}
         />
         <MachineForm
           routeData={routeData}

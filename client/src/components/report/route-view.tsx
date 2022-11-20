@@ -1,64 +1,57 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
-import { routes } from "../../data/reports-data";
-import { Machine } from "./machine";
+import { michlolim, Routes } from "../../data/reports-data";
+import { MachinesList } from "./machines-list";
+import { MichlolimList } from "./michlolim-list";
 
 export const RouteView: React.FC<{
   routeData: Route;
+  route: Routes[number];
   setScreen: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ routeData, setScreen }) => {
+}> = ({ route, routeData, setScreen }) => {
   const [view, setView] = useState(0);
-  const route = routes.find((route) => route.routeId === routeData.id);
-  const machines = Object.entries(route?.michlolim[view].machines!);
+  const currentMichlol = route.michlolim[view];
+  const currentMichlolData = michlolim.find(
+    (m) => m.michlolId === currentMichlol
+  );
+  const machines = Object.entries(currentMichlolData?.machines!);
 
   return (
     <>
       <h1 className="page-title">{routeData.name}</h1>
-      <div className="michlolim-selections">
-        <h2 className="michlolim-header">מכלולים</h2>
-        {route?.michlolim.map((michlol, i) => (
-          <div
-            className={`michlol-selection ${view === i ? "current" : "idle"}`}
-            key={i}
-            onClick={() => setView(i)}
-          >
-            {michlol.michlolName}
-          </div>
-        ))}
-      </div>
-      <h2 className="machines-header">מכונות</h2>
-      {machines.map((machine, i) => (
-        <Machine
-          key={`${route?.routeId}-${view}-${i}`}
-          routeData={routeData}
-          machine={machine}
-          michlolName={route?.michlolim[view].michlolName!}
-        />
-      ))}
+      <MichlolimList view={view} route={route} setView={setView} />
+      <MachinesList
+        view={view}
+        route={route}
+        machines={machines}
+        routeData={routeData}
+        currentMichlol={currentMichlol}
+      />
       <button
         className="route-submit-btn"
         onClick={() => {
           setScreen("home");
         }}
       >
-        שמור מסלול
-      </button>
-      <button
-        className="route-submit-btn"
-        onClick={() => {
-          const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
-          if (answer)
-            fetch("/save-report", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: routeData.saveSurvey(),
-            });
-          localStorage.setItem(routeData.id, routeData.saveSurvey());
-          setScreen("home");
-        }}
-      >
-        שלח מסלול
+        סגור מסלול
       </button>
     </>
   );
 };
+
+//  <button
+// className="route-submit-btn"
+// onClick={() => {
+//   const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
+//   if (answer)
+//     fetch("/save-report", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: routeData.saveSurvey(),
+//     });
+//   localStorage.setItem(routeData.id, routeData.saveSurvey());
+//   setScreen("home");
+// }}
+// >
+// שלח מסלול
+// </button>

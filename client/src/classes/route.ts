@@ -1,22 +1,40 @@
 import { Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
+//Refactor to KEY in of
 export class Route {
   [key: string]: any;
   id: string;
   name: string;
-  michlolim: michlolAnswers;
-  dateUploaded: number | null;
+  machines: Machines;
+  dateCreated: number | null;
+  reportId: string | null;
 
   constructor(report: Routes[number]) {
     this.id = report.routeId;
     this.name = report.routeName;
-    this.michlolim = {};
-    this.michlolCompleted = {};
-    this.dateUploaded = null;
+    this.machines = {};
+    this.dateCreated = null;
+    this.reportId = null;
   }
-  createNewSurvey() {
+
+  newReport() {
     this.dateCreated = Date.now();
+    this.reportId = `${this.id}-${this.dateCreated}`;
+    localStorage.setItem(this.id, this.saveReport());
+  }
+
+  loadReport(data: string) {
+    const existingData = JSON.parse(data);
+    for (let [key, value] of Object.entries(existingData)) {
+      this[key] = value;
+    }
+  }
+
+  saveReport() {
+    this.dateUploaded = Date.now();
+    this.date = getDateString(new Date(Date.now()));
+    return JSON.stringify(this);
   }
 
   setValue(
@@ -31,34 +49,23 @@ export class Route {
     this.michlolim[michlolName][machineName][areaName] = value;
   }
 
-  saveSurvey() {
-    this.dateUploaded = Date.now();
-    this.date = getDateString(new Date(Date.now()));
-    return JSON.stringify(this);
-  }
-
-  loadExistingSurvey(data: string) {
-    const existingData = JSON.parse(data);
-    for (let [key, value] of Object.entries(existingData)) {
-      this[key] = value;
+  isMachineComplete(machineName: string) {
+    const machine = this.machines[machineName];
+    if (machine) {
+      return machine.completed ? "completed" : "partial";
     }
+    return "incomplete";
   }
 
-  isMachineAnswered(michlolName: string, machineName: string) {
-    if (this.michlolim[michlolName]?.[machineName]) return true;
-    return false;
-  }
-
-  isMachineAreaAnswered(
-    michlolName: string,
-    machineName: string,
-    areaName: string
-  ) {
-    if (this.michlolim[michlolName]?.[machineName]?.[areaName]) return true;
+  isPartComplete(machineName: string, partName: string) {
+    if (this.machines[machineName]?.data?.[partName]) return true;
     return false;
   }
 }
 
-interface michlolAnswers {
-  [michlolId: string]: { [machineId: string]: any };
+interface Machines {
+  [machineName: string]: {
+    completed: boolean;
+    data: { [partName: string]: any };
+  };
 }

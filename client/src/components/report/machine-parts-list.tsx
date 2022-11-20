@@ -3,10 +3,10 @@ import { machineParts } from "../../data/machine-parts";
 
 export const MachinePartsList: React.FC<{
   parts: string[];
-  setView: React.Dispatch<React.SetStateAction<number>>;
-  checkAnswered: (areaName: string) => boolean;
   view: number;
-}> = ({ parts, setView, checkAnswered, view }) => {
+  setView: React.Dispatch<React.SetStateAction<number>>;
+  checkPart: (partName: string) => boolean;
+}> = ({ parts, setView, checkPart, view }) => {
   const currentParts = parts.map(
     (current) => machineParts.find((part) => part.id === current)!
   );
@@ -14,8 +14,7 @@ export const MachinePartsList: React.FC<{
   return (
     <div className="michlol-questions-array">
       {currentParts.map((part, idx) => {
-        const answered = checkAnswered(part.name);
-
+        const answered = checkPart(part.name);
         return (
           <div
             key={idx}

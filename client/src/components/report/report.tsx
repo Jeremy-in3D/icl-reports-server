@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Routes, routes } from "../../data/reports-data";
-import { RouteSelect } from "./route-select";
+import { RouteReport } from "./route-report";
 
 export const Report: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -10,7 +10,7 @@ export const Report: React.FC<{
   if (route)
     return (
       <div className="report">
-        <RouteSelect route={route} setScreen={setScreen} />
+        <RouteReport route={route} setScreen={setScreen} />
       </div>
     );
 
