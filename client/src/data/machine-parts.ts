@@ -1,4 +1,4 @@
-export const machineAreas: MachineAreas = [
+export const machineParts: MachineParts = [
   {
     id: "1",
     name: "משפך קבלה",
@@ -131,7 +131,7 @@ export type CheckBox =
   | { text: string; alert: boolean; options: true; choices: string[] }
   | { text: string; alert: boolean; options: false };
 
-export type MachineAreas = {
+export type MachineParts = {
   id: string;
   name: string;
   checkboxes: CheckBox[];

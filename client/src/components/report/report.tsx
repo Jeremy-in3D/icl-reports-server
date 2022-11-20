@@ -25,7 +25,7 @@ export const Report: React.FC<{
             onClick={() => setRoute(route)}
             key={idx}
           >
-            {route.name}
+            {route.routeName}
           </button>
         ))}
       </div>

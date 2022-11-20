@@ -11,13 +11,15 @@ export const RouteSelect: React.FC<{
 }> = ({ route, setScreen }) => {
   const [routeView, setRouteView] = useState(false);
   const routeData = useRef(new Route(route)).current;
-  const [existingReport, existingReportDetails] = isExistingReport(route.id);
+  const [existingReport, existingReportDetails] = isExistingReport(
+    route.routeId
+  );
   if (routeView)
     return <RouteView routeData={routeData} setScreen={setScreen} />;
 
   return (
     <div className="report-options">
-      <h1 className="page-title">{route.name}</h1>
+      <h1 className="page-title">{route.routeName}</h1>
       <RouteOption
         text='המשך בדו"ח הקיים'
         disabled={existingReport === undefined}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
-import { machineAreas } from "../../data/machine-areas";
+import { machineParts } from "../../data/machine-parts";
 import { MachineForm } from "./machine-form";
-import { MachineAreasList } from "./machine-areas-list";
+import { MachinePartsList } from "./machine-parts-list";
 
 //Only load Machine contents if it is open for performance
 
@@ -10,7 +10,7 @@ export const Machine: React.FC<{
   routeData: Route;
   machine: [string, string[]];
   michlolName: string;
-}> = ({ routeData, machine: [machineName, areaIds], michlolName }) => {
+}> = ({ routeData, machine: [machineName, parts], michlolName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
   const isComplete = routeData.isMachineAnswered(michlolName, machineName);
@@ -19,9 +19,9 @@ export const Machine: React.FC<{
   }
   const completedClass = `${isComplete ? "complete" : "incomplete"}`;
   const openClass = `${isOpen ? "opened" : "closed"}`;
-  const currentArea = machineAreas.find((area) => area.id === areaIds[view])!;
+  const currentPart = machineParts.find((part) => part.id === parts[view])!;
   function updateView() {
-    if (view + 1 < areaIds.length) setView((prevState) => ++prevState);
+    if (view + 1 < parts.length) setView((prevState) => ++prevState);
     else setView(0);
   }
 
@@ -34,16 +34,16 @@ export const Machine: React.FC<{
         {machineName}
       </div>
       <div className={`michlol-contents ${completedClass} ${openClass}`}>
-        <MachineAreasList
+        <MachinePartsList
           checkAnswered={areaAnswered}
-          areaIds={areaIds}
+          parts={parts}
           setView={setView}
           view={view}
         />
         <MachineForm
           routeData={routeData}
-          key={`${machineName}-${currentArea.id}`}
-          area={currentArea}
+          key={`${machineName}-${currentPart.id}`}
+          part={currentPart}
           machineName={machineName}
           michlolName={michlolName}
           updateView={updateView}

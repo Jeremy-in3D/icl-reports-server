@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
-import { MachineAreas } from "../../data/machine-areas";
+import { MachineParts } from "../../data/machine-parts";
 import { CheckboxInput } from "./checkbox-input";
 
 export const MachineForm: React.FC<{
   routeData: Route;
-  area: MachineAreas[number];
+  part: MachineParts[number];
   machineName: string;
   michlolName: string;
   updateView: () => void;
-}> = ({ routeData, area, machineName, michlolName, updateView }) => {
+}> = ({ routeData, part, machineName, michlolName, updateView }) => {
   const [isValid, setIsValid] = useState(false);
 
   function checkIfValid(idx: number) {
@@ -17,30 +17,29 @@ export const MachineForm: React.FC<{
     return false;
   }
 
-  //Only look if is a loaded survey otherwise no localstorage
   function checkIfChecked(idx: string) {
     const answered = localStorage.getItem("R1");
     const ans = JSON.parse(answered!);
-    if (ans.michlolim[michlolName]?.[machineName]?.[area.name]?.[idx])
+    if (ans.michlolim[michlolName]?.[machineName]?.[part.name]?.[idx])
       return true;
     return false;
   }
 
   return (
     <>
-      <p className="machine-area">{area.name}</p>
+      <p className="machine-area">{part.name}</p>
       <form
         className="machine-form"
         // onChange={(e) => e.currentTarget.requestSubmit()}
         onSubmit={(e) => {
-          handleFormSubmit(e, routeData, michlolName, area.name, machineName);
+          handleFormSubmit(e, routeData, michlolName, part.name, machineName);
           updateView();
         }}
       >
-        {area.checkboxes.map((checkbox, idx) => {
+        {part.checkboxes.map((checkbox, idx) => {
           return (
             <CheckboxInput
-              key={`${area.id}-${idx}`}
+              key={`${part.id}-${idx}`}
               index={idx}
               checkbox={checkbox}
               check={() => checkIfValid(idx)}

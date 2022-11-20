@@ -1,3 +1,4 @@
+import { Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
 export class Route {
@@ -7,9 +8,9 @@ export class Route {
   michlolim: michlolAnswers;
   dateUploaded: number | null;
 
-  constructor(report: { id: string; name: string }) {
-    this.id = report.id;
-    this.name = report.name;
+  constructor(report: Routes[number]) {
+    this.id = report.routeId;
+    this.name = report.routeName;
     this.michlolim = {};
     this.michlolCompleted = {};
     this.dateUploaded = null;

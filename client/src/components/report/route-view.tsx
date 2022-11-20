@@ -8,7 +8,7 @@ export const RouteView: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ routeData, setScreen }) => {
   const [view, setView] = useState(0);
-  const route = routes.find((route) => route.id === routeData.id);
+  const route = routes.find((route) => route.routeId === routeData.id);
   const machines = Object.entries(route?.michlolim[view].machines!);
 
   return (
@@ -22,19 +22,27 @@ export const RouteView: React.FC<{
             key={i}
             onClick={() => setView(i)}
           >
-            {michlol.name}
+            {michlol.michlolName}
           </div>
         ))}
       </div>
       <h2 className="machines-header">מכונות</h2>
       {machines.map((machine, i) => (
         <Machine
-          key={`${route?.id}-${view}-${i}`}
+          key={`${route?.routeId}-${view}-${i}`}
           routeData={routeData}
           machine={machine}
-          michlolName={route?.michlolim[view].name!}
+          michlolName={route?.michlolim[view].michlolName!}
         />
       ))}
+      <button
+        className="route-submit-btn"
+        onClick={() => {
+          setScreen("home");
+        }}
+      >
+        שמור מסלול
+      </button>
       <button
         className="route-submit-btn"
         onClick={() => {

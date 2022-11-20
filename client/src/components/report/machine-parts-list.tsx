@@ -1,20 +1,20 @@
 import React from "react";
-import { machineAreas } from "../../data/machine-areas";
+import { machineParts } from "../../data/machine-parts";
 
-export const MachineAreasList: React.FC<{
-  areaIds: string[];
+export const MachinePartsList: React.FC<{
+  parts: string[];
   setView: React.Dispatch<React.SetStateAction<number>>;
   checkAnswered: (areaName: string) => boolean;
   view: number;
-}> = ({ areaIds, setView, checkAnswered, view }) => {
-  const areas = areaIds.map(
-    (areaId) => machineAreas.find((area) => area.id === areaId)!
+}> = ({ parts, setView, checkAnswered, view }) => {
+  const currentParts = parts.map(
+    (current) => machineParts.find((part) => part.id === current)!
   );
 
   return (
     <div className="michlol-questions-array">
-      {areas.map((area, idx) => {
-        const answered = checkAnswered(area.name);
+      {currentParts.map((part, idx) => {
+        const answered = checkAnswered(part.name);
 
         return (
           <div
@@ -24,7 +24,7 @@ export const MachineAreasList: React.FC<{
             }`}
             onClick={() => setView(idx)}
           >
-            {area?.name}
+            {part?.name}
           </div>
         );
       })}
