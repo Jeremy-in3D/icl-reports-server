@@ -32,21 +32,23 @@ export class Route {
   }
 
   saveReport() {
-    this.dateUploaded = Date.now();
-    this.date = getDateString(new Date(Date.now()));
     return JSON.stringify(this);
   }
 
   setValue(
-    michlolName: string,
     machineName: string,
-    areaName: string,
+    partName: string,
+    michlolName: string,
     value: { [id: string]: FormDataEntryValue }
   ) {
-    if (!this.michlolim[michlolName]) this.michlolim[michlolName] = {};
-    if (!this.michlolim[michlolName][machineName])
-      this.michlolim[michlolName][machineName] = {};
-    this.michlolim[michlolName][machineName][areaName] = value;
+    if (!this.machines[machineName])
+      this.machines[machineName] = {
+        completed: false,
+        michlolName,
+        machineName,
+        data: {},
+      };
+    this.machines[machineName].data[partName] = value;
   }
 
   isMachineComplete(machineName: string) {
@@ -66,11 +68,25 @@ export class Route {
     if (this.machines[machineName]?.data?.[partName]?.[index]) return true;
     return false;
   }
+
+  sendMachineData(machineName: string) {
+    const machine = this.machines[machineName];
+    if (machine) {
+      const { completed, ...data } = machine;
+      machine.completed = true;
+      return data;
+    }
+  }
 }
 
 interface Machines {
   [machineName: string]: {
     completed: boolean;
+    michlolName: string;
+    machineName: string;
     data: { [partName: string]: any };
   };
 }
+
+// this.dateUploaded = Date.now();
+// this.date = getDateString(new Date(Date.now()));

@@ -8,15 +8,13 @@ export const MachineForm: React.FC<{
   part: MachineParts[number];
   machineName: string;
   michlolName: string;
-  updateView: () => void;
-}> = ({ routeData, part, machineName, michlolName, updateView }) => {
+}> = ({ routeData, part, machineName, michlolName }) => {
   const [isValid, setIsValid] = useState(false);
 
   function isDisabled(index: number) {
     if (index !== 0 && isValid) return true;
     return false;
   }
-
   function isDefault(index: string) {
     return routeData.isQuestionAnswered(machineName, part.name, index);
   }
@@ -26,10 +24,9 @@ export const MachineForm: React.FC<{
       <p className="machine-area">{part.name}</p>
       <form
         className="machine-form"
-        // onChange={(e) => e.currentTarget.requestSubmit()}
+        onChange={(e) => e.currentTarget.requestSubmit()}
         onSubmit={(e) => {
-          handleFormSubmit(e, routeData, michlolName, part.name, machineName);
-          updateView();
+          handleFormSubmit(e, routeData, part.name, machineName, michlolName);
         }}
       >
         {part.checkboxes.map((checkbox, idx) => {
@@ -44,9 +41,6 @@ export const MachineForm: React.FC<{
             />
           );
         })}
-        <button className="machine-submit-btn" type={"submit"}>
-          שמור מכונה
-        </button>
       </form>
     </>
   );
@@ -55,9 +49,9 @@ export const MachineForm: React.FC<{
 function handleFormSubmit(
   e: React.FormEvent<HTMLFormElement>,
   routeData: Route,
-  michlolName: string,
-  areaName: string,
-  machineName: string
+  partName: string,
+  machineName: string,
+  michlolName: string
 ) {
   e.preventDefault();
   const formData = new FormData(e.target as HTMLFormElement);
@@ -66,7 +60,8 @@ function handleFormSubmit(
   for (const [key, value] of Object.entries(formObj)) {
     sorted[key] = value;
   }
-  if (Object.keys(sorted).length)
-    routeData.setValue(michlolName, machineName, areaName, sorted);
-  localStorage.setItem(routeData.id, routeData.saveSurvey());
+  if (Object.keys(sorted).length) {
+    routeData.setValue(machineName, partName, michlolName, sorted);
+    localStorage.setItem(routeData.id, routeData.saveReport());
+  }
 }

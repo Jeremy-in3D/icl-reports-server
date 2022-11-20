@@ -18,10 +18,6 @@ export const Machine: React.FC<{
   function isPartComplete(partName: string) {
     return routeData.isPartComplete(machineName, partName);
   }
-  function updateView() {
-    if (view + 1 < parts.length) setView((prevState) => ++prevState);
-    else setView(0);
-  }
 
   return (
     <div className="machine">
@@ -32,20 +28,32 @@ export const Machine: React.FC<{
         {machineName}
       </div>
       <div className={`michlol-contents ${isComplete} ${openStyle}`}>
-        <MachinePartsList
-          view={view}
-          setView={setView}
-          parts={parts}
-          checkPart={isPartComplete}
-        />
-        <MachineForm
-          routeData={routeData}
-          key={`${machineName}-${currentPart.id}`}
-          part={currentPart}
-          machineName={machineName}
-          michlolName={michlolName}
-          updateView={updateView}
-        />
+        {isOpen && (
+          <>
+            <MachinePartsList
+              view={view}
+              setView={setView}
+              parts={parts}
+              checkPart={isPartComplete}
+            />
+            <MachineForm
+              routeData={routeData}
+              key={`${machineName}-${currentPart.id}`}
+              part={currentPart}
+              machineName={machineName}
+              michlolName={michlolName}
+            />
+            <button
+              className="machine-submit-btn"
+              onClick={() => {
+                console.log(routeData.sendMachineData(machineName));
+                setIsOpen(false);
+              }}
+            >
+              Send
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

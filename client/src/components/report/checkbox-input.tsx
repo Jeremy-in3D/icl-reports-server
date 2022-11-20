@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CheckBox } from "../../data/machine-parts";
 
 export const CheckboxInput: React.FC<{
@@ -9,13 +9,18 @@ export const CheckboxInput: React.FC<{
   setValid: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ checkbox, index, checkDisabled, checkDefault, setValid }) => {
   const [showSecondary, setShowSecondary] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const { text, options } = checkbox;
+
+  useEffect(() => {
+    if (checkDefault(`${index}`)) {
+      if (index === 0) setValid((prevState) => !prevState);
+      setShowSecondary(true);
+    }
+  }, []);
 
   return (
     <div className="form-checkbox">
       <input
-        ref={inputRef}
         className="checkbox"
         type={"checkbox"}
         name={`${index}`}
@@ -48,10 +53,3 @@ export const CheckboxInput: React.FC<{
     </div>
   );
 };
-
-// useEffect(() => {
-//   if (checkDefault(`${index}`)) {
-//     if (index === 0) setValid((prevState) => !prevState);
-//     inputRef.current!.checked = true;
-//   }
-// }, []);

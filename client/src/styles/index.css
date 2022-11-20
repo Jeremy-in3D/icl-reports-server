@@ -338,7 +338,7 @@ textarea {
   left: 0;
 }
 
-.machine .bar.complete {
+.machine .bar.completed {
   background: linear-gradient(#1f8b3a, #46815f);
 }
 
@@ -376,14 +376,21 @@ textarea {
 
 .michlol-contents {
   background-color: whitesmoke;
-  border-bottom: 4px solid rgb(255, 0, 0);
   max-height: 0;
   transition: max-height 0.6s ease-out;
   overflow: hidden;
 }
 
-.michlol-contents.complete {
+.michlol-contents.completed {
   border-bottom: 4px solid green;
+}
+
+.michlol-contents.incomplete {
+  border-bottom: 4px solid rgb(255, 0, 0);
+}
+
+.michlol-contents.partial {
+  border-bottom: 4px solid #d89d1e;
 }
 
 .michlol-contents.opened {
