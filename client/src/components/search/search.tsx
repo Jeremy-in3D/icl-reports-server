@@ -139,25 +139,33 @@ async function exportExcel(reportId: string) {
     body: reportId,
   });
   if (pullResult.status === 200) {
-    const data = await pullResult.json();
-    console.log(data);
+    const response = await pullResult.json();
+    console.log(response);
     const workbook = utils.book_new();
     const worksheet = utils.json_to_sheet([]);
-    for (let machine of data) {
+    for (let machine of response) {
       const { michlolName, machineName, data } = machine;
       const sorted = {
         Michlol: michlolName,
         Machine: machineName,
       };
-      const sortedData = {
-        חעשקיפןו: "עידרגיד",
-      };
+      const newData = [] as any;
+      console.log(data);
+      for (let [key, value] of Object.entries(data)) {
+        const newObj = {} as any;
+        for (let [key2, value2] of Object.entries(value as any)) {
+          const string = `${key} ${key2}`;
+          newObj[string] = value2;
+        }
+        newData.push(newObj);
+      }
+      console.log(newData);
 
       utils.sheet_add_json(worksheet, [sorted], {
         origin: -1,
         // skipHeader: true,
       });
-      utils.sheet_add_json(worksheet, [sortedData], {
+      utils.sheet_add_json(worksheet, newData, {
         origin: -1,
         // skipHeader: true,
       });
