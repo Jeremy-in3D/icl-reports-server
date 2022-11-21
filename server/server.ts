@@ -82,11 +82,14 @@ app.post("/search-reports", async (req, res) => {
 });
 
 app.post("/save-report", async (req, res) => {
+  const data = req.body;
+  console.log(data);
   try {
-    await mongo.insertDoc(req.body);
-    res.send("Document Inserted Successfully");
+    if (data.id) await mongo.removeDoc(data.id);
+    const insertedId = await mongo.insertDoc(data);
+    res.status(200).send(insertedId.toString());
   } catch (e) {
-    res.status(500).send(e);
+    res.status(500).send("Error" + e);
   }
 });
 

@@ -44,6 +44,7 @@ export class Route {
     if (!this.machines[machineName])
       this.machines[machineName] = {
         completed: false,
+        id: null,
         michlolName,
         machineName,
         data: {},
@@ -57,6 +58,14 @@ export class Route {
       return machine.completed ? "completed" : "partial";
     }
     return "incomplete";
+  }
+
+  markMachineComplete(machineName: string, id: string) {
+    const machine = this.machines[machineName];
+    if (machine) {
+      machine.completed = true;
+      machine.id = id;
+    }
   }
 
   isPartComplete(machineName: string, partName: string) {
@@ -74,7 +83,8 @@ export class Route {
     if (machine) {
       const { completed, ...data } = machine;
       machine.completed = true;
-      return data;
+      const finalData = { ...data, reportId: this.reportId };
+      return JSON.stringify(finalData);
     }
   }
 }
@@ -82,6 +92,7 @@ export class Route {
 interface Machines {
   [machineName: string]: {
     completed: boolean;
+    id: string | null;
     michlolName: string;
     machineName: string;
     data: { [partName: string]: any };

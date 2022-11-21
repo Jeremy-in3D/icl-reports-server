@@ -1,4 +1,4 @@
-import { Collection, MongoClient } from "mongodb";
+import { Collection, MongoClient, ObjectId } from "mongodb";
 
 export class MongoDB {
   client: MongoClient;
@@ -48,11 +48,15 @@ export class MongoDB {
   }
 
   async insertDoc(payload: any) {
-    try {
-      const insert = await this.collection.insertOne(payload);
-      console.log(`A document was inserted with the _id: ${insert.insertedId}`);
-    } catch (e) {
-      console.log("Error", e);
-    }
+    const insert = await this.collection.insertOne(payload);
+    console.log(`A document was inserted with the _id: ${insert.insertedId}`);
+    return insert.insertedId;
+  }
+
+  async removeDoc(id: string) {
+    const remove = await this.collection.deleteOne({ _id: new ObjectId(id) });
+    console.log(
+      `${remove.deletedCount} document was removed with the _id: ${id} `
+    );
   }
 }

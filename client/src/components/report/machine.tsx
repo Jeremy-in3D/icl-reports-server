@@ -44,10 +44,21 @@ export const Machine: React.FC<{
               michlolName={michlolName}
             />
             <button
-              className="machine-submit-btn"
-              onClick={() => {
-                console.log(routeData.sendMachineData(machineName));
-                setIsOpen(false);
+              className="submit-data-btn"
+              onClick={async (e) => {
+                const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
+                if (answer) {
+                  const response = await fetch("/save-report", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: routeData.sendMachineData(machineName),
+                  });
+                  if (response.status === 200) {
+                    const id = await response.text();
+                    routeData.markMachineComplete(machineName, id);
+                  }
+                  setIsOpen(false);
+                }
               }}
             >
               Send

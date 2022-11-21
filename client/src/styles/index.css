@@ -585,3 +585,17 @@ textarea {
 .report-details {
   direction: ltr;
 }
+
+.submit-data-btn {
+  display: block;
+  margin: auto;
+  padding: 0.5em;
+  margin: 1em auto;
+  width: 60%;
+  font-size: 1.4em;
+  font-weight: bold;
+  background: linear-gradient(0.15turn, var(--blue2), var(--blue4));
+  border-radius: 5px;
+  border: 1px solid black;
+  box-shadow: 0px 0px 5px 1px black;
+}
