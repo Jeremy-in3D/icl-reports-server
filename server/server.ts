@@ -83,7 +83,16 @@ app.post("/search-reports", async (req, res) => {
 
 app.post("/save-report", async (req, res) => {
   const data = req.body;
-  console.log(data);
+  try {
+    const insertedId = await mongo.insertReport(data);
+    res.status(200).send(insertedId.toString());
+  } catch (e) {
+    res.status(500).send("Error" + e);
+  }
+});
+
+app.post("/save-machine", async (req, res) => {
+  const data = req.body;
   try {
     if (data.id) await mongo.removeDoc(data.id);
     const insertedId = await mongo.insertDoc(data);

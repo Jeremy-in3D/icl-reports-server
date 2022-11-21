@@ -9,6 +9,7 @@ export class Route {
   machines: Machines;
   dateCreated: number | null;
   reportId: string | null;
+  reportSubmitted: boolean;
 
   constructor(report: Routes[number]) {
     this.id = report.routeId;
@@ -16,6 +17,7 @@ export class Route {
     this.machines = {};
     this.dateCreated = null;
     this.reportId = null;
+    this.reportSubmitted = false;
   }
 
   newReport() {
@@ -47,6 +49,7 @@ export class Route {
         id: null,
         michlolName,
         machineName,
+        reportId: this.reportId!,
         data: {},
       };
     this.machines[machineName].data[partName] = value;
@@ -81,11 +84,22 @@ export class Route {
   sendMachineData(machineName: string) {
     const machine = this.machines[machineName];
     if (machine) {
-      const { completed, ...data } = machine;
+      const { completed, id, ...data } = machine;
       machine.completed = true;
-      const finalData = { ...data, reportId: this.reportId };
-      return JSON.stringify(finalData);
+      return JSON.stringify(data);
     }
+  }
+
+  sendReportData() {
+    const data = { dateCreated: this.dateCreated, reportId: this.reportId };
+    return JSON.stringify(data);
+  }
+  reportIsSubmitted() {
+    return this.reportSubmitted;
+  }
+
+  markReportSubmitted() {
+    this.reportSubmitted = true;
   }
 }
 
@@ -95,6 +109,7 @@ interface Machines {
     id: string | null;
     michlolName: string;
     machineName: string;
+    reportId: string;
     data: { [partName: string]: any };
   };
 }

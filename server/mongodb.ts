@@ -2,11 +2,13 @@ import { Collection, MongoClient, ObjectId } from "mongodb";
 
 export class MongoDB {
   client: MongoClient;
-  collection: Collection;
+  machines: Collection;
+  reports: Collection;
 
   constructor(uri: string) {
     this.client = new MongoClient(uri);
-    this.collection = this.client.db("icl").collection("reports");
+    this.machines = this.client.db("icl").collection("machines");
+    this.reports = this.client.db("icl").collection("reports");
   }
 
   async connect() {
@@ -19,7 +21,7 @@ export class MongoDB {
 
   async pullDocs() {
     try {
-      const find = this.collection
+      const find = this.reports
         .find({})
         .project({ _id: 1, name: 1, dateUploaded: 1 })
         .sort({ dateUploaded: -1 })
@@ -34,7 +36,7 @@ export class MongoDB {
   async searchDocs(data: { startDate: number; endDate: number }) {
     const { startDate, endDate } = data;
     try {
-      const find = this.collection
+      const find = this.reports
         .find({
           dateUploaded: { $gt: startDate, $lt: endDate },
         })
@@ -48,15 +50,32 @@ export class MongoDB {
   }
 
   async insertDoc(payload: any) {
-    const insert = await this.collection.insertOne(payload);
-    console.log(`A document was inserted with the _id: ${insert.insertedId}`);
+    const insert = await this.machines.insertOne(payload);
+    console.log(
+      `A machine document was inserted with the _id: ${insert.insertedId}`
+    );
     return insert.insertedId;
   }
 
   async removeDoc(id: string) {
-    const remove = await this.collection.deleteOne({ _id: new ObjectId(id) });
+    const remove = await this.machines.deleteOne({ _id: new ObjectId(id) });
     console.log(
-      `${remove.deletedCount} document was removed with the _id: ${id} `
+      `${remove.deletedCount} machine document was removed with the _id: ${id} `
+    );
+  }
+
+  async insertReport(payload: any) {
+    const insert = await this.reports.insertOne(payload);
+    console.log(
+      `A report document was inserted with the _id: ${insert.insertedId}`
+    );
+    return insert.insertedId;
+  }
+
+  async removeReport(id: string) {
+    const remove = await this.reports.deleteOne({ _id: new ObjectId(id) });
+    console.log(
+      `${remove.deletedCount} report document was removed with the _id: ${id} `
     );
   }
 }
