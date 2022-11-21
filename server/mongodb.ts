@@ -50,23 +50,25 @@ export class MongoDB {
     console.log(`Report deleted successfully`);
   }
 
+  async pullReport(id: string, collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId);
+    const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
+    return await find.toArray();
+  }
+
   async searchDocs(
     data: { startDate: number; endDate: number },
     collectionId: CollectionIds
   ) {
     const { startDate, endDate } = data;
     const collection = this.getCollection(collectionId);
-    try {
-      const find = collection
-        .find({
-          dateCreated: { $gt: startDate, $lt: endDate },
-        })
-        .project({ _id: 1, name: 1, dateCreated: 1, reportId: 1 })
-        .sort({ dateCreated: -1 });
-      console.log(`Database was searched successfully`);
-      return await find.toArray();
-    } catch (e) {
-      console.log("Error", e);
-    }
+    const find = collection
+      .find({
+        dateCreated: { $gt: startDate, $lt: endDate },
+      })
+      .project({ _id: 1, name: 1, dateCreated: 1, reportId: 1 })
+      .sort({ dateCreated: -1 });
+    console.log(`Database was searched successfully`);
+    return await find.toArray();
   }
 }

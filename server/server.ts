@@ -61,6 +61,7 @@ app.post(
 app.post("/save-machine", async (req, res) => {
   const data = req.body;
   try {
+    //Maybe refactor to findOneandUpdate
     if (data.id) await mongo.removeDoc(data.id, "machines");
     const insertedId = await mongo.insertDoc(data, "machines");
     res.status(200).send(insertedId.toString());
@@ -103,8 +104,8 @@ app.post("/search-reports", async (req, res) => {
 app.post("/pull-report", async (req, res) => {
   const data = req.body;
   try {
-    const results = await mongo.searchDocs(data, "machines");
-    // res.json(results);
+    const results = await mongo.pullReport(data, "machines");
+    res.json(results);
   } catch (e) {
     res.status(500).send(e);
   }

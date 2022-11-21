@@ -107,7 +107,7 @@ export const Search: React.FC = () => {
                         body: item.reportId,
                       });
                       if (pullResult.status === 200) {
-                        console.log(pullResult.json());
+                        console.log(await pullResult.json());
                       }
                     }}
                     className="search-item-btn"
