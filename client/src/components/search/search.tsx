@@ -2,7 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { getDateString } from "../../helpers/dates";
 
 const openIcon = new URL(
-  "../../../assets/icons/report-icons/open-btn.png",
+  "../../../assets/icons/bar-icons/open-btn.png",
+  import.meta.url
+);
+const exportIcon = new URL(
+  "../../../assets/icons/bar-icons/export-btn.png",
+  import.meta.url
+);
+const deleteIcon = new URL(
+  "../../../assets/icons/bar-icons/delete-btn.png",
   import.meta.url
 );
 
@@ -58,6 +66,8 @@ export const Search: React.FC = () => {
           <p className="search-header">שם</p>
           <p className="search-header">תאריך</p>
           <p className="search-header">מחיקה</p>
+          <p className="search-header">ייצוא</p>
+          <p className="search-header">פתיחה</p>
         </div>
         <div className="search-items">
           {searchResults &&
@@ -84,6 +94,30 @@ export const Search: React.FC = () => {
                           setSearchResults(newSearchResults);
                         }
                       }
+                    }}
+                    className="search-item-btn"
+                    src={deleteIcon.href}
+                  ></img>
+                </div>
+                <div>
+                  <img
+                    onClick={async () => {
+                      const pullResult = await fetch("/pull-report", {
+                        method: "POST",
+                        body: item.reportId,
+                      });
+                      if (pullResult.status === 200) {
+                        console.log(pullResult.json());
+                      }
+                    }}
+                    className="search-item-btn"
+                    src={exportIcon.href}
+                  ></img>
+                </div>
+                <div>
+                  <img
+                    onClick={async () => {
+                      console.log("open doc");
                     }}
                     className="search-item-btn"
                     src={openIcon.href}

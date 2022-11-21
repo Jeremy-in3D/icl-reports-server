@@ -100,6 +100,16 @@ app.post("/search-reports", async (req, res) => {
   }
 });
 
+app.post("/pull-report", async (req, res) => {
+  const data = req.body;
+  try {
+    const results = await mongo.searchDocs(data, "machines");
+    // res.json(results);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 (async () => {
   try {
     await mongo.connect();
