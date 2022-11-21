@@ -62,10 +62,12 @@ app.get("/export-report", (req, res) => {
   res.send("1234");
 });
 
-app.get("/pull-reports", async (req, res) => {
+app.post("/delete-report", async (req, res) => {
+  const id = req.body;
+  console.log(id);
   try {
-    const results = await mongo.pullDocs();
-    res.json(results);
+    await mongo.deleteReport(id);
+    res.status(200).send("Report Deleted Successfully");
   } catch (e) {
     res.status(500).send(e);
   }

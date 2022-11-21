@@ -1,5 +1,7 @@
 import { Collection, MongoClient, ObjectId } from "mongodb";
 
+//Refactor to contain second parameter which is the collection instead of having two types
+
 export class MongoDB {
   client: MongoClient;
   machines: Collection;
@@ -19,18 +21,10 @@ export class MongoDB {
     await this.client.close();
   }
 
-  async pullDocs() {
-    try {
-      const find = this.reports
-        .find({})
-        .project({ _id: 1, reportId: 1, dateCreated: 1 })
-        .sort({ dateUploaded: -1 })
-        .limit(10);
-      console.log(`Database was searched successfully`);
-      return await find.toArray();
-    } catch (e) {
-      console.log("Error", e);
-    }
+  async deleteReport(id: string) {
+    await this.removeReport(id);
+    await this.removeDocs(id);
+    console.log(`Report deleted successfully`);
   }
 
   async searchDocs(data: { startDate: number; endDate: number }) {
@@ -40,7 +34,7 @@ export class MongoDB {
         .find({
           dateCreated: { $gt: startDate, $lt: endDate },
         })
-        .project({ _id: 1, name: 1, dateCreated: 1 })
+        .project({ _id: 1, name: 1, dateCreated: 1, reportId: 1 })
         .sort({ dateCreated: -1 });
       console.log(`Database was searched successfully`);
       return await find.toArray();
@@ -64,6 +58,15 @@ export class MongoDB {
     );
   }
 
+  async removeDocs(id: string) {
+    const remove = await this.machines.deleteMany({
+      reportId: id,
+    });
+    console.log(
+      `${remove.deletedCount} machines documents were removed with the _id: ${id} `
+    );
+  }
+
   async insertReport(payload: any) {
     const insert = await this.reports.insertOne(payload);
     console.log(
@@ -73,7 +76,7 @@ export class MongoDB {
   }
 
   async removeReport(id: string) {
-    const remove = await this.reports.deleteOne({ _id: new ObjectId(id) });
+    const remove = await this.reports.deleteOne({ reportId: id });
     console.log(
       `${remove.deletedCount} report document was removed with the _id: ${id} `
     );

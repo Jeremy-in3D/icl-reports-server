@@ -69,8 +69,21 @@ export const Search: React.FC = () => {
                 </p>
                 <div>
                   <img
-                    onClick={() => {
-                      console.log(item);
+                    onClick={async () => {
+                      const answer = confirm("אתה רוצה למחוק את הדוח?");
+                      if (answer) {
+                        const deleteResult = await fetch("/delete-report", {
+                          method: "POST",
+                          body: item.reportId,
+                        });
+                        if (deleteResult.status === 200) {
+                          const newSearchResults = searchResults.filter(
+                            (result: any, i: number) => i !== idx
+                          );
+
+                          setSearchResults(newSearchResults);
+                        }
+                      }
                     }}
                     className="search-item-btn"
                     src={openIcon.href}
