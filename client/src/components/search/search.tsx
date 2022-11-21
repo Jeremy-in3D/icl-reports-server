@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { utils, writeFile } from "xlsx";
 import { getDateString } from "../../helpers/dates";
 
 const openIcon = new URL(
@@ -101,15 +102,7 @@ export const Search: React.FC = () => {
                 </div>
                 <div>
                   <img
-                    onClick={async () => {
-                      const pullResult = await fetch("/pull-report", {
-                        method: "POST",
-                        body: item.reportId,
-                      });
-                      if (pullResult.status === 200) {
-                        console.log(await pullResult.json());
-                      }
-                    }}
+                    onClick={async () => await exportExcel(item.reportId)}
                     className="search-item-btn"
                     src={exportIcon.href}
                   ></img>
@@ -130,3 +123,54 @@ export const Search: React.FC = () => {
     </div>
   );
 };
+
+//Use header option to decide the order of the data
+//Skip header skips writing the headers in its own row
+//Origin enables you to pick the starting point of the JSON addition
+//Data will be added from the json objects based on the header and placed accordingly
+
+//Check if extra keys that dont have a header are added automatically,
+// if so, then create an array of exportable data and filter by it
+
+//Refactor so origin is calculated manually by the iteration
+async function exportExcel(reportId: string) {
+  const pullResult = await fetch("/pull-report", {
+    method: "POST",
+    body: reportId,
+  });
+  if (pullResult.status === 200) {
+    const data = await pullResult.json();
+    console.log(data);
+    const workbook = utils.book_new();
+    const worksheet = utils.json_to_sheet([]);
+    for (let machine of data) {
+      const { michlolName, machineName, data } = machine;
+      const sorted = {
+        Michlol: michlolName,
+        Machine: machineName,
+      };
+      const sortedData = {
+        חעשקיפןו: "עידרגיד",
+      };
+
+      utils.sheet_add_json(worksheet, [sorted], {
+        origin: -1,
+        // skipHeader: true,
+      });
+      utils.sheet_add_json(worksheet, [sortedData], {
+        origin: -1,
+        // skipHeader: true,
+      });
+      utils.sheet_add_json(worksheet, [], {
+        origin: -1,
+        // skipHeader: true,
+      });
+      // utils.sheet_add_json(worksheet, [data]);
+    }
+
+    utils.book_append_sheet(workbook, worksheet, "Data");
+    writeFile(workbook, `${reportId}.xlsx`, {
+      compression: true,
+    });
+  }
+}

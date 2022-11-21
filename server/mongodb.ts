@@ -53,6 +53,7 @@ export class MongoDB {
   async pullReport(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
+    console.log(`Report queried successfully`);
     return await find.toArray();
   }
 
