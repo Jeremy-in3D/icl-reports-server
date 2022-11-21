@@ -72,7 +72,7 @@ app.get("/pull-reports", async (req, res) => {
 });
 
 app.post("/search-reports", async (req, res) => {
-  const data = JSON.parse(req.body);
+  const data = req.body;
   try {
     const results = await mongo.searchDocs(data);
     res.json(results);

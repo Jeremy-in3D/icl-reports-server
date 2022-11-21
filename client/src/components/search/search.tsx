@@ -40,6 +40,7 @@ export const Search: React.FC = () => {
         onClick={async () => {
           const result = await fetch("/search-reports", {
             method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               startDate: startDateRef.current!.valueAsNumber,
               endDate: endDateRef.current!.valueAsNumber + 86400000, //Add 1 day in ms to the endDate so it includes the full day
@@ -64,7 +65,7 @@ export const Search: React.FC = () => {
               <div className="search-item" key={idx}>
                 <p className="search-item-name">{item.name}</p>
                 <p className="search-item-date">
-                  {new Date(item.dateUploaded).toDateString()}
+                  {new Date(item.dateCreated).toDateString()}
                 </p>
                 <div>
                   <img

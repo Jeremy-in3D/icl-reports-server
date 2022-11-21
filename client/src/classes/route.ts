@@ -91,7 +91,11 @@ export class Route {
   }
 
   sendReportData() {
-    const data = { dateCreated: this.dateCreated, reportId: this.reportId };
+    const data = {
+      dateCreated: this.dateCreated,
+      name: this.id,
+      reportId: this.reportId,
+    };
     return JSON.stringify(data);
   }
   reportIsSubmitted() {

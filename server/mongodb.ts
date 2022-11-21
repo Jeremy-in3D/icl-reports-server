@@ -23,7 +23,7 @@ export class MongoDB {
     try {
       const find = this.reports
         .find({})
-        .project({ _id: 1, name: 1, dateUploaded: 1 })
+        .project({ _id: 1, reportId: 1, dateCreated: 1 })
         .sort({ dateUploaded: -1 })
         .limit(10);
       console.log(`Database was searched successfully`);
@@ -38,10 +38,10 @@ export class MongoDB {
     try {
       const find = this.reports
         .find({
-          dateUploaded: { $gt: startDate, $lt: endDate },
+          dateCreated: { $gt: startDate, $lt: endDate },
         })
-        .project({ _id: 1, name: 1, dateUploaded: 1 })
-        .sort({ dateUploaded: -1 });
+        .project({ _id: 1, name: 1, dateCreated: 1 })
+        .sort({ dateCreated: -1 });
       console.log(`Database was searched successfully`);
       return await find.toArray();
     } catch (e) {
