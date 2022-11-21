@@ -57,7 +57,7 @@ export const Search: React.FC = () => {
         <div className="search-headers">
           <p className="search-header">שם</p>
           <p className="search-header">תאריך</p>
-          <p className="search-header">פתיחה</p>
+          <p className="search-header">מחיקה</p>
         </div>
         <div className="search-items">
           {searchResults &&

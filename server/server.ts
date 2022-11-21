@@ -58,8 +58,25 @@ app.post(
   }
 );
 
-app.get("/export-report", (req, res) => {
-  res.send("1234");
+app.post("/save-machine", async (req, res) => {
+  const data = req.body;
+  try {
+    if (data.id) await mongo.removeDoc(data.id, "machines");
+    const insertedId = await mongo.insertDoc(data, "machines");
+    res.status(200).send(insertedId.toString());
+  } catch (e) {
+    res.status(500).send("Error" + e);
+  }
+});
+
+app.post("/save-report", async (req, res) => {
+  const data = req.body;
+  try {
+    const insertedId = await mongo.insertDoc(data, "reports");
+    res.status(200).send(insertedId.toString());
+  } catch (e) {
+    res.status(500).send("Error" + e);
+  }
 });
 
 app.post("/delete-report", async (req, res) => {
@@ -76,31 +93,10 @@ app.post("/delete-report", async (req, res) => {
 app.post("/search-reports", async (req, res) => {
   const data = req.body;
   try {
-    const results = await mongo.searchDocs(data);
+    const results = await mongo.searchDocs(data, "reports");
     res.json(results);
   } catch (e) {
     res.status(500).send(e);
-  }
-});
-
-app.post("/save-report", async (req, res) => {
-  const data = req.body;
-  try {
-    const insertedId = await mongo.insertReport(data);
-    res.status(200).send(insertedId.toString());
-  } catch (e) {
-    res.status(500).send("Error" + e);
-  }
-});
-
-app.post("/save-machine", async (req, res) => {
-  const data = req.body;
-  try {
-    if (data.id) await mongo.removeDoc(data.id);
-    const insertedId = await mongo.insertDoc(data);
-    res.status(200).send(insertedId.toString());
-  } catch (e) {
-    res.status(500).send("Error" + e);
   }
 });
 
