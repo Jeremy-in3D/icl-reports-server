@@ -43,7 +43,7 @@ export const RouteReport: React.FC<{
           setRouteView(true);
         }}
       >
-        <p>ימחק הדוח הקיים</p>
+        <p>הדו"ח הקיים יסגר</p>
       </RouteOption>
     </div>
   );

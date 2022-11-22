@@ -160,8 +160,8 @@ body,
 
 .report-option {
   font-size: 1.3em;
-  font-weight: 500;
-  background: linear-gradient(grey, black);
+  font-weight: 600;
+  background: rgba(128, 128, 128, 0.5);
   border-radius: 6px;
   margin: 1em;
   padding: 0.5em 0em;
@@ -171,7 +171,6 @@ body,
   flex-flow: column nowrap;
   justify-content: space-evenly;
   align-items: center;
-  color: white;
 }
 
 .report-option-button {
@@ -180,8 +179,13 @@ body,
   font-weight: 600;
   padding: 1em;
   margin: 1em;
-  border-radius: 5px;
-  border: 2px solid var(--blue4);
+  border: 1px solid black;
+  box-shadow: 0px 0px 5px black;
+  background: var(--blue4opaque);
+}
+
+.details-date {
+  direction: ltr;
 }
 
 button:disabled {
@@ -610,10 +614,6 @@ textarea {
   border-radius: 5px;
   border: 1px solid black;
   box-shadow: 0px 0px 5px 1px black;
-}
-
-.report-details {
-  direction: ltr;
 }
 
 .submit-data-btn {

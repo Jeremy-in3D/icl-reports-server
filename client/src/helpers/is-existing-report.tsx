@@ -6,9 +6,9 @@ export const isExistingReport = (id: string) => {
     const parsedReport = JSON.parse(existingSurvey) as Route;
     const existingDate = new Date(parsedReport.dateCreated!);
     const existingDetails = (
-      <div>
-        <p>מזהה: {parsedReport.reportId}</p>
-        <p className="report-details">{existingDate.toLocaleString()} :תאריך</p>
+      <div className="existing-report-details">
+        <p>{parsedReport.reportId}</p>
+        <p className="details-date">{existingDate.toLocaleString()}</p>
       </div>
     );
     return [existingSurvey, existingDetails];
