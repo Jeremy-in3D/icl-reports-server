@@ -77,7 +77,7 @@ export class MongoDB {
       .find({
         dateCreated: { $gt: startDate, $lt: endDate },
       })
-      .project({ _id: 1, name: 1, dateCreated: 1, reportId: 1 })
+      .project({ _id: 1, routeName: 1, reportId: 1, dateCreated: 1 })
       .sort({ dateCreated: -1 });
     console.log(`Database was searched successfully`);
     return await find.toArray();
