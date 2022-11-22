@@ -550,6 +550,7 @@ textarea {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
+  padding-bottom: 0.5em;
 }
 
 .search-option {
