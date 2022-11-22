@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { PageNotFound } from "./components/page-not-found";
 import { Report } from "./components/report/report";
 import { Search } from "./components/search/search";
+import { TopBar } from "./components/top-bar";
 import { Home } from "./home";
-import { logo } from "./data/imports";
 
 export const App: React.FC = () => {
   const [showScreen, setShowScreen] = useState("home");
@@ -23,15 +23,7 @@ export const App: React.FC = () => {
   }
   return (
     <div className="app ">
-      <div className="top-bar">
-        <img
-          className="icon logo"
-          src={logo.href}
-          onClick={() => {
-            setShowScreen("home");
-          }}
-        ></img>
-      </div>
+      <TopBar setScreen={setShowScreen} />
       {display}
     </div>
   );

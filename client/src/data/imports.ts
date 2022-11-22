@@ -1,4 +1,9 @@
 const viewIcon = new URL("../../assets/icons/report-view.png", import.meta.url);
+
+const uploadIcon = new URL(
+  "../../assets/icons/report-upload.png",
+  import.meta.url
+);
 const downloadIcon = new URL(
   "../../assets/icons/report-download.png",
   import.meta.url
@@ -17,4 +22,12 @@ const searchIcon = new URL(
 );
 const logo = new URL("../../assets/logo.webp", import.meta.url);
 
-export { logo, viewIcon, downloadIcon, deleteIcon, createIcon, searchIcon };
+export {
+  logo,
+  viewIcon,
+  uploadIcon,
+  downloadIcon,
+  deleteIcon,
+  createIcon,
+  searchIcon,
+};

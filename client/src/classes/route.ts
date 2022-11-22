@@ -22,6 +22,7 @@ export class Route {
 
   newReport() {
     this.dateCreated = Date.now();
+    this.date = getDateString(new Date(Date.now()));
     this.reportId = `${this.id}-${this.dateCreated}`;
     localStorage.setItem(this.id, this.saveReport());
   }
@@ -118,6 +119,3 @@ interface Machines {
     data: { [partName: string]: any };
   };
 }
-
-// this.dateUploaded = Date.now();
-// this.date = getDateString(new Date(Date.now()));
