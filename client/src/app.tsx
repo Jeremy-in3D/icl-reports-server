@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { Export } from "./components/export/export";
 import { PageNotFound } from "./components/page-not-found";
 import { Report } from "./components/report/report";
 import { Search } from "./components/search/search";
 import { Home } from "./home";
-
-const logo = new URL("../assets/logo.webp", import.meta.url);
+import { logo } from "./data/imports";
 
 export const App: React.FC = () => {
   const [showScreen, setShowScreen] = useState("home");
@@ -19,9 +17,6 @@ export const App: React.FC = () => {
       break;
     case "search":
       display = <Search />;
-      break;
-    case "export":
-      display = <Export />;
       break;
     default:
       display = <PageNotFound />;

@@ -149,7 +149,7 @@ body,
   border-radius: 6px;
   font-size: 1.6em;
   font-weight: 600;
-  background: url("../../assets/abstract-background2.jpg");
+  background: rgba(0, 0, 0, 0.8);
   border: 2px solid gray;
   color: white;
 }
@@ -594,7 +594,7 @@ textarea {
 }
 
 .search-item-btn {
-  width: 30px;
+  width: 40px;
   margin: 0 auto;
 }
 

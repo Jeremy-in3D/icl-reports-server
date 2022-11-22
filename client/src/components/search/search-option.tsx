@@ -7,8 +7,8 @@ export const SearchOption: React.FC<{
 }> = ({ text, onClick, href }) => {
   return (
     <div className="search-option">
-      <p>{text}</p>
       <img onClick={onClick} className="search-item-btn" src={href}></img>
+      <p>{text}</p>
     </div>
   );
 };

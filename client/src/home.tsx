@@ -1,29 +1,10 @@
 import React from "react";
 import { HomeSelection } from "./components/home-selection";
-import {
-  addReportIcon,
-  notificationReportIcon,
-  searchReportIcon,
-  settingsReportIcon,
-  shareReportIcon,
-  statisticsReportIcon,
-} from "./data/imports";
+import { createIcon, searchIcon } from "./data/imports";
 
 const buttons = [
-  { text: 'יצור דו"ח', imgPath: addReportIcon.href, screen: "report" },
-  { text: "חיפוש דוחות", imgPath: searchReportIcon.href, screen: "search" },
-  {
-    text: "מסך התראות",
-    imgPath: notificationReportIcon.href,
-    screen: "notifications",
-  },
-  { text: "ייצוא", imgPath: shareReportIcon.href, screen: "export" },
-  {
-    text: "סטטיסטיקה",
-    imgPath: statisticsReportIcon.href,
-    screen: "Statistics",
-  },
-  { text: "הגדרת דוחות", imgPath: settingsReportIcon.href, screen: "options" },
+  { text: 'יצור דו"ח', imgPath: createIcon.href, screen: "report" },
+  { text: "חיפוש דוחות", imgPath: searchIcon.href, screen: "search" },
 ];
 
 export const Home: React.FC<{

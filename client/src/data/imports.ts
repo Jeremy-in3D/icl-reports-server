@@ -1,33 +1,20 @@
-const notificationReportIcon = new URL(
-  "../../assets/icons/report-icons/report-notification.svg",
+const viewIcon = new URL("../../assets/icons/report-view.png", import.meta.url);
+const downloadIcon = new URL(
+  "../../assets/icons/report-download.png",
   import.meta.url
 );
-const searchReportIcon = new URL(
-  "../../assets/icons/report-icons/report-search.svg",
+const deleteIcon = new URL(
+  "../../assets/icons/report-delete.png",
   import.meta.url
 );
-const addReportIcon = new URL(
-  "../../assets/icons/report-icons/report-add.svg",
+const createIcon = new URL(
+  "../../assets/icons/report-add.png",
   import.meta.url
 );
-const shareReportIcon = new URL(
-  "../../assets/icons/report-icons/report-share.svg",
+const searchIcon = new URL(
+  "../../assets/icons/report-search.png",
   import.meta.url
 );
-const settingsReportIcon = new URL(
-  "../../assets/icons/report-icons/report-settings.svg",
-  import.meta.url
-);
-const statisticsReportIcon = new URL(
-  "../../assets/icons/report-icons/report-statistics.svg",
-  import.meta.url
-);
+const logo = new URL("../../assets/logo.webp", import.meta.url);
 
-export {
-  notificationReportIcon,
-  addReportIcon,
-  searchReportIcon,
-  settingsReportIcon,
-  shareReportIcon,
-  statisticsReportIcon,
-};
+export { logo, viewIcon, downloadIcon, deleteIcon, createIcon, searchIcon };

@@ -4,19 +4,7 @@ import { exportExcel } from "../../helpers/export-excel";
 import { SearchBtn } from "./search-btn";
 import { SearchDate } from "./search-date";
 import { SearchOption } from "./search-option";
-
-const openIcon = new URL(
-  "../../../assets/icons/bar-icons/open-btn.png",
-  import.meta.url
-);
-const exportIcon = new URL(
-  "../../../assets/icons/bar-icons/export-btn.png",
-  import.meta.url
-);
-const deleteIcon = new URL(
-  "../../../assets/icons/bar-icons/delete-btn.png",
-  import.meta.url
-);
+import { downloadIcon, viewIcon, deleteIcon } from "../../data/imports";
 
 export const Search: React.FC = () => {
   const [searchResults, setSearchResults] = useState<any>(null);
@@ -40,19 +28,19 @@ export const Search: React.FC = () => {
         <div className="search-items">
           {searchResults &&
             searchResults.map((item: any, idx: number) => (
-              <div className="search-item">
+              <div className="search-item" key={`${item.id}-${idx}`}>
                 <h2>{item.reportId}</h2>
                 <p>{item.routeName}</p>
                 <p>{new Date(item.dateCreated).toDateString()}</p>
                 <div className="search-item-options">
                   <SearchOption
                     text={"פתיחה"}
-                    href={openIcon.href}
+                    href={viewIcon.href}
                     onClick={() => {}}
                   />
                   <SearchOption
-                    text={"ייצוא"}
-                    href={exportIcon.href}
+                    text={"הורדה"}
+                    href={downloadIcon.href}
                     onClick={() => exportExcel(item.reportId)}
                   />
                   <SearchOption
