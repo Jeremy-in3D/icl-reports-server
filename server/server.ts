@@ -8,6 +8,8 @@ import { BlobServiceClient } from "@azure/storage-blob";
 import { streamToBuffer } from "./helpers/streamToBuffer.js";
 import { MongoDB } from "./mongodb.js";
 
+//Add refresh token for mongodb
+
 dotenv.config();
 const mongoUri = process.env.MONGO_URI || "";
 const mongo = new MongoDB(mongoUri);
@@ -82,12 +84,11 @@ app.post("/save-report", async (req, res) => {
 
 app.post("/delete-report", async (req, res) => {
   const id = req.body;
-  console.log(id);
   try {
     await mongo.deleteReport(id);
     res.status(200).send("Report Deleted Successfully");
-  } catch (e) {
-    res.status(500).send(e);
+  } catch {
+    res.status(500).send("Report Deletion Failed");
   }
 });
 

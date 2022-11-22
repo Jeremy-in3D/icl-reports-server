@@ -2,6 +2,8 @@ import { Collection, MongoClient, ObjectId } from "mongodb";
 
 type CollectionIds = "reports" | "machines";
 
+//Refactor to better handle thrown error. Each function can either return the promise which can res/rej or you handle the functions return and handle/throw based on that output
+
 export class MongoDB {
   client: MongoClient;
 
@@ -30,18 +32,26 @@ export class MongoDB {
 
   async removeDoc(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    await collection.deleteOne({ _id: new ObjectId(id) });
-    console.log(`Document was removed with the _id: ${id}`);
+    try {
+      await collection.deleteOne({ reportId: id });
+      console.log(`Document was removed with the reportId: ${id}`);
+    } catch (e) {
+      console.log("Error", e);
+    }
   }
 
   async removeDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    const remove = await collection.deleteMany({
-      reportId: id,
-    });
-    console.log(
-      `${remove.deletedCount} documents were removed with the _id: ${id} `
-    );
+    try {
+      const remove = await collection.deleteMany({
+        reportId: id,
+      });
+      console.log(
+        `${remove.deletedCount} documents were removed with the reportId: ${id} `
+      );
+    } catch (e) {
+      console.log("Error", e);
+    }
   }
 
   async deleteReport(id: string) {
