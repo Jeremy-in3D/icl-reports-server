@@ -48,30 +48,29 @@ export const MachineForm: React.FC<{
 function handleCheckboxSubmit(formData: FormData) {
   const formEntries = Object.fromEntries(formData);
   const formSubmission: { [id: string]: FormDataEntryValue } = {};
-  const strings = ["", "", "", "", "", "", "", ""];
-  let alert;
+  let outputAlert: "true" | "false" = "false";
+  let stringParts: string[] = [];
   for (const [key, value] of Object.entries(formEntries)) {
-    const stringValue = value as string;
-    const splitValue = stringValue.split("-");
-    formSubmission[key] = splitValue[0];
-    const index = parseInt(key.split("-")[0]);
-    const string = strings[index];
-    if (!string) {
-      strings[index] += splitValue[0];
-    } else {
-      strings[index] = string + ":" + splitValue[0];
+    const uniqueIndex = parseInt(key.split("-")[0]);
+    if (value === typeof "string") {
+      //Checkbox names contain both text and alert string to represent an alert action to be done by the server on submit
+      const [text, alert] = value.split("-");
+      //Enter value under the key for offline form continuation
+      formSubmission[key] = text;
+      //Output Alert based on alert string
+      if (outputAlert !== "true") outputAlert = alert ? "true" : "false";
+      //String parts to be entered and later reduced into an output strings
+      const string = stringParts[uniqueIndex];
+      if (!string) stringParts[uniqueIndex] = text;
+      else stringParts[uniqueIndex] = `${string}:${text}`;
     }
-    if (!alert) splitValue[1] === "true" ? (alert = splitValue[1]) : undefined;
   }
-  if (!alert) alert = "false";
-  const finalString = strings.reduce((prev, cur) => {
-    if (cur) return prev + "---" + cur;
-    return prev;
-  });
-  if (finalString) {
-    formSubmission["output"] = finalString;
-    formSubmission["alert"] = alert;
-  }
+  const outputString = stringParts.reduce((prevValue, currentValue) =>
+    currentValue ? `${prevValue}--${currentValue}` : prevValue
+  );
 
+  //Add output string and alert to finalFormSubmission object
+  formSubmission["excelOutput"] = outputString;
+  formSubmission["alert"] = outputAlert;
   return formSubmission;
 }
