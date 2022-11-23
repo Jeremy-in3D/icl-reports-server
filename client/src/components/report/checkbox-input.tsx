@@ -9,7 +9,9 @@ export const CheckboxInput: React.FC<{
   setValid: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ checkbox, index, checkDisabled, checkDefault, setValid }) => {
   const [showSecondary, setShowSecondary] = useState(false);
-  const { text, options } = checkbox;
+  const { text, options, alert } = checkbox;
+  const alertValue = alert ? "true" : "false";
+  // console.log(alert);
 
   useEffect(() => {
     if (checkDefault(`${index}`)) {
@@ -24,8 +26,8 @@ export const CheckboxInput: React.FC<{
         className="checkbox"
         type={"checkbox"}
         name={`${index}`}
-        value={text}
-        onClick={(e) => {
+        value={text + "-" + alert}
+        onChange={(e) => {
           if (index === 0) setValid((prevState) => !prevState);
           setShowSecondary((prevState) => !prevState);
         }}

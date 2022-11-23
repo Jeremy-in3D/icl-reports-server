@@ -66,6 +66,23 @@ app.post("/save-machine", async (req, res) => {
     //Maybe refactor to findOneandUpdate
     if (data.id) await mongo.removeDoc(data.id, "machines");
     const insertedId = await mongo.insertDoc(data, "machines");
+    const machines = Object.entries(data.data);
+    const filtered = machines
+      .map((machine) => {
+        const [key, value] = machine as any;
+        return value.alert === "true" ? value : null;
+      })
+      .filter((parts) => parts !== null);
+    // console.log(filtered);
+
+    const alert = {
+      reportId: data.reportId,
+      machineName: data.machineName,
+      michlolName: data.michlolName,
+      data: filtered,
+    };
+
+    console.log(alert);
     res.status(200).send(insertedId.toString());
   } catch (e) {
     res.status(500).send("Error" + e);

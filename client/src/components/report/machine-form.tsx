@@ -3,6 +3,8 @@ import { Route } from "../../classes/route";
 import { MachineParts } from "../../data/machine-parts";
 import { CheckboxInput } from "./checkbox-input";
 
+//Refactor basically everything after it works
+
 export const MachineForm: React.FC<{
   routeData: Route;
   part: MachineParts[number];
@@ -66,21 +68,30 @@ function handleFormSubmit(
   const formData = new FormData(e.target as HTMLFormElement);
   const formObj = Object.fromEntries(formData);
   const sorted: { [id: string]: FormDataEntryValue } = {};
-  const strings = ["", "", "", "", ""];
+  const strings = ["", "", "", "", "", "", "", ""];
+  let alert;
   for (const [key, value] of Object.entries(formObj)) {
-    sorted[key] = value;
+    const stringValue = value as string;
+    const splitValue = stringValue.split("-");
+    sorted[key] = splitValue[0];
     const index = parseInt(key.split("-")[0]);
     const string = strings[index];
     if (!string) {
-      strings[index] += value;
+      strings[index] += splitValue[0];
     } else {
-      strings[index] = string + ":" + value;
+      strings[index] = string + ":" + splitValue[0];
     }
+    if (!alert) splitValue[1] === "true" ? (alert = splitValue[1]) : undefined;
   }
+  if (!alert) alert = "false";
   const finalString = strings.reduce((prev, cur) => {
-    return prev + "---" + cur;
+    if (cur) return prev + "---" + cur;
+    return prev;
   });
-  sorted["output"] = finalString;
+  if (finalString) {
+    sorted["output"] = finalString;
+    sorted["alert"] = alert;
+  }
   routeData.setValue(machineName, partName, michlolName, sorted);
   localStorage.setItem(routeData.id, routeData.saveReport());
 }
