@@ -1,28 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Route } from "../../classes/route";
+import { FormInput } from "./form-input";
 import { MachineParts } from "../../data/machine-parts";
-import { CheckboxInput } from "./checkbox-input";
-
-//Refactor basically everything after it works
+import { ReportDetails } from "./machine";
 
 export const MachineForm: React.FC<{
   routeData: Route;
   part: MachineParts[number];
-  machineName: string;
-  michlolName: string;
-}> = ({ routeData, part, machineName, michlolName }) => {
+  reportDetails: ReportDetails;
+}> = ({ routeData, part, reportDetails }) => {
   const [formSubmit, setFormSubmit] = useState(false);
-  const [isValid, setIsValid] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  function isDisabled(index: number) {
-    if (index !== 0 && isValid) return true;
-    return false;
-  }
-  function isDefault(index: string) {
-    return routeData.isQuestionAnswered(machineName, part.name, index);
-  }
-
+  //Check for another way to submit form after state update has finished and rendered, for disabled buttons
   useEffect(() => {
     formRef.current?.requestSubmit();
   }, [formSubmit]);
@@ -37,43 +27,33 @@ export const MachineForm: React.FC<{
           setFormSubmit((prevState) => !prevState);
         }}
         onSubmit={(e) => {
-          handleFormSubmit(e, routeData, part.name, machineName, michlolName);
+          e.preventDefault();
+          const formData = new FormData(e.target as HTMLFormElement);
+          const formSubmission = handleCheckboxSubmit(formData);
+
+          routeData.setValue(reportDetails, formSubmission);
+          localStorage.setItem(routeData.id, routeData.saveReport());
         }}
       >
-        {part.checkboxes.map((checkbox, idx) => {
-          return (
-            <CheckboxInput
-              key={`${part.id}-${idx}`}
-              index={idx}
-              checkbox={checkbox}
-              checkDisabled={() => isDisabled(idx)}
-              checkDefault={isDefault}
-              setValid={setIsValid}
-            />
-          );
-        })}
+        <FormInput
+          routeData={routeData}
+          machinePart={part}
+          machineName={reportDetails.machineName}
+        />
       </form>
     </>
   );
 };
 
-function handleFormSubmit(
-  e: React.FormEvent<HTMLFormElement>,
-  routeData: Route,
-  partName: string,
-  machineName: string,
-  michlolName: string
-) {
-  e.preventDefault();
-  const formData = new FormData(e.target as HTMLFormElement);
-  const formObj = Object.fromEntries(formData);
-  const sorted: { [id: string]: FormDataEntryValue } = {};
+function handleCheckboxSubmit(formData: FormData) {
+  const formEntries = Object.fromEntries(formData);
+  const formSubmission: { [id: string]: FormDataEntryValue } = {};
   const strings = ["", "", "", "", "", "", "", ""];
   let alert;
-  for (const [key, value] of Object.entries(formObj)) {
+  for (const [key, value] of Object.entries(formEntries)) {
     const stringValue = value as string;
     const splitValue = stringValue.split("-");
-    sorted[key] = splitValue[0];
+    formSubmission[key] = splitValue[0];
     const index = parseInt(key.split("-")[0]);
     const string = strings[index];
     if (!string) {
@@ -89,9 +69,9 @@ function handleFormSubmit(
     return prev;
   });
   if (finalString) {
-    sorted["output"] = finalString;
-    sorted["alert"] = alert;
+    formSubmission["output"] = finalString;
+    formSubmission["alert"] = alert;
   }
-  routeData.setValue(machineName, partName, michlolName, sorted);
-  localStorage.setItem(routeData.id, routeData.saveReport());
+
+  return formSubmission;
 }

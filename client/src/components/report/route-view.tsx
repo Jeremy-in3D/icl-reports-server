@@ -14,7 +14,6 @@ export const RouteView: React.FC<{
   const currentMichlolData = michlolim.find(
     (m) => m.michlolId === currentMichlol
   );
-  const machines = Object.entries(currentMichlolData?.machines!);
 
   return (
     <>
@@ -23,9 +22,8 @@ export const RouteView: React.FC<{
       <MachinesList
         view={view}
         route={route}
-        machines={machines}
         routeData={routeData}
-        currentMichlol={currentMichlol}
+        michlolData={currentMichlolData}
       />
       <button
         className="route-submit-btn"
@@ -38,20 +36,3 @@ export const RouteView: React.FC<{
     </>
   );
 };
-
-//  <button
-// className="route-submit-btn"
-// onClick={() => {
-//   const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
-//   if (answer)
-//     fetch("/save-report", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: routeData.saveSurvey(),
-//     });
-//   localStorage.setItem(routeData.id, routeData.saveSurvey());
-//   setScreen("home");
-// }}
-// >
-// שלח מסלול
-// </button>

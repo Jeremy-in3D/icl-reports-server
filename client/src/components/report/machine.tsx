@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
 import { machineParts } from "../../data/machine-parts";
+import { MichlolContents } from "../../data/reports-data";
 import { MachineForm } from "./machine-form";
 import { MachinePartsList } from "./machine-parts-list";
 
 export const Machine: React.FC<{
   routeData: Route;
   machine: [string, string[]];
-  michlolName: string;
-}> = ({ routeData, machine: [machineName, parts], michlolName }) => {
+  michlolData: MichlolContents | undefined;
+}> = ({ routeData, machine: [machineName, parts], michlolData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
   const isComplete = routeData.isMachineComplete(machineName);
@@ -18,6 +19,13 @@ export const Machine: React.FC<{
   function isPartComplete(partName: string) {
     return routeData.isPartComplete(machineName, partName);
   }
+
+  const reportDetails: ReportDetails = {
+    michlolName: michlolData?.michlolName,
+    michlolId: michlolData?.michlolId,
+    machineName,
+    partName: currentPart.name,
+  };
 
   return (
     <div className="machine">
@@ -40,8 +48,7 @@ export const Machine: React.FC<{
               routeData={routeData}
               key={`${machineName}-${currentPart.id}`}
               part={currentPart}
-              machineName={machineName}
-              michlolName={michlolName}
+              reportDetails={reportDetails}
             />
             <button
               className="submit-data-btn"
@@ -78,4 +85,11 @@ export const Machine: React.FC<{
       </div>
     </div>
   );
+};
+
+export type ReportDetails = {
+  michlolName: string | undefined;
+  michlolId: string | undefined;
+  machineName: string;
+  partName: string;
 };

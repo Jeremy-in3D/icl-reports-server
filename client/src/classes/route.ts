@@ -1,3 +1,4 @@
+import { ReportDetails } from "../components/report/machine";
 import { Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
@@ -39,16 +40,16 @@ export class Route {
   }
 
   setValue(
-    machineName: string,
-    partName: string,
-    michlolName: string,
+    reportDetails: ReportDetails,
     value: { [id: string]: FormDataEntryValue }
   ) {
+    const { machineName, michlolName, michlolId, partName } = reportDetails;
     if (!this.machines[machineName])
       this.machines[machineName] = {
         completed: false,
         id: null,
         michlolName,
+        michlolId,
         machineName,
         reportId: this.reportId!,
         data: {},
@@ -116,7 +117,8 @@ interface Machines {
   [machineName: string]: {
     completed: boolean;
     id: string | null;
-    michlolName: string;
+    michlolName: string | undefined;
+    michlolId: string | undefined;
     machineName: string;
     reportId: string;
     data: { [partName: string]: any };

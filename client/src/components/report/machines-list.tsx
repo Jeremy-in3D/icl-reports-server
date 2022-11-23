@@ -1,15 +1,16 @@
 import React from "react";
 import { Route } from "../../classes/route";
-import { Routes } from "../../data/reports-data";
+import { MichlolContents, Routes } from "../../data/reports-data";
 import { Machine } from "./machine";
 
 export const MachinesList: React.FC<{
-  machines: [string, string[]][];
   route: Routes[number];
   view: number;
   routeData: Route;
-  currentMichlol: string;
-}> = ({ machines, route, currentMichlol, routeData, view }) => {
+  michlolData: MichlolContents | undefined;
+}> = ({ route, routeData, view, michlolData }) => {
+  const machines = Object.entries(michlolData?.machines!);
+
   return (
     <div className="machines">
       <h2 className="machines-header">מכונות</h2>
@@ -18,7 +19,7 @@ export const MachinesList: React.FC<{
           key={`${route?.routeId}-${view}-${i}`}
           routeData={routeData}
           machine={machine}
-          michlolName={currentMichlol}
+          michlolData={michlolData}
         />
       ))}
     </div>

@@ -2,7 +2,8 @@ export const machineParts: MachineParts = [
   {
     id: "1",
     name: "משפך קבלה",
-    checkboxes: [
+    type: "checkboxes",
+    input: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -22,7 +23,8 @@ export const machineParts: MachineParts = [
   {
     id: "2",
     name: "מנוע",
-    checkboxes: [
+    type: "checkboxes",
+    input: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -55,7 +57,8 @@ export const machineParts: MachineParts = [
   {
     id: "3",
     name: "ממסרה",
-    checkboxes: [
+    type: "checkboxes",
+    input: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -75,7 +78,8 @@ export const machineParts: MachineParts = [
   {
     id: "4",
     name: "סרט",
-    checkboxes: [
+    type: "checkboxes",
+    input: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -95,7 +99,8 @@ export const machineParts: MachineParts = [
   {
     id: "5",
     name: "תופים",
-    checkboxes: [
+    type: "checkboxes",
+    input: [
       {
         text: "כלל הערות למטה תקינות",
         options: false,
@@ -134,7 +139,8 @@ export type CheckBox =
 export type MachineParts = {
   id: string;
   name: string;
-  checkboxes: CheckBox[];
+  type: "checkboxes" | "multiple-choice" | "range";
+  input: CheckBox[];
 }[];
 
 //Try and refactor new type to this old ones structure below, note, instead of the key being a string.. check if theres a way to do with a boolean
