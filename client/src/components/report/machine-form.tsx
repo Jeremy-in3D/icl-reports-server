@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Route } from "../../classes/route";
 import { MachineParts } from "../../data/machine-parts";
 import { CheckboxInput } from "./checkbox-input";
@@ -9,7 +9,9 @@ export const MachineForm: React.FC<{
   machineName: string;
   michlolName: string;
 }> = ({ routeData, part, machineName, michlolName }) => {
+  const [formSubmit, setFormSubmit] = useState(false);
   const [isValid, setIsValid] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   function isDisabled(index: number) {
     if (index !== 0 && isValid) return true;
@@ -19,12 +21,19 @@ export const MachineForm: React.FC<{
     return routeData.isQuestionAnswered(machineName, part.name, index);
   }
 
+  useEffect(() => {
+    formRef.current?.requestSubmit();
+  }, [formSubmit]);
+
   return (
     <>
       <p className="machine-area">{part.name}</p>
       <form
+        ref={formRef}
         className="machine-form"
-        onChange={(e) => e.currentTarget.requestSubmit()}
+        onChange={(e) => {
+          setFormSubmit((prevState) => !prevState);
+        }}
         onSubmit={(e) => {
           handleFormSubmit(e, routeData, part.name, machineName, michlolName);
         }}
@@ -57,11 +66,21 @@ function handleFormSubmit(
   const formData = new FormData(e.target as HTMLFormElement);
   const formObj = Object.fromEntries(formData);
   const sorted: { [id: string]: FormDataEntryValue } = {};
+  const strings = ["", "", "", "", ""];
   for (const [key, value] of Object.entries(formObj)) {
     sorted[key] = value;
+    const index = parseInt(key.split("-")[0]);
+    const string = strings[index];
+    if (!string) {
+      strings[index] += value;
+    } else {
+      strings[index] = string + ":" + value;
+    }
   }
-  if (Object.keys(sorted).length) {
-    routeData.setValue(machineName, partName, michlolName, sorted);
-    localStorage.setItem(routeData.id, routeData.saveReport());
-  }
+  const finalString = strings.reduce((prev, cur) => {
+    return prev + "---" + cur;
+  });
+  sorted["output"] = finalString;
+  routeData.setValue(machineName, partName, michlolName, sorted);
+  localStorage.setItem(routeData.id, routeData.saveReport());
 }

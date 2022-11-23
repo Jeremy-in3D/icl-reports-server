@@ -25,7 +25,7 @@ export const CheckboxInput: React.FC<{
         type={"checkbox"}
         name={`${index}`}
         value={text}
-        onChange={(e) => {
+        onClick={(e) => {
           if (index === 0) setValid((prevState) => !prevState);
           setShowSecondary((prevState) => !prevState);
         }}
