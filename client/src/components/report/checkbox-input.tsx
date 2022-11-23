@@ -33,8 +33,8 @@ export const CheckboxInput: React.FC<{
         disabled={checkDisabled()}
       />
       <label>{text}</label>
-      {showSecondary && options && (
-        <div className="form-secondary">
+      {options && (
+        <div className={`form-secondary ${!showSecondary ? "hide" : ""}`}>
           {checkbox.choices?.map((choice, i) => (
             <div key={`${i}`} className="form-secondary-checkbox">
               <input

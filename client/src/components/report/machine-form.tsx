@@ -30,7 +30,6 @@ export const MachineForm: React.FC<{
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const formSubmission = handleCheckboxInputSubmit(formData);
-          console.log(formSubmission);
           routeData.setValue(reportDetails, formSubmission);
           localStorage.setItem(routeData.routeId, routeData.saveReport());
         }}
@@ -56,7 +55,6 @@ function handleCheckboxInputSubmit(formData: FormData) {
       //Checkbox names contain both text and alert string to represent an alert action to be done by the server on submit
       const [text, alert] = value.split("-");
       //Enter value under the key for offline form continuation
-      console.log(key);
       formSubmission[key] = text;
       //Output Alert based on alert string
       if (outputAlert !== "true")

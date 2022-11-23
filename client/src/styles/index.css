@@ -647,3 +647,7 @@ textarea {
   text-shadow: 0px 0px 5px black;
   border-bottom: 2px solid white;
 }
+
+.hide {
+  display: none;
+}
