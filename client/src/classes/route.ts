@@ -5,16 +5,17 @@ import { getDateString } from "../helpers/dates";
 //Refactor to KEY in of
 export class Route {
   [key: string]: any;
-  id: string;
-  name: string;
+  routeId: string;
+  routeName: string;
   machines: Machines;
   dateCreated: number | null;
   reportId: string | null;
   reportSubmitted: boolean;
+  date?: string;
 
   constructor(report: Routes[number]) {
-    this.id = report.routeId;
-    this.name = report.routeName;
+    this.routeId = report.routeId;
+    this.routeName = report.routeName;
     this.machines = {};
     this.dateCreated = null;
     this.reportId = null;
@@ -24,8 +25,8 @@ export class Route {
   newReport() {
     this.dateCreated = Date.now();
     this.date = getDateString(new Date(Date.now()));
-    this.reportId = `${this.id}-${this.dateCreated}`;
-    localStorage.setItem(this.id, this.saveReport());
+    this.reportId = `${this.routeId}-${this.dateCreated}`;
+    localStorage.setItem(this.routeId, this.saveReport());
   }
 
   loadReport(data: string) {
@@ -39,10 +40,7 @@ export class Route {
     return JSON.stringify(this);
   }
 
-  setValue(
-    reportDetails: ReportDetails,
-    value: { [id: string]: FormDataEntryValue }
-  ) {
+  setValue(reportDetails: ReportDetails, value: FormSubmission) {
     const { machineName, michlolName, michlolId, partName } = reportDetails;
     if (!this.machines[machineName])
       this.machines[machineName] = {
@@ -76,7 +74,7 @@ export class Route {
   isPartComplete(machineName: string, partName: string) {
     const part = this.machines[machineName]?.data?.[partName];
     if (part) {
-      if (Object.entries(part).length) return true;
+      if (part.excelOutput) return true;
     }
     return false;
   }
@@ -98,8 +96,8 @@ export class Route {
   sendReportData() {
     const data = {
       dateCreated: this.dateCreated,
-      routeId: this.id,
-      routeName: this.name,
+      routeId: this.routeId,
+      routeName: this.routeName,
       reportId: this.reportId,
     };
     return JSON.stringify(data);
@@ -121,6 +119,16 @@ interface Machines {
     michlolId: string | undefined;
     machineName: string;
     reportId: string;
-    data: { [partName: string]: any };
+    data: {
+      [partName: string]: FormSubmission;
+    };
   };
 }
+
+type Value = FormDataEntryValue;
+
+export type FormSubmission = {
+  [id: string]: Value;
+  excelOutput: string;
+  alert: string;
+};
