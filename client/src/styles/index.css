@@ -367,7 +367,7 @@ textarea {
 }
 
 .m-question-marker.current {
-  background-color: rgba(255, 255, 0, 0.5);
+  border-top: 6px solid rgba(0, 140, 255, 0.8);
 }
 
 .m-question-marker.green {

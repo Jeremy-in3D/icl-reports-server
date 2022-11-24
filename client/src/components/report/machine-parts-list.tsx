@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { machineParts } from "../../data/machine-parts";
 
 export const MachinePartsList: React.FC<{
@@ -17,9 +17,9 @@ export const MachinePartsList: React.FC<{
         const answered = checkPart(part.name);
         return (
           <div
-            key={idx}
-            className={`m-question-marker ${
-              idx === view ? "current" : answered ? "green" : "red"
+            key={`${idx}`}
+            className={`m-question-marker ${idx === view ? "current" : ""} ${
+              answered ? "green" : "red"
             }`}
             onClick={() => setView(idx)}
           >

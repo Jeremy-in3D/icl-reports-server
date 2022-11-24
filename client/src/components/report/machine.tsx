@@ -10,6 +10,7 @@ export const Machine: React.FC<{
   machine: [string, string[]];
   michlolData: MichlolContents | undefined;
 }> = ({ routeData, machine: [machineName, parts], michlolData }) => {
+  const [updateMachine, setUpdateMachine] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
   const isComplete = routeData.isMachineComplete(machineName);
@@ -49,6 +50,7 @@ export const Machine: React.FC<{
               key={`${machineName}-${currentPart.id}`}
               part={currentPart}
               reportDetails={reportDetails}
+              setUpdateMachine={setUpdateMachine}
             />
             <button
               className="submit-data-btn"

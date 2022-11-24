@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { FormSubmission, Route } from "../../classes/route";
 import { FormInput } from "./form-input";
 import { MachineParts } from "../../data/machine-parts";
@@ -8,14 +8,9 @@ export const MachineForm: React.FC<{
   routeData: Route;
   part: MachineParts[number];
   reportDetails: ReportDetails;
-}> = ({ routeData, part, reportDetails }) => {
-  const [formSubmit, setFormSubmit] = useState(false);
+  setUpdateMachine: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ routeData, part, reportDetails, setUpdateMachine }) => {
   const formRef = useRef<HTMLFormElement>(null);
-
-  //Check for another way to submit form after state update has finished and rendered, for disabled buttons
-  useEffect(() => {
-    formRef.current?.requestSubmit();
-  }, [formSubmit]);
 
   return (
     <>
@@ -24,7 +19,7 @@ export const MachineForm: React.FC<{
         ref={formRef}
         className="machine-form"
         onChange={(e) => {
-          setFormSubmit((prevState) => !prevState);
+          formRef.current?.requestSubmit();
         }}
         onSubmit={(e) => {
           e.preventDefault();
@@ -32,6 +27,7 @@ export const MachineForm: React.FC<{
           const formSubmission = handleCheckboxInputSubmit(formData);
           routeData.setValue(reportDetails, formSubmission);
           localStorage.setItem(routeData.routeId, routeData.saveReport());
+          setUpdateMachine((prevState) => !prevState);
         }}
       >
         <FormInput
