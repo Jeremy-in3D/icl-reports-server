@@ -49,7 +49,10 @@ export class Route {
         michlolName,
         michlolId,
         machineName,
+        routeName: this.routeName,
+        routeId: this.routeId,
         reportId: this.reportId!,
+        dateCreated: this.dateCreated,
         data: {},
       };
     this.machines[machineName].data[partName] = value;
@@ -118,7 +121,10 @@ interface Machines {
     michlolName: string | undefined;
     michlolId: string | undefined;
     machineName: string;
+    routeName: string;
+    routeId: string;
     reportId: string;
+    dateCreated: number | null;
     data: {
       [partName: string]: FormSubmission;
     };

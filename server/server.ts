@@ -67,22 +67,31 @@ app.post("/save-machine", async (req, res) => {
     if (data.id) await mongo.removeDoc(data.id, "machines");
     const insertedId = await mongo.insertDoc(data, "machines");
     const machines = Object.entries(data.data);
-    const filtered = machines
+    const filteredAlerts = machines
       .map((machine) => {
         const [key, value] = machine as any;
         return value.alert === "true" ? value : null;
       })
       .filter((parts) => parts !== null);
-    // console.log(filtered);
 
-    const alert = {
-      reportId: data.reportId,
-      machineName: data.machineName,
-      michlolName: data.michlolName,
-      data: filtered,
-    };
-
-    console.log(alert);
+    if (filteredAlerts.length) {
+      console.log(data);
+      filteredAlerts.forEach(async (alertData) => {
+        const alert = {
+          reportId: data.reportId,
+          routeName: data.routeName,
+          routeId: data.routeId,
+          machineName: data.machineName,
+          michlolName: data.michlolName,
+          dateCreated: data.dateCreated,
+          data: alertData,
+        };
+        const insertedId = await mongo.insertDoc(alert, "alerts");
+        console.log(insertedId);
+      });
+      //For each filteredAlert create an alert and send to alert collection
+    }
+    // console.log(alert);
     res.status(200).send(insertedId.toString());
   } catch (e) {
     res.status(500).send("Error" + e);
@@ -123,6 +132,15 @@ app.post("/pull-report", async (req, res) => {
   const data = req.body;
   try {
     const results = await mongo.pullReport(data, "machines");
+    res.json(results);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
+app.get("/get-alerts", async (req, res) => {
+  try {
+    const results = await mongo.getAlerts("alerts");
     res.json(results);
   } catch (e) {
     res.status(500).send(e);

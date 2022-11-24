@@ -1,6 +1,6 @@
 import { Collection, MongoClient, ObjectId } from "mongodb";
 
-type CollectionIds = "reports" | "machines";
+type CollectionIds = "reports" | "machines" | "alerts";
 
 //Refactor to better handle thrown error. Each function can either return the promise which can res/rej or you handle the functions return and handle/throw based on that output
 
@@ -64,6 +64,12 @@ export class MongoDB {
     const collection = this.getCollection(collectionId);
     const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
     console.log(`Report queried successfully`);
+    return await find.toArray();
+  }
+
+  async getAlerts(collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId);
+    const find = collection.find().sort({ dateCreated: 1 });
     return await find.toArray();
   }
 
