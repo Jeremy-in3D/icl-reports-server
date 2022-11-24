@@ -17,7 +17,7 @@ export const RouteView: React.FC<{
 
   return (
     <>
-      <h1 className="page-title">{routeData.name}</h1>
+      <h1 className="page-title">{routeData.routeName}</h1>
       <MichlolimList view={view} route={route} setView={setView} />
       <MachinesList
         view={view}

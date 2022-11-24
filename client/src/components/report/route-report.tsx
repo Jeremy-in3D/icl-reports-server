@@ -19,10 +19,9 @@ export const RouteReport: React.FC<{
     return (
       <RouteView route={route} routeData={routeData} setScreen={setScreen} />
     );
-
   return (
     <div className="report-options">
-      <h1 className="page-title">{route.routeName}</h1>
+      <h1 className="page-title">{routeData.routeName}</h1>
       <RouteOption
         text='המשך בדו"ח הקיים'
         disabled={existingReport === undefined}
