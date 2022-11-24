@@ -63,9 +63,18 @@ app.post(
 app.post("/save-machine", async (req, res) => {
   const data = req.body;
   try {
-    //Maybe refactor to findOneandUpdate
-    if (data.id) await mongo.removeDoc(data.id, "machines");
-    const insertedId = await mongo.insertDoc(data, "machines");
+    //Check if machine was already submitted in the past, if so delete old one first
+    if (data.id) {
+      //Refactor to find one by Id and update
+      await mongo.removeDoc(data.id, "machines");
+      console.log(`Document was removed with the id: ${data.id}`);
+    }
+    //Save machine to collection
+    const inserted = await mongo.insertDoc(data, "machines");
+    console.log(`A document was inserted with the _id: ${inserted.insertedId}`);
+
+    //Refactor to promise.all
+    //Check if any of saved data raised an alert
     const machines = Object.entries(data.data);
     const filteredAlerts = machines
       .map((machine) => {
@@ -75,7 +84,6 @@ app.post("/save-machine", async (req, res) => {
       .filter((parts) => parts !== null);
 
     if (filteredAlerts.length) {
-      console.log(data);
       filteredAlerts.forEach(async (alertData) => {
         const alert = {
           reportId: data.reportId,
@@ -86,13 +94,10 @@ app.post("/save-machine", async (req, res) => {
           dateCreated: data.dateCreated,
           data: alertData,
         };
-        const insertedId = await mongo.insertDoc(alert, "alerts");
-        console.log(insertedId);
+        await mongo.insertDoc(alert, "alerts");
       });
-      //For each filteredAlert create an alert and send to alert collection
     }
-    // console.log(alert);
-    res.status(200).send(insertedId.toString());
+    res.status(200).send(inserted.insertedId.toString());
   } catch (e) {
     res.status(500).send("Error" + e);
   }
@@ -101,8 +106,8 @@ app.post("/save-machine", async (req, res) => {
 app.post("/save-report", async (req, res) => {
   const data = req.body;
   try {
-    const insertedId = await mongo.insertDoc(data, "reports");
-    res.status(200).send(insertedId.toString());
+    const inserted = await mongo.insertDoc(data, "reports");
+    res.status(200).send(inserted.insertedId.toString());
   } catch (e) {
     res.status(500).send("Error" + e);
   }
@@ -111,8 +116,12 @@ app.post("/save-report", async (req, res) => {
 app.post("/delete-report", async (req, res) => {
   const id = req.body;
   try {
-    await mongo.deleteReport(id);
-    res.status(200).send("Report Deleted Successfully");
+    const deleted = await mongo.removeDoc(id, "reports");
+    if (deleted) {
+      await mongo.removeDocs(id, "machines");
+      await mongo.removeDocs(id, "alerts");
+    }
+    res.status(200).send("Report deleted Successfully");
   } catch {
     res.status(500).send("Report Deletion Failed");
   }
@@ -122,17 +131,19 @@ app.post("/search-reports", async (req, res) => {
   const data = req.body;
   try {
     const results = await mongo.searchDocs(data, "reports");
-    res.json(results);
+    console.log(`Database was searched successfully`);
+    res.status(200).json(results);
   } catch (e) {
     res.status(500).send(e);
   }
 });
 
-app.post("/pull-report", async (req, res) => {
-  const data = req.body;
+app.post("/get-docs", async (req, res) => {
+  const id = req.body;
   try {
-    const results = await mongo.pullReport(data, "machines");
-    res.json(results);
+    const results = await mongo.getDocs(id, "machines");
+    console.log(`Report queried successfully with id ${id}`);
+    res.status(200).json(results);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -141,7 +152,7 @@ app.post("/pull-report", async (req, res) => {
 app.get("/get-alerts", async (req, res) => {
   try {
     const results = await mongo.getAlerts("alerts");
-    res.json(results);
+    res.status(200).json(results);
   } catch (e) {
     res.status(500).send(e);
   }

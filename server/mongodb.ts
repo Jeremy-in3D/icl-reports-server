@@ -25,45 +25,22 @@ export class MongoDB {
 
   async insertDoc(payload: any, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    const insert = await collection.insertOne(payload);
-    console.log(`A document was inserted with the _id: ${insert.insertedId}`);
-    return insert.insertedId;
+    return await collection.insertOne(payload);
   }
 
   async removeDoc(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    try {
-      await collection.deleteOne({ reportId: id });
-      console.log(`Document was removed with the reportId: ${id}`);
-    } catch (e) {
-      console.log("Error", e);
-    }
+    return await collection.deleteOne({ reportId: id });
   }
 
   async removeDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    try {
-      const remove = await collection.deleteMany({
-        reportId: id,
-      });
-      console.log(
-        `${remove.deletedCount} documents were removed with the reportId: ${id} `
-      );
-    } catch (e) {
-      console.log("Error", e);
-    }
+    return await collection.deleteMany({ reportId: id });
   }
 
-  async deleteReport(id: string) {
-    await this.removeDoc(id, "reports");
-    await this.removeDocs(id, "machines");
-    console.log(`Report deleted successfully`);
-  }
-
-  async pullReport(id: string, collectionId: CollectionIds) {
+  async getDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
-    console.log(`Report queried successfully`);
     return await find.toArray();
   }
 
@@ -85,7 +62,6 @@ export class MongoDB {
       })
       .project({ _id: 1, routeName: 1, reportId: 1, dateCreated: 1 })
       .sort({ dateCreated: -1 });
-    console.log(`Database was searched successfully`);
     return await find.toArray();
   }
 }

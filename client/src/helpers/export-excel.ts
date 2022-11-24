@@ -1,7 +1,7 @@
 import { utils, writeFile } from "xlsx";
 
 export async function exportExcel(reportId: string) {
-  const pullResult = await fetch("/pull-report", {
+  const pullResult = await fetch("/get-docs", {
     method: "POST",
     body: reportId,
   });

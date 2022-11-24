@@ -11,7 +11,7 @@ import { utils, writeFile } from "xlsx";
 export const Export: React.FC = () => {
   useEffect(() => {
     async function exportExcel() {
-      // const pullResult = await fetch("/pull-report", {
+      // const pullResult = await fetch("/get-docs", {
       //   method: "POST",
       //   body: reportId,
       // });
