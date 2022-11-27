@@ -1,3 +1,10 @@
+const checkmarkIcon = new URL(
+  "../../assets/icons/checkmark.png",
+  import.meta.url
+);
+
+const minusIcon = new URL("../../assets/icons/minus.png", import.meta.url);
+
 const viewIcon = new URL("../../assets/icons/report-view.png", import.meta.url);
 
 const uploadIcon = new URL(
@@ -21,9 +28,13 @@ const searchIcon = new URL(
   import.meta.url
 );
 const logo = new URL("../../assets/logo.webp", import.meta.url);
+const symbol = new URL("../../assets/icl-symbol.png", import.meta.url);
 
 export {
   logo,
+  symbol,
+  checkmarkIcon,
+  minusIcon,
   viewIcon,
   uploadIcon,
   downloadIcon,

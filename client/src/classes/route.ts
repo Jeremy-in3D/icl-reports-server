@@ -114,7 +114,7 @@ export class Route {
   }
 }
 
-type Machines = {
+export type Machines = {
   [machineName: string]: {
     completed: boolean;
     id: string | null;
@@ -135,4 +135,19 @@ export type FormSubmission = {
   [id: string]: FormDataEntryValue;
   excelOutput: string;
   alert: string;
+};
+
+export type MachineData = {
+  _id: string;
+  id: string | null;
+  michlolName: string | undefined;
+  michlolId: string | undefined;
+  machineName: string;
+  routeName: string;
+  routeId: string;
+  reportId: string;
+  dateCreated: number | null;
+  data: {
+    [partName: string]: FormSubmission;
+  };
 };
