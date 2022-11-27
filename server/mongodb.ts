@@ -11,46 +11,46 @@ export class MongoDB {
     this.client = new MongoClient(uri);
   }
 
-  async connect() {
-    await this.client.connect();
+  connect() {
+    return this.client.connect();
   }
 
-  async close() {
-    await this.client.close();
+  close() {
+    return this.client.close();
   }
 
   getCollection(id: CollectionIds): Collection {
     return this.client.db("icl").collection(id);
   }
 
-  async insertDoc(payload: any, collectionId: CollectionIds) {
+  insertDoc(payload: any, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    return await collection.insertOne(payload);
+    return collection.insertOne(payload);
   }
 
-  async removeDoc(id: string, collectionId: CollectionIds) {
+  removeDoc(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    return await collection.deleteOne({ reportId: id });
+    return collection.deleteOne({ reportId: id });
   }
 
-  async removeDocs(id: string, collectionId: CollectionIds) {
+  removeDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    return await collection.deleteMany({ reportId: id });
+    return collection.deleteMany({ reportId: id });
   }
 
-  async getDocs(id: string, collectionId: CollectionIds) {
+  getDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
-    return await find.toArray();
+    return find.toArray();
   }
 
-  async getAlerts(collectionId: CollectionIds) {
+  getAlerts(collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     const find = collection.find().sort({ dateCreated: 1 });
-    return await find.toArray();
+    return find.toArray();
   }
 
-  async searchDocs(
+  searchDocs(
     data: { startDate: number; endDate: number },
     collectionId: CollectionIds
   ) {
@@ -62,6 +62,6 @@ export class MongoDB {
       })
       .project({ _id: 1, routeName: 1, reportId: 1, dateCreated: 1 })
       .sort({ dateCreated: -1 });
-    return await find.toArray();
+    return find.toArray();
   }
 }
