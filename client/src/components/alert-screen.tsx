@@ -44,7 +44,9 @@ export const AlertScreen: React.FC = () => {
             </div>
           ))
         ) : (
-          <p>אין התראות</p>
+          <div className="alert-item-default">
+            <p>אין התראות</p>
+          </div>
         )}
       </div>
     </div>
