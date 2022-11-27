@@ -90,7 +90,7 @@ export class Route {
   sendMachineData(machineName: string) {
     const machine = this.machines[machineName];
     if (machine) {
-      const { completed, id, ...data } = machine;
+      const { completed, ...data } = machine;
       machine.completed = true;
       return JSON.stringify(data);
     }
@@ -114,7 +114,7 @@ export class Route {
   }
 }
 
-interface Machines {
+type Machines = {
   [machineName: string]: {
     completed: boolean;
     id: string | null;
@@ -129,12 +129,10 @@ interface Machines {
       [partName: string]: FormSubmission;
     };
   };
-}
-
-type Value = FormDataEntryValue;
+};
 
 export type FormSubmission = {
-  [id: string]: Value;
+  [id: string]: FormDataEntryValue;
   excelOutput: string;
   alert: string;
 };

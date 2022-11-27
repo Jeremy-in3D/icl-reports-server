@@ -7,6 +7,7 @@ export const AlertScreen: React.FC = () => {
     async function getAlerts() {
       const alertsResponse = await fetch("/get-alerts");
       const data = await alertsResponse.json();
+      console.log(data);
       setAlerts(data);
     }
 

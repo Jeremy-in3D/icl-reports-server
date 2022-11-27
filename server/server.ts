@@ -61,7 +61,7 @@ app.post(
 );
 
 app.post("/save-machine", async (req, res) => {
-  const data = req.body;
+  const data: MachineData = req.body;
   try {
     //Check if machine was already submitted in the past, if so delete old one first
     if (data.id) {
@@ -86,11 +86,13 @@ app.post("/save-machine", async (req, res) => {
     if (filteredAlerts.length) {
       filteredAlerts.forEach(async (alertData) => {
         const alert = {
+          id: data.id,
           reportId: data.reportId,
           routeName: data.routeName,
           routeId: data.routeId,
           machineName: data.machineName,
           michlolName: data.michlolName,
+          michlolId: data.michlolId,
           dateCreated: data.dateCreated,
           data: alertData,
         };
@@ -104,7 +106,7 @@ app.post("/save-machine", async (req, res) => {
 });
 
 app.post("/save-report", async (req, res) => {
-  const data = req.body;
+  const data: ReportData = req.body;
   try {
     const inserted = await mongo.insertDoc(data, "reports");
     res.status(200).send(inserted.insertedId.toString());
@@ -169,3 +171,30 @@ app.get("/get-alerts", async (req, res) => {
     console.log("Error", e);
   }
 })();
+
+export type MachineData = {
+  id: string | null;
+  michlolName: string | undefined;
+  michlolId: string | undefined;
+  machineName: string;
+  routeName: string;
+  routeId: string;
+  reportId: string;
+  dateCreated: number | null;
+  data: {
+    [partName: string]: FormSubmission;
+  };
+};
+
+type FormSubmission = {
+  [id: string]: FormDataEntryValue;
+  excelOutput: string;
+  alert: string;
+};
+
+export type ReportData = {
+  dateCreated: number;
+  routeId: string;
+  routeName: string;
+  reportId: string;
+};

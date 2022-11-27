@@ -1,4 +1,5 @@
 import { Collection, MongoClient, ObjectId } from "mongodb";
+import { MachineData, ReportData } from "./server";
 
 type CollectionIds = "reports" | "machines" | "alerts";
 
@@ -23,7 +24,7 @@ export class MongoDB {
     return this.client.db("icl").collection(id);
   }
 
-  insertDoc(payload: any, collectionId: CollectionIds) {
+  insertDoc(payload: MachineData | ReportData, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     return collection.insertOne(payload);
   }
