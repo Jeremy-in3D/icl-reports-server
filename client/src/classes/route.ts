@@ -56,6 +56,7 @@ export class Route {
         data: {},
       };
     this.machines[machineName].data[partName] = value;
+    localStorage.setItem(this.routeId, this.saveReport());
   }
 
   isMachineComplete(machineName: string) {

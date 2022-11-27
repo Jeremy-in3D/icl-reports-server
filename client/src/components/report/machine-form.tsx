@@ -26,7 +26,6 @@ export const MachineForm: React.FC<{
           const formData = new FormData(e.target as HTMLFormElement);
           const formSubmission = handleCheckboxInputSubmit(formData);
           routeData.setValue(reportDetails, formSubmission);
-          localStorage.setItem(routeData.routeId, routeData.saveReport());
           setUpdateMachine((prevState) => !prevState);
         }}
       >
