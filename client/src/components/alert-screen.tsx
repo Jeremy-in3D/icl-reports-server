@@ -11,9 +11,9 @@ export const AlertScreen: React.FC = () => {
       const data = await alertsResponse.json();
       setAlerts(data);
     }
-
     getAlerts();
   }, []);
+
   return (
     <div className="alerts-screen">
       <h2 className="alerts-title">התראות</h2>

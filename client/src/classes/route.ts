@@ -71,6 +71,7 @@ export class Route {
     if (machine) {
       machine.completed = true;
       machine.id = id;
+      localStorage.setItem(this.routeId, this.saveReport());
     }
   }
 
@@ -105,12 +106,14 @@ export class Route {
     };
     return JSON.stringify(data);
   }
+
   reportIsSubmitted() {
     return this.reportSubmitted;
   }
 
   markReportSubmitted() {
     this.reportSubmitted = true;
+    localStorage.setItem(this.routeId, this.saveReport());
   }
 }
 
