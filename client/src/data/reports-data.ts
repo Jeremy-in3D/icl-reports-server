@@ -25,6 +25,11 @@ export const routes: Routes = [
     routeName: "מסלול מספר 1",
     michlolim: ["R1-M1", "R1-M2", "R1-M3"],
   },
+  {
+    routeId: "R2",
+    routeName: "מסלול מספר 2",
+    michlolim: ["R1-M1", "R1-M2", "R1-M3"],
+  },
 ];
 export type MichlolContents = {
   michlolId: string;

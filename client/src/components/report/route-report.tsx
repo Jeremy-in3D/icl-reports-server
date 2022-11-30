@@ -45,6 +45,7 @@ export const RouteReport: React.FC<{
       >
         {existingReportDetails}
       </RouteOption>
+      <div className="divider"></div>
       <RouteOption
         text='יצירה דו"ח חדש'
         disabled={errorMessage ? true : false}
