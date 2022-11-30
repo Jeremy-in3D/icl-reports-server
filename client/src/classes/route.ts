@@ -2,9 +2,7 @@ import { ReportDetails } from "../components/report/machine";
 import { Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
-//Refactor to KEY in of
 export class Route {
-  [key: string]: any;
   routeId: string;
   routeName: string;
   machines: Machines;
@@ -29,6 +27,7 @@ export class Route {
   loadReport(data: string) {
     const existingData = JSON.parse(data);
     for (let [key, value] of Object.entries(existingData)) {
+      //@ts-ignore
       this[key] = value;
     }
   }
@@ -117,10 +116,6 @@ export class Route {
       reportId: this.reportId,
     };
     return JSON.stringify(data);
-  }
-
-  reportIsSubmitted() {
-    return this.reportSubmitted;
   }
 }
 
