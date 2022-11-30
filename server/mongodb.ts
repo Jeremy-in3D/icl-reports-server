@@ -1,9 +1,7 @@
-import { Collection, MongoClient, ObjectId } from "mongodb";
+import { Collection, MongoClient } from "mongodb";
 import { MachineData, ReportData } from "./server";
 
 type CollectionIds = "reports" | "machines" | "alerts";
-
-//Refactor to better handle thrown error. Each function can either return the promise which can res/rej or you handle the functions return and handle/throw based on that output
 
 export class MongoDB {
   client: MongoClient;
