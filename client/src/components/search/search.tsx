@@ -46,14 +46,15 @@ export const Search: React.FC = () => {
                   <SearchOption
                     text={"מחיקה"}
                     href={deleteIcon.href}
-                    onClick={() =>
+                    onClick={() => {
                       deleteReport(
                         item.reportId,
+                        item.routeId,
                         searchResults,
                         idx,
                         setSearchResults
-                      )
-                    }
+                      );
+                    }}
                   />
                 </div>
               </div>

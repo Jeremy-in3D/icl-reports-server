@@ -5,6 +5,8 @@ const checkmarkIcon = new URL(
 
 const minusIcon = new URL("../../assets/icons/minus.png", import.meta.url);
 
+const lookatAlert = new URL("../../assets/icons/view.png", import.meta.url);
+
 const viewIcon = new URL("../../assets/icons/report-view.png", import.meta.url);
 
 const uploadIcon = new URL(
@@ -41,4 +43,5 @@ export {
   deleteIcon,
   createIcon,
   searchIcon,
+  lookatAlert,
 };

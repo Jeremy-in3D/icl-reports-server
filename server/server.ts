@@ -113,6 +113,16 @@ app.post("/save-report", async (req, res) => {
   }
 });
 
+app.post("/update-alert", async (req, res) => {
+  const data = req.body;
+  try {
+    await mongo.updateAlert(data, "alerts");
+    res.status(200).send();
+  } catch (e) {
+    res.status(500).send("Error" + e);
+  }
+});
+
 app.post("/delete-report", async (req, res) => {
   const id = req.body;
   try {

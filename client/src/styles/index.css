@@ -676,8 +676,12 @@ textarea {
 
 .alert-item-btn {
   width: 30px;
-  margin: 0 0.25em;
+  margin: 0 0.5em;
   background-color: rgba(225, 225, 0, 0.7);
+}
+
+.alert-item-view {
+  width: 30px;
 }
 
 .alert-item-btn.completed {

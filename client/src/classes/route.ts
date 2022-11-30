@@ -25,7 +25,7 @@ export class Route {
   }
 
   loadReport(data: string) {
-    const existingData = JSON.parse(data);
+    const existingData: Route = JSON.parse(data);
     for (let [key, value] of Object.entries(existingData)) {
       //@ts-ignore
       this[key] = value;
@@ -145,8 +145,7 @@ export type Machines = {
 };
 
 export type AlertData = {
-  _id: string;
-  id: string | null;
+  uniqueId: string | null;
   completed: boolean;
   michlolName: string | undefined;
   michlolId: string | undefined;

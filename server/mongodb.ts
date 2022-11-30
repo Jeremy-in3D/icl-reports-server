@@ -57,6 +57,17 @@ export class MongoDB {
     return find.toArray();
   }
 
+  updateAlert(
+    payload: { uniqueId: string; completed: boolean },
+    collectionId: CollectionIds
+  ) {
+    const collection = this.getCollection(collectionId);
+    return collection.findOneAndUpdate(
+      { uniqueId: payload.uniqueId },
+      { $set: { completed: payload.completed } }
+    );
+  }
+
   searchDocs(
     data: { startDate: number; endDate: number },
     collectionId: CollectionIds
@@ -67,7 +78,13 @@ export class MongoDB {
       .find({
         dateCreated: { $gt: startDate, $lt: endDate },
       })
-      .project({ _id: 1, routeName: 1, reportId: 1, dateCreated: 1 })
+      .project({
+        _id: 1,
+        routeName: 1,
+        reportId: 1,
+        routeId: 1,
+        dateCreated: 1,
+      })
       .sort({ dateCreated: -1 });
     return find.toArray();
   }
