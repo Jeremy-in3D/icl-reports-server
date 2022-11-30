@@ -4,6 +4,7 @@ import { Routes } from "../../data/reports-data";
 import { RouteView } from "./route-view";
 import { isExistingReport } from "../../helpers/is-existing-report";
 import { RouteOption } from "./route-option";
+import { ShowError } from "../show-error";
 
 export const RouteReport: React.FC<{
   route: Routes[number];
@@ -30,8 +31,8 @@ export const RouteReport: React.FC<{
 
   return (
     <div className="report-options">
+      {errorMessage && <ShowError message={errorMessage} />}
       <h1 className="page-title">{routeData.routeName}</h1>
-      {errorMessage && <p className="error">{errorMessage}</p>}
       <RouteOption
         text='המשך בדו"ח הקיים'
         disabled={existingReport === undefined}
@@ -62,7 +63,7 @@ async function createReport(
 ) {
   routeData.newReport();
   try {
-    const reportResponse = await fetch("/save-reports", {
+    const reportResponse = await fetch("/save-report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: routeData.sendReportData(),
@@ -71,7 +72,7 @@ async function createReport(
       routeData.saveReportToLocal();
       setRouteView(true);
     } else {
-      throw new Error("Failed to create a new report with the database");
+      throw new Error("Failed to create new report");
     }
   } catch (e) {
     if (e instanceof Error) setErrorMessage(`Error: ${e.message}`);

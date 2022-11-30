@@ -10,9 +10,9 @@ export const RouteView: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ route, routeData, setScreen }) => {
   const [view, setView] = useState(0);
-  const currentMichlol = route.michlolim[view];
+  const currentMichlolId = route.michlolim[view];
   const currentMichlolData = michlolim.find(
-    (m) => m.michlolId === currentMichlol
+    (m) => m.michlolId === currentMichlolId
   );
 
   return (
