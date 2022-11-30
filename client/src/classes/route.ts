@@ -10,7 +10,6 @@ export class Route {
   machines: Machines;
   dateCreated: number | null;
   reportId: string | null;
-  reportSubmitted: boolean;
   date?: string;
 
   constructor(report: Routes[number]) {
@@ -19,14 +18,12 @@ export class Route {
     this.machines = {};
     this.dateCreated = null;
     this.reportId = null;
-    this.reportSubmitted = false;
   }
 
   newReport() {
     this.dateCreated = Date.now();
     this.date = getDateString(new Date(Date.now()));
     this.reportId = `${this.routeId}-${this.dateCreated}`;
-    localStorage.setItem(this.routeId, this.saveReport());
   }
 
   loadReport(data: string) {
@@ -36,8 +33,12 @@ export class Route {
     }
   }
 
-  saveReport() {
+  getReport() {
     return JSON.stringify(this);
+  }
+
+  saveReportToLocal() {
+    localStorage.setItem(this.routeId, this.getReport());
   }
 
   setValue(reportDetails: ReportDetails, value: FormSubmission) {
@@ -56,7 +57,7 @@ export class Route {
         data: {},
       };
     this.machines[machineName].data[partName] = value;
-    localStorage.setItem(this.routeId, this.saveReport());
+    this.saveReportToLocal();
   }
 
   isPartComplete(machineName: string, partName: string) {
@@ -80,7 +81,7 @@ export class Route {
     if (machine) {
       machine.completed = true;
       machine.id = id;
-      localStorage.setItem(this.routeId, this.saveReport());
+      this.saveReportToLocal();
     }
   }
 
@@ -110,11 +111,6 @@ export class Route {
 
   reportIsSubmitted() {
     return this.reportSubmitted;
-  }
-
-  markReportSubmitted() {
-    this.reportSubmitted = true;
-    localStorage.setItem(this.routeId, this.saveReport());
   }
 }
 

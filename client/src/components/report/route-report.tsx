@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Route } from "../../classes/route";
 import { Routes } from "../../data/reports-data";
 import { RouteView } from "./route-view";
@@ -14,14 +14,24 @@ export const RouteReport: React.FC<{
   const [existingReport, existingReportDetails] = isExistingReport(
     route.routeId
   );
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (errorMessage)
+      setTimeout(() => {
+        setErrorMessage(undefined);
+      }, 5000);
+  }, [errorMessage]);
 
   if (routeView)
     return (
       <RouteView route={route} routeData={routeData} setScreen={setScreen} />
     );
+
   return (
     <div className="report-options">
       <h1 className="page-title">{routeData.routeName}</h1>
+      {errorMessage && <p className="error">{errorMessage}</p>}
       <RouteOption
         text='המשך בדו"ח הקיים'
         disabled={existingReport === undefined}
@@ -36,14 +46,34 @@ export const RouteReport: React.FC<{
       </RouteOption>
       <RouteOption
         text='יצירה דו"ח חדש'
-        disabled={false}
-        onClick={() => {
-          routeData.newReport();
-          setRouteView(true);
-        }}
+        disabled={errorMessage ? true : false}
+        onClick={() => createReport(routeData, setRouteView, setErrorMessage)}
       >
         <p>הדו"ח הקיים יסגר</p>
       </RouteOption>
     </div>
   );
 };
+
+async function createReport(
+  routeData: Route,
+  setRouteView: React.Dispatch<React.SetStateAction<boolean>>,
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>
+) {
+  routeData.newReport();
+  try {
+    const reportResponse = await fetch("/save-reports", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: routeData.sendReportData(),
+    });
+    if (reportResponse.status === 200) {
+      routeData.saveReportToLocal();
+      setRouteView(true);
+    } else {
+      throw new Error("Failed to create a new report with the database");
+    }
+  } catch (e) {
+    if (e instanceof Error) setErrorMessage(`Error: ${e.message}`);
+  }
+}

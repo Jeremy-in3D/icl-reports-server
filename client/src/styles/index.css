@@ -694,3 +694,13 @@ textarea {
   text-shadow: 0px 0px 5px var(--blue5);
   padding-top: 0.5em;
 }
+
+.error {
+  background-color: red;
+  color: white;
+  margin: 1em;
+  padding: 0.25em;
+  border-radius: 6px;
+  font-size: 1.2em;
+  text-align: center;
+}

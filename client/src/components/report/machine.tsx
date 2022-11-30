@@ -59,16 +59,6 @@ export const Machine: React.FC<{
               onClick={async () => {
                 const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
                 if (answer) {
-                  if (!routeData.reportIsSubmitted()) {
-                    const reportResponse = await fetch("/save-report", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: routeData.sendReportData(),
-                    });
-                    if (reportResponse.status === 200) {
-                      routeData.markReportSubmitted();
-                    }
-                  }
                   const machineResponse = await fetch("/save-machine", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
