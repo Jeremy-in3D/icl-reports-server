@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { MachineData } from "../classes/route";
+import { AlertData } from "../classes/route";
 import { checkmarkIcon, minusIcon } from "../data/imports";
 
 export const AlertScreen: React.FC = () => {
-  const [alerts, setAlerts] = useState<MachineData[]>();
+  const [alerts, setAlerts] = useState<AlertData[]>();
 
   useEffect(() => {
     async function getAlerts() {
@@ -25,15 +25,12 @@ export const AlertScreen: React.FC = () => {
               <div>{alert.machineName}</div>
               <img
                 className={`alert-item-btn ${
-                  //@ts-ignore
                   alert.completed ? "completed" : ""
                 }`}
-                //@ts-ignore
                 src={alert.completed ? checkmarkIcon.href : minusIcon.href}
                 onClick={() => {
                   const answer = confirm(
                     `Would you like to mark alert as ${
-                      //@ts-ignore
                       alert.completed ? "incomplete" : "complete"
                     }?`
                   );

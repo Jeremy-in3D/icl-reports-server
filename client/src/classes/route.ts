@@ -59,6 +59,14 @@ export class Route {
     localStorage.setItem(this.routeId, this.saveReport());
   }
 
+  isPartComplete(machineName: string, partName: string) {
+    const part = this.machines[machineName]?.data?.[partName];
+    if (part) {
+      if (part.excelOutput) return true;
+    }
+    return false;
+  }
+
   isMachineComplete(machineName: string) {
     const machine = this.machines[machineName];
     if (machine) {
@@ -74,14 +82,6 @@ export class Route {
       machine.id = id;
       localStorage.setItem(this.routeId, this.saveReport());
     }
-  }
-
-  isPartComplete(machineName: string, partName: string) {
-    const part = this.machines[machineName]?.data?.[partName];
-    if (part) {
-      if (part.excelOutput) return true;
-    }
-    return false;
   }
 
   isQuestionAnswered(machineName: string, partName: string, index: string) {
@@ -144,6 +144,22 @@ export type FormSubmission = {
 export type MachineData = {
   _id: string;
   id: string | null;
+  michlolName: string | undefined;
+  michlolId: string | undefined;
+  machineName: string;
+  routeName: string;
+  routeId: string;
+  reportId: string;
+  dateCreated: number | null;
+  data: {
+    [partName: string]: FormSubmission;
+  };
+};
+
+export type AlertData = {
+  _id: string;
+  id: string | null;
+  completed: boolean;
   michlolName: string | undefined;
   michlolId: string | undefined;
   machineName: string;

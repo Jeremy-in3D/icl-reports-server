@@ -94,6 +94,7 @@ app.post("/save-machine", async (req, res) => {
           michlolName: data.michlolName,
           michlolId: data.michlolId,
           dateCreated: data.dateCreated,
+          completed: false,
           data: alertData,
         };
         await mongo.insertDoc(alert, "alerts");

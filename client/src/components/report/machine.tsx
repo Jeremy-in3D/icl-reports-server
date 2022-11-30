@@ -10,16 +10,17 @@ export const Machine: React.FC<{
   machine: [string, string[]];
   michlolData: MichlolContents | undefined;
 }> = ({ routeData, machine: [machineName, parts], michlolData }) => {
-  const [updateMachine, setUpdateMachine] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
-  const isComplete = routeData.isMachineComplete(machineName);
+  const [machineComplete, setMachineComplete] = useState(
+    routeData.isMachineComplete(machineName)
+  );
+  const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const openStyle = `${isOpen ? "opened" : "closed"}`;
+  const currentParts = parts.map(
+    (current) => machineParts.find((part) => part.id === current)!
+  );
   const currentPart = machineParts.find((part) => part.id === parts[view])!;
-
-  function isPartComplete(partName: string) {
-    return routeData.isPartComplete(machineName, partName);
-  }
 
   const reportDetails: ReportDetails = {
     michlolName: michlolData?.michlolName,
@@ -32,25 +33,27 @@ export const Machine: React.FC<{
     <div className="machine">
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
-        className={`bar ${isComplete} ${openStyle}`}
+        className={`bar ${machineComplete} ${openStyle}`}
       >
         {machineName}
       </div>
-      <div className={`michlol-contents ${isComplete} ${openStyle}`}>
+      <div className={`michlol-contents ${machineComplete} ${openStyle}`}>
         {isOpen && (
           <>
             <MachinePartsList
               view={view}
               setView={setView}
-              parts={parts}
-              checkPart={isPartComplete}
+              parts={currentParts}
+              partsComplete={partsComplete}
             />
             <MachineForm
               routeData={routeData}
               key={`${machineName}-${currentPart.id}`}
-              part={currentPart}
+              currentPart={currentPart}
+              parts={currentParts}
               reportDetails={reportDetails}
-              setUpdateMachine={setUpdateMachine}
+              setMachineComplete={setMachineComplete}
+              setPartsComplete={setPartsComplete}
             />
             <button
               className="submit-data-btn"

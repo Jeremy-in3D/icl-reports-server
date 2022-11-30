@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FormSubmission, Route } from "../../classes/route";
 import { FormInput } from "./form-input";
 import { MachineParts } from "../../data/machine-parts";
@@ -6,19 +6,38 @@ import { ReportDetails } from "./machine";
 
 export const MachineForm: React.FC<{
   routeData: Route;
-  part: MachineParts[number];
+  currentPart: MachineParts[number];
+  parts: MachineParts;
   reportDetails: ReportDetails;
-  setUpdateMachine: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ routeData, part, reportDetails, setUpdateMachine }) => {
+  setMachineComplete: React.Dispatch<React.SetStateAction<string>>;
+  setPartsComplete: React.Dispatch<React.SetStateAction<boolean[] | undefined>>;
+}> = ({
+  routeData,
+  currentPart,
+  parts,
+  reportDetails,
+  setMachineComplete,
+  setPartsComplete,
+}) => {
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(
+    () =>
+      setPartsComplete(() =>
+        parts.map((part) =>
+          routeData.isPartComplete(reportDetails.machineName, part.name)
+        )
+      ),
+    [parts]
+  );
 
   return (
     <>
-      <p className="machine-area">{part.name}</p>
+      <p className="machine-area">{currentPart.name}</p>
       <form
         ref={formRef}
         className="machine-form"
-        onChange={(e) => {
+        onChange={() => {
           formRef.current?.requestSubmit();
         }}
         onSubmit={(e) => {
@@ -26,12 +45,19 @@ export const MachineForm: React.FC<{
           const formData = new FormData(e.target as HTMLFormElement);
           const formSubmission = handleCheckboxInputSubmit(formData);
           routeData.setValue(reportDetails, formSubmission);
-          setUpdateMachine((prevState) => !prevState);
+          setMachineComplete(
+            routeData.isMachineComplete(reportDetails.machineName)
+          );
+          setPartsComplete(() =>
+            parts.map((part) =>
+              routeData.isPartComplete(reportDetails.machineName, part.name)
+            )
+          );
         }}
       >
         <FormInput
           routeData={routeData}
-          machinePart={part}
+          machinePart={currentPart}
           machineName={reportDetails.machineName}
         />
       </form>

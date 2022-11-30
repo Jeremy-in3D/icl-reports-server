@@ -1,20 +1,17 @@
-import React, { useMemo } from "react";
-import { machineParts } from "../../data/machine-parts";
+import React from "react";
+import { MachineParts } from "../../data/machine-parts";
 
 export const MachinePartsList: React.FC<{
-  parts: string[];
   view: number;
   setView: React.Dispatch<React.SetStateAction<number>>;
-  checkPart: (partName: string) => boolean;
-}> = ({ parts, setView, checkPart, view }) => {
-  const currentParts = parts.map(
-    (current) => machineParts.find((part) => part.id === current)!
-  );
-
+  parts: MachineParts;
+  partsComplete: boolean[] | undefined;
+}> = ({ view, setView, parts, partsComplete }) => {
   return (
     <div className="michlol-questions-array">
-      {currentParts.map((part, idx) => {
-        const answered = checkPart(part.name);
+      {parts.map((part, idx) => {
+        let answered;
+        if (partsComplete) answered = partsComplete[idx];
         return (
           <div
             key={`${idx}`}
