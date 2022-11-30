@@ -9,7 +9,7 @@ export const Machine: React.FC<{
   routeData: Route;
   machine: [string, string[]];
   michlolData: MichlolContents | undefined;
-}> = ({ routeData, machine: [machineName, parts], michlolData }) => {
+}> = ({ routeData, machine: [machineName, partsId], michlolData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
   const [machineComplete, setMachineComplete] = useState(
@@ -17,11 +17,10 @@ export const Machine: React.FC<{
   );
   const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const openStyle = `${isOpen ? "opened" : "closed"}`;
-  const currentParts = parts.map(
-    (current) => machineParts.find((part) => part.id === current)!
+  const currentParts = partsId.map(
+    (partId) => machineParts.find((part) => part.id === partId)!
   );
-  const currentPart = machineParts.find((part) => part.id === parts[view])!;
-
+  const currentPart = currentParts[view];
   const reportDetails: ReportDetails = {
     michlolName: michlolData?.michlolName,
     michlolId: michlolData?.michlolId,

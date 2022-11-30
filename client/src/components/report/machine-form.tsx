@@ -28,7 +28,7 @@ export const MachineForm: React.FC<{
           routeData.isPartComplete(reportDetails.machineName, part.name)
         )
       ),
-    [parts]
+    []
   );
 
   return (
