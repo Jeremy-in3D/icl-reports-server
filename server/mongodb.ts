@@ -29,6 +29,14 @@ export class MongoDB {
     return collection.insertOne(payload);
   }
 
+  updateDoc(payload: MachineData, collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId);
+    return collection.findOneAndReplace(
+      { uniqueId: payload.uniqueId },
+      payload
+    );
+  }
+
   removeDoc(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     return collection.deleteOne({ reportId: id });

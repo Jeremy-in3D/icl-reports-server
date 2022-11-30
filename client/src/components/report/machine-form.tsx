@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { FormSubmission, Route } from "../../classes/route";
-import { FormInput } from "./form-input";
+import { FormInput } from "./inputs/form-input";
 import { MachineParts } from "../../data/machine-parts";
 import { ReportDetails } from "./machine";
 

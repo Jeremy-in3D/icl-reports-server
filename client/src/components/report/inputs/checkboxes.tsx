@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route } from "../../../classes/route";
 import { MachineParts } from "../../../data/machine-parts";
-import { CheckboxInput } from "../checkbox-input";
+import { CheckboxInput } from "./checkbox-input";
 
 export const Checkboxes: React.FC<{
   routeData: Route;

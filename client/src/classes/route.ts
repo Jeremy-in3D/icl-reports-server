@@ -44,20 +44,32 @@ export class Route {
   setValue(reportDetails: ReportDetails, value: FormSubmission) {
     const { machineName, michlolName, michlolId, partName } = reportDetails;
     if (!this.machines[machineName])
-      this.machines[machineName] = {
-        completed: false,
-        id: null,
+      this.machines[machineName] = this.createMachine(
         michlolName,
         michlolId,
-        machineName,
-        routeName: this.routeName,
-        routeId: this.routeId,
-        reportId: this.reportId!,
-        dateCreated: this.dateCreated,
-        data: {},
-      };
+        machineName
+      );
     this.machines[machineName].data[partName] = value;
     this.saveReportToLocal();
+  }
+
+  createMachine(
+    michlolName: string,
+    michlolId: string,
+    machineName: string
+  ): MachineData {
+    return {
+      completed: false,
+      uniqueId: `${this.reportId}: ${machineName}`,
+      michlolName,
+      michlolId,
+      machineName,
+      routeName: this.routeName,
+      routeId: this.routeId,
+      reportId: this.reportId!,
+      dateCreated: this.dateCreated,
+      data: {},
+    };
   }
 
   isPartComplete(machineName: string, partName: string) {
@@ -76,11 +88,10 @@ export class Route {
     return "incomplete";
   }
 
-  markMachineComplete(machineName: string, id: string) {
+  markMachineComplete(machineName: string) {
     const machine = this.machines[machineName];
     if (machine) {
       machine.completed = true;
-      machine.id = id;
       this.saveReportToLocal();
     }
   }
@@ -94,7 +105,6 @@ export class Route {
     const machine = this.machines[machineName];
     if (machine) {
       const { completed, ...data } = machine;
-      machine.completed = true;
       return JSON.stringify(data);
     }
   }
@@ -114,23 +124,6 @@ export class Route {
   }
 }
 
-export type Machines = {
-  [machineName: string]: {
-    completed: boolean;
-    id: string | null;
-    michlolName: string | undefined;
-    michlolId: string | undefined;
-    machineName: string;
-    routeName: string;
-    routeId: string;
-    reportId: string;
-    dateCreated: number | null;
-    data: {
-      [partName: string]: FormSubmission;
-    };
-  };
-};
-
 export type FormSubmission = {
   [id: string]: FormDataEntryValue;
   excelOutput: string;
@@ -138,18 +131,22 @@ export type FormSubmission = {
 };
 
 export type MachineData = {
-  _id: string;
-  id: string | null;
+  completed: boolean;
+  uniqueId: string;
+  reportId: string;
+  routeName: string;
+  routeId: string;
   michlolName: string | undefined;
   michlolId: string | undefined;
   machineName: string;
-  routeName: string;
-  routeId: string;
-  reportId: string;
   dateCreated: number | null;
   data: {
     [partName: string]: FormSubmission;
   };
+};
+
+export type Machines = {
+  [machineName: string]: MachineData;
 };
 
 export type AlertData = {

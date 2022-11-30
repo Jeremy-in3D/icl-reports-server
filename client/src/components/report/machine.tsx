@@ -22,8 +22,8 @@ export const Machine: React.FC<{
   );
   const currentPart = currentParts[view];
   const reportDetails: ReportDetails = {
-    michlolName: michlolData?.michlolName,
-    michlolId: michlolData?.michlolId,
+    michlolName: michlolData?.michlolName!,
+    michlolId: michlolData?.michlolId!,
     machineName,
     partName: currentPart.name,
   };
@@ -65,8 +65,10 @@ export const Machine: React.FC<{
                     body: routeData.sendMachineData(machineName),
                   });
                   if (machineResponse.status === 200) {
-                    const id = await machineResponse.text();
-                    routeData.markMachineComplete(machineName, id);
+                    routeData.markMachineComplete(machineName);
+                    setMachineComplete(
+                      routeData.isMachineComplete(machineName)
+                    );
                   }
                   setIsOpen(false);
                 }
@@ -82,8 +84,8 @@ export const Machine: React.FC<{
 };
 
 export type ReportDetails = {
-  michlolName: string | undefined;
-  michlolId: string | undefined;
+  michlolName: string;
+  michlolId: string;
   machineName: string;
   partName: string;
 };

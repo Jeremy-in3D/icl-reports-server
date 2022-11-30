@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CheckBox } from "../../data/machine-parts";
+import { CheckBox } from "../../../data/machine-parts";
 
 export const CheckboxInput: React.FC<{
   checkbox: CheckBox;
