@@ -26,10 +26,7 @@ export class Route {
 
   loadReport(data: string) {
     const existingData: Route = JSON.parse(data);
-    for (let [key, value] of Object.entries(existingData)) {
-      //@ts-ignore
-      this[key] = value;
-    }
+    Object.assign(this, existingData);
   }
 
   getReport() {

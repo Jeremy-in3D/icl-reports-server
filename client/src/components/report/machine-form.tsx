@@ -56,6 +56,7 @@ export const MachineForm: React.FC<{
         }}
       >
         <FormInput
+          formRef={formRef}
           routeData={routeData}
           machinePart={currentPart}
           machineName={reportDetails.machineName}
