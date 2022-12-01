@@ -63,41 +63,37 @@ app.post(
 app.post("/save-machine", async (req, res) => {
   const data: MachineData = req.body;
   try {
+    //Update machine in collection
     const updateResult = await mongo.updateDoc(data, "machines");
-    if (!updateResult.value) {
-      //Save machine to collection
-      const inserted = await mongo.insertDoc(data, "machines");
-      console.log(
-        `A document was inserted with the _id: ${inserted.insertedId}`
-      );
-      //Refactor to promise.all
-      //Check if any of saved data raised an alert
-      const machines = Object.entries(data.data);
-      const filteredAlerts = machines
-        .map((machine) => {
-          const [key, value] = machine as any;
-          return value.alert === "true" ? value : null;
-        })
-        .filter((parts) => parts !== null);
-      if (filteredAlerts.length) {
-        filteredAlerts.forEach(async (alertData) => {
-          const alert = {
-            uniqueId: data.uniqueId,
-            reportId: data.reportId,
-            routeName: data.routeName,
-            routeId: data.routeId,
-            machineName: data.machineName,
-            michlolName: data.michlolName,
-            michlolId: data.michlolId,
-            dateCreated: data.dateCreated,
-            completed: false,
-            data: alertData,
-          };
-          await mongo.insertDoc(alert, "alerts");
-        });
-      }
-      res.status(200).send();
+    //Save machine to collection
+    if (!updateResult.value) await mongo.insertDoc(data, "machines");
+    //Refactor to promise.all
+    //Check if any of saved data raised an alert
+    const machines = Object.entries(data.data);
+    const filteredAlerts = machines
+      .map((machine) => {
+        const [key, value] = machine as any;
+        return value.alert === "true" ? value : null;
+      })
+      .filter((parts) => parts !== null);
+    if (filteredAlerts.length) {
+      filteredAlerts.forEach(async (alertData) => {
+        const alert = {
+          uniqueId: data.uniqueId,
+          reportId: data.reportId,
+          routeName: data.routeName,
+          routeId: data.routeId,
+          machineName: data.machineName,
+          michlolName: data.michlolName,
+          michlolId: data.michlolId,
+          dateCreated: data.dateCreated,
+          completed: false,
+          data: alertData,
+        };
+        await mongo.insertDoc(alert, "alerts");
+      });
     }
+    res.status(200).send();
   } catch (e) {
     res.status(500).send("Error" + e);
   }
