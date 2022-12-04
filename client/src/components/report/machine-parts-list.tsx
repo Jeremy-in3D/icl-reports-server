@@ -20,7 +20,7 @@ export const MachinePartsList: React.FC<{
             }`}
             onClick={() => setView(idx)}
           >
-            {part?.name}
+            {part?.partName}
           </div>
         );
       })}

@@ -8,8 +8,7 @@ import { MachinePartsList } from "./machine-parts-list";
 export const Machine: React.FC<{
   routeData: Route;
   machine: [string, string[]];
-  michlolData: MichlolContents | undefined;
-}> = ({ routeData, machine: [machineName, partsId], michlolData }) => {
+}> = ({ routeData, machine: [machineName, partsId] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
   const [machineComplete, setMachineComplete] = useState(
@@ -18,14 +17,14 @@ export const Machine: React.FC<{
   const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const openStyle = `${isOpen ? "opened" : "closed"}`;
   const currentParts = partsId.map(
-    (partId) => machineParts.find((part) => part.id === partId)!
+    (partId) => machineParts.find((part) => part.questionId === partId)!
   );
   const currentPart = currentParts[view];
   const reportDetails: ReportDetails = {
-    michlolName: michlolData?.michlolName!,
-    michlolId: michlolData?.michlolId!,
+    michlolName: "michlolData?.michlolName!",
+    michlolId: "michlolData?.michlolId!",
     machineName,
-    partName: currentPart.name,
+    partName: currentPart.partName,
   };
 
   return (
@@ -47,7 +46,7 @@ export const Machine: React.FC<{
             />
             <MachineForm
               routeData={routeData}
-              key={`${machineName}-${currentPart.id}`}
+              key={`${machineName}-${currentPart.questionId}`}
               currentPart={currentPart}
               parts={currentParts}
               reportDetails={reportDetails}

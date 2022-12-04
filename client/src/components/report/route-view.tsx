@@ -1,29 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route } from "../../classes/route";
 import { michlolim, Routes } from "../../data/reports-data";
 import { MachinesList } from "./machines-list";
-import { MichlolimList } from "./michlolim-list";
 
 export const RouteView: React.FC<{
   routeData: Route;
   route: Routes[number];
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ route, routeData, setScreen }) => {
-  const [view, setView] = useState(0);
-  const currentMichlolId = route.michlolim[view];
-  const currentMichlolData = michlolim.find(
-    (m) => m.michlolId === currentMichlolId
+  //Refactor
+  const machinesArray = route.michlolim.map(
+    (michlolId) => michlolim.find((m) => m.michlolId === michlolId)?.machines
   );
-
+  const finalMachines: { [id: string]: string[] } = {};
+  for (let machinesObj of Object.values(machinesArray)) {
+    if (machinesObj !== undefined) {
+      for (let [key, value] of Object.entries(machinesObj)) {
+        finalMachines[key] = value;
+      }
+    }
+  }
+  console.log(finalMachines);
+  //Sort the final machine list by number
   return (
     <>
       <h1 className="page-title">{routeData.routeName}</h1>
-      <MichlolimList view={view} route={route} setView={setView} />
       <MachinesList
-        view={view}
         route={route}
         routeData={routeData}
-        michlolData={currentMichlolData}
+        machineList={finalMachines}
       />
       <button
         className="route-submit-btn"
