@@ -18,10 +18,13 @@ export const RouteReport: React.FC<{
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   useEffect(() => {
-    if (errorMessage)
-      setTimeout(() => {
+    if (errorMessage) {
+      const timeoutId = setTimeout(() => {
         setErrorMessage(undefined);
       }, 5000);
+
+      return () => clearTimeout(timeoutId);
+    }
   }, [errorMessage]);
 
   if (routeView)
