@@ -8,6 +8,12 @@ export const RouteView: React.FC<{
   route: Routes[number];
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ route, routeData, setScreen }) => {
+  //Make a new object with the machine as key, then its value is an object that is:
+  //{
+  //questions: string[]
+  //michlolId: michlolId,
+  //michlolName: michlolName
+  // }
   //Refactor
   const machinesArray = route.michlolim.map(
     (michlolId) => michlolim.find((m) => m.michlolId === michlolId)?.machines
