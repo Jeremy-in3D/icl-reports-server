@@ -6,14 +6,14 @@ export const CheckboxInput: React.FC<{
   index: number;
   checkDisabled: () => boolean;
   checkDefault: (idx: string) => boolean;
-  setValid: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ checkbox, index, checkDisabled, checkDefault, setValid }) => {
+  setDisableInputs: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ checkbox, index, checkDisabled, checkDefault, setDisableInputs }) => {
   const [showSecondary, setShowSecondary] = useState(false);
   const { text, options, alert } = checkbox;
 
   useEffect(() => {
     if (checkDefault(`${index}`)) {
-      if (index === 0) setValid((prevState) => !prevState);
+      if (index === 0) setDisableInputs((prevState) => !prevState);
       setShowSecondary(true);
     }
   }, []);
@@ -26,7 +26,7 @@ export const CheckboxInput: React.FC<{
         name={`${index}`}
         value={`${text}-${alert}`}
         onChange={(e) => {
-          if (index === 0) setValid((prevState) => !prevState);
+          if (index === 0) setDisableInputs((prevState) => !prevState);
           setShowSecondary((prevState) => !prevState);
         }}
         defaultChecked={checkDefault(`${index}`)}

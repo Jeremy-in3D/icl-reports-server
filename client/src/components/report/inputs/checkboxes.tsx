@@ -9,31 +9,36 @@ export const Checkboxes: React.FC<{
   machinePart: MachineParts[number];
   machineName: string;
 }> = ({ routeData, machinePart, machineName, formRef }) => {
-  const [isValid, setIsValid] = useState(false);
+  //Disables all inputs apart from first choice
+  const [disableInputs, setDisableInputs] = useState(false);
 
   function isDisabled(index: number) {
-    if (index !== 0 && isValid) return true;
+    if (index !== 0 && disableInputs) return true;
     return false;
   }
   function isDefault(index: string) {
-    return routeData.isQuestionAnswered(machineName, machinePart.name, index);
+    return routeData.isQuestionAnswered(
+      machineName,
+      machinePart.partName,
+      index
+    );
   }
 
   useEffect(() => {
     formRef.current?.requestSubmit();
-  }, [isValid]);
+  }, [disableInputs]);
 
   return (
     <>
       {machinePart.input.map((checkbox, idx) => {
         return (
           <CheckboxInput
-            key={`${machinePart.id}-${idx}`}
+            key={`${machinePart.questionId}-${idx}`}
             index={idx}
             checkbox={checkbox}
             checkDisabled={() => isDisabled(idx)}
             checkDefault={isDefault}
-            setValid={setIsValid}
+            setDisableInputs={setDisableInputs}
           />
         );
       })}

@@ -25,7 +25,7 @@ export const MachineForm: React.FC<{
     () =>
       setPartsComplete(() =>
         parts.map((part) =>
-          routeData.isPartComplete(reportDetails.machineName, part.name)
+          routeData.isPartComplete(reportDetails.machineName, part.partName)
         )
       ),
     []
@@ -33,7 +33,7 @@ export const MachineForm: React.FC<{
 
   return (
     <>
-      <p className="machine-area">{currentPart.name}</p>
+      <p className="machine-area">{currentPart.partName}</p>
       <form
         ref={formRef}
         className="machine-form"
@@ -50,7 +50,7 @@ export const MachineForm: React.FC<{
           );
           setPartsComplete(() =>
             parts.map((part) =>
-              routeData.isPartComplete(reportDetails.machineName, part.name)
+              routeData.isPartComplete(reportDetails.machineName, part.partName)
             )
           );
         }}
