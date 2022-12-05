@@ -3,18 +3,15 @@ import { Route } from "../../classes/route";
 import { machineParts } from "../../data/machine-parts";
 import { MachineForm } from "./machine-form";
 import { MachinePartsList } from "./machine-parts-list";
+import { MachineDetails } from "./route-view";
 
 export const Machine: React.FC<{
   routeData: Route;
-  machine: [
-    string,
-    {
-      michlolId: string;
-      michlolName: string;
-      parts: string[];
-    }
-  ];
-}> = ({ routeData, machine: [machineName, machineDetails] }) => {
+  machine: MachineDetails;
+}> = ({
+  routeData,
+  machine: { machineName, michlolId, michlolName, parts },
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
   const [machineComplete, setMachineComplete] = useState(
@@ -22,13 +19,13 @@ export const Machine: React.FC<{
   );
   const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const openStyle = `${isOpen ? "opened" : "closed"}`;
-  const currentParts = machineDetails.parts.map(
+  const currentParts = parts.map(
     (partId) => machineParts.find((part) => part.questionId === partId)!
   );
   const currentPart = currentParts[view];
   const reportDetails: ReportDetails = {
-    michlolName: machineDetails.michlolName,
-    michlolId: machineDetails.michlolId,
+    michlolName: michlolName,
+    michlolId: michlolId,
     machineName,
     partName: currentPart.partName,
   };

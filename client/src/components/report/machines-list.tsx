@@ -7,16 +7,14 @@ import { MachineDetails } from "./route-view";
 export const MachinesList: React.FC<{
   route: Routes[number];
   routeData: Route;
-  machineList: MachineDetails;
+  machineList: MachineDetails[];
 }> = ({ route, routeData, machineList }) => {
-  const machines = Object.entries(machineList);
-
   return (
     <div className="machines">
       <h2 className="machines-header">מכונות</h2>
-      {machines.map((machine, i) => (
+      {machineList.map((machine) => (
         <Machine
-          key={`${route?.routeId}-${i}`}
+          key={`${route?.routeId}-${machine.machineName}`}
           routeData={routeData}
           machine={machine}
         />
