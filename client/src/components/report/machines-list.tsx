@@ -2,13 +2,12 @@ import React from "react";
 import { Route } from "../../classes/route";
 import { Routes } from "../../data/reports-data";
 import { Machine } from "./machine";
+import { MachineDetails } from "./route-view";
 
 export const MachinesList: React.FC<{
   route: Routes[number];
   routeData: Route;
-  machineList: {
-    [id: string]: string[];
-  };
+  machineList: MachineDetails;
 }> = ({ route, routeData, machineList }) => {
   const machines = Object.entries(machineList);
 

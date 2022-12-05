@@ -8,26 +8,20 @@ export const RouteView: React.FC<{
   route: Routes[number];
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ route, routeData, setScreen }) => {
-  //Make a new object with the machine as key, then its value is an object that is:
-  //{
-  //questions: string[]
-  //michlolId: michlolId,
-  //michlolName: michlolName
-  // }
-  //Refactor
-  const machinesArray = route.michlolim.map(
-    (michlolId) => michlolim.find((m) => m.michlolId === michlolId)?.machines
+  const michlolimArray = route.michlolim.map(
+    (michlolId) => michlolim.find((m) => m.michlolId === michlolId)!
   );
-  const finalMachines: { [id: string]: string[] } = {};
-  for (let machinesObj of Object.values(machinesArray)) {
-    if (machinesObj !== undefined) {
-      for (let [key, value] of Object.entries(machinesObj)) {
-        finalMachines[key] = value;
-      }
+  const finalMachines: MachineDetails = {};
+  michlolimArray.forEach((michlol) => {
+    for (let [key, value] of Object.entries(michlol.machines)) {
+      finalMachines[key] = {
+        michlolId: michlol.michlolId,
+        michlolName: michlol.michlolName,
+        parts: value,
+      };
     }
-  }
-  console.log(finalMachines);
-  //Sort the final machine list by number
+  });
+
   return (
     <>
       <h1 className="page-title">{routeData.routeName}</h1>
@@ -46,4 +40,12 @@ export const RouteView: React.FC<{
       </button>
     </>
   );
+};
+
+export type MachineDetails = {
+  [machineId: string]: {
+    michlolId: string;
+    michlolName: string;
+    parts: string[];
+  };
 };
