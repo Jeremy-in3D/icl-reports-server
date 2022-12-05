@@ -3,8 +3,6 @@ import { Route } from "../../classes/route";
 import { michlolim, Routes } from "../../data/reports-data";
 import { MachinesList } from "./machines-list";
 
-type MachineFilter = "all" | "completed" | "partial";
-
 export const RouteView: React.FC<{
   routeData: Route;
   route: Routes[number];
@@ -29,12 +27,19 @@ export const RouteView: React.FC<{
     }
   });
 
-  //Filter machines based on filter state
-  const finalMachines = machines.filter((machine) => {
-    if (machineFilter !== "all")
-      return routeData.isMachineComplete(machine.machineName) === machineFilter;
-    return true;
-  });
+  //Filter machines based on filter state and then sort based on name
+  const finalMachines = machines
+    .filter((machine) => {
+      if (machineFilter !== "all")
+        return (
+          routeData.isMachineComplete(machine.machineName) === machineFilter
+        );
+      return true;
+    })
+    .sort((a, b) => {
+      if (a.machineName > b.machineName) return 1;
+      return -1;
+    });
 
   return (
     <>
@@ -55,6 +60,13 @@ export const RouteView: React.FC<{
       </button>
       <button
         onClick={() => {
+          setMachineFilter("incomplete");
+        }}
+      >
+        Incomplete
+      </button>
+      <button
+        onClick={() => {
           setMachineFilter("partial");
         }}
       >
@@ -64,6 +76,7 @@ export const RouteView: React.FC<{
         route={route}
         routeData={routeData}
         machineList={finalMachines}
+        machineFilter={machineFilter}
       />
       <button
         className="route-submit-btn"
@@ -83,3 +96,5 @@ export type MachineDetails = {
   michlolName: string;
   parts: string[];
 };
+
+export type MachineFilter = "all" | "completed" | "partial" | "incomplete";

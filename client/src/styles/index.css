@@ -346,15 +346,18 @@ textarea {
 }
 
 .machine .bar.completed {
-  background: linear-gradient(#1f8b3a, #46815f);
+  background: linear-gradient(rgba(31, 139, 58, 0.6), rgba(70, 129, 95, 0.6));
 }
 
 .machine .bar.incomplete {
-  background: linear-gradient(#db1212, #dd503d);
+  background: linear-gradient(
+    rgba(219, 18, 18, 0.603),
+    rgba(221, 80, 61, 0.671)
+  );
 }
 
 .machine .bar.partial {
-  background: linear-gradient(#dba512, #ddc03d);
+  background: linear-gradient(rgba(219, 165, 18, 0.6), rgba(221, 192, 61, 0.6));
 }
 
 .m-question-marker {
