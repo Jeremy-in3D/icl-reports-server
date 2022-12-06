@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
 import { michlolim, Routes } from "../../data/reports-data";
+import { Filter } from "./filter";
 import { MachinesList } from "./machines-list";
+
+const filterItems: MachineFilter[] = [
+  "completed",
+  "incomplete",
+  "partial",
+  "all",
+];
 
 export const RouteView: React.FC<{
   routeData: Route;
@@ -44,34 +52,7 @@ export const RouteView: React.FC<{
   return (
     <>
       <h1 className="page-title">{routeData.routeName}</h1>
-      <button
-        onClick={() => {
-          setMachineFilter("all");
-        }}
-      >
-        All
-      </button>
-      <button
-        onClick={() => {
-          setMachineFilter("completed");
-        }}
-      >
-        Completed
-      </button>
-      <button
-        onClick={() => {
-          setMachineFilter("incomplete");
-        }}
-      >
-        Incomplete
-      </button>
-      <button
-        onClick={() => {
-          setMachineFilter("partial");
-        }}
-      >
-        Partial
-      </button>
+      <Filter setFilter={setMachineFilter} filterItems={filterItems} />
       <MachinesList
         route={route}
         routeData={routeData}
