@@ -83,9 +83,9 @@ export class Route {
   isMachineComplete(machineName: string) {
     const machine = this.machines[machineName];
     if (machine) {
-      return machine.completed ? "completed" : "partial";
+      return machine.completed ? "הושלם" : "חלקי";
     }
-    return "incomplete";
+    return "לא הושלם";
   }
 
   markMachineComplete(machineName: string) {

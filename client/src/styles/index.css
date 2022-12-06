@@ -292,7 +292,6 @@ textarea {
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 0.25em;
-  margin-top: 0.75em;
 }
 
 .michlol-selection {
@@ -720,4 +719,24 @@ textarea {
   text-align: center;
   box-shadow: 0px 0px 5px black;
   border: 1px solid black;
+}
+
+.filter {
+  text-align: center;
+  margin: 0.5em 0;
+}
+
+.filter-item {
+  padding: 0.5em;
+  margin: 0 0.25em;
+  background-color: #646464;
+  color: white;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-size: 1.1em;
+}
+
+.filter-item.current {
+  background-color: var(--blue5opaque);
+  border: 1px solid var(--blue3);
 }

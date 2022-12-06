@@ -3,7 +3,13 @@ import { Route } from "../../classes/route";
 import { machineParts } from "../../data/machine-parts";
 import { MachineForm } from "./machine-form";
 import { MachinePartsList } from "./machine-parts-list";
-import { MachineDetails } from "./route-view";
+import { MachineDetails, MachineFilter } from "./route-view";
+
+function getMachineStyle(machineState: MachineFilter) {
+  if (machineState === "הושלם") return "completed";
+  if (machineState === "חלקי") return "partial";
+  if (machineState === "לא הושלם") return "incomplete";
+}
 
 export const Machine: React.FC<{
   routeData: Route;
@@ -34,7 +40,7 @@ export const Machine: React.FC<{
     <div className="machine">
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
-        className={`bar ${machineComplete} ${openStyle}`}
+        className={`bar ${getMachineStyle(machineComplete)} ${openStyle}`}
       >
         {machineName}
       </div>

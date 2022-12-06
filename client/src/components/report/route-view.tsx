@@ -4,19 +4,14 @@ import { michlolim, Routes } from "../../data/reports-data";
 import { Filter } from "./filter";
 import { MachinesList } from "./machines-list";
 
-const filterItems: MachineFilter[] = [
-  "completed",
-  "incomplete",
-  "partial",
-  "all",
-];
+const filterItems: MachineFilter[] = ["הכל", "הושלם", "חלקי", "לא הושלם"];
 
 export const RouteView: React.FC<{
   routeData: Route;
   route: Routes[number];
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ route, routeData, setScreen }) => {
-  const [machineFilter, setMachineFilter] = useState<MachineFilter>("all");
+  const [machineFilter, setMachineFilter] = useState<MachineFilter>("הכל");
 
   //Arrange Michlolim into an array of machines
   const michlolimArray = route.michlolim.map(
@@ -38,7 +33,7 @@ export const RouteView: React.FC<{
   //Filter machines based on filter state and then sort based on name
   const finalMachines = machines
     .filter((machine) => {
-      if (machineFilter !== "all")
+      if (machineFilter !== "הכל")
         return (
           routeData.isMachineComplete(machine.machineName) === machineFilter
         );
@@ -52,7 +47,11 @@ export const RouteView: React.FC<{
   return (
     <>
       <h1 className="page-title">{routeData.routeName}</h1>
-      <Filter setFilter={setMachineFilter} filterItems={filterItems} />
+      <Filter
+        setFilter={setMachineFilter}
+        filterItems={filterItems}
+        currentFilter={machineFilter}
+      />
       <MachinesList
         route={route}
         routeData={routeData}
@@ -78,4 +77,4 @@ export type MachineDetails = {
   parts: string[];
 };
 
-export type MachineFilter = "all" | "completed" | "partial" | "incomplete";
+export type MachineFilter = "הכל" | "הושלם" | "חלקי" | "לא הושלם";
