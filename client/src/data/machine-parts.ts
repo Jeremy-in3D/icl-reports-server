@@ -570,51 +570,6 @@ export const machineParts: MachineParts = [
     ],
   },
   {
-    questionId: "Q16",
-    partName: "מנוע",
-    type: "checkboxes",
-    input: [
-      {
-        text: "כלל הערות למטה תקינות",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "מנוע המסוע חם",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "מכסה המאוור או מאוורר המנוע שבורים",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "קיימים רעשים חריגים מהמנוע",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "יש צורך בניקיון צלעות מנוע",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "קימיים רעשים חריגים מהמצמד המקשר לממסרה",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "קיימים ברגים משוחררים בבסיס המנוע או הממסרה",
-        options: false,
-        alert: true,
-      },
-    ],
-  },
-  {
     questionId: "Q17",
     partName: "ממסרה",
     type: "checkboxes",
@@ -727,51 +682,6 @@ export const machineParts: MachineParts = [
         text: "מצב הסקרטינג נדרשת הנמכה/החלפה",
         options: false,
         alert: false,
-      },
-    ],
-  },
-  {
-    questionId: "Q20",
-    partName: "מנוע",
-    type: "checkboxes",
-    input: [
-      {
-        text: "כלל הערות למטה תקינות",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "מנוע המסוע חם",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "מכסה המאוור או מאוורר המנוע שבורים",
-        alert: false,
-        options: false,
-      },
-      {
-        text: "קיימים רעשים חריגים מהמנוע",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "יש צורך בניקיון צלעות מנוע",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "קימיים רעשים חריגים מהמצמד המקשר לממסרה",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "קיימים ברגים משוחררים בבסיס המנוע או הממסרה",
-        options: false,
-        alert: true,
       },
     ],
   },
@@ -1146,51 +1056,6 @@ export const machineParts: MachineParts = [
     ],
   },
   {
-    questionId: "Q31",
-    partName: "מנוע",
-    type: "checkboxes",
-    input: [
-      {
-        text: "כלל הערות למטה תקינות",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "מנוע המסוע חם",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "מכסה המאוור או מאוורר המנוע שבורים",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "קיימים רעשים חריגים מהמנוע",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "יש צורך בניקיון צלעות מנוע",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "קימיים רעשים חריגים מהמצמד המקשר לממסרה",
-        options: true,
-        alert: true,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "קיימים ברגים משוחררים בבסיס המנוע או הממסרה",
-        options: false,
-        alert: true,
-      },
-    ],
-  },
-  {
     questionId: "Q32",
     partName: "ממסרה",
     type: "checkboxes",
@@ -1440,51 +1305,6 @@ export const machineParts: MachineParts = [
       },
       {
         text: "קיימים רעידות בגוף החילזון אוברגים משוחריים במסבים",
-        options: false,
-        alert: false,
-      },
-    ],
-  },
-  {
-    questionId: "Q38",
-    partName: "מנוע",
-    type: "checkboxes",
-    input: [
-      {
-        text: "כלל הערות למטה תקינות",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "מנוע המסוע חם",
-        options: true,
-        alert: false,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "מכסה המאוור או מאוורר המנוע שבורים",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "קיימים רעשים חריגים מהמנוע",
-        options: true,
-        alert: false,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: "יש צורך בניקיון צלעות מנוע",
-        options: false,
-        alert: false,
-      },
-      {
-        text: "קימיים רעשים חריגים מהמצמד המקשר",
-        options: true,
-        alert: false,
-        choices: ["גבולי", "חריג", "קריטי"],
-      },
-      {
-        text: " פירמוט הגירוז במנוע חוסרות/ריקות",
         options: false,
         alert: false,
       },
