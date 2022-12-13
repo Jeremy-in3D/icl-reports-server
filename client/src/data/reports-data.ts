@@ -1,4 +1,5 @@
 export const michlolim: MichlolContents[] = [
+  //#region Route 1
   {
     michlolId: "R1-M1",
     michlolName: "משאבה",
@@ -116,12 +117,69 @@ export const michlolim: MichlolContents[] = [
       "R-2010-050-074": ["Q15", "Q16", "Q17", "Q18"],
     },
   },
+  //#endregion
+  {
+    michlolId: "R2-M1",
+    michlolName: "מסוע משקולת",
+    equipmentUnit: "מסוע סרט ממחסן תוצרת",
+    machines: {
+      "R-2010-050-170": ["Q19", "Q20", "Q21", "Q22", "Q23", "Q24", "Q25"],
+    },
+  },
+  {
+    michlolId: "R2-M2",
+    michlolName: "מסוע מותחנים",
+    equipmentUnit: "מסוע הזנה לנפות משלוחים",
+    machines: {
+      "R-2010-050-406": ["Q19", "Q20", "Q21", "Q22", "Q23", "Q24", "Q26"],
+    },
+  },
+  {
+    michlolId: "R2-M3",
+    michlolName: "נפה רוטט",
+    equipmentUnit: "נפה משלוחים ישנה",
+    machines: {
+      "R-2010-050-402A": ["Q27", "Q28", "Q29"],
+    },
+  },
+  {
+    michlolId: "R2-M4",
+    michlolName: "נפה רוטט",
+    equipmentUnit: "נפה משלוחים חדשה",
+    machines: {
+      "R-2010-050-402B": ["Q27", "Q28", "Q29"],
+    },
+  },
+  {
+    michlolId: "R2-M5",
+    michlolName: "רדלר",
+    equipmentUnit: "רדלר שפיכה לסרט 004",
+    machines: {
+      "R-2010-050-3502": ["Q30", "Q31", "Q32", "Q33", "Q34"],
+    },
+  },
+  {
+    michlolId: "R2-M6",
+    michlolName: "רדלר",
+    equipmentUnit: "רדלר קבלה מנפות משלוחים",
+    machines: {
+      "R-2010-050-3501": ["Q30", "Q31", "Q32", "Q33", "Q35"],
+    },
+  },
+  {
+    michlolId: "R2-M7",
+    michlolName: "חילזון",
+    equipmentUnit: "חילזון הזנה לרדלר 3501",
+    machines: {
+      "R-2010-050-3504": ["Q36", "Q31", "Q32", "Q37"],
+    },
+  },
 ];
 
 export const routes: Routes = [
   {
     routeId: "R1",
-    routeName: "מסלול מספר 1",
+    routeName: "ספיגה 50",
     michlolim: [
       "R1-M1",
       "R1-M2",
@@ -139,8 +197,8 @@ export const routes: Routes = [
   },
   {
     routeId: "R2",
-    routeName: "מסלול מספר 2",
-    michlolim: ["R2-M1", "R2-M2", "R2-M3"],
+    routeName: "משלוחים",
+    michlolim: ["R2-M1", "R2-M2", "R2-M3", "R2-M4", "R2-M5", "R2-M6", "R2-M7"],
   },
 ];
 export type MichlolContents = {

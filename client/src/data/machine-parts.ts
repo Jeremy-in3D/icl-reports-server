@@ -1,4 +1,5 @@
 export const machineParts: MachineParts = [
+  //#region Route 1: Question 1 - 18
   {
     questionId: "Q01",
     partName: "צנרת וברזים",
@@ -694,6 +695,757 @@ export const machineParts: MachineParts = [
       },
     ],
   },
+  //#endregion
+  //#region Route 2: Question 19 - *
+  {
+    questionId: "Q19",
+    partName: "משפך קבלה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים נזילות ממעטפת המשפך",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים מגוני צד מפורקים לאורך הסרט",
+        alert: false,
+        options: true,
+        choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
+      },
+      {
+        text: "קיימים מרעדים לא תקינים",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מצב הסקרטינג נדרשת הנמכה/החלפה",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q20",
+    partName: "מנוע",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מנוע המסוע חם",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מכסה המאוור או מאוורר המנוע שבורים",
+        alert: false,
+        options: false,
+      },
+      {
+        text: "קיימים רעשים חריגים מהמנוע",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "יש צורך בניקיון צלעות מנוע",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קימיים רעשים חריגים מהמצמד המקשר לממסרה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים ברגים משוחררים בבסיס המנוע או הממסרה",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
+  {
+    questionId: "Q21",
+    partName: "ממסרה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "ממסרה של המסוע חמה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים רעשים חריגים מהממסרה",
+        alert: false,
+        options: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימת נזילת שמן מהממסרה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "גובה שמן הממסרה לא תקין או לא ניתן לראות",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מיגון במערכת ההנעה לא תקין",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מצמד המקשר לתוף הנעה מרעיש",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+    ],
+  },
+  {
+    questionId: "Q22",
+    partName: "סרט",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "חיבורי המסוע קלמרות/הדבקה נפתחו",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "המסוע סוטה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "המסוע שחוק",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "המסוע קרוע או קיימים חתכים לאורכו",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "גובה שמן הממסרה לא תקין או לא ניתן לראות",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "המסוע רפוי/מתוח מידיי",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q23",
+    partName: "תופים",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "ציפוי הגומי בתופי המסוע לא תקינה",
+        options: true,
+        alert: false,
+        choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
+      },
+      {
+        text: "קיים חוסר במערכת גירוז למסבי התוף",
+        options: true,
+        alert: false,
+        choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
+      },
+      {
+        text: "קיימים רעשים חריגים מהתוף או ממסבב",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
+      },
+      {
+        text: "קיימת תזוזה של התוף בבתי המיסב",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
+      },
+    ],
+  },
+  {
+    questionId: "Q24",
+    partName: "גלילים",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים גלילים לא תקינים במסוע",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "קימיים גלילים בנויים בחומר לאורך המנוע",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "קיים גליל מרעיש לאורך הסרט",
+        options: true,
+        alert: true,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+    ],
+  },
+  {
+    questionId: "Q25",
+    partName: "מערכות נלוות למסוע",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "כבל/גלגלת/מבנה מערכת המתחיה פגום",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מגנט המסוע עמוס בברזלים",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מגרדות המסוע דורשות טיפול וקיים זרזוף בסרט החוזר",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קונסטרוקצית המסוע פגוע",
+        options: true,
+        alert: true,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "יש צורך בניקיון בסביבת הסרט",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+    ],
+  },
+  {
+    questionId: "Q26",
+    partName: "מערכות נלוות למסוע",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מגרדות המסוע דורשות טיפול וקיים זרזוף בסרט החוזר",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קונסטרוקצית המסוע פגוע",
+        options: true,
+        alert: true,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "יש צורך בניקיון בסביבת הסרט",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "מערכת המתיחה של הסרט לא מאפשר מתיחה והגוגונים לא תקינים",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q27",
+    partName: "משפך קבלה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים נזילות ממעטפת המשפך",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קלפת וסות חומר לנפה תקוע באמצע",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q28",
+    partName: "מנועי ורטטי הנפה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים ממנוע/רטטי הנפה/מצצמד קארדן",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים רעידות חריגות בנפה או באיזור הנפה",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים סדקים חדשים בגוף הנפה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים ברגים של הרטטים משוחריים",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים מיגונים מפורקים למנועי ורטטי הנפה",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיים חוסר שמן/נזילה שמן או מערכת גירוז לא מחוברת ברטטי הנפה",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
+  {
+    questionId: "Q29",
+    partName: "גוף הנפה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רשתות קרועות בנפות או סרגלים משוחררים",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיים גומי קרוע  או סרגל אטימה משוחרר",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים זירזופים מגוף הנפה או ממשפך היציאה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "תושבות קפיצי גומי וקפיצי גומי קרועים/שבורים או עקומים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "גוף הנפה רוטט גם בכיוון אנכי לנפה",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+    ],
+  },
+  {
+    questionId: "Q30",
+    partName: "גוף הרדלר",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים נזילות ממעטפת הרדלר",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים מגוני/מכסים מפורקים לאורך הרדלר או בזנב",
+        options: true,
+        alert: false,
+        choices: ["ראש", "זנב", "לאורך הרדלר"],
+      },
+      {
+        text: "קיים נגיעות השרשרת בגוף הרדלר",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q31",
+    partName: "מנוע",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מנוע המסוע חם",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מכסה המאוור או מאוורר המנוע שבורים",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים מהמנוע",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "יש צורך בניקיון צלעות מנוע",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קימיים רעשים חריגים מהמצמד המקשר לממסרה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים ברגים משוחררים בבסיס המנוע או הממסרה",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
+  {
+    questionId: "Q32",
+    partName: "ממסרה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "ממסרה של המסוע חמה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים רעשים חריגים מהממסרה",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימת נזילת שמן מהממסרה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "גובה שמן הממסרה לא תקין או לא ניתן לראות",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מיגון במערכת ההנעה לא תקין",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מצמד המקשר לתוף הנעה מרעיש",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+    ],
+  },
+  {
+    questionId: "Q33",
+    partName: "שרשרת",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים חוליות תפוסות בשרשרת הרדלר",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים רעשים חריגים מהשרשרת לאורך הרדלר",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימות מסילות נושאות שחוקות ברדלר",
+        options: true,
+        alert: true,
+        choices: ["ראש", "זנב", "לאורך הרדלר"],
+      },
+      {
+        text: "קיימים כפיים עקומות או שבורות ברדלר",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "השרשרת רפויה וקופצת בתוף הראש",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q34",
+    partName: "תוף זנב וראש",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים רעש מי תוף הזנב או מי שילוב השרשרת עם התוף",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "מסבי התוף הזנב לא מפולסים",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "מערכת המתיחה של הרדלר לא מאפשר מתיחה והגוגונים לא תקינים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מסבי תוף הזנב מרעישים/חמים",
+        options: true,
+        alert: true,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "שינים של התוף רופפת או שבורות",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "ציר תוף הרדלר שקע במסבי התוף עקב כשל מיסב",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "יש צורך בניקיון בסביבת הסרט",
+        options: true,
+        alert: true,
+        choices: ["ראש", "זנב", "לאורך הרדלר"],
+      },
+    ],
+  },
+  {
+    questionId: "Q35",
+    partName: "תוף זנב וראש",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים רעש מי תוף הזנב או מי שילוב השרשרת עם התוף",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "מסבי התוף הזנב לא מפולסים",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "מערכת המתיחה של הרדלר לא מאפשר מתיחה והגוגונים לא תקינים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מסבי תוף הזנב מרעישים/חמים",
+        options: true,
+        alert: true,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "שינים של התוף רופפת או שבורות",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "ציר תוף הרדלר שקע במסבי התוף עקב כשל מיסב",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "יש צורך בניקיון בסביבת הרדלר",
+        options: true,
+        alert: false,
+        choices: ["ראש", "זנב", "לאורך הרדלר"],
+      },
+    ],
+  },
+  {
+    questionId: "Q36",
+    partName: "משפך קבלה וגוף החילזון",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים נזילות/בריחת ואקום ממעטפת החילזון או המשפך",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים מגוני RD מפורק או לא יושב טוב",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים מכיוון החלזון",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q37",
+    partName: "חילזון",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים מיסב חם/מרעיש בחילזון",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "זנב"],
+      },
+      {
+        text: "לא קיים גירוז במיסב החילזון",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "זנב"],
+      },
+      {
+        text: "קיימת נזילה מאטם החילזון",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "זנב"],
+      },
+      {
+        text: "קיימים רעידות בגוף החילזון אוברגים משוחריים במסבים",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
+  //#endregion
 ];
 
 export type CheckBox =
