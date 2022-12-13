@@ -1,5 +1,5 @@
 export const machineParts: MachineParts = [
-  //#region Route 1: Question 1 - 18
+  //#region Question Bank
   {
     questionId: "Q01",
     partName: "צנרת וברזים",
@@ -650,8 +650,6 @@ export const machineParts: MachineParts = [
       },
     ],
   },
-  //#endregion
-  //#region Route 2: Question 19 - 51
   {
     questionId: "Q21",
     partName: "ממסרה",
