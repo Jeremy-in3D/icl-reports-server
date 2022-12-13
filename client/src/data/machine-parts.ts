@@ -267,8 +267,8 @@ export const machineParts: MachineParts = [
       },
       {
         text: "קיימים מגוני צד מפורקים לאורך הסרט",
-        alert: false,
         options: true,
+        alert: false,
         choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
       },
       {
@@ -696,7 +696,7 @@ export const machineParts: MachineParts = [
     ],
   },
   //#endregion
-  //#region Route 2: Question 19 - *
+  //#region Route 2: Question 19 - 51
   {
     questionId: "Q19",
     partName: "משפך קבלה",
@@ -714,8 +714,8 @@ export const machineParts: MachineParts = [
       },
       {
         text: "קיימים מגוני צד מפורקים לאורך הסרט",
-        alert: false,
         options: true,
+        alert: false,
         choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
       },
       {
@@ -1440,6 +1440,606 @@ export const machineParts: MachineParts = [
       },
       {
         text: "קיימים רעידות בגוף החילזון אוברגים משוחריים במסבים",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q38",
+    partName: "מנוע",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מנוע המסוע חם",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מכסה המאוור או מאוורר המנוע שבורים",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים מהמנוע",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "יש צורך בניקיון צלעות מנוע",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קימיים רעשים חריגים מהמצמד המקשר",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: " פירמוט הגירוז במנוע חוסרות/ריקות",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q39",
+    partName: "ציר ומסבי המפוח",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים ממסבי המפוח",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים חוסר שמן/פירמוט גירוז במסבי המפוח",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעידות חריגות במפוח ובסביבתו",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מיגון לבטח רוקד או אינו מוחבר",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "גשש הרעידות או הטמפ' אינם מחוברים או כבל פגוע",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q40",
+    partName: "בית המפוח",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים חורים/נזילות בבית המפוח או במחברי המפוח",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימים ברגים חסרים/משוחררים במפוח",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעידות חריגות במפוח ובסביבתו",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים סדקים או ברגים משוחררים בבסיס המפוח",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q41",
+    partName: "משפך קבלה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים נזילות ממעטפת המשפך ",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים מגוני צד מפורקים לאורך הסרט",
+        options: true,
+        alert: false,
+        choices: ["הנעה", "ראש", "משקולת", "הידוק", "הטייה"],
+      },
+      {
+        text: "קיימים מרעדים לא תקינים",
+        options: false,
+        alert: false,
+      },
+      {
+        text: " מצב הסקרטינג נדרשת הנמכה/החלפה",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q42",
+    partName: "סרט",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "חיבורי המסוע קלמרות/הדבקה נפתחו",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "המסוע סוטה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "המסוע שחוק",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "המסוע קרוע או קיימים חתכים לאורכו",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "המסוע רפוי/מתוח מידיי",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q43",
+    partName: "מערכות נלוות למסוע",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מגרדות המסוע דורשות טיפול וקיים זרזוף בסרט החוזר",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קונסטרוקצית המסוע פגוע",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "יש צורך בניקיון בסביבת הסרט",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "מערכת המתיחה של הסרט לא מאפשר מתיחה והגוגונים לא תקינים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קימיים גלילים בנויים בחומר לאורך המנוע",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "קיים גליל מרעיש לאורך הסרט",
+        options: true,
+        alert: true,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+    ],
+  },
+  {
+    questionId: "Q44",
+    partName: "משפך קבלה/יציאה ומיגון לבטח",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים נזילות ממעטפת המשפך או מדלת המשפך",
+        options: true,
+        alert: false,
+        choices: ["משפך כניסה", "משפך יציאה"],
+      },
+      {
+        text: "קיימים רעשי חיכוך גוף התוף/ליפטרים",
+        options: true,
+        alert: true,
+        choices: ["משפך כניסה", "משפך יציאה"],
+      },
+      {
+        text: "קיימים רעידות מצנרת/תעלת התוף",
+        options: true,
+        alert: false,
+        choices: ["משפך כניסה", "משפך יציאה"],
+      },
+    ],
+  },
+  {
+    questionId: "Q45",
+    partName: "פיניון וזר שיניים",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים משילוב הזר והפיניון",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיים חוסר גירוז בפיניון או בזר השיניים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מיסבי הפיניון מרעישים/חמים",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "פרט האטימה של מסבי הפיניון נפגע/נכנס חומר למיסב",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימים סדקים/ברגים משוחררים בזר השיניים/בפיניון",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q46",
+    partName: "רוליקים וטיירים",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים מרוליק נושא/רוליק לחץ",
+        options: true,
+        alert: true,
+        choices: [
+          "צ.מזרח",
+          "צ.מערב",
+          "ד.מזרח",
+          "ד.מערב",
+          "לחץ יציאה",
+          "לחץ כניסה",
+        ],
+      },
+      {
+        text: "פני הרוליק הנושא אינם מגורזים",
+        options: true,
+        alert: true,
+        choices: [
+          "צ.מזרח",
+          "צ.מערב",
+          "ד.מזרח",
+          "ד.מערב",
+          "לחץ יציאה",
+          "לחץ כניסה",
+        ],
+      },
+      {
+        text: "פני הרוליק הנושא אינם מגורזים",
+        options: true,
+        alert: false,
+        choices: ["צ.מזרח", "צ.מערב", "ד.מזרח", "ד.מערב"],
+      },
+      {
+        text: "לא קיים חיבור גירוז לרוליק",
+        options: true,
+        alert: true,
+        choices: [
+          "צ.מזרח",
+          "צ.מערב",
+          "ד.מזרח",
+          "ד.מערב",
+          "לחץ יציאה",
+          "לחץ כניסה",
+        ],
+      },
+      {
+        text: "וקיימת שחיקה גבוה או פדחות על פני הרוליק",
+        options: true,
+        alert: false,
+        choices: [
+          "צ.מזרח",
+          "צ.מערב",
+          "ד.מזרח",
+          "ד.מערב",
+          "לחץ יציאה",
+          "לחץ כניסה",
+        ],
+      },
+      {
+        text: "יש צורך בניקיון יסודי של הרוליק מחומר",
+        options: true,
+        alert: false,
+        choices: [
+          "צ.מזרח",
+          "צ.מערב",
+          "ד.מזרח",
+          "ד.מערב",
+          "לחץ יציאה",
+          "לחץ כניסה",
+        ],
+      },
+      {
+        text: "קיימים רעידות חריגות באזור התוף סובב ומערכת ההנעה",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "התוף לוחץ על הרוליק לחץ בחוזקה ושוחק אותו",
+        options: true,
+        alert: false,
+        choices: ["רוליק לחץ כניסת חומר", "רוליק לחץ יציאת חומר"],
+      },
+      {
+        text: "יש צורך בניקיון יסודי של הרוליק מחומר",
+        options: true,
+        alert: true,
+        choices: [
+          "צ.מזרח",
+          "צ.מערב",
+          "ד.מזרח",
+          "ד.מערב",
+          "לחץ יציאה",
+          "לחץ כניסה",
+        ],
+      },
+    ],
+  },
+  {
+    questionId: "Q47",
+    partName: "מערכת פטישים",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים ממערכת ההנעה של הפטישים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימת אומגה קרוע/יבשה",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימים רעשים חריגים מהמנוע",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיים צורך בהחלפת ברונזה בפטישים/ברגים חסרים או משוחררים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיים כשל במיסב הפטישים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימים קפיצות במערכת הפטישים או בעיה בבאק סטופ",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימים סדקים/חורים בגוף המייבש",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
+  {
+    questionId: "Q48",
+    partName: "תופים",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "ציפוי הגומי בתופי המסוע לא תקינה",
+        options: true,
+        alert: false,
+        choices: ["הנעה", "ראש", "הידוק"],
+      },
+      {
+        text: "קיים חוסר במערכת גירוז למסבי התוף",
+        options: true,
+        alert: false,
+        choices: ["הנעה", "ראש", "הידוק"],
+      },
+      {
+        text: "קיימים רעשים חריגים מהתוף או ממסבב",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "ראש", "הידוק"],
+      },
+      {
+        text: "קיימת תזוזה של התוף בבתי המיסב",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "ראש", "הידוק"],
+      },
+    ],
+  },
+  {
+    questionId: "Q49",
+    partName: "משפך קבלה וגוף המזין",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים נזילות/בריחת ואקום ממעטפת המזין או המשפך",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים מגוני RD מפורק או לא יושב טוב",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רעשים חריגים מכיוון המזין",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q50",
+    partName: "ממסרה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "ממסרה של המזין חמה",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "ראש", "הידוק"],
+      },
+      {
+        text: "קיימים רעשים חריגים מהממסרה",
+        options: true,
+        alert: false,
+        choices: ["הנעה", "ראש", "הידוק"],
+      },
+      {
+        text: "קיימת נזילת שמן מהממסרה",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "ראש", "הידוק"],
+      },
+      {
+        text: "גובה שמן הממסרה לא תקין או לא ניתן לראות",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מיגון במערכת ההנעה לא תקין",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מצמד המקשר בין ההנעה למזין מרעיש/לא תקין",
+        options: true,
+        alert: true,
+        choices: ["הנעה", "ראש", "הידוק"],
+      },
+    ],
+  },
+  {
+    questionId: "Q51",
+    partName: "מזין כוכבי",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים מיסב חם/מרעיש במזין",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "לא קיים גירוז במיסב המזין",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימת נזילה מאטם המזין",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימים רעידות בגוף המזין או ברגים משוחריים במסבים",
         options: false,
         alert: true,
       },

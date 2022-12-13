@@ -118,6 +118,7 @@ export const michlolim: MichlolContents[] = [
     },
   },
   //#endregion
+  //#region Route 2
   {
     michlolId: "R2-M1",
     michlolName: "מסוע משקולת",
@@ -174,6 +175,85 @@ export const michlolim: MichlolContents[] = [
       "R-2010-050-3504": ["Q36", "Q31", "Q32", "Q37"],
     },
   },
+  {
+    michlolId: "R2-M8",
+    michlolName: "חילזון",
+    equipmentUnit: "חילזון קבלה מבית שקים",
+    machines: {
+      "R-2010-050-3505": ["Q36", "Q31", "Q32", "Q37"],
+    },
+  },
+  {
+    michlolId: "R2-M9",
+    michlolName: "מפוח",
+    equipmentUnit: "מפוח בית שקים",
+    machines: {
+      "R-2010-050-3514": ["Q38", "Q39", "Q40"],
+    },
+  },
+  {
+    michlolId: "R2-M10",
+    michlolName: "מסוע מותחנים",
+    equipmentUnit: "מסוע כניסה לתוף שימון",
+    machines: {
+      "R-2010-050-413": ["Q41", "Q31", "Q32", "Q42", "Q11", "Q24", "Q43"],
+    },
+  },
+  {
+    michlolId: "R2-M11",
+    michlolName: "תוף סובב",
+    equipmentUnit: "תוף שימון",
+    machines: {
+      "R-2010-050-414": ["Q44", "Q31", "Q32", "Q45", "Q46", "Q47"],
+    },
+  },
+  {
+    michlolId: "R2-M12",
+    michlolName: "מסוע מותחנים",
+    equipmentUnit: "מסוע יציאה מנפות",
+    machines: {
+      "R-2010-050-165": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q43"],
+      "R-2010-050-407": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q43"],
+      "R-2010-050-415": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q43"],
+    },
+  },
+  {
+    michlolId: "R2-M13",
+    michlolName: "מסוע משקולת",
+    equipmentUnit: "מסוע תוצרת משומנת",
+    machines: {
+      "R-2010-050-174": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q25"],
+      "R-2010-050-178": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q25"],
+    },
+  },
+  {
+    michlolId: "R2-M14",
+    michlolName: "מזין כוכבי",
+    equipmentUnit: "מזין כוכבי ציקלון",
+    machines: {
+      "R-2010-050-174": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q25"],
+      "R-2010-050-178": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q25"],
+    },
+  },
+  {
+    michlolId: "R2-M14",
+    michlolName: "מזין כוכבי",
+    equipmentUnit: "מזין כוכבי ציקלון",
+    machines: {
+      "R-2010-040-290": ["Q49", "Q31", "Q50", "Q51"],
+      "R-2010-040-291": ["Q49", "Q31", "Q50", "Q51"],
+    },
+  },
+  {
+    michlolId: "R2-M15",
+    michlolName: "מסוע משקולת",
+    equipmentUnit: "מסוע הזנת ציקלון",
+    machines: {
+      "R-2010-040-049": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q25"],
+      "R-2010-040-050": ["Q19", "Q31", "Q32", "Q42", "Q48", "Q24", "Q25"],
+    },
+  },
+  //#endregion
 ];
 
 export const routes: Routes = [
@@ -198,7 +278,23 @@ export const routes: Routes = [
   {
     routeId: "R2",
     routeName: "משלוחים",
-    michlolim: ["R2-M1", "R2-M2", "R2-M3", "R2-M4", "R2-M5", "R2-M6", "R2-M7"],
+    michlolim: [
+      "R2-M1",
+      "R2-M2",
+      "R2-M3",
+      "R2-M4",
+      "R2-M5",
+      "R2-M6",
+      "R2-M7",
+      "R2-M8",
+      "R2-M9",
+      "R2-M10",
+      "R2-M11",
+      "R2-M12",
+      "R2-M13",
+      "R2-M14",
+      "R2-M15",
+    ],
   },
 ];
 export type MichlolContents = {
