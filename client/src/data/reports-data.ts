@@ -124,7 +124,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מסוע משקולת",
     equipmentUnit: "מסוע סרט ממחסן תוצרת",
     machines: {
-      "R-2010-050-170": ["Q19", "Q08", "Q21", "Q22", "Q23", "Q24", "Q25"],
+      "R-2010-050-170": ["Q07", "Q08", "Q21", "Q10", "Q11", "Q12", "Q25"],
     },
   },
   {
@@ -132,7 +132,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מסוע מותחנים",
     equipmentUnit: "מסוע הזנה לנפות משלוחים",
     machines: {
-      "R-2010-050-406": ["Q19", "Q08", "Q21", "Q22", "Q23", "Q24", "Q26"],
+      "R-2010-050-406": ["Q07", "Q08", "Q21", "Q10", "Q11", "Q12", "Q26"],
     },
   },
   {
@@ -156,7 +156,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "רדלר",
     equipmentUnit: "רדלר שפיכה לסרט 004",
     machines: {
-      "R-2010-050-3502": ["Q30", "Q08", "Q32", "Q33", "Q34"],
+      "R-2010-050-3502": ["Q30", "Q08", "Q21", "Q33", "Q34"],
     },
   },
   {
@@ -164,7 +164,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "רדלר",
     equipmentUnit: "רדלר קבלה מנפות משלוחים",
     machines: {
-      "R-2010-050-3501": ["Q30", "Q08", "Q32", "Q33", "Q35"],
+      "R-2010-050-3501": ["Q30", "Q08", "Q21", "Q33", "Q35"],
     },
   },
   {
@@ -172,7 +172,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "חילזון",
     equipmentUnit: "חילזון הזנה לרדלר 3501",
     machines: {
-      "R-2010-050-3504": ["Q36", "Q08", "Q32", "Q37"],
+      "R-2010-050-3504": ["Q15", "Q08", "Q21", "Q18"],
     },
   },
   {
@@ -180,7 +180,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "חילזון",
     equipmentUnit: "חילזון קבלה מבית שקים",
     machines: {
-      "R-2010-050-3505": ["Q36", "Q08", "Q32", "Q37"],
+      "R-2010-050-3505": ["Q15", "Q08", "Q21", "Q18"],
     },
   },
   {
@@ -196,7 +196,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מסוע מותחנים",
     equipmentUnit: "מסוע כניסה לתוף שימון",
     machines: {
-      "R-2010-050-413": ["Q41", "Q08", "Q32", "Q42", "Q11", "Q24", "Q43"],
+      "R-2010-050-413": ["Q07", "Q08", "Q21", "Q10", "Q11", "Q12", "Q43"],
     },
   },
   {
@@ -204,7 +204,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "תוף סובב",
     equipmentUnit: "תוף שימון",
     machines: {
-      "R-2010-050-414": ["Q44", "Q08", "Q32", "Q45", "Q46", "Q47"],
+      "R-2010-050-414": ["Q44", "Q08", "Q21", "Q45", "Q46", "Q47"],
     },
   },
   {
@@ -212,9 +212,9 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מסוע מותחנים",
     equipmentUnit: "מסוע יציאה מנפות",
     machines: {
-      "R-2010-050-165": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q43"],
-      "R-2010-050-407": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q43"],
-      "R-2010-050-415": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q43"],
+      "R-2010-050-165": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q43"],
+      "R-2010-050-407": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q43"],
+      "R-2010-050-415": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q43"],
     },
   },
   {
@@ -222,8 +222,8 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מסוע משקולת",
     equipmentUnit: "מסוע תוצרת משומנת",
     machines: {
-      "R-2010-050-174": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q25"],
-      "R-2010-050-178": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q25"],
+      "R-2010-050-174": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q25"],
+      "R-2010-050-178": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q25"],
     },
   },
   {
@@ -231,8 +231,8 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מזין כוכבי",
     equipmentUnit: "מזין כוכבי ציקלון",
     machines: {
-      "R-2010-050-174": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q25"],
-      "R-2010-050-178": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q25"],
+      "R-2010-050-174": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q25"],
+      "R-2010-050-178": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q25"],
     },
   },
   {
@@ -249,8 +249,8 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מסוע משקולת",
     equipmentUnit: "מסוע הזנת ציקלון",
     machines: {
-      "R-2010-040-049": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q25"],
-      "R-2010-040-050": ["Q19", "Q08", "Q32", "Q42", "Q48", "Q24", "Q25"],
+      "R-2010-040-049": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q25"],
+      "R-2010-040-050": ["Q07", "Q08", "Q21", "Q10", "Q48", "Q12", "Q25"],
     },
   },
   //#endregion
