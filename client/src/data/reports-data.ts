@@ -501,6 +501,26 @@ export const routes: Routes = [
       "R3-M9",
     ],
   },
+  {
+    routeId: "R4",
+    routeName: "מגדל ניפוי",
+    michlolim: [
+      "R4-M1",
+      "R4-M2",
+      "R4-M3",
+      "R4-M4",
+      "R4-M5",
+      "R4-M6",
+      "R4-M7",
+      "R4-M8",
+      "R4-M9",
+      "R4-M10",
+      "R4-M11",
+      "R4-M12",
+      "R4-M13",
+      "R4-M14",
+    ],
+  },
 ];
 export type MichlolContents = {
   michlolId: string;
