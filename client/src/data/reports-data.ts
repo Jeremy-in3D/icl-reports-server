@@ -336,7 +336,111 @@ export const michlolim: MichlolContents[] = [
     michlolName: "דליין",
     equipmentUnit: "דליין קר",
     machines: {
-      "R-2010-050-035": [],
+      "R-2010-050-035": ["Q07", "Q08", "Q09", "Q10", "Q11", "Q12", "Q38"],
+    },
+  },
+  {
+    michlolId: "R4-M2",
+    michlolName: "מזין רוטט",
+    equipmentUnit: "מזין צפוני",
+    machines: {
+      "R-2010-050-011": ["Q27", "Q28", "Q41"],
+    },
+  },
+  {
+    michlolId: "R4-M3",
+    michlolName: "מזין רוטט",
+    equipmentUnit: "מזין דרומי",
+    machines: {
+      "R-2010-050-036": ["Q27", "Q28", "Q41"],
+    },
+  },
+  {
+    michlolId: "R4-M4",
+    michlolName: "נפה",
+    equipmentUnit: "נפת גסים ליין ישן",
+    machines: {
+      "R-2010-050-008": ["Q27", "Q28", "Q41"],
+    },
+  },
+  {
+    michlolId: "R4-M5",
+    michlolName: "נפה",
+    equipmentUnit: "נפת גסים ליין חדש צפוני",
+    machines: {
+      "R-2010-050-037": ["Q27", "Q28", "Q41"],
+    },
+  },
+  {
+    michlolId: "R4-M6",
+    michlolName: "נפה",
+    equipmentUnit: "נפת תוצרת ליין ישן דרומי",
+    machines: {
+      "R-2010-050-010": ["Q27", "Q28", "Q41"],
+    },
+  },
+  {
+    michlolId: "R4-M7",
+    michlolName: "נפה",
+    equipmentUnit: "נפת תוצרת ליין חדש צפוני",
+    machines: {
+      "R-2010-050-038": ["Q27", "Q28", "Q41"],
+    },
+  },
+  {
+    michlolId: "R4-M8",
+    michlolName: "נפה רוטט",
+    equipmentUnit: "נפה משנית",
+    machines: {
+      "R-2010-050-254": ["Q27", "Q28", "Q41"],
+    },
+  },
+  {
+    michlolId: "R4-M9",
+    michlolName: "נפה רוטט",
+    equipmentUnit: "נפה משנית למגרסות",
+    machines: {
+      "R-2010-050-255": ["Q27", "Q28", "Q41"],
+    },
+  },
+  {
+    michlolId: "R4-M10",
+    michlolName: "מסוע מותחנים",
+    equipmentUnit: "מסוע הזנה לנפות משלוחים",
+    machines: {
+      "R-2010-050-1304": ["Q07", "Q08", "Q09", "Q10", "Q11", "Q12", "Q42"],
+    },
+  },
+  {
+    michlolId: "R4-M11",
+    michlolName: "מגרסה",
+    equipmentUnit: "מגרסת פטישים",
+    machines: {
+      "R-2010-050-1304": ["Q08", "Q19"],
+    },
+  },
+  {
+    michlolId: "R4-M12",
+    michlolName: "מגרסה",
+    equipmentUnit: "מגרסה עליונה",
+    machines: {
+      "R-2010-050-042": ["Q08", "Q19"],
+    },
+  },
+  {
+    michlolId: "R4-M13",
+    michlolName: "רדלר",
+    equipmentUnit: "רדלר קבלה  מציקלונים",
+    machines: {
+      "R-2010-050-048": ["Q30", "Q08", "Q09", "Q33", "Q53"],
+    },
+  },
+  {
+    michlolId: "R4-M14",
+    michlolName: "דליין",
+    equipmentUnit: "דליין חם",
+    machines: {
+      "R-2010-050-028": ["Q07", "Q08", "Q09", "Q10", "Q11", "Q12", "Q38"],
     },
   },
   //#endregion

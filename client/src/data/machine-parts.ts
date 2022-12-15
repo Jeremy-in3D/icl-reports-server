@@ -1660,6 +1660,41 @@ export const machineParts: MachineParts = [
     ],
   },
   {
+    questionId: "Q42",
+    partName: "מערכות נלוות למסוע",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מגרדות המסוע דורשות טיפול וקיים זרזוף בסרט החוזר",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קונסטרוקצית המסוע פגוע",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "יש צורך בניקיון בסביבת הסרט",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "מערכת המתיחה של הסרט לא מאפשר מתיחה והגוגונים לא תקינים",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
     questionId: "Q43",
     partName: "מערכות נלוות למסוע",
     type: "checkboxes",
@@ -2068,6 +2103,53 @@ export const machineParts: MachineParts = [
         text: "קיימים רעידות בגוף המזין או ברגים משוחריים במסבים",
         options: false,
         alert: true,
+      },
+    ],
+  },
+  {
+    questionId: "Q53",
+    partName: "תוף זנב וראש",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים רעש מי תוף הזנב או מי שילוב השרשרת עם התוף",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "מסבי התוף הזנב לא מפולסים",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "מערכת המתיחה של הרדלר לא מאפשר מתיחה והגוגונים לא תקינים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מסבי תוף הזנב מרעישים/חמים",
+        options: true,
+        alert: true,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "שינים של התוף רופפת או שבורות",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "ציר תוף הרדלר שקע במסבי התוף עקב כשל מיסב",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
       },
     ],
   },
