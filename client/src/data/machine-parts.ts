@@ -2153,6 +2153,146 @@ export const machineParts: MachineParts = [
       },
     ],
   },
+  {
+    questionId: "Q54",
+    partName: "מזין כוכבי",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים מיסב חם/מרעיש במזין",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "לא קיים גירוז במיסב המזין",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימת נזילה מאטם המזין",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימים רעידות בגוף המזין או ברגים משוחריים במסבים",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
+  {
+    questionId: "Q55",
+    partName: "תוף זנב וראש",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיים רעש מי תוף הזנב או מי שילוב השרשרת עם התוף",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "מסבי התוף הזנב לא מפולסים",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "מערכת המתיחה של הרדלר לא מאפשר מתיחה והגוגונים לא תקינים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מסבי תוף הזנב מרעישים/חמים",
+        options: true,
+        alert: true,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "שינים של התוף רופפת או שבורות",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "ציר תוף הרדלר שקע במסבי התוף עקב כשל מיסב",
+        options: true,
+        alert: false,
+        choices: ["תוף ראש", "תוף זנב"],
+      },
+      {
+        text: "יש צורך בניקיון בסביבת הסרט",
+        options: true,
+        alert: false,
+        choices: ["ראש", "זנב", "לאורך הרדלר"],
+      },
+      {
+        text: "חסרות פרמוט/שמן במשאבה או לא קיים",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מיגון המשאבה או האטם  לא תקין",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "צנרת מי האטימה לא מחובר לא פתוח",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
+  {
+    questionId: "Q56",
+    partName: "משאבה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מסבי המשאבה חמים",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים רעשים/רעידות חריגים במשאבה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימת נזילת מים מאטם המשאבה/גוף המשאבה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "חסרות פרמוט/שמן במשאבה או לא קיים",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מיגון המשאבה או האטם לא תקין",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
   //#endregion
 ];
 
@@ -2167,7 +2307,7 @@ export type MachineParts = {
   input: CheckBox[];
 }[];
 
-//Try and refactor new type to this old ones structure below, note, instead of the key being a string.. check if theres a way to do with a boolean
+//Try and refactor MachineParts to new type to this old ones structure below, note, instead of the key being a string.. check if theres a way to do with a boolean
 // type QuestionTypes = {
 //   mc: string[];
 //   text: null;

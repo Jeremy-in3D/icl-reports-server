@@ -521,6 +521,11 @@ export const routes: Routes = [
       "R4-M14",
     ],
   },
+  {
+    routeId: "R6",
+    routeName: "מתקן 40",
+    michlolim: [],
+  },
 ];
 export type MichlolContents = {
   michlolId: string;
