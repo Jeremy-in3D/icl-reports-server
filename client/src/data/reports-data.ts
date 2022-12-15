@@ -444,6 +444,207 @@ export const michlolim: MichlolContents[] = [
     },
   },
   //#endregion
+  //#region Route 6
+  {
+    michlolId: "R6-M1",
+    michlolName: "מפוח",
+    equipmentUnit: "מפוח קטן בית שקים",
+    machines: {
+      "R-2010-050-233": ["Q04", "Q39", "Q06"],
+    },
+  },
+  {
+    michlolId: "R6-M2",
+    michlolName: "רדלר",
+    equipmentUnit: "רדלר תוצרת טחנה",
+    machines: {
+      "R-2010-040-235": ["Q30", "Q08", "Q09", "Q33", "Q34"],
+    },
+  },
+  {
+    michlolId: "R6-M3",
+    michlolName: "מזין כוכבי",
+    equipmentUnit: "מזין כוכבי בית שקים",
+    machines: {
+      "R-2010-040-231": ["Q49", "Q08", "Q17", "Q54"],
+    },
+  },
+  {
+    michlolId: "R6-M4",
+    michlolName: "חילזון",
+    equipmentUnit: "חילזון בית שקים",
+    machines: {
+      "R-2010-040-230": ["Q15", "Q08", "Q17", "Q18"],
+    },
+  },
+  {
+    michlolId: "R6-M5",
+    michlolName: "מזין כוכבי",
+    equipmentUnit: "מזין כוכבי ציקלון",
+    machines: {
+      "R-2010-040-225": ["Q49", "Q08", "Q50", "Q54"],
+    },
+  },
+  {
+    michlolId: "R6-M5",
+    michlolName: "רדלר",
+    equipmentUnit: "רדלר עודפי תוצרת",
+    machines: {
+      "R-2010-040-239": ["Q30", "Q08", "Q09", "Q33", "Q34"],
+    },
+  },
+  {
+    michlolId: "R6-M6",
+    michlolName: "רדלר",
+    equipmentUnit: "רדלר הזנה להחמצה",
+    machines: {
+      "R-2010-040-237": ["Q30", "Q08", "Q09", "Q33", "Q55"],
+    },
+  },
+  {
+    michlolId: "R6-M7",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת חמוצה מדוללת מיכל 060",
+    machines: {
+      "R-2010-040-132": ["Q56", "Q02", "Q56"],
+    },
+  },
+  {
+    michlolId: "R6-M8",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת חומצה מדוללת מיכל 061",
+    machines: {
+      "R-2010-040-1238/112": ["Q01", "Q02", "Q56"],
+    },
+  },
+  {
+    michlolId: "R6-M9",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת חומצה זרחתית מיכל 035",
+    machines: {
+      "R-2010-050-036": ["Q01", "Q02", "Q56"],
+    },
+  },
+  {
+    michlolId: "R6-M10",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת חומצה זרחתית מיכל 040",
+    machines: {
+      "R-2010-040-037": ["Q01", "Q02", "Q56"],
+    },
+  },
+  {
+    michlolId: "R6-M11",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת סחרור לחומצה גופרתית 98%",
+    machines: {
+      "R-2010-040-031": ["Q01", "Q02", "Q03"],
+      "R-2010-050-032": ["Q01", "Q02", "Q03"],
+    },
+  },
+  {
+    michlolId: "R6-M12",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת פריקת מיכלית",
+    machines: {
+      "R-2010-040-861": ["Q01", "Q02", "Q03"],
+    },
+  },
+  {
+    michlolId: "R6-M13",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת פריקת חומצה גופרתית למיכל 030",
+    machines: {
+      "R-2010-040-038": ["Q01", "Q02", "Q03"],
+    },
+  },
+  {
+    michlolId: "R6-M14",
+    michlolName: "מפוח",
+    equipmentUnit: "מפוח ספיגה 40",
+    machines: {
+      "R-2010-040-027": ["Q04", "Q05", "Q06"],
+    },
+  },
+  {
+    michlolId: "R6-M15",
+    michlolName: "משאבה בור",
+    equipmentUnit: "משאבת בור ניקוזים ספיגה",
+    machines: {
+      "R-2010-040-053": ["Q57", "Q02", "Q58"],
+    },
+  },
+  {
+    michlolId: "R6-M16",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת ניקוז מערכת ספיגה",
+    machines: {
+      "R-2010-040-021": ["Q01", "Q02", "Q03"],
+      "R-2010-040-022": ["Q01", "Q02", "Q03"],
+    },
+  },
+  {
+    michlolId: "R6-M17",
+    michlolName: "משאבה",
+    equipmentUnit: "משאבת סחרור מערכת ספיגה",
+    machines: {
+      "R-2010-040-025": ["Q01", "Q02", "Q03"],
+      "R-2010-040-026": ["Q01", "Q02", "Q03"],
+      "R-2010-040-074": ["Q01", "Q02", "Q03"],
+      "R-2010-040-076": ["Q01", "Q02", "Q03"],
+      "R-2010-040-077": ["Q01", "Q02", "Q03"],
+      "R-2010-040-079": ["Q01", "Q02", "Q03"],
+    },
+  },
+  {
+    michlolId: "R6-M18",
+    michlolName: "חילזון",
+    equipmentUnit: "חילזון הזנת ציקלון להחמצה",
+    machines: {
+      "R-2010-040-005": ["Q15", "Q08", "Q17", "Q18"],
+    },
+  },
+  {
+    michlolId: "R6-M19",
+    michlolName: "מסוע מותחנים",
+    equipmentUnit: "מסוע כניסה לתוף שימון",
+    machines: {
+      "R-2010-050-413": ["Q07", "Q08", "Q09", "Q10", "Q11", "Q12", "Q43"],
+    },
+  },
+  {
+    michlolId: "R6-M20",
+    michlolName: "פגמיל",
+    equipmentUnit: "פגמיל",
+    machines: {
+      "R-2010-040-276": ["Q08", "Q16", "Q59"],
+    },
+  },
+  {
+    michlolId: "R6-M21",
+    michlolName: "מסוע מותחנים",
+    equipmentUnit: "מסוע הבשלה",
+    machines: {
+      "R-2010-040-012": ["Q07", "Q08", "Q09", "Q10", "Q11", "Q12", "Q43"],
+    },
+  },
+  {
+    michlolId: "R6-M22",
+    michlolName: "מסוע משקולת",
+    equipmentUnit: "מסוע דו כיווני החמצה",
+    machines: {
+      "R-2010-040-016": ["Q07", "Q08", "Q09", "Q10", "Q11", "Q12", "Q25"],
+    },
+  },
+  {
+    michlolId: "R6-M23",
+    michlolName: "מסוע משקולת",
+    equipmentUnit: "מסוע תוצרת החמצה",
+    machines: {
+      "R-2010-050-017": ["Q07", "Q08", "Q09", "Q10", "Q11", "Q12", "Q25"],
+    },
+  },
+  //#endregion
 ];
 
 export const routes: Routes = [
@@ -524,7 +725,31 @@ export const routes: Routes = [
   {
     routeId: "R6",
     routeName: "מתקן 40",
-    michlolim: [],
+    michlolim: [
+      "R6-M1",
+      "R6-M2",
+      "R6-M3",
+      "R6-M4",
+      "R6-M5",
+      "R6-M6",
+      "R6-M7",
+      "R6-M8",
+      "R6-M9",
+      "R6-M10",
+      "R6-M11",
+      "R6-M12",
+      "R6-M13",
+      "R6-M14",
+      "R6-M15",
+      "R6-M16",
+      "R6-M17",
+      "R6-M18",
+      "R6-M19",
+      "R6-M20",
+      "R6-M21",
+      "R6-M22",
+      "R6-M23",
+    ],
   },
 ];
 export type MichlolContents = {

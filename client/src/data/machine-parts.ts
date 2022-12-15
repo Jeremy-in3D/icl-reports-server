@@ -2293,6 +2293,109 @@ export const machineParts: MachineParts = [
       },
     ],
   },
+  {
+    questionId: "Q57",
+    partName: "צנרת וברזים",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מחבר גמיש של המשאבה יבש או קרוע",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "תמיכות צנרת המשאבה או הפילטר לא תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "בוחש המיכל לא מסתובב/נפל למיכל/רועד",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
+  {
+    questionId: "Q58",
+    partName: "משאבה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מסבי המשאבה חמים",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים רעשים/רעידות חריגים במשאבה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "חסרות פרמוט/שמן במשאבה או לא קיים",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "מיגון המשאבה או האטם לא תקין",
+        options: false,
+        alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q59",
+    partName: "בית הפגמיל והרטוטר",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימות נזילות מי גוף הפגמיל או מהצנרת הנכנסת אליו",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיים ברגים חסרים/משוחררים בבית הפגמיל או ברוטור",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קיימים רעשים/רעידות חריגים מהרוטור או מהמיסבים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "מערכת הגירוז לא מחוברת למסבי ציר הפגמיל",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "קימיים רעידות חריגות מגוף הפגמיל",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "יש צורך לניקיון בסביבת המפורר",
+        options: false,
+        alert: true,
+      },
+    ],
+  },
   //#endregion
 ];
 
