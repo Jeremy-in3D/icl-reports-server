@@ -1023,6 +1023,11 @@ export const machineParts: MachineParts = [
         alert: false,
         choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
       },
+      {
+        text: "גלגל משקלת במסוע משוחרר/עמדת המשקל עקומה ולא תקינה",
+        options: false,
+        alert: false,
+      },
     ],
   },
   {
@@ -1165,6 +1170,11 @@ export const machineParts: MachineParts = [
         options: true,
         alert: false,
         choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מיגון במערכת ההנעה לא תקין",
+        options: false,
+        alert: false,
       },
     ],
   },
@@ -1497,6 +1507,48 @@ export const machineParts: MachineParts = [
     ],
   },
   {
+    questionId: "Q38",
+    partName: "מערכות נלוות למסוע",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "כבל או גלגלת מערכת המתחיה פגום",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מגנט המסוע עמוס בברזלים",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "מגרדות המסוע דורשות טיפול וקיים זרזוף בסרט החוזר",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קונסטרוקצית המסוע פגוע",
+        options: true,
+        alert: true,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+      {
+        text: "יש צורך בניקיון בסביבת הסרט",
+        options: true,
+        alert: false,
+        choices: ["שוקת", "חוזרים", "נושאים", "כיוון חוזר", "נושא חוזר"],
+      },
+    ],
+  },
+  {
     questionId: "Q39",
     partName: "ציר ומסבי המפוח",
     type: "checkboxes",
@@ -1563,6 +1615,47 @@ export const machineParts: MachineParts = [
         text: "קיימים סדקים או ברגים משוחררים בבסיס המפוח",
         options: false,
         alert: false,
+      },
+    ],
+  },
+  {
+    questionId: "Q41",
+    partName: "גוף הנפה",
+    type: "checkboxes",
+    input: [
+      {
+        text: "כלל הערות למטה תקינות",
+        options: false,
+        alert: false,
+      },
+      {
+        text: "קיימים רשתות קרועות בנפות או סרגלים משוחררים",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיים גומי קרוע  או סרגל אטימה משוחרר",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "קיימים זירזופים מגוף הנפה או ממשפך היציאה",
+        options: true,
+        alert: true,
+        choices: ["גבולי", "חריג", "קריטי"],
+      },
+      {
+        text: "תושבות קפיצי גומי וקפיצי גומי קרועים/שבורים או עקומים",
+        options: false,
+        alert: true,
+      },
+      {
+        text: "גוף הנפה רוטט גם בכיוון אנכי לנפה",
+        options: true,
+        alert: false,
+        choices: ["גבולי", "חריג", "קריטי"],
       },
     ],
   },
