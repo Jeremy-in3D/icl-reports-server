@@ -15,6 +15,7 @@ export const RouteView: React.FC<{
 
   //Arrange Michlolim into an array of machines
   const michlolimArray = route.michlolim.map(
+    //@ts-ignore
     (michlolId) => michlolim.find((m) => m.michlolId === michlolId)!
   );
   const machines: MachineDetails[] = [];

@@ -3,7 +3,7 @@ import React from "react";
 export const HomeSelection: React.FC<{
   text: string;
   imgPath: string;
-  onClick: () => void;
+  onClick?: (() => Promise<void>) | undefined;
 }> = ({ text, imgPath, onClick }) => {
   return (
     <div className="block-item" onClick={onClick}>

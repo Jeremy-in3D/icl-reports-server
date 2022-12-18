@@ -1,7 +1,7 @@
 import { Collection, MongoClient } from "mongodb";
 import { MachineData, ReportData } from "./server";
 
-type CollectionIds = "reports" | "machines" | "alerts";
+type CollectionIds = "reports" | "machines" | "alerts" | "routes";
 
 export class MongoDB {
   client: MongoClient;
@@ -47,7 +47,11 @@ export class MongoDB {
 
   getDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
+    if (id.length) {
+      const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
+      return find.toArray();
+    }
+    const find = collection.find().sort({ dateCreated: -1 });
     return find.toArray();
   }
 

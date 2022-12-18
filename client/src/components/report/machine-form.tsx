@@ -3,13 +3,14 @@ import { FormSubmission, Route } from "../../classes/route";
 import { FormInput } from "./inputs/form-input";
 import { MachineParts } from "../../data/machine-parts";
 import { ReportDetails } from "./machine";
+import { MachineFilter } from "./route-view";
 
 export const MachineForm: React.FC<{
   routeData: Route;
   currentPart: MachineParts[number];
   parts: MachineParts;
   reportDetails: ReportDetails;
-  setMachineComplete: React.Dispatch<React.SetStateAction<string>>;
+  setMachineComplete: React.Dispatch<React.SetStateAction<MachineFilter>>;
   setPartsComplete: React.Dispatch<React.SetStateAction<boolean[] | undefined>>;
 }> = ({
   routeData,

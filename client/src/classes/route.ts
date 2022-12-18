@@ -1,21 +1,22 @@
 import { ReportDetails } from "../components/report/machine";
+import { MachineFilter } from "../components/report/route-view";
 import { Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
 export class Route {
-  routeId: string;
-  routeName: string;
-  machines: Machines;
-  dateCreated: number | null;
-  reportId: string | null;
+  routeId?: string;
+  routeName?: string;
+  machines?: Machines;
+  dateCreated?: number | null;
+  reportId?: string | null;
   date?: string;
 
-  constructor(report: Routes[number]) {
-    this.routeId = report.routeId;
-    this.routeName = report.routeName;
-    this.machines = {};
-    this.dateCreated = null;
-    this.reportId = null;
+  constructor() {
+    // this.routeId = report.routeId;
+    // this.routeName = report.routeName;
+    // this.machines = {};
+    // this.dateCreated = null;
+    // this.reportId = null;
   }
 
   newReport() {
@@ -80,7 +81,7 @@ export class Route {
     return false;
   }
 
-  isMachineComplete(machineName: string) {
+  isMachineComplete(machineName: string): MachineFilter {
     const machine = this.machines[machineName];
     if (machine) {
       return machine.completed ? "הושלם" : "חלקי";

@@ -99,7 +99,17 @@ app.post("/save-machine", async (req, res) => {
   }
 });
 
-app.post("/save-report", async (req, res) => {
+app.get("/get-routes", async (req, res) => {
+  const data: ReportData = req.body;
+  try {
+    const docs = await mongo.getDocs("", "routes");
+    res.status(200).json(docs);
+  } catch (e) {
+    res.status(500).send("Error" + e);
+  }
+});
+
+app.post("/create-report", async (req, res) => {
   const data: ReportData = req.body;
   try {
     const inserted = await mongo.insertDoc(data, "reports");
