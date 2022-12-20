@@ -1,5 +1,3 @@
-import { ReportDetails } from "../components/report/machine";
-import { MachineFilter } from "../components/report/route-view";
 import { Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
@@ -11,18 +9,25 @@ export class Route {
   reportId?: string | null;
   date?: string;
 
-  constructor() {
-    // this.routeId = report.routeId;
-    // this.routeName = report.routeName;
-    // this.machines = {};
-    // this.dateCreated = null;
-    // this.reportId = null;
+  newReport(report: any): ReportData {
+    console.log(report);
+    return {
+      dateCreated: Date.now(),
+      date: getDateString(new Date(Date.now())),
+      reportId: `${report.routeId}-${this.dateCreated}`,
+      routeId: report.routeId,
+      routeName: report.routeName,
+    };
   }
 
-  newReport() {
-    this.dateCreated = Date.now();
-    this.date = getDateString(new Date(Date.now()));
-    this.reportId = `${this.routeId}-${this.dateCreated}`;
+  instantiateReport(report: ReportData) {
+    this.routeId = report.routeId;
+    this.routeName = report.routeName;
+    this.machines = {};
+    this.dateCreated = null;
+    this.reportId = null;
+
+    console.log(this);
   }
 
   loadReport(data: string) {
@@ -38,87 +43,87 @@ export class Route {
     return JSON.stringify(this);
   }
 
-  saveReportToLocal() {
-    localStorage.setItem(this.routeId, this.getReport());
-  }
+  // saveReportToLocal() {
+  //   localStorage.setItem(this.routeId, this.getReport());
+  // }
 
-  setValue(reportDetails: ReportDetails, value: FormSubmission) {
-    const { machineName, michlolName, michlolId, partName } = reportDetails;
-    if (!this.machines[machineName])
-      this.machines[machineName] = this.createMachine(
-        michlolName,
-        michlolId,
-        machineName
-      );
-    this.machines[machineName].data[partName] = value;
-    this.saveReportToLocal();
-  }
+  // setValue(reportDetails: ReportDetails, value: FormSubmission) {
+  //   const { machineName, michlolName, michlolId, partName } = reportDetails;
+  //   if (!this.machines[machineName])
+  //     this.machines[machineName] = this.createMachine(
+  //       michlolName,
+  //       michlolId,
+  //       machineName
+  //     );
+  //   this.machines[machineName].data[partName] = value;
+  //   this.saveReportToLocal();
+  // }
 
-  createMachine(
-    michlolName: string,
-    michlolId: string,
-    machineName: string
-  ): MachineData {
-    return {
-      completed: false,
-      uniqueId: `${this.reportId}: ${machineName}`,
-      michlolName,
-      michlolId,
-      machineName,
-      routeName: this.routeName,
-      routeId: this.routeId,
-      reportId: this.reportId!,
-      dateCreated: this.dateCreated,
-      data: {},
-    };
-  }
+  // createMachine(
+  //   michlolName: string,
+  //   michlolId: string,
+  //   machineName: string
+  // ): MachineData {
+  //   return {
+  //     completed: false,
+  //     uniqueId: `${this.reportId}: ${machineName}`,
+  //     michlolName,
+  //     michlolId,
+  //     machineName,
+  //     routeName: this.routeName,
+  //     routeId: this.routeId,
+  //     reportId: this.reportId!,
+  //     dateCreated: this.dateCreated,
+  //     data: {},
+  //   };
+  // }
 
-  isPartComplete(machineName: string, partName: string) {
-    const part = this.machines[machineName]?.data?.[partName];
-    if (part) {
-      if (part.excelOutput) return true;
-    }
-    return false;
-  }
+  // isPartComplete(machineName: string, partName: string) {
+  //   const part = this.machines[machineName]?.data?.[partName];
+  //   if (part) {
+  //     if (part.excelOutput) return true;
+  //   }
+  //   return false;
+  // }
 
-  isMachineComplete(machineName: string): MachineFilter {
-    const machine = this.machines[machineName];
-    if (machine) {
-      return machine.completed ? "הושלם" : "חלקי";
-    }
-    return "לא הושלם";
-  }
+  // isMachineComplete(machineName: string): MachineFilter {
+  //   const machine = this.machines[machineName];
+  //   if (machine) {
+  //     return machine.completed ? "הושלם" : "חלקי";
+  //   }
+  //   return "לא הושלם";
+  // }
 
-  markMachineComplete(machineName: string) {
-    const machine = this.machines[machineName];
-    if (machine) {
-      machine.completed = true;
-      this.saveReportToLocal();
-    }
-  }
+  // markMachineComplete(machineName: string) {
+  //   const machine = this.machines[machineName];
+  //   if (machine) {
+  //     machine.completed = true;
+  //     this.saveReportToLocal();
+  //   }
+  // }
 
-  isQuestionAnswered(machineName: string, partName: string, index: string) {
-    if (this.machines[machineName]?.data?.[partName]?.[index]) return true;
-    return false;
-  }
+  // isQuestionAnswered(machineName: string, partName: string, index: string) {
+  //   if (this.machines[machineName]?.data?.[partName]?.[index]) return true;
+  //   return false;
+  // }
 
-  sendMachineData(machineName: string) {
-    const machine = this.machines[machineName];
-    if (machine) {
-      const { completed, ...data } = machine;
-      return JSON.stringify(data);
-    }
-  }
+  // sendMachineData(machineName: string) {
+  //   const machine = this.machines[machineName];
+  //   if (machine) {
+  //     const { completed, ...data } = machine;
+  //     return JSON.stringify(data);
+  //   }
+  // }
 
-  sendReportData() {
-    const data = {
-      dateCreated: this.dateCreated,
-      routeId: this.routeId,
-      routeName: this.routeName,
-      reportId: this.reportId,
-    };
-    return JSON.stringify(data);
-  }
+  // sendReportData() {
+  //   const data = {
+  //     dateCreated: this.dateCreated,
+  //     routeId: this.routeId,
+  //     routeName: this.routeName,
+  //     reportId: this.reportId,
+  //   };
+  //   return JSON.stringify(data);
+  // }
 }
 
 export type FormSubmission = {
@@ -159,4 +164,12 @@ export type AlertData = {
   data: {
     [partName: string]: FormSubmission;
   };
+};
+
+type ReportData = {
+  reportId: string;
+  routeId: string;
+  routeName: string;
+  dateCreated: number;
+  date: string;
 };

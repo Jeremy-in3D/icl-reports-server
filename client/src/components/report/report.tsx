@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Route } from "../../classes/route";
 import { Routes } from "../../data/reports-data";
 import { ShowError } from "../show-error";
-import { RouteView } from "./route-view";
 
 export const Report: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -10,18 +9,18 @@ export const Report: React.FC<{
 }> = ({ setScreen, routes }) => {
   const [route, setRoute] = useState<Routes[number] | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
-  const activeReport = useRef(new Route()).current;
+  const reportInstance = useRef(new Route()).current;
 
-  if (route)
-    return (
-      <div className="report">
-        <RouteView
-          route={route}
-          routeData={activeReport}
-          setScreen={setScreen}
-        />
-      </div>
-    );
+  // if (route)
+  //   return (
+  //     <div className="report">
+  //       <RouteView
+  //         route={route}
+  //         routeData={reportInstance}
+  //         setScreen={setScreen}
+  //       />
+  //     </div>
+  //   );
 
   useEffect(() => {
     if (errorMessage) {
@@ -42,7 +41,9 @@ export const Report: React.FC<{
           routes.map((route, idx) => (
             <button
               className="routes-selection-btn"
-              onClick={() => setRoute(route)}
+              onClick={() => {
+                createReport(route, reportInstance, setErrorMessage);
+              }}
               key={idx}
             >
               {route.routeName}
@@ -54,20 +55,20 @@ export const Report: React.FC<{
 };
 
 async function createReport(
-  routeData: Route,
-  setRouteView: React.Dispatch<React.SetStateAction<boolean>>,
+  report: Routes[number],
+  reportInstance: Route,
   setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>
 ) {
-  routeData.newReport();
+  const newReport = reportInstance.newReport(report);
   try {
     const reportResponse = await fetch("/create-report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: routeData.sendReportData(),
+      body: JSON.stringify(newReport),
     });
     if (reportResponse.status === 200) {
-      routeData.saveReportToLocal();
-      setRouteView(true);
+      reportInstance.instantiateReport(newReport);
+      //Set route view
     } else {
       throw new Error("Failed to create new report");
     }

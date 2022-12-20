@@ -17,11 +17,12 @@ export const Checkboxes: React.FC<{
     return false;
   }
   function isDefault(index: string) {
-    return routeData.isQuestionAnswered(
-      machineName,
-      machinePart.partName,
-      index
-    );
+    return false;
+    // return routeData.isQuestionAnswered(
+    //   machineName,
+    //   machinePart.partName,
+    //   index
+    // );
   }
 
   useEffect(() => {
