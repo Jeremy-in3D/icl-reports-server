@@ -73,9 +73,7 @@ export class Route {
 
   isPartComplete(machineName: string, partName: string) {
     const part = this.data?.[machineName]?.data?.[partName];
-    if (part) {
-      if (part.excelOutput) return true;
-    }
+    if (part?.excelOutput) return true;
     return false;
   }
 
