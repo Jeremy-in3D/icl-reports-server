@@ -2,50 +2,40 @@ import { Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
 export class Route {
+  reportId?: string | null;
   routeId?: string;
   routeName?: string;
-  machines?: Machines;
   dateCreated?: number | null;
-  reportId?: string | null;
   date?: string;
+  michlolim?: Routes[number]["michlolim"];
+  data?: {
+    [machineName: string]: MachineData;
+  };
 
-  newReport(report: any): ReportData {
+  newReport(report: Routes[number]): ReportData {
     console.log(report);
+    const timestamp = Date.now();
     return {
-      dateCreated: Date.now(),
+      dateCreated: timestamp,
       date: getDateString(new Date(Date.now())),
-      reportId: `${report.routeId}-${this.dateCreated}`,
+      reportId: `${report.routeId}-${timestamp}`,
       routeId: report.routeId,
       routeName: report.routeName,
+      michlolim: report.michlolim,
+      data: {},
     };
   }
 
   instantiateReport(report: ReportData) {
     this.routeId = report.routeId;
     this.routeName = report.routeName;
-    this.machines = {};
-    this.dateCreated = null;
-    this.reportId = null;
+    this.dateCreated = report.dateCreated;
+    this.reportId = report.reportId;
+    this.michlolim = report.michlolim;
+    this.data = {};
 
     console.log(this);
   }
-
-  loadReport(data: string) {
-    const existingData: Route = JSON.parse(data);
-    // Object.assign(this, existingData);
-    for (let [key, value] of Object.entries(existingData)) {
-      // this[key] = value
-      Object.defineProperty(this, key, { value });
-    }
-  }
-
-  getReport() {
-    return JSON.stringify(this);
-  }
-
-  // saveReportToLocal() {
-  //   localStorage.setItem(this.routeId, this.getReport());
-  // }
 
   // setValue(reportDetails: ReportDetails, value: FormSubmission) {
   //   const { machineName, michlolName, michlolId, partName } = reportDetails;
@@ -56,7 +46,6 @@ export class Route {
   //       machineName
   //     );
   //   this.machines[machineName].data[partName] = value;
-  //   this.saveReportToLocal();
   // }
 
   // createMachine(
@@ -98,7 +87,6 @@ export class Route {
   //   const machine = this.machines[machineName];
   //   if (machine) {
   //     machine.completed = true;
-  //     this.saveReportToLocal();
   //   }
   // }
 
@@ -126,6 +114,18 @@ export class Route {
   // }
 }
 
+type ReportData = {
+  reportId: string;
+  routeId: string;
+  routeName: string;
+  dateCreated: number;
+  date: string;
+  michlolim: Routes[number]["michlolim"];
+  data: {
+    [machineName: string]: MachineData;
+  };
+};
+
 export type FormSubmission = {
   [id: string]: FormDataEntryValue;
   excelOutput: string;
@@ -147,10 +147,6 @@ export type MachineData = {
   };
 };
 
-export type Machines = {
-  [machineName: string]: MachineData;
-};
-
 export type AlertData = {
   uniqueId: string | null;
   completed: boolean;
@@ -164,12 +160,4 @@ export type AlertData = {
   data: {
     [partName: string]: FormSubmission;
   };
-};
-
-type ReportData = {
-  reportId: string;
-  routeId: string;
-  routeName: string;
-  dateCreated: number;
-  date: string;
 };

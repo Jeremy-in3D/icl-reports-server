@@ -1,6 +1,6 @@
 import React from "react";
-import { AlertScreen } from "./components/alert-screen";
-import { HomeSelection } from "./components/home-selection";
+import { AlertScreen } from "./components/misc/alert-screen";
+import { HomeSelection } from "./components/misc/home-selection";
 import { createIcon, searchIcon, uploadIcon } from "./data/imports";
 
 export const Home: React.FC<{

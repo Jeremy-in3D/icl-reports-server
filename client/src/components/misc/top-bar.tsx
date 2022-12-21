@@ -1,5 +1,5 @@
 import React from "react";
-import { logo } from "../data/imports";
+import { logo } from "../../data/imports";
 
 export const TopBar: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;

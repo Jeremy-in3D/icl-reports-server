@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { PageNotFound } from "./components/page-not-found";
+import { PageNotFound } from "./components/misc/page-not-found";
 import { Report } from "./components/report/report";
 import { Search } from "./components/search/search";
-import { TopBar } from "./components/top-bar";
+import { TopBar } from "./components/misc/top-bar";
 import { Routes } from "./data/reports-data";
 import { Home } from "./home";
 

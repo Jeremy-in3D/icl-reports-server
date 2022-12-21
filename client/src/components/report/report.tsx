@@ -1,26 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Route } from "../../classes/route";
 import { Routes } from "../../data/reports-data";
-import { ShowError } from "../show-error";
+import { ShowError } from "../misc/show-error";
+import { RouteView } from "./route-view";
 
 export const Report: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
   routes: Routes | undefined;
 }> = ({ setScreen, routes }) => {
-  const [route, setRoute] = useState<Routes[number] | null>(null);
+  const [routeView, setRouteView] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const reportInstance = useRef(new Route()).current;
 
-  // if (route)
-  //   return (
-  //     <div className="report">
-  //       <RouteView
-  //         route={route}
-  //         routeData={reportInstance}
-  //         setScreen={setScreen}
-  //       />
-  //     </div>
-  //   );
+  if (routeView)
+    return (
+      <div className="report">
+        <RouteView routeData={reportInstance} setScreen={setScreen} />
+      </div>
+    );
 
   useEffect(() => {
     if (errorMessage) {
@@ -42,7 +39,12 @@ export const Report: React.FC<{
             <button
               className="routes-selection-btn"
               onClick={() => {
-                createReport(route, reportInstance, setErrorMessage);
+                createReport(
+                  route,
+                  reportInstance,
+                  setRouteView,
+                  setErrorMessage
+                );
               }}
               key={idx}
             >
@@ -55,11 +57,12 @@ export const Report: React.FC<{
 };
 
 async function createReport(
-  report: Routes[number],
+  route: Routes[number],
   reportInstance: Route,
+  setRouteView: React.Dispatch<React.SetStateAction<boolean>>,
   setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>
 ) {
-  const newReport = reportInstance.newReport(report);
+  const newReport = reportInstance.newReport(route);
   try {
     const reportResponse = await fetch("/create-report", {
       method: "POST",
@@ -68,7 +71,7 @@ async function createReport(
     });
     if (reportResponse.status === 200) {
       reportInstance.instantiateReport(newReport);
-      //Set route view
+      setRouteView(true);
     } else {
       throw new Error("Failed to create new report");
     }
