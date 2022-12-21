@@ -40,14 +40,6 @@ export class Route {
     this.michlolim = report.michlolim;
   }
 
-  getMachineComplete(machineName: string): MachineFilter {
-    const machine = this.data?.[machineName];
-    if (machine) {
-      return machine.completed ? "הושלם" : "חלקי";
-    }
-    return "לא הושלם";
-  }
-
   setValue(reportDetails: ReportDetails, value: FormSubmission) {
     const { machineName, michlolName, michlolId, partName } = reportDetails;
     if (!this.data[machineName])
@@ -57,6 +49,7 @@ export class Route {
         machineName
       );
     this.data[machineName].data[partName] = value;
+    console.log(this.data);
   }
 
   createMachine(
@@ -104,6 +97,14 @@ export class Route {
       const { completed, ...data } = machine;
       return JSON.stringify(data);
     }
+  }
+
+  getMachineComplete(machineName: string): MachineFilter {
+    const machine = this.data?.[machineName];
+    if (machine) {
+      return machine.completed ? "הושלם" : "חלקי";
+    }
+    return "לא הושלם";
   }
 
   sendReportData() {

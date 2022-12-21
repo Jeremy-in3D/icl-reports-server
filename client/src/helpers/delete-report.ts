@@ -17,13 +17,6 @@ export async function deleteReport(
       const newSearchResults = results.filter(
         (result: any, i: number) => i !== idx
       );
-      const localitem = localStorage.getItem(routeId);
-      if (localitem) {
-        const report = JSON.parse(localitem);
-        if (report.reportId === reportId) {
-          localStorage.removeItem(routeId);
-        }
-      }
       setResults(newSearchResults);
     }
   }

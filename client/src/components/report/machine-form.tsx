@@ -48,6 +48,10 @@ export const MachineForm: React.FC<{
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const formSubmission = handleCheckboxInputSubmit(formData);
+          console.log(
+            "form" + reportDetails.partName,
+            formSubmission.excelOutput
+          );
           reportInstance.setValue(reportDetails, formSubmission);
           setMachineComplete(
             reportInstance.getMachineComplete(reportDetails.machineName)
