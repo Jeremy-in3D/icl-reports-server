@@ -19,7 +19,6 @@ export class Route {
   }
 
   newReport(report: Routes[number]): ReportData {
-    console.log(report);
     const timestamp = Date.now();
     return {
       dateCreated: timestamp,
@@ -33,14 +32,12 @@ export class Route {
   }
 
   instantiateReport(report: ReportData) {
+    this.reportId = report.reportId;
     this.routeId = report.routeId;
     this.routeName = report.routeName;
     this.dateCreated = report.dateCreated;
-    this.reportId = report.reportId;
+    this.date = report.date;
     this.michlolim = report.michlolim;
-    this.data = {};
-
-    console.log(this);
   }
 
   getMachineComplete(machineName: string): MachineFilter {

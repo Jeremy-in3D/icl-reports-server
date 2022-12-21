@@ -5,10 +5,10 @@ import { Checkboxes } from "./checkboxes";
 
 export const FormInput: React.FC<{
   formRef: React.RefObject<HTMLFormElement>;
-  routeData: Route;
+  reportInstance: Route;
   machinePart: MachineParts[number];
   machineName: string;
-}> = ({ routeData, machinePart, machineName, formRef }) => {
+}> = ({ reportInstance, machinePart, machineName, formRef }) => {
   let input;
 
   switch (machinePart.type) {
@@ -16,7 +16,7 @@ export const FormInput: React.FC<{
       input = (
         <Checkboxes
           formRef={formRef}
-          routeData={routeData}
+          reportInstance={reportInstance}
           machinePart={machinePart}
           machineName={machineName}
         />

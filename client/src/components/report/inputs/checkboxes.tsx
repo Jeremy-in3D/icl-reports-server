@@ -5,10 +5,10 @@ import { CheckboxInput } from "./checkbox-input";
 
 export const Checkboxes: React.FC<{
   formRef: React.RefObject<HTMLFormElement>;
-  routeData: Route;
+  reportInstance: Route;
   machinePart: MachineParts[number];
   machineName: string;
-}> = ({ routeData, machinePart, machineName, formRef }) => {
+}> = ({ reportInstance, machinePart, machineName, formRef }) => {
   //Disables all inputs apart from first choice
   const [disableInputs, setDisableInputs] = useState(false);
 
@@ -18,7 +18,7 @@ export const Checkboxes: React.FC<{
   }
   function isDefault(index: string) {
     return false;
-    // return routeData.isQuestionAnswered(
+    // return reportInstance.isQuestionAnswered(
     //   machineName,
     //   machinePart.partName,
     //   index

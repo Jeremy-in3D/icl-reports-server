@@ -6,13 +6,13 @@ import { MachinesList } from "./machines-list";
 const filterItems: MachineFilter[] = ["הכל", "הושלם", "חלקי", "לא הושלם"];
 
 export const RouteView: React.FC<{
-  routeData: Route;
+  reportInstance: Route;
   setScreen: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ routeData, setScreen }) => {
+}> = ({ reportInstance, setScreen }) => {
   const [machineFilter, setMachineFilter] = useState<MachineFilter>("הכל");
   const machines: MachineDetails[] = [];
   //For each michlol, push a machine object with the michlol details
-  routeData.michlolim?.forEach((michlol) => {
+  reportInstance.michlolim?.forEach((michlol) => {
     for (let [key, value] of Object.entries(michlol.machines)) {
       machines.push({
         machineName: key,
@@ -27,7 +27,8 @@ export const RouteView: React.FC<{
     .filter((machine) => {
       if (machineFilter !== "הכל")
         return (
-          routeData.getMachineComplete(machine.machineName) === machineFilter
+          reportInstance.getMachineComplete(machine.machineName) ===
+          machineFilter
         );
       return true;
     })
@@ -38,14 +39,14 @@ export const RouteView: React.FC<{
 
   return (
     <>
-      <h1 className="page-title">{routeData.routeName}</h1>
+      <h1 className="page-title">{reportInstance.routeName}</h1>
       <Filter
         setFilter={setMachineFilter}
         filterItems={filterItems}
         currentFilter={machineFilter}
       />
       <MachinesList
-        routeData={routeData}
+        reportInstance={reportInstance}
         machineList={finalMachines}
         machineFilter={machineFilter}
       />

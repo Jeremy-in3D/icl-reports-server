@@ -25,7 +25,7 @@ export const Report: React.FC<{
   if (routeView)
     return (
       <div className="report">
-        <RouteView routeData={reportInstance} setScreen={setScreen} />
+        <RouteView reportInstance={reportInstance} setScreen={setScreen} />
       </div>
     );
 

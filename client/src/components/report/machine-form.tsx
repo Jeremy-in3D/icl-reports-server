@@ -6,14 +6,14 @@ import { ReportDetails } from "./machine";
 import { MachineFilter } from "./route-view";
 
 export const MachineForm: React.FC<{
-  routeData: Route;
+  reportInstance: Route;
   currentPart: MachineParts[number];
   parts: MachineParts;
   reportDetails: ReportDetails;
   setMachineComplete: React.Dispatch<React.SetStateAction<MachineFilter>>;
   setPartsComplete: React.Dispatch<React.SetStateAction<boolean[] | undefined>>;
 }> = ({
-  routeData,
+  reportInstance,
   currentPart,
   parts,
   reportDetails,
@@ -26,7 +26,10 @@ export const MachineForm: React.FC<{
     () =>
       setPartsComplete(() =>
         parts.map((part) =>
-          routeData.isPartComplete(reportDetails.machineName, part.partName)
+          reportInstance.isPartComplete(
+            reportDetails.machineName,
+            part.partName
+          )
         )
       ),
     []
@@ -45,20 +48,23 @@ export const MachineForm: React.FC<{
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const formSubmission = handleCheckboxInputSubmit(formData);
-          routeData.setValue(reportDetails, formSubmission);
+          reportInstance.setValue(reportDetails, formSubmission);
           setMachineComplete(
-            routeData.getMachineComplete(reportDetails.machineName)
+            reportInstance.getMachineComplete(reportDetails.machineName)
           );
           setPartsComplete(() =>
             parts.map((part) =>
-              routeData.isPartComplete(reportDetails.machineName, part.partName)
+              reportInstance.isPartComplete(
+                reportDetails.machineName,
+                part.partName
+              )
             )
           );
         }}
       >
         <FormInput
           formRef={formRef}
-          routeData={routeData}
+          reportInstance={reportInstance}
           machinePart={currentPart}
           machineName={reportDetails.machineName}
         />

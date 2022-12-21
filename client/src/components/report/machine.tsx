@@ -12,19 +12,20 @@ function getMachineStyle(machineState: MachineFilter) {
 }
 
 export const Machine: React.FC<{
-  routeData: Route;
+  reportInstance: Route;
   machine: MachineDetails;
 }> = ({
-  routeData,
+  reportInstance,
   machine: { machineName, michlolId, michlolName, parts },
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
   const [machineComplete, setMachineComplete] = useState(
-    routeData.getMachineComplete(machineName)
+    reportInstance.getMachineComplete(machineName)
   );
   const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const openStyle = `${isOpen ? "opened" : "closed"}`;
+  //Get parts from question bank online
   const currentParts = parts.map(
     (partId) => machineParts.find((part) => part.questionId === partId)!
   );
@@ -54,7 +55,7 @@ export const Machine: React.FC<{
               partsComplete={partsComplete}
             />
             <MachineForm
-              routeData={routeData}
+              reportInstance={reportInstance}
               key={`${machineName}-${currentPart.questionId}`}
               currentPart={currentPart}
               parts={currentParts}
@@ -70,12 +71,12 @@ export const Machine: React.FC<{
                   const machineResponse = await fetch("/save-machine", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: routeData.sendMachineData(machineName),
+                    body: reportInstance.sendMachineData(machineName),
                   });
                   if (machineResponse.status === 200) {
-                    routeData.setMachineComplete(machineName);
+                    reportInstance.setMachineComplete(machineName);
                     setMachineComplete(
-                      routeData.getMachineComplete(machineName)
+                      reportInstance.getMachineComplete(machineName)
                     );
                   }
                   setIsOpen(false);
