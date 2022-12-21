@@ -9,15 +9,8 @@ export const Report: React.FC<{
   routes: Routes | undefined;
 }> = ({ setScreen, routes }) => {
   const [routeView, setRouteView] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [errorMessage, setErrorMessage] = useState<string>();
   const reportInstance = useRef(new Route()).current;
-
-  if (routeView)
-    return (
-      <div className="report">
-        <RouteView routeData={reportInstance} setScreen={setScreen} />
-      </div>
-    );
 
   useEffect(() => {
     if (errorMessage) {
@@ -29,6 +22,13 @@ export const Report: React.FC<{
     }
   }, [errorMessage]);
 
+  if (routeView)
+    return (
+      <div className="report">
+        <RouteView routeData={reportInstance} setScreen={setScreen} />
+      </div>
+    );
+
   return (
     <div className="reports">
       {errorMessage && <ShowError message={errorMessage} />}
@@ -37,6 +37,7 @@ export const Report: React.FC<{
         {routes &&
           routes.map((route, idx) => (
             <button
+              key={idx}
               className="routes-selection-btn"
               onClick={() => {
                 createReport(
@@ -46,7 +47,6 @@ export const Report: React.FC<{
                   setErrorMessage
                 );
               }}
-              key={idx}
             >
               {route.routeName}
             </button>

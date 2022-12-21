@@ -1,3 +1,5 @@
+import { ReportDetails } from "../components/report/machine";
+import { MachineFilter } from "../components/report/route-view";
 import { Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
@@ -8,9 +10,13 @@ export class Route {
   dateCreated?: number | null;
   date?: string;
   michlolim?: Routes[number]["michlolim"];
-  data?: {
+  data: {
     [machineName: string]: MachineData;
   };
+
+  constructor() {
+    this.data = {};
+  }
 
   newReport(report: Routes[number]): ReportData {
     console.log(report);
@@ -37,81 +43,81 @@ export class Route {
     console.log(this);
   }
 
-  // setValue(reportDetails: ReportDetails, value: FormSubmission) {
-  //   const { machineName, michlolName, michlolId, partName } = reportDetails;
-  //   if (!this.machines[machineName])
-  //     this.machines[machineName] = this.createMachine(
-  //       michlolName,
-  //       michlolId,
-  //       machineName
-  //     );
-  //   this.machines[machineName].data[partName] = value;
-  // }
+  getMachineComplete(machineName: string): MachineFilter {
+    const machine = this.data?.[machineName];
+    if (machine) {
+      return machine.completed ? "הושלם" : "חלקי";
+    }
+    return "לא הושלם";
+  }
 
-  // createMachine(
-  //   michlolName: string,
-  //   michlolId: string,
-  //   machineName: string
-  // ): MachineData {
-  //   return {
-  //     completed: false,
-  //     uniqueId: `${this.reportId}: ${machineName}`,
-  //     michlolName,
-  //     michlolId,
-  //     machineName,
-  //     routeName: this.routeName,
-  //     routeId: this.routeId,
-  //     reportId: this.reportId!,
-  //     dateCreated: this.dateCreated,
-  //     data: {},
-  //   };
-  // }
+  setValue(reportDetails: ReportDetails, value: FormSubmission) {
+    const { machineName, michlolName, michlolId, partName } = reportDetails;
+    if (!this.data[machineName])
+      this.data[machineName] = this.createMachine(
+        michlolName,
+        michlolId,
+        machineName
+      );
+    this.data[machineName].data[partName] = value;
+  }
 
-  // isPartComplete(machineName: string, partName: string) {
-  //   const part = this.machines[machineName]?.data?.[partName];
-  //   if (part) {
-  //     if (part.excelOutput) return true;
-  //   }
-  //   return false;
-  // }
+  createMachine(
+    michlolName: string,
+    michlolId: string,
+    machineName: string
+  ): MachineData {
+    return {
+      completed: false,
+      uniqueId: `${this.reportId}: ${machineName}`,
+      michlolName,
+      michlolId,
+      machineName,
+      routeName: this.routeName!,
+      routeId: this.routeId!,
+      reportId: this.reportId!,
+      dateCreated: this.dateCreated!,
+      data: {},
+    };
+  }
 
-  // isMachineComplete(machineName: string): MachineFilter {
-  //   const machine = this.machines[machineName];
-  //   if (machine) {
-  //     return machine.completed ? "הושלם" : "חלקי";
-  //   }
-  //   return "לא הושלם";
-  // }
+  isPartComplete(machineName: string, partName: string) {
+    const part = this.data?.[machineName]?.data?.[partName];
+    if (part) {
+      if (part.excelOutput) return true;
+    }
+    return false;
+  }
 
-  // markMachineComplete(machineName: string) {
-  //   const machine = this.machines[machineName];
-  //   if (machine) {
-  //     machine.completed = true;
-  //   }
-  // }
+  setMachineComplete(machineName: string) {
+    const machine = this.data?.[machineName];
+    if (machine) {
+      machine.completed = true;
+    }
+  }
 
-  // isQuestionAnswered(machineName: string, partName: string, index: string) {
-  //   if (this.machines[machineName]?.data?.[partName]?.[index]) return true;
-  //   return false;
-  // }
+  isQuestionAnswered(machineName: string, partName: string, index: string) {
+    if (this.data?.[machineName]?.data?.[partName]?.[index]) return true;
+    return false;
+  }
 
-  // sendMachineData(machineName: string) {
-  //   const machine = this.machines[machineName];
-  //   if (machine) {
-  //     const { completed, ...data } = machine;
-  //     return JSON.stringify(data);
-  //   }
-  // }
+  sendMachineData(machineName: string) {
+    const machine = this.data?.[machineName];
+    if (machine) {
+      const { completed, ...data } = machine;
+      return JSON.stringify(data);
+    }
+  }
 
-  // sendReportData() {
-  //   const data = {
-  //     dateCreated: this.dateCreated,
-  //     routeId: this.routeId,
-  //     routeName: this.routeName,
-  //     reportId: this.reportId,
-  //   };
-  //   return JSON.stringify(data);
-  // }
+  sendReportData() {
+    const data = {
+      dateCreated: this.dateCreated,
+      routeId: this.routeId,
+      routeName: this.routeName,
+      reportId: this.reportId,
+    };
+    return JSON.stringify(data);
+  }
 }
 
 type ReportData = {
