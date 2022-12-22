@@ -25,6 +25,8 @@ html,
 body,
 #root {
   height: 100%;
+  max-width: 120ch;
+  margin: 0 auto;
 }
 
 * {
@@ -36,9 +38,9 @@ body,
 }
 
 .app {
-  position: fixed;
+  position: relative;
   height: 100%;
-  width: 100%;
+  width: inherit;
   overflow-y: scroll;
   background: rgba(150, 150, 150, 0.2);
 }
