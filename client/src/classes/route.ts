@@ -40,6 +40,10 @@ export class Route {
     this.michlolim = report.michlolim;
   }
 
+  loadMachines(machines: MachineData[]) {
+    machines.forEach((machine) => (this.data[machine.machineName] = machine));
+  }
+
   setValue(reportDetails: ReportDetails, value: FormSubmission) {
     const { machineName, michlolName, michlolId, partName } = reportDetails;
     if (!this.data[machineName])
@@ -49,7 +53,6 @@ export class Route {
         machineName
       );
     this.data[machineName].data[partName] = value;
-    console.log(this.data);
   }
 
   createMachine(
@@ -91,10 +94,7 @@ export class Route {
 
   sendMachineData(machineName: string) {
     const machine = this.data?.[machineName];
-    if (machine) {
-      const { completed, ...data } = machine;
-      return JSON.stringify(data);
-    }
+    if (machine) return JSON.stringify(machine);
   }
 
   getMachineComplete(machineName: string): MachineFilter {
@@ -106,17 +106,11 @@ export class Route {
   }
 
   sendReportData() {
-    const data = {
-      dateCreated: this.dateCreated,
-      routeId: this.routeId,
-      routeName: this.routeName,
-      reportId: this.reportId,
-    };
-    return JSON.stringify(data);
+    return JSON.stringify(this);
   }
 }
 
-type ReportData = {
+export type ReportData = {
   reportId: string;
   routeId: string;
   routeName: string;

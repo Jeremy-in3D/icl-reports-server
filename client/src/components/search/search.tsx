@@ -5,8 +5,12 @@ import { SearchBtn } from "./search-btn";
 import { SearchDate } from "./search-date";
 import { SearchOption } from "./search-option";
 import { downloadIcon, viewIcon, deleteIcon } from "../../data/imports";
+import { ReportData, Route } from "../../classes/route";
 
-export const Search: React.FC = () => {
+export const Search: React.FC<{
+  setScreen: React.Dispatch<React.SetStateAction<string>>;
+  reportInstance: Route;
+}> = ({ setScreen, reportInstance }) => {
   const [searchResults, setSearchResults] = useState<any>(null);
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
@@ -27,8 +31,8 @@ export const Search: React.FC = () => {
         <h1 className="search-title">תוצאות</h1>
         <div className="search-items">
           {searchResults &&
-            searchResults.map((item: any, idx: number) => (
-              <div className="search-item" key={`${item.id}-${idx}`}>
+            searchResults.map((item: ReportData, idx: number) => (
+              <div className="search-item" key={item.reportId}>
                 <h2>{item.reportId}</h2>
                 <p>{item.routeName}</p>
                 <p>{new Date(item.dateCreated).toDateString()}</p>
@@ -36,7 +40,16 @@ export const Search: React.FC = () => {
                   <SearchOption
                     text={"פתיחה"}
                     href={viewIcon.href}
-                    onClick={() => {}}
+                    onClick={async () => {
+                      reportInstance.instantiateReport(item);
+                      const result = await fetch("/get-docs", {
+                        method: "POST",
+                        body: item.reportId,
+                      });
+                      const data = await result.json();
+                      reportInstance.loadMachines(data);
+                      setScreen("report");
+                    }}
                   />
                   <SearchOption
                     text={"הורדה"}

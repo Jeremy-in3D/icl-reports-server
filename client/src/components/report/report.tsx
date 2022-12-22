@@ -7,10 +7,10 @@ import { RouteView } from "./route-view";
 export const Report: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
   routes: Routes | undefined;
-}> = ({ setScreen, routes }) => {
+  reportInstance: Route;
+}> = ({ setScreen, routes, reportInstance }) => {
   const [routeView, setRouteView] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
-  const reportInstance = useRef(new Route()).current;
 
   useEffect(() => {
     if (errorMessage) {
@@ -21,6 +21,12 @@ export const Report: React.FC<{
       return () => clearTimeout(timeoutId);
     }
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (reportInstance.reportId) setRouteView(true);
+  }, []);
+
+  console.log(reportInstance);
 
   if (routeView)
     return (

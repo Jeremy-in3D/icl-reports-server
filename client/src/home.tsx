@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from "./classes/route";
 import { AlertScreen } from "./components/misc/alert-screen";
 import { HomeSelection } from "./components/misc/home-selection";
 import { createIcon, searchIcon, uploadIcon } from "./data/imports";
@@ -6,12 +7,14 @@ import { createIcon, searchIcon, uploadIcon } from "./data/imports";
 export const Home: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
   setRoutes: React.Dispatch<React.SetStateAction<any>>;
-}> = ({ setScreen, setRoutes }) => {
+  reportInstanceRef: React.MutableRefObject<Route>;
+}> = ({ setScreen, setRoutes, reportInstanceRef }) => {
   const buttons = [
     {
       text: 'יצור דו"ח',
       imgPath: createIcon.href,
       onClick: async () => {
+        reportInstanceRef.current = new Route();
         const response = await fetch("/get-routes");
         const data = await response.json();
         setRoutes(data);

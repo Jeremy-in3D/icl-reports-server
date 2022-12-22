@@ -48,9 +48,14 @@ export class MongoDB {
   getDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     if (id.length) {
-      const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
+      console.log("1");
+      const find = collection
+        .find({ reportId: id })
+        .project({ _id: -1 })
+        .sort({ dateCreated: -1 });
       return find.toArray();
     }
+    console.log("2");
     const find = collection.find().sort({ dateCreated: -1 });
     return find.toArray();
   }
@@ -81,13 +86,6 @@ export class MongoDB {
     const find = collection
       .find({
         dateCreated: { $gt: startDate, $lt: endDate },
-      })
-      .project({
-        _id: 1,
-        routeName: 1,
-        reportId: 1,
-        routeId: 1,
-        dateCreated: 1,
       })
       .sort({ dateCreated: -1 });
     return find.toArray();
