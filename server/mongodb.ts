@@ -48,14 +48,12 @@ export class MongoDB {
   getDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     if (id.length) {
-      console.log("1");
       const find = collection
         .find({ reportId: id })
         .project({ _id: -1 })
         .sort({ dateCreated: -1 });
       return find.toArray();
     }
-    console.log("2");
     const find = collection.find().sort({ dateCreated: -1 });
     return find.toArray();
   }

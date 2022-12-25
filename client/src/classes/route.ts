@@ -77,6 +77,7 @@ export class Route {
   isPartComplete(machineName: string, partName: string) {
     const part = this.data?.[machineName]?.data?.[partName];
     if (part?.excelOutput) return true;
+    if (part?.text) return true;
     return false;
   }
 
@@ -108,6 +109,10 @@ export class Route {
   sendReportData() {
     return JSON.stringify(this);
   }
+
+  clearInstance() {
+    this;
+  }
 }
 
 export type ReportData = {
@@ -126,6 +131,7 @@ export type FormSubmission = {
   [id: string]: FormDataEntryValue;
   excelOutput: string;
   alert: string;
+  text: string;
 };
 
 export type MachineData = {

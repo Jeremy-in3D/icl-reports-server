@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FormSubmission, Route } from "../../classes/route";
 import { FormInput } from "./inputs/form-input";
 import { MachineParts } from "../../data/machine-parts";
@@ -20,7 +20,13 @@ export const MachineForm: React.FC<{
   setMachineComplete,
   setPartsComplete,
 }) => {
+  //Look into why it re-renders 3 times
   const formRef = useRef<HTMLFormElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const textAreastring =
+    reportInstance.data[reportDetails.machineName]?.data?.[
+      reportDetails.partName
+    ]?.text || "";
 
   useEffect(
     () =>
@@ -48,7 +54,11 @@ export const MachineForm: React.FC<{
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const formSubmission = handleCheckboxInputSubmit(formData);
-          reportInstance.setValue(reportDetails, formSubmission);
+          const formSub = {
+            ...formSubmission,
+            text: textAreaRef.current?.value || "",
+          };
+          reportInstance.setValue(reportDetails, formSub);
           setMachineComplete(
             reportInstance.getMachineComplete(reportDetails.machineName)
           );
@@ -68,6 +78,13 @@ export const MachineForm: React.FC<{
           machinePart={currentPart}
           machineName={reportDetails.machineName}
         />
+        <textarea
+          ref={textAreaRef}
+          maxLength={100}
+          rows={4}
+          className="text-area"
+          defaultValue={textAreastring}
+        ></textarea>
       </form>
     </>
   );
@@ -75,7 +92,11 @@ export const MachineForm: React.FC<{
 
 function handleCheckboxInputSubmit(formData: FormData) {
   const formEntries = Object.fromEntries(formData);
-  const formSubmission: FormSubmission = { excelOutput: "", alert: " " };
+  const formSubmission: FormSubmission = {
+    excelOutput: "",
+    alert: " ",
+    text: "",
+  };
   let outputAlert: Alert = "false";
   let stringParts: string[] = [];
   for (const [key, value] of Object.entries(formEntries)) {

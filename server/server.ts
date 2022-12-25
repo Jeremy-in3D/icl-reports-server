@@ -27,11 +27,6 @@ const blobServiceClient = BlobServiceClient.fromConnectionString(
   BLOB_CONNECTION_STRING
 );
 
-// app.get("/", (req, res) => {
-//   res.sendFile(`${string}/index.html`);
-//   res.send("Hello World");
-// });
-
 app.post("/get-image", async (req, res) => {
   const containerClient = blobServiceClient.getContainerClient("images");
   const blobClient = containerClient.getBlobClient(req.body);
@@ -50,7 +45,7 @@ app.post(
       //@ts-ignore
       const buffer = req.files["imgFile"].data;
       const containerClient = blobServiceClient.getContainerClient("images");
-      const blobName = "newblob" + Date.now();
+      const blobName = "blob-" + Date.now();
       const blobClient = containerClient.getBlockBlobClient(blobName);
       const uploadBlobResponse = await blobClient.upload(buffer, buffer.length);
       const blobId = uploadBlobResponse.requestId;
