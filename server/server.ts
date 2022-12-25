@@ -10,23 +10,30 @@ import { MongoDB } from "./mongodb.js";
 
 //Add refresh token for mongodb
 
+//Loads .env environment variables
 dotenv.config();
+//Load mongoClient
 const mongoUri = process.env.MONGO_URI || "";
 const mongo = new MongoDB(mongoUri);
+//Initialize express
 const port = process.env.PORT || 8080;
 const app = express();
+//Get relative path for static hosting
 const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
 
+//Express Middleware
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 
+//Blob initilization for images saving in Azure
 const BLOB_CONNECTION_STRING = process.env.BLOB_CONNECTION_STRING || "";
 const blobServiceClient = BlobServiceClient.fromConnectionString(
   BLOB_CONNECTION_STRING
 );
 
+//Route to get image buffer and send to client
 app.post("/get-image", async (req, res) => {
   const containerClient = blobServiceClient.getContainerClient("images");
   const blobClient = containerClient.getBlobClient(req.body);
@@ -37,6 +44,7 @@ app.post("/get-image", async (req, res) => {
   res.send(downloaded);
 });
 
+//Route to upload image
 app.post(
   "/upload-image",
   fileUpload({ createParentPath: true }),

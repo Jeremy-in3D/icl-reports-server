@@ -18,6 +18,7 @@ export class MongoDB {
     return this.client.close();
   }
 
+  //This makes the collection your are querying more dynamic in individual endpoints
   getCollection(id: CollectionIds): Collection {
     return this.client.db("icl").collection(id);
   }
