@@ -62,7 +62,6 @@ export const Search: React.FC<{
                     onClick={() => {
                       deleteReport(
                         item.reportId,
-                        item.routeId,
                         searchResults,
                         idx,
                         setSearchResults

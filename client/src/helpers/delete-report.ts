@@ -2,7 +2,6 @@ import React from "react";
 
 export async function deleteReport(
   reportId: string,
-  routeId: string,
   results: any,
   idx: number,
   setResults: React.Dispatch<React.SetStateAction<any>>

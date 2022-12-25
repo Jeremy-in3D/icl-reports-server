@@ -9,12 +9,14 @@ export const Home: React.FC<{
   setRoutes: React.Dispatch<React.SetStateAction<any>>;
   reportInstanceRef: React.MutableRefObject<Route>;
 }> = ({ setScreen, setRoutes, reportInstanceRef }) => {
+  //What the different buttons in home are, their image, and onClick event
   const buttons = [
     {
       text: 'יצור דו"ח',
       imgPath: createIcon.href,
       onClick: async () => {
         reportInstanceRef.current = new Route();
+        //On click, fetches the routes, once fetched, sets routes data, and screen to report
         const response = await fetch("/get-routes");
         const data = await response.json();
         setRoutes(data);
@@ -38,6 +40,7 @@ export const Home: React.FC<{
   ];
   return (
     <div className="home-screen">
+      {/* Maps the buttons */}
       {buttons.map((item, idx) => (
         <HomeSelection
           text={item.text}

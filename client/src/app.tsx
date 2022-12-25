@@ -12,6 +12,7 @@ export const App: React.FC = () => {
   const [routes, setRoutes] = useState<Routes | undefined>();
   const reportInstance = useRef(new Route());
 
+  //Display screen based on showScreen state
   let display;
   switch (showScreen) {
     case "home":
@@ -45,6 +46,7 @@ export const App: React.FC = () => {
   }
   return (
     <div className="app ">
+      {/* Top Bar to always show, and then display component follows */}
       <TopBar setScreen={setShowScreen} />
       {display}
     </div>

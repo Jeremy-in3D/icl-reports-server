@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route } from "../../classes/route";
 import { Routes } from "../../data/reports-data";
 import { ShowError } from "../misc/show-error";
@@ -13,6 +13,7 @@ export const Report: React.FC<{
   const [errorMessage, setErrorMessage] = useState<string>();
 
   useEffect(() => {
+    //Error message with timeout to appear if needed
     if (errorMessage) {
       const timeoutId = setTimeout(() => {
         setErrorMessage(undefined);
@@ -22,12 +23,12 @@ export const Report: React.FC<{
     }
   }, [errorMessage]);
 
+  //If reportInstance has a picked reportID, then setView to this
   useEffect(() => {
     if (reportInstance.reportId) setRouteView(true);
   }, []);
 
-  console.log(reportInstance);
-
+  //If routeview is true, show the routeview component
   if (routeView)
     return (
       <div className="report">
@@ -37,9 +38,11 @@ export const Report: React.FC<{
 
   return (
     <div className="reports">
+      {/* If error exists in state, show it */}
       {errorMessage && <ShowError message={errorMessage} />}
       <p className="page-title">יצור דו"ח</p>
       <div className="routes-selections">
+        {/* Show the different routes pulled as options, with a dynamic onclick based on the route */}
         {routes &&
           routes.map((route, idx) => (
             <button
@@ -68,6 +71,7 @@ async function createReport(
   setRouteView: React.Dispatch<React.SetStateAction<boolean>>,
   setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>
 ) {
+  //Creates new report on the instance using the route
   const newReport = reportInstance.newReport(route);
   try {
     const reportResponse = await fetch("/create-report", {
@@ -76,6 +80,7 @@ async function createReport(
       body: JSON.stringify(newReport),
     });
     if (reportResponse.status === 200) {
+      //If the new report has successfully opened within the database, then it instantiates locally
       reportInstance.instantiateReport(newReport);
       setRouteView(true);
     } else {
