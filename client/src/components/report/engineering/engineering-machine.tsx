@@ -30,6 +30,7 @@ export const EngineeringMachine: React.FC<{
       <div className={`michlol-contents ${machineComplete} ${openStyle}`}>
         {isOpen && (
           <>
+            {/* Seperate into oil / quake engineering here */}
             <EngineeringMachineForm
               reportInstance={reportInstance}
               machineName={machineName}

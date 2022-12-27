@@ -9,7 +9,6 @@ export const RouteView: React.FC<{
   reportInstance: Route;
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ reportInstance, setScreen }) => {
-  console.log(reportInstance);
   const [machineFilter, setMachineFilter] = useState<MachineFilter>("הכל");
   const machines: MachineDetails[] = [];
   //For each michlol, push a machine object with the michlol details
@@ -29,10 +28,6 @@ export const RouteView: React.FC<{
     reportInstance.machines?.forEach((machine) =>
       machines.push({
         machineName: machine,
-        michlolId: "",
-        michlolName: "",
-        equipmentUnit: "",
-        parts: [],
       })
     );
   }
@@ -78,10 +73,10 @@ export const RouteView: React.FC<{
 
 export type MachineDetails = {
   machineName: string;
-  michlolId: string;
-  michlolName: string;
-  equipmentUnit: string;
-  parts: string[];
+  michlolId?: string;
+  michlolName?: string;
+  equipmentUnit?: string;
+  parts?: string[];
 };
 
 export type MachineFilter = "הכל" | "הושלם" | "חלקי" | "לא הושלם";
