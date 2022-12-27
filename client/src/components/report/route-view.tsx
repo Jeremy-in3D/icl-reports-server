@@ -49,7 +49,6 @@ export const RouteView: React.FC<{
       <MachinesList
         reportInstance={reportInstance}
         machineList={finalMachines}
-        machineFilter={machineFilter}
       />
       <button
         className="route-submit-btn"

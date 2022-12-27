@@ -1,13 +1,12 @@
 import React from "react";
 import { Route } from "../../classes/route";
 import { Machine } from "./machine";
-import { MachineDetails, MachineFilter } from "./route-view";
+import { MachineDetails } from "./route-view";
 
 export const MachinesList: React.FC<{
   reportInstance: Route;
   machineList: MachineDetails[];
-  machineFilter: MachineFilter;
-}> = ({ reportInstance, machineList, machineFilter }) => {
+}> = ({ reportInstance, machineList }) => {
   return (
     <div className="machines">
       <h2 className="machines-header">מכונות</h2>
