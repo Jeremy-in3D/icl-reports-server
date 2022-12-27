@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Route } from "../../../classes/route";
-import { MachineParts } from "../../../data/machine-parts";
+import { QuestionBank } from "../../../data/question-bank";
 import { CheckboxInput } from "./checkbox-input";
 
 export const Checkboxes: React.FC<{
   formRef: React.RefObject<HTMLFormElement>;
   reportInstance: Route;
-  machinePart: MachineParts[number];
+  currentQuestion: QuestionBank[number];
   machineName: string;
-}> = ({ reportInstance, machinePart, machineName, formRef }) => {
+}> = ({ reportInstance, currentQuestion, machineName, formRef }) => {
   //Disables all inputs apart from first choice
   const [disableInputs, setDisableInputs] = useState(false);
 
@@ -19,7 +19,7 @@ export const Checkboxes: React.FC<{
   function isDefault(index: string) {
     return reportInstance.isQuestionAnswered(
       machineName,
-      machinePart.partName,
+      currentQuestion.partName,
       index
     );
   }
@@ -30,10 +30,10 @@ export const Checkboxes: React.FC<{
 
   return (
     <>
-      {machinePart.input.map((checkbox, idx) => {
+      {currentQuestion.input.map((checkbox, idx) => {
         return (
           <CheckboxInput
-            key={`${machinePart.questionId}-${idx}`}
+            key={`${currentQuestion.questionId}-${idx}`}
             index={idx}
             checkbox={checkbox}
             checkDisabled={() => isDisabled(idx)}

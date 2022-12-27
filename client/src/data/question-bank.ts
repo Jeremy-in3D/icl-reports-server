@@ -1,4 +1,4 @@
-export const machineParts: MachineParts = [
+export const questionBank: QuestionBank = [
   //#region Question Bank
   {
     questionId: "Q01",
@@ -2403,7 +2403,7 @@ export type CheckBox =
   | { text: string; alert: boolean; options: true; choices: string[] }
   | { text: string; alert: boolean; options: false };
 
-export type MachineParts = {
+export type QuestionBank = {
   questionId: string;
   partName: string;
   type: "checkboxes" | "multiple-choice" | "range";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
-import { machineParts } from "../../data/machine-parts";
+import { questionBank } from "../../data/question-bank";
 import { MachineForm } from "./machine-form";
 import { MachinePartsList } from "./machine-parts-list";
 import { MachineDetails, MachineFilter } from "./route-view";
@@ -26,16 +26,16 @@ export const Machine: React.FC<{
   const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const openStyle = `${isOpen ? "opened" : "closed"}`;
   //Get parts from question bank online
-  const currentParts = parts.map(
-    (partId) => machineParts.find((part) => part.questionId === partId)!
+  const machineQuestions = parts.map(
+    (partId) => questionBank.find((question) => question.questionId === partId)!
   );
-  const currentPart = currentParts[view];
+  const currentQuestion = machineQuestions[view];
   const reportDetails: ReportDetails = {
     michlolName: michlolName,
     michlolId: michlolId,
     machineName,
     equipmentUnit,
-    partName: currentPart.partName,
+    partName: currentQuestion.partName,
   };
 
   return (
@@ -52,14 +52,14 @@ export const Machine: React.FC<{
             <MachinePartsList
               view={view}
               setView={setView}
-              parts={currentParts}
+              questions={machineQuestions}
               partsComplete={partsComplete}
             />
             <MachineForm
               reportInstance={reportInstance}
-              key={`${machineName}-${currentPart.questionId}`}
-              currentPart={currentPart}
-              parts={currentParts}
+              key={`${machineName}-${currentQuestion.questionId}`}
+              currentQuestion={currentQuestion}
+              machineQuestions={machineQuestions}
               reportDetails={reportDetails}
               setMachineComplete={setMachineComplete}
               setPartsComplete={setPartsComplete}

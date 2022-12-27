@@ -1,15 +1,15 @@
 import React from "react";
-import { MachineParts } from "../../data/machine-parts";
+import { QuestionBank } from "../../data/question-bank";
 
 export const MachinePartsList: React.FC<{
   view: number;
   setView: React.Dispatch<React.SetStateAction<number>>;
-  parts: MachineParts;
+  questions: QuestionBank;
   partsComplete: boolean[] | undefined;
-}> = ({ view, setView, parts, partsComplete }) => {
+}> = ({ view, setView, questions, partsComplete }) => {
   return (
     <div className="michlol-questions-array">
-      {parts.map((part, idx) => {
+      {questions.map((part, idx) => {
         let answered;
         if (partsComplete) answered = partsComplete[idx];
         return (

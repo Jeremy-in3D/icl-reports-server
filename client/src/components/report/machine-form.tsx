@@ -1,21 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FormSubmission, Route } from "../../classes/route";
 import { FormInput } from "./inputs/form-input";
-import { MachineParts } from "../../data/machine-parts";
+import { QuestionBank } from "../../data/question-bank";
 import { ReportDetails } from "./machine";
 import { MachineFilter } from "./route-view";
 
 export const MachineForm: React.FC<{
   reportInstance: Route;
-  currentPart: MachineParts[number];
-  parts: MachineParts;
+  currentQuestion: QuestionBank[number];
+  machineQuestions: QuestionBank;
   reportDetails: ReportDetails;
   setMachineComplete: React.Dispatch<React.SetStateAction<MachineFilter>>;
   setPartsComplete: React.Dispatch<React.SetStateAction<boolean[] | undefined>>;
 }> = ({
   reportInstance,
-  currentPart,
-  parts,
+  currentQuestion,
+  machineQuestions,
   reportDetails,
   setMachineComplete,
   setPartsComplete,
@@ -31,10 +31,10 @@ export const MachineForm: React.FC<{
   useEffect(
     () =>
       setPartsComplete(() =>
-        parts.map((part) =>
+        machineQuestions.map((question) =>
           reportInstance.isPartComplete(
             reportDetails.machineName,
-            part.partName
+            question.partName
           )
         )
       ),
@@ -43,7 +43,7 @@ export const MachineForm: React.FC<{
 
   return (
     <>
-      <p className="machine-area">{currentPart.partName}</p>
+      <p className="machine-area">{currentQuestion.partName}</p>
       <form
         ref={formRef}
         className="machine-form"
@@ -63,10 +63,10 @@ export const MachineForm: React.FC<{
             reportInstance.getMachineComplete(reportDetails.machineName)
           );
           setPartsComplete(() =>
-            parts.map((part) =>
+            machineQuestions.map((question) =>
               reportInstance.isPartComplete(
                 reportDetails.machineName,
-                part.partName
+                question.partName
               )
             )
           );
@@ -75,7 +75,7 @@ export const MachineForm: React.FC<{
         <FormInput
           formRef={formRef}
           reportInstance={reportInstance}
-          machinePart={currentPart}
+          currentQuestion={currentQuestion}
           machineName={reportDetails.machineName}
         />
         <textarea
