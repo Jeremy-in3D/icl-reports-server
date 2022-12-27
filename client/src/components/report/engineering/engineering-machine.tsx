@@ -19,14 +19,6 @@ export const EngineeringMachine: React.FC<{
   );
   const openStyle = `${isOpen ? "opened" : "closed"}`;
 
-  const reportDetails: ReportDetails = {
-    michlolName: "",
-    michlolId: "",
-    machineName,
-    equipmentUnit: "",
-    partName: "",
-  };
-
   return (
     <div className="machine">
       <div
@@ -40,7 +32,7 @@ export const EngineeringMachine: React.FC<{
           <>
             <EngineeringMachineForm
               reportInstance={reportInstance}
-              reportDetails={reportDetails}
+              machineName={machineName}
               setMachineComplete={setMachineComplete}
             />
             <button

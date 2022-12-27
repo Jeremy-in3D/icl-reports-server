@@ -26,6 +26,7 @@ export const SurveyMachineForm: React.FC<{
   const textAreastring =
     reportInstance.data[reportDetails.machineName]?.data?.[
       reportDetails.partName
+      //@ts-ignore
     ]?.text || "";
 
   useEffect(

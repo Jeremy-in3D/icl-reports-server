@@ -1,22 +1,21 @@
 import React, { useRef } from "react";
 import { Route } from "../../../classes/route";
-import { ReportDetails } from "../survey/survey-machine";
 import { MachineFilter } from "../route-view";
 import { RadioQuestion } from "../inputs/radio-input";
 
 export const EngineeringMachineForm: React.FC<{
   reportInstance: Route;
-  reportDetails: ReportDetails;
+  machineName: string;
   setMachineComplete: React.Dispatch<React.SetStateAction<MachineFilter>>;
-}> = ({ reportInstance, reportDetails, setMachineComplete }) => {
+}> = ({ reportInstance, machineName, setMachineComplete }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const textAreaAnswer = (reportInstance.data[reportDetails.machineName]?.data
-    ?.text || "") as string;
-  const michlolOilAnswer = (reportInstance.data[reportDetails.machineName]?.data
-    ?.oil || "") as string;
-  const michlolWearAnswer = (reportInstance.data[reportDetails.machineName]
-    ?.data?.wear || "") as string;
+  const textAreaAnswer = (reportInstance.data[machineName]?.data?.text ||
+    "") as string;
+  const michlolOilAnswer = (reportInstance.data[machineName]?.data?.oil ||
+    "") as string;
+  const michlolWearAnswer = (reportInstance.data[machineName]?.data?.wear ||
+    "") as string;
 
   return (
     <>
@@ -30,13 +29,8 @@ export const EngineeringMachineForm: React.FC<{
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const formSubmission = handleEngineeringSubmit(formData);
-          reportInstance.setEngineeringValue(
-            reportDetails.machineName,
-            formSubmission
-          );
-          setMachineComplete(
-            reportInstance.getMachineComplete(reportDetails.machineName)
-          );
+          reportInstance.setEngineeringValue(machineName, formSubmission);
+          setMachineComplete(reportInstance.getMachineComplete(machineName));
         }}
       >
         <h3 className="radio-question-title">שמן:</h3>
