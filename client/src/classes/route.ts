@@ -79,6 +79,12 @@ export class Route {
     this.data[machineName].data[partName] = value;
   }
 
+  setEngineeringValue(machineName: string, value: FormSubmission) {
+    if (!this.data[machineName])
+      this.data[machineName] = this.createEngineeringMachine(machineName);
+    this.data[machineName].data = value;
+  }
+
   createMachine(
     michlolName: string,
     michlolId: string,
@@ -100,8 +106,20 @@ export class Route {
     };
   }
 
+  createEngineeringMachine(machineName: string): any {
+    return {
+      completed: false,
+      uniqueId: `${this.reportId}: ${machineName}`,
+      routeName: this.routeName!,
+      routeId: this.routeId!,
+      reportId: this.reportId!,
+      dateCreated: this.dateCreated!,
+      data: {},
+    };
+  }
+
   isPartComplete(machineName: string, partName: string) {
-    const part = this.data?.[machineName]?.data?.[partName];
+    const part = this.data?.[machineName]?.data?.[partName] as FormSubmission;
     if (part?.excelOutput) return true;
     if (part?.text) return true;
     return false;
@@ -115,6 +133,7 @@ export class Route {
   }
 
   isQuestionAnswered(machineName: string, partName: string, index: string) {
+    //@ts-ignore
     if (this.data?.[machineName]?.data?.[partName]?.[index]) return true;
     return false;
   }
@@ -169,9 +188,11 @@ export type MachineData = {
   equipmentUnit: string;
   machineName: string;
   dateCreated: number | null;
-  data: {
-    [partName: string]: FormSubmission;
-  };
+  data:
+    | {
+        [partName: string]: FormSubmission;
+      }
+    | FormSubmission;
 };
 
 export type AlertData = {

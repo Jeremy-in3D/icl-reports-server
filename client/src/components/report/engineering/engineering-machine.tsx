@@ -19,6 +19,14 @@ export const EngineeringMachine: React.FC<{
   );
   const openStyle = `${isOpen ? "opened" : "closed"}`;
 
+  const reportDetails: ReportDetails = {
+    michlolName: "",
+    michlolId: "",
+    machineName,
+    equipmentUnit: "",
+    partName: "",
+  };
+
   return (
     <div className="machine">
       <div
@@ -30,7 +38,11 @@ export const EngineeringMachine: React.FC<{
       <div className={`michlol-contents ${machineComplete} ${openStyle}`}>
         {isOpen && (
           <>
-            {/* <EngineeringMachineForm /> */}
+            <EngineeringMachineForm
+              reportInstance={reportInstance}
+              reportDetails={reportDetails}
+              setMachineComplete={setMachineComplete}
+            />
             <button
               className="submit-data-btn"
               onClick={async () => {
