@@ -1,14 +1,18 @@
 import dotenv from "dotenv";
 import url from "url";
-import express from "express";
+import express, { NextFunction } from "express";
 import path from "path";
 import http from "http";
-import fileUpload from "express-fileupload";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { streamToBuffer } from "./helpers/streamToBuffer.js";
 import { MongoDB } from "./mongodb.js";
+import jwt from "jsonwebtoken";
+import jwksClient from "jwks-rsa";
 
-//Add refresh token for mongodb
+//Client for pulling public key for use with verifying jwt
+const JwksClient = jwksClient({
+  jwksUri: "https://login.microsoftonline.com/common/discovery/v2.0/keys",
+});
 
 //Loads .env environment variables
 dotenv.config();
@@ -45,23 +49,19 @@ app.post("/get-image", async (req, res) => {
 });
 
 //Route to upload image
-app.post(
-  "/upload-image",
-  fileUpload({ createParentPath: true }),
-  async (req, res) => {
-    if (req.files) {
-      //@ts-ignore
-      const buffer = req.files["imgFile"].data;
-      const containerClient = blobServiceClient.getContainerClient("images");
-      const blobName = "blob-" + Date.now();
-      const blobClient = containerClient.getBlockBlobClient(blobName);
-      const uploadBlobResponse = await blobClient.upload(buffer, buffer.length);
-      const blobId = uploadBlobResponse.requestId;
-      console.log(`Upload block blob ${blobName} successfully - ${blobId}`);
-      res.send(`Upload block blob ${blobName} successfully - ${blobId}`);
-    }
+app.post("/upload-image", async (req, res) => {
+  if (req.files) {
+    //@ts-ignore
+    const buffer = req.files["imgFile"].data;
+    const containerClient = blobServiceClient.getContainerClient("images");
+    const blobName = "blob-" + Date.now();
+    const blobClient = containerClient.getBlockBlobClient(blobName);
+    const uploadBlobResponse = await blobClient.upload(buffer, buffer.length);
+    const blobId = uploadBlobResponse.requestId;
+    console.log(`Upload block blob ${blobName} successfully - ${blobId}`);
+    res.send(`Upload block blob ${blobName} successfully - ${blobId}`);
   }
-);
+});
 
 app.post("/save-machine", async (req, res) => {
   const data: MachineData = req.body;
@@ -188,6 +188,25 @@ app.get("/get-alerts", async (req, res) => {
     console.log("Error", e);
   }
 })();
+
+//Validate JWT Token Middlware
+async function validateJwt(req: any, res: any, next: NextFunction) {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    try {
+      const accessToken = req.headers.authorization.split(" ")[1];
+      const decode = jwt.decode(accessToken, { complete: true });
+      const key = await JwksClient.getSigningKey(decode?.header.kid);
+      const signingKey = key.getPublicKey();
+      jwt.verify(accessToken, signingKey);
+      next();
+    } catch (e) {
+      res.status(400).send("Invalid JWT Validation");
+    }
+  } else {
+    res.status(401).send("No authorization token provided");
+  }
+}
 
 export type MachineData = {
   uniqueId: string;
