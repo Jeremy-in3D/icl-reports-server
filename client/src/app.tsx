@@ -7,7 +7,7 @@ const Content = lazy(() =>
 );
 
 export const App: React.FC = () => {
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState(true);
   const accessToken = useRef<string>();
 
   return (

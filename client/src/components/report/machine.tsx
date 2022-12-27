@@ -16,7 +16,7 @@ export const Machine: React.FC<{
   machine: MachineDetails;
 }> = ({
   reportInstance,
-  machine: { machineName, michlolId, michlolName, parts },
+  machine: { machineName, michlolId, michlolName, parts, equipmentUnit },
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
@@ -34,6 +34,7 @@ export const Machine: React.FC<{
     michlolName: michlolName,
     michlolId: michlolId,
     machineName,
+    equipmentUnit,
     partName: currentPart.partName,
   };
 
@@ -96,5 +97,6 @@ export type ReportDetails = {
   michlolName: string;
   michlolId: string;
   machineName: string;
+  equipmentUnit: string;
   partName: string;
 };

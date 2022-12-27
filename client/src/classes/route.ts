@@ -45,12 +45,14 @@ export class Route {
   }
 
   setValue(reportDetails: ReportDetails, value: FormSubmission) {
-    const { machineName, michlolName, michlolId, partName } = reportDetails;
+    const { machineName, michlolName, michlolId, partName, equipmentUnit } =
+      reportDetails;
     if (!this.data[machineName])
       this.data[machineName] = this.createMachine(
         michlolName,
         michlolId,
-        machineName
+        machineName,
+        equipmentUnit
       );
     this.data[machineName].data[partName] = value;
   }
@@ -58,7 +60,8 @@ export class Route {
   createMachine(
     michlolName: string,
     michlolId: string,
-    machineName: string
+    machineName: string,
+    equipmentUnit: string
   ): MachineData {
     return {
       completed: false,
@@ -66,6 +69,7 @@ export class Route {
       michlolName,
       michlolId,
       machineName,
+      equipmentUnit,
       routeName: this.routeName!,
       routeId: this.routeId!,
       reportId: this.reportId!,
@@ -109,10 +113,6 @@ export class Route {
   sendReportData() {
     return JSON.stringify(this);
   }
-
-  clearInstance() {
-    this;
-  }
 }
 
 export type ReportData = {
@@ -142,6 +142,7 @@ export type MachineData = {
   routeId: string;
   michlolName: string | undefined;
   michlolId: string | undefined;
+  equipmentUnit: string;
   machineName: string;
   dateCreated: number | null;
   data: {

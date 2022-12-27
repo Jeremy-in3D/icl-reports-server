@@ -231,15 +231,6 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מזין כוכבי",
     equipmentUnit: "מזין כוכבי ציקלון",
     machines: {
-      "R-2010-050-174": ["Q07", "Q08", "Q09", "Q10", "Q48", "Q12", "Q25"],
-      "R-2010-050-178": ["Q07", "Q08", "Q09", "Q10", "Q48", "Q12", "Q25"],
-    },
-  },
-  {
-    michlolId: "R2-M14",
-    michlolName: "מזין כוכבי",
-    equipmentUnit: "מזין כוכבי ציקלון",
-    machines: {
       "R-2010-040-290": ["Q49", "Q08", "Q50", "Q51"],
       "R-2010-040-291": ["Q49", "Q08", "Q50", "Q51"],
     },
@@ -416,7 +407,7 @@ export const michlolim: MichlolContents[] = [
     michlolName: "מגרסה",
     equipmentUnit: "מגרסת פטישים",
     machines: {
-      "R-2010-050-1304": ["Q08", "Q19"],
+      "R-2010-050-206": ["Q08", "Q19"],
     },
   },
   {
@@ -887,15 +878,6 @@ export const routes: Routes = [
         michlolName: "מזין כוכבי",
         equipmentUnit: "מזין כוכבי ציקלון",
         machines: {
-          "R-2010-050-174": ["Q07", "Q08", "Q09", "Q10", "Q48", "Q12", "Q25"],
-          "R-2010-050-178": ["Q07", "Q08", "Q09", "Q10", "Q48", "Q12", "Q25"],
-        },
-      },
-      {
-        michlolId: "R2-M14",
-        michlolName: "מזין כוכבי",
-        equipmentUnit: "מזין כוכבי ציקלון",
-        machines: {
           "R-2010-040-290": ["Q49", "Q08", "Q50", "Q51"],
           "R-2010-040-291": ["Q49", "Q08", "Q50", "Q51"],
         },
@@ -1080,7 +1062,7 @@ export const routes: Routes = [
         michlolName: "מגרסה",
         equipmentUnit: "מגרסת פטישים",
         machines: {
-          "R-2010-050-1304": ["Q08", "Q19"],
+          "R-2010-050-206": ["Q08", "Q19"],
         },
       },
       {

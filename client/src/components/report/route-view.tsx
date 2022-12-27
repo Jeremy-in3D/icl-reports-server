@@ -18,6 +18,7 @@ export const RouteView: React.FC<{
         machineName: key,
         michlolId: michlol.michlolId,
         michlolName: michlol.michlolName,
+        equipmentUnit: michlol.equipmentUnit,
         parts: value,
       });
     }
@@ -66,6 +67,7 @@ export type MachineDetails = {
   machineName: string;
   michlolId: string;
   michlolName: string;
+  equipmentUnit: string;
   parts: string[];
 };
 
