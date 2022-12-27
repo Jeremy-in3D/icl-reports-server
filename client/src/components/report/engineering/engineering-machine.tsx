@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Route } from "../../classes/route";
-import { questionBank } from "../../data/question-bank";
-import { MachineForm } from "./machine-form";
-import { MachinePartsList } from "./machine-parts-list";
-import { MachineDetails, MachineFilter } from "./route-view";
+import { Route } from "../../../classes/route";
+import { MachineDetails, MachineFilter } from "../route-view";
+import { EngineeringMachineForm } from "./engineering-machine-form";
 
 function getMachineStyle(machineState: MachineFilter) {
   if (machineState === "הושלם") return "completed";
@@ -11,32 +9,15 @@ function getMachineStyle(machineState: MachineFilter) {
   if (machineState === "לא הושלם") return "incomplete";
 }
 
-export const Machine: React.FC<{
+export const EngineeringMachine: React.FC<{
   reportInstance: Route;
   machine: MachineDetails;
-}> = ({
-  reportInstance,
-  machine: { machineName, michlolId, michlolName, parts, equipmentUnit },
-}) => {
+}> = ({ reportInstance, machine: { machineName } }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [view, setView] = useState(0);
   const [machineComplete, setMachineComplete] = useState(
     reportInstance.getMachineComplete(machineName)
   );
-  const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const openStyle = `${isOpen ? "opened" : "closed"}`;
-  //Get parts from question bank online
-  const machineQuestions = parts.map(
-    (partId) => questionBank.find((question) => question.questionId === partId)!
-  );
-  const currentQuestion = machineQuestions[view];
-  const reportDetails: ReportDetails = {
-    michlolName: michlolName,
-    michlolId: michlolId,
-    machineName,
-    equipmentUnit,
-    partName: currentQuestion.partName,
-  };
 
   return (
     <div className="machine">
@@ -49,21 +30,7 @@ export const Machine: React.FC<{
       <div className={`michlol-contents ${machineComplete} ${openStyle}`}>
         {isOpen && (
           <>
-            <MachinePartsList
-              view={view}
-              setView={setView}
-              questions={machineQuestions}
-              partsComplete={partsComplete}
-            />
-            <MachineForm
-              reportInstance={reportInstance}
-              key={`${machineName}-${currentQuestion.questionId}`}
-              currentQuestion={currentQuestion}
-              machineQuestions={machineQuestions}
-              reportDetails={reportDetails}
-              setMachineComplete={setMachineComplete}
-              setPartsComplete={setPartsComplete}
-            />
+            {/* <EngineeringMachineForm /> */}
             <button
               className="submit-data-btn"
               onClick={async () => {

@@ -9,20 +9,34 @@ export const RouteView: React.FC<{
   reportInstance: Route;
   setScreen: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ reportInstance, setScreen }) => {
+  console.log(reportInstance);
   const [machineFilter, setMachineFilter] = useState<MachineFilter>("הכל");
   const machines: MachineDetails[] = [];
   //For each michlol, push a machine object with the michlol details
-  reportInstance.michlolim?.forEach((michlol) => {
-    for (let [key, value] of Object.entries(michlol.machines)) {
+  if (reportInstance.type === "survey") {
+    reportInstance.michlolim?.forEach((michlol) => {
+      for (let [key, value] of Object.entries(michlol.machines)) {
+        machines.push({
+          machineName: key,
+          michlolId: michlol.michlolId,
+          michlolName: michlol.michlolName,
+          equipmentUnit: michlol.equipmentUnit,
+          parts: value,
+        });
+      }
+    });
+  } else {
+    reportInstance.machines?.forEach((machine) =>
       machines.push({
-        machineName: key,
-        michlolId: michlol.michlolId,
-        michlolName: michlol.michlolName,
-        equipmentUnit: michlol.equipmentUnit,
-        parts: value,
-      });
-    }
-  });
+        machineName: machine,
+        michlolId: "",
+        michlolName: "",
+        equipmentUnit: "",
+        parts: [],
+      })
+    );
+  }
+
   // Filter machines based on filter state and then sort based on name
   const finalMachines = machines
     .filter((machine) => {

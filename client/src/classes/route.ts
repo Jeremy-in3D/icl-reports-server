@@ -1,15 +1,17 @@
-import { ReportDetails } from "../components/report/machine";
+import { ReportDetails } from "../components/report/survey/survey-machine";
 import { MachineFilter } from "../components/report/route-view";
-import { Routes } from "../data/reports-data";
+import { Engineering, Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 
 export class Route {
+  type?: "survey" | "engineering" | null;
   reportId?: string | null;
   routeId?: string;
   routeName?: string;
   dateCreated?: number | null;
   date?: string;
   michlolim?: Routes[number]["michlolim"];
+  machines?: string[];
   data: {
     [machineName: string]: MachineData;
   };
@@ -18,26 +20,46 @@ export class Route {
     this.data = {};
   }
 
-  newReport(report: Routes[number]): ReportData {
+  newReport(report: Routes[number] | Engineering[number]): ReportData {
     const timestamp = Date.now();
-    return {
-      dateCreated: timestamp,
-      date: getDateString(new Date(Date.now())),
-      reportId: `${report.routeId}-${timestamp}`,
-      routeId: report.routeId,
-      routeName: report.routeName,
-      michlolim: report.michlolim,
-      data: {},
-    };
+    if (report.type === "survey") {
+      return {
+        type: report.type,
+        dateCreated: timestamp,
+        date: getDateString(new Date(Date.now())),
+        reportId: `${report.routeId}-${timestamp}`,
+        routeId: report.routeId,
+        routeName: report.routeName,
+        michlolim: report.michlolim,
+        data: {},
+      };
+    } else {
+      return {
+        type: report.type,
+        dateCreated: timestamp,
+        date: getDateString(new Date(Date.now())),
+        reportId: `${report.routeId}-${timestamp}`,
+        routeId: report.routeId,
+        routeName: report.routeName,
+        machines: report.machines,
+        data: {},
+      };
+    }
   }
 
   instantiateReport(report: ReportData) {
+    this.type = report.type;
     this.reportId = report.reportId;
     this.routeId = report.routeId;
     this.routeName = report.routeName;
     this.dateCreated = report.dateCreated;
     this.date = report.date;
-    this.michlolim = report.michlolim;
+    if (report.michlolim) {
+      this.michlolim = report.michlolim;
+    }
+    if (report.machines) {
+      this.machines = report.machines;
+    }
   }
 
   loadMachines(machines: MachineData[]) {
@@ -116,12 +138,14 @@ export class Route {
 }
 
 export type ReportData = {
+  type: "survey" | "engineering";
   reportId: string;
   routeId: string;
   routeName: string;
   dateCreated: number;
   date: string;
-  michlolim: Routes[number]["michlolim"];
+  michlolim?: Routes[number]["michlolim"];
+  machines?: string[];
   data: {
     [machineName: string]: MachineData;
   };

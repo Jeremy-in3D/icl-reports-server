@@ -638,8 +638,11 @@ export const michlolim: MichlolContents[] = [
   //#endregion
 ];
 
+//These routes are the ones that exist within the mongoDB routes collection
 export const routes: Routes = [
+  //#region Survey Route 1
   {
+    type: "survey",
     routeId: "R1",
     routeName: "ספיגה 50",
     michlolim: [
@@ -762,7 +765,10 @@ export const routes: Routes = [
       },
     ],
   },
+  //#endregion
+  //#region Survey Route 2
   {
+    type: "survey",
     routeId: "R2",
     routeName: "משלוחים",
     michlolim: [
@@ -893,7 +899,10 @@ export const routes: Routes = [
       },
     ],
   },
+  //#endregion
+  //#region Survey Route 3
   {
+    type: "survey",
     routeId: "R3",
     routeName: "תופים סובבים",
     michlolim: [
@@ -973,7 +982,10 @@ export const routes: Routes = [
       },
     ],
   },
+  //#endregion
+  //#region Survey Route 4
   {
+    type: "survey",
     routeId: "R4",
     routeName: "מגדל ניפוי",
     michlolim: [
@@ -1091,7 +1103,10 @@ export const routes: Routes = [
       },
     ],
   },
+  //#endregion
+  //#region Survey Route 6
   {
+    type: "survey",
     routeId: "R6",
     routeName: "מתקן 40",
     michlolim: [
@@ -1296,7 +1311,26 @@ export const routes: Routes = [
       },
     ],
   },
+  //#endregion
 ];
+
+export const engineering: Engineering = [
+  //#region Engineering Report Quakes
+  {
+    type: "engineering",
+    routeId: "E1",
+    routeName: 'דו"ח רעידות',
+    machines: [
+      "50-017 C1 מזין סרט (מסוע סרט)",
+      "50-018 V1 מגרען",
+      "50-022 H5 מייבש סובב ראשוני",
+      "50-028 C2 מעלית כפות (דליין חם)",
+      "50-030 H2 מקרר סובב",
+    ],
+  },
+];
+
+//#endregion];
 export type MichlolContents = {
   michlolId: string;
   michlolName: string;
@@ -1305,7 +1339,15 @@ export type MichlolContents = {
 };
 
 export type Routes = {
+  type: "survey";
   routeId: string;
   routeName: string;
   michlolim: MichlolContents[];
+}[];
+
+export type Engineering = {
+  type: "engineering";
+  routeId: string;
+  routeName: string;
+  machines: string[];
 }[];

@@ -1,7 +1,7 @@
 import React from "react";
-import { QuestionBank } from "../../data/question-bank";
+import { QuestionBank } from "../../../data/question-bank";
 
-export const MachinePartsList: React.FC<{
+export const SurveyMachinePartsList: React.FC<{
   view: number;
   setView: React.Dispatch<React.SetStateAction<number>>;
   questions: QuestionBank;

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FormSubmission, Route } from "../../classes/route";
-import { FormInput } from "./inputs/form-input";
-import { QuestionBank } from "../../data/question-bank";
-import { ReportDetails } from "./machine";
-import { MachineFilter } from "./route-view";
+import { FormSubmission, Route } from "../../../classes/route";
+import { FormInput } from "../inputs/form-input";
+import { QuestionBank } from "../../../data/question-bank";
+import { ReportDetails } from "./survey-machine";
+import { MachineFilter } from "../route-view";
 
-export const MachineForm: React.FC<{
+export const SurveyMachineForm: React.FC<{
   reportInstance: Route;
   currentQuestion: QuestionBank[number];
   machineQuestions: QuestionBank;
