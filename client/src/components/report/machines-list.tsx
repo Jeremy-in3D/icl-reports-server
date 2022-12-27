@@ -13,7 +13,7 @@ export const MachinesList: React.FC<{
       <h2 className="machines-header">מכונות</h2>
       {machineList.map((machine) => (
         <Machine
-          key={`${reportInstance.routeId}-${machine.machineName}-${machineFilter}`}
+          key={`${reportInstance.routeId}-${machine.machineName}`}
           reportInstance={reportInstance}
           machine={machine}
         />
