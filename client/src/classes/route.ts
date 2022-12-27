@@ -110,6 +110,7 @@ export class Route {
     return {
       completed: false,
       uniqueId: `${this.reportId}: ${machineName}`,
+      machineName,
       routeName: this.routeName!,
       routeId: this.routeId!,
       reportId: this.reportId!,

@@ -863,3 +863,29 @@ textarea {
   margin-bottom: 0.5em;
   text-align: center;
 }
+
+.radio-question input {
+  display: none;
+}
+
+.radio-question {
+  width: 40%;
+  margin: 0.5em auto;
+}
+
+.radio-question label {
+  background-color: rgba(128, 128, 128, 0.315);
+  display: block;
+  width: 100%;
+  padding: 1em;
+  border-radius: 6px;
+}
+
+.check-with-label:checked + .label-for-check {
+  background: var(--blue5);
+  color: white;
+}
+
+.radio-question-title {
+  width: 100%;
+}

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Route } from "../../../classes/route";
 import { ReportDetails } from "../survey/survey-machine";
 import { MachineFilter } from "../route-view";
+import { RadioQuestion } from "../inputs/radio-input";
 
 export const EngineeringMachineForm: React.FC<{
   reportInstance: Route;
@@ -12,10 +13,11 @@ export const EngineeringMachineForm: React.FC<{
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const textAreaAnswer = (reportInstance.data[reportDetails.machineName]?.data
     ?.text || "") as string;
-  const michlolStatusAnswer = (reportInstance.data[reportDetails.machineName]
-    ?.data?.status || "") as string;
+  const michlolOilAnswer = (reportInstance.data[reportDetails.machineName]?.data
+    ?.oil || "") as string;
   const michlolWearAnswer = (reportInstance.data[reportDetails.machineName]
     ?.data?.wear || "") as string;
+
   return (
     <>
       <form
@@ -37,64 +39,64 @@ export const EngineeringMachineForm: React.FC<{
           );
         }}
       >
-        <h3>Machine Status:</h3>
-        {/* <RadioQuestion
-          text={"Critical"}
-          name={`${michlolId}-status`}
-          id={`${michlolId}-status-critical`}
-          value={"critical"}
-          checked={"critical" === michlolStatusAnswer}
+        <h3 className="radio-question-title">שמן:</h3>
+        <RadioQuestion
+          text={"נורמלי"}
+          name={"oil"}
+          id={"oil-normal"}
+          value={"נורמלי"}
+          checked={"נורמלי" === michlolOilAnswer}
         />
         <RadioQuestion
-          text={"High"}
-          name={`${michlolId}-status`}
-          id={`${michlolId}-status-high`}
-          value={"high"}
-          checked={"high" === michlolStatusAnswer}
+          text={"גבולי"}
+          name={"oil"}
+          id={"oil-medium"}
+          value={"גבולי"}
+          checked={"גבולי" === michlolOilAnswer}
         />
         <RadioQuestion
-          text={"Medium"}
-          name={`${michlolId}-status`}
-          id={`${michlolId}-status-medium`}
-          value={"medium"}
-          checked={"medium" === michlolStatusAnswer}
+          text={"גבוה"}
+          name={"oil"}
+          id={"oil-high"}
+          value={"גבוה"}
+          checked={"גבוה" === michlolOilAnswer}
         />
         <RadioQuestion
-          text={"Normal"}
-          name={`${michlolId}-status`}
-          id={`${michlolId}-status-normal`}
-          value={"normal"}
-          checked={"normal" === michlolStatusAnswer}
+          text={"קריטי"}
+          name={"oil"}
+          id={"oil-critical"}
+          value={"קריטי"}
+          checked={"קריטי" === michlolOilAnswer}
         />
-        <h3>Wear and Tear</h3>
+        <h3 className="radio-question-title">בלאי:</h3>
         <RadioQuestion
-          text={"Critical"}
-          name={`${michlolId}-wear`}
-          id={`${michlolId}-wear-critical`}
-          value={"critical"}
-          checked={"critical" === michlolWearAnswer}
-        />
-        <RadioQuestion
-          text={"High"}
-          name={`${michlolId}-wear`}
-          id={`${michlolId}-wear-high`}
-          value={"high"}
-          checked={"high" === michlolWearAnswer}
+          text={"נורמלי"}
+          name={"wear"}
+          id={"wear-normal"}
+          value={"נורמלי"}
+          checked={"נורמלי" === michlolWearAnswer}
         />
         <RadioQuestion
-          text={"Medium"}
-          name={`${michlolId}-wear`}
-          id={`${michlolId}-wear-medium`}
-          value={"medium"}
-          checked={"medium" === michlolWearAnswer}
+          text={"גבולי"}
+          name={"wear"}
+          id={"wear-medium"}
+          value={"גבולי"}
+          checked={"גבולי" === michlolWearAnswer}
         />
         <RadioQuestion
-          text={"Normal"}
-          name={`${michlolId}-wear`}
-          id={`${michlolId}-wear-normal`}
-          value={"normal"}
-          checked={"normal" === michlolWearAnswer}
-        /> */}
+          text={"גבוה"}
+          name={"wear"}
+          id={"wear-high"}
+          value={"גבוה"}
+          checked={"גבוה" === michlolWearAnswer}
+        />
+        <RadioQuestion
+          text={"קריטי"}
+          name={"wear"}
+          id={"wear-critical"}
+          value={"קריטי"}
+          checked={"קריטי" === michlolWearAnswer}
+        />
         <textarea
           name="text"
           ref={textAreaRef}
