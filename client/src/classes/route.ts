@@ -141,7 +141,7 @@ export class Route {
 
   sendMachineData(machineName: string) {
     const machine = this.data?.[machineName];
-    if (machine) return JSON.stringify(machine);
+    if (machine) return JSON.stringify({ ...machine, completed: true });
   }
 
   getMachineComplete(machineName: string): MachineFilter {

@@ -26,15 +26,15 @@ export const SurveyMachine: React.FC<{
   const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const openStyle = `${isOpen ? "opened" : "closed"}`;
   //Get parts from question bank online
-  const machineQuestions = parts.map(
+  const machineQuestions = parts!.map(
     (partId) => questionBank.find((question) => question.questionId === partId)!
   );
   const currentQuestion = machineQuestions[view];
   const reportDetails: ReportDetails = {
-    michlolName: michlolName,
-    michlolId: michlolId,
+    michlolName: michlolName!,
+    michlolId: michlolId!,
     machineName,
-    equipmentUnit,
+    equipmentUnit: equipmentUnit!,
     partName: currentQuestion.partName,
   };
 
