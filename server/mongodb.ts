@@ -30,9 +30,11 @@ export class MongoDB {
 
   updateDoc(payload: MachineData, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
+    //@ts-ignore //TO DO: Remove the _id from being sent with an existing machine data in first place
+    const { _id, ...rest } = payload;
     return collection.findOneAndReplace(
       { uniqueId: payload.uniqueId },
-      payload
+      { ...rest }
     );
   }
 

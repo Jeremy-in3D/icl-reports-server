@@ -197,7 +197,7 @@ export type MachineData = {
 };
 
 export type AlertData = {
-  uniqueId: string | null;
+  uniqueId: string;
   completed: boolean;
   michlolName: string | undefined;
   michlolId: string | undefined;

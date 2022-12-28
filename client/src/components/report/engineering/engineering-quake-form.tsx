@@ -10,9 +10,10 @@ export const EngineeringQuakeForm: React.FC<{
 }> = ({ reportInstance, machineName, setMachineComplete }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const textAreaAnswer = (reportInstance.data[machineName]?.data?.text ||
-    "") as string;
-  const statusAnswer = (reportInstance.data[machineName]?.data?.status ||
+  const textAreaAnswer = (reportInstance.data[machineName]?.data?.[
+    "טקסט חופשי"
+  ] || "") as string;
+  const statusAnswer = (reportInstance.data[machineName]?.data?.["סטטוס"] ||
     "") as string;
   const MHIAnswer = (reportInstance.data[machineName]?.data?.MHI ||
     "") as string;
@@ -33,31 +34,31 @@ export const EngineeringQuakeForm: React.FC<{
           setMachineComplete(reportInstance.getMachineComplete(machineName));
         }}
       >
-        <h3 className="radio-question-title">סטטוס המכונה:</h3>
+        <h3 className="radio-question-title">סטטוס:</h3>
         <RadioQuestion
           text={"Acceptable"}
-          name={"status"}
+          name={"סטטוס"}
           id={"status-acceptable"}
           value={"acceptable"}
           checked={"acceptable" === statusAnswer}
         />
         <RadioQuestion
           text={"Monitor"}
-          name={"status"}
+          name={"סטטוס"}
           id={"status-monitor"}
           value={"monitor"}
           checked={"monitor" === statusAnswer}
         />
         <RadioQuestion
           text={"Alarm"}
-          name={"status"}
+          name={"סטטוס"}
           id={"status-alarm"}
           value={"alarm"}
           checked={"alarm" === statusAnswer}
         />
         <RadioQuestion
           text={"Danger"}
-          name={"status"}
+          name={"סטטוס"}
           id={"status-danger"}
           value={"danger"}
           checked={"danger" === statusAnswer}
@@ -71,7 +72,7 @@ export const EngineeringQuakeForm: React.FC<{
         ></input>
         <h3 className="radio-question-title">טקסט חופשי:</h3>
         <textarea
-          name="text"
+          name="טקסט חופשי"
           ref={textAreaRef}
           maxLength={100}
           rows={4}

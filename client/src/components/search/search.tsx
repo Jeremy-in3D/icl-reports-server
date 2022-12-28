@@ -54,7 +54,9 @@ export const Search: React.FC<{
                   <SearchOption
                     text={"הורדה"}
                     href={downloadIcon.href}
-                    onClick={() => exportExcel(item.reportId)}
+                    onClick={() =>
+                      exportExcel(item.reportId, item.routeName, item.type)
+                    }
                   />
                   <SearchOption
                     text={"מחיקה"}

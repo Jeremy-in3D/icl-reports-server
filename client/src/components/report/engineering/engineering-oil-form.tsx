@@ -10,11 +10,12 @@ export const EngineeringOilForm: React.FC<{
 }> = ({ reportInstance, machineName, setMachineComplete }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const textAreaAnswer = (reportInstance.data[machineName]?.data?.text ||
+  const textAreaAnswer = (reportInstance.data[machineName]?.data?.[
+    "טקסט חופשי"
+  ] || "") as string;
+  const oilAnswer = (reportInstance.data[machineName]?.data?.["שמן"] ||
     "") as string;
-  const oilAnswer = (reportInstance.data[machineName]?.data?.oil ||
-    "") as string;
-  const wearAnswer = (reportInstance.data[machineName]?.data?.wear ||
+  const wearAnswer = (reportInstance.data[machineName]?.data?.["בלאי"] ||
     "") as string;
 
   return (
@@ -36,28 +37,28 @@ export const EngineeringOilForm: React.FC<{
         <h3 className="radio-question-title">שמן:</h3>
         <RadioQuestion
           text={"נורמלי"}
-          name={"oil"}
+          name={"שמן"}
           id={"oil-normal"}
           value={"נורמלי"}
           checked={"נורמלי" === oilAnswer}
         />
         <RadioQuestion
           text={"גבולי"}
-          name={"oil"}
+          name={"שמן"}
           id={"oil-medium"}
           value={"גבולי"}
           checked={"גבולי" === oilAnswer}
         />
         <RadioQuestion
           text={"גבוה"}
-          name={"oil"}
+          name={"שמן"}
           id={"oil-high"}
           value={"גבוה"}
           checked={"גבוה" === oilAnswer}
         />
         <RadioQuestion
           text={"קריטי"}
-          name={"oil"}
+          name={"שמן"}
           id={"oil-critical"}
           value={"קריטי"}
           checked={"קריטי" === oilAnswer}
@@ -65,35 +66,35 @@ export const EngineeringOilForm: React.FC<{
         <h3 className="radio-question-title">בלאי:</h3>
         <RadioQuestion
           text={"נורמלי"}
-          name={"wear"}
+          name={"בלאי"}
           id={"wear-normal"}
           value={"נורמלי"}
           checked={"נורמלי" === wearAnswer}
         />
         <RadioQuestion
           text={"גבולי"}
-          name={"wear"}
+          name={"בלאי"}
           id={"wear-medium"}
           value={"גבולי"}
           checked={"גבולי" === wearAnswer}
         />
         <RadioQuestion
           text={"גבוה"}
-          name={"wear"}
+          name={"בלאי"}
           id={"wear-high"}
           value={"גבוה"}
           checked={"גבוה" === wearAnswer}
         />
         <RadioQuestion
           text={"קריטי"}
-          name={"wear"}
+          name={"בלאי"}
           id={"wear-critical"}
           value={"קריטי"}
           checked={"קריטי" === wearAnswer}
         />
         <h3 className="radio-question-title">טקסט חופשי:</h3>
         <textarea
-          name="text"
+          name="טקסט חופשי"
           ref={textAreaRef}
           maxLength={100}
           rows={4}

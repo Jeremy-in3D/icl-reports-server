@@ -20,8 +20,8 @@ export const AlertScreen: React.FC = () => {
       <h2 className="alerts-title">התראות</h2>
       <div className="alerts">
         {alerts?.length ? (
-          alerts.map((alert) => (
-            <div className="alert-item" key={alert.uniqueId}>
+          alerts.map((alert, i) => (
+            <div className="alert-item" key={alert.uniqueId + i}>
               <div>{alert.routeName}</div>
               <div>{alert.machineName}</div>
               <div>
