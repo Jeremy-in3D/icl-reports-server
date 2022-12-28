@@ -3,7 +3,7 @@ import { Route } from "../../../classes/route";
 import { MachineFilter } from "../route-view";
 import { RadioQuestion } from "../inputs/radio-input";
 
-export const EngineeringMachineForm: React.FC<{
+export const EngineeringOilForm: React.FC<{
   reportInstance: Route;
   machineName: string;
   setMachineComplete: React.Dispatch<React.SetStateAction<MachineFilter>>;
@@ -12,9 +12,9 @@ export const EngineeringMachineForm: React.FC<{
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const textAreaAnswer = (reportInstance.data[machineName]?.data?.text ||
     "") as string;
-  const michlolOilAnswer = (reportInstance.data[machineName]?.data?.oil ||
+  const oilAnswer = (reportInstance.data[machineName]?.data?.oil ||
     "") as string;
-  const michlolWearAnswer = (reportInstance.data[machineName]?.data?.wear ||
+  const wearAnswer = (reportInstance.data[machineName]?.data?.wear ||
     "") as string;
 
   return (
@@ -39,28 +39,28 @@ export const EngineeringMachineForm: React.FC<{
           name={"oil"}
           id={"oil-normal"}
           value={"נורמלי"}
-          checked={"נורמלי" === michlolOilAnswer}
+          checked={"נורמלי" === oilAnswer}
         />
         <RadioQuestion
           text={"גבולי"}
           name={"oil"}
           id={"oil-medium"}
           value={"גבולי"}
-          checked={"גבולי" === michlolOilAnswer}
+          checked={"גבולי" === oilAnswer}
         />
         <RadioQuestion
           text={"גבוה"}
           name={"oil"}
           id={"oil-high"}
           value={"גבוה"}
-          checked={"גבוה" === michlolOilAnswer}
+          checked={"גבוה" === oilAnswer}
         />
         <RadioQuestion
           text={"קריטי"}
           name={"oil"}
           id={"oil-critical"}
           value={"קריטי"}
-          checked={"קריטי" === michlolOilAnswer}
+          checked={"קריטי" === oilAnswer}
         />
         <h3 className="radio-question-title">בלאי:</h3>
         <RadioQuestion
@@ -68,28 +68,28 @@ export const EngineeringMachineForm: React.FC<{
           name={"wear"}
           id={"wear-normal"}
           value={"נורמלי"}
-          checked={"נורמלי" === michlolWearAnswer}
+          checked={"נורמלי" === wearAnswer}
         />
         <RadioQuestion
           text={"גבולי"}
           name={"wear"}
           id={"wear-medium"}
           value={"גבולי"}
-          checked={"גבולי" === michlolWearAnswer}
+          checked={"גבולי" === wearAnswer}
         />
         <RadioQuestion
           text={"גבוה"}
           name={"wear"}
           id={"wear-high"}
           value={"גבוה"}
-          checked={"גבוה" === michlolWearAnswer}
+          checked={"גבוה" === wearAnswer}
         />
         <RadioQuestion
           text={"קריטי"}
           name={"wear"}
           id={"wear-critical"}
           value={"קריטי"}
-          checked={"קריטי" === michlolWearAnswer}
+          checked={"קריטי" === wearAnswer}
         />
         <textarea
           name="text"

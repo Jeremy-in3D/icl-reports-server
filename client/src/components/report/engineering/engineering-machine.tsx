@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Route } from "../../../classes/route";
 import { MachineDetails, MachineFilter } from "../route-view";
-import { EngineeringMachineForm } from "./engineering-machine-form";
+import { EngineeringOilForm } from "./engineering-oil-form";
+import { EngineeringQuakeForm } from "./engineering-quake-form";
 
 function getMachineStyle(machineState: MachineFilter) {
   if (machineState === "הושלם") return "completed";
@@ -19,6 +20,26 @@ export const EngineeringMachine: React.FC<{
   );
   const openStyle = `${isOpen ? "opened" : "closed"}`;
 
+  let machineForm;
+  if (reportInstance.routeName === 'דו"ח רעידות') {
+    machineForm = (
+      <EngineeringQuakeForm
+        reportInstance={reportInstance}
+        machineName={machineName}
+        setMachineComplete={setMachineComplete}
+      />
+    );
+  }
+  if (reportInstance.routeName === 'דו"ח מערכת שמן') {
+    machineForm = (
+      <EngineeringOilForm
+        reportInstance={reportInstance}
+        machineName={machineName}
+        setMachineComplete={setMachineComplete}
+      />
+    );
+  }
+
   return (
     <div className="machine">
       <div
@@ -30,12 +51,7 @@ export const EngineeringMachine: React.FC<{
       <div className={`michlol-contents ${machineComplete} ${openStyle}`}>
         {isOpen && (
           <>
-            {/* Seperate into oil / quake engineering here */}
-            <EngineeringMachineForm
-              reportInstance={reportInstance}
-              machineName={machineName}
-              setMachineComplete={setMachineComplete}
-            />
+            {machineForm}
             <button
               className="submit-data-btn"
               onClick={async () => {
