@@ -364,14 +364,14 @@ textarea {
   align-items: center;
   text-align: center;
   margin: 0.2em;
-  border: 1px solid black;
-  border-radius: 4px;
+  border: 2px solid gray;
+  border-radius: 6px;
   font-weight: 600;
   padding: 0.5em;
 }
 
 .m-question-marker.current {
-  border-top: 5px solid rgba(4, 69, 122, 0.8);
+  border: 2px solid black;
 }
 
 .m-question-marker.green {
@@ -423,6 +423,7 @@ textarea {
 .checkbox {
   height: 20px;
   width: 20px;
+  margin: 0.25em;
 }
 
 .form-checkbox label {
@@ -438,6 +439,11 @@ textarea {
 
 .form-secondary-checkbox {
   padding-right: 0.5em;
+}
+
+.form-secondary-checkbox {
+  padding-right: 0.5em;
+  accent-color: var(--blue1opaque);
 }
 
 .machine-area {
