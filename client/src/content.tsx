@@ -6,6 +6,7 @@ import { TopBar } from "./components/misc/top-bar";
 import { Routes } from "./data/reports-data";
 import { Home } from "./home";
 import { Route } from "./classes/route";
+import { StatusScreen } from "./components/status-screen";
 
 export const Content: React.FC = () => {
   const [showScreen, setShowScreen] = useState("home");
@@ -40,6 +41,9 @@ export const Content: React.FC = () => {
           setScreen={setShowScreen}
         />
       );
+      break;
+    case "status":
+      display = <StatusScreen />;
       break;
     default:
       display = <PageNotFound />;

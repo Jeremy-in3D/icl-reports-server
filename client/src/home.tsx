@@ -1,8 +1,7 @@
 import React from "react";
 import { Route } from "./classes/route";
-import { AlertScreen } from "./components/misc/alert-screen";
 import { HomeSelection } from "./components/misc/home-selection";
-import { createIcon, searchIcon, uploadIcon } from "./data/imports";
+import { createIcon, searchIcon, viewIcon } from "./data/imports";
 
 export const Home: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -31,10 +30,10 @@ export const Home: React.FC<{
       },
     },
     {
-      text: "היסטוריית הגשה",
-      imgPath: uploadIcon.href,
+      text: "מסך סטטוס",
+      imgPath: viewIcon.href,
       onClick: async () => {
-        setScreen("submission");
+        setScreen("status");
       },
     },
   ];
@@ -49,7 +48,6 @@ export const Home: React.FC<{
           onClick={item.onClick}
         />
       ))}
-      <AlertScreen />
     </div>
   );
 };

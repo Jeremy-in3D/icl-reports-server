@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { AlertData } from "../../classes/route";
-import { checkmarkIcon, lookatAlert, minusIcon } from "../../data/imports";
+import { AlertData } from "../classes/route";
+import { checkmarkIcon, lookatAlert, minusIcon } from "../data/imports";
 
-export const AlertScreen: React.FC = () => {
+export const StatusScreen: React.FC = () => {
   const [alerts, setAlerts] = useState<AlertData[]>();
 
   async function getAlerts() {
