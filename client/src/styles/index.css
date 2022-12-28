@@ -249,11 +249,6 @@ input[type="range"] {
   bottom: 2px;
 }
 
-.free-text {
-  width: 100%;
-  text-align: center;
-}
-
 textarea {
   resize: none;
 }
@@ -269,6 +264,7 @@ textarea {
 .text-area {
   width: 80%;
   margin: 0.25em auto;
+  font-size: 1em;
 }
 
 .text-input {
@@ -888,4 +884,10 @@ textarea {
 
 .radio-question-title {
   width: 100%;
+}
+
+.number-input {
+  margin: 1em auto;
+  padding: 0.5em;
+  font-size: 1em;
 }

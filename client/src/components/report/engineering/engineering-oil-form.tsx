@@ -91,6 +91,7 @@ export const EngineeringOilForm: React.FC<{
           value={"קריטי"}
           checked={"קריטי" === wearAnswer}
         />
+        <h3 className="radio-question-title">טקסט חופשי:</h3>
         <textarea
           name="text"
           ref={textAreaRef}

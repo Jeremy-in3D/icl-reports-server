@@ -79,6 +79,7 @@ export const SurveyMachineForm: React.FC<{
           currentQuestion={currentQuestion}
           machineName={reportDetails.machineName}
         />
+        <h3 className="radio-question-title">טקסט חופשי:</h3>
         <textarea
           ref={textAreaRef}
           maxLength={100}

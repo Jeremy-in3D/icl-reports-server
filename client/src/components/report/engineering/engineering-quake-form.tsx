@@ -63,7 +63,13 @@ export const EngineeringQuakeForm: React.FC<{
           checked={"danger" === statusAnswer}
         />
         <h3 className="radio-question-title">MHI:</h3>
-        <input type="number" name="MHI" defaultValue={MHIAnswer}></input>
+        <input
+          type="number"
+          name="MHI"
+          defaultValue={MHIAnswer}
+          className="number-input"
+        ></input>
+        <h3 className="radio-question-title">טקסט חופשי:</h3>
         <textarea
           name="text"
           ref={textAreaRef}
