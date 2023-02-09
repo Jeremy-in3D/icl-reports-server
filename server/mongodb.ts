@@ -1,7 +1,21 @@
 import { Collection, MongoClient } from "mongodb";
-import { MachineData, ReportData } from "./server";
+import { MachineData, ReportData, ReportDataCurrent } from "./server";
 
-type CollectionIds = "reports" | "machines" | "alerts" | "routes";
+type CollectionIds =
+  | "reports"
+  | "machines"
+  | "alerts"
+  | "routes"
+  | "reports_history";
+
+type RouteName = string | number;
+type MachineName = string | number;
+interface UpdateDocAdjustedParams {
+  payload: ReportDataCurrent;
+  collectionId: CollectionIds;
+  routeName: RouteName;
+  key: MachineName;
+}
 
 export class MongoDB {
   client: MongoClient;
@@ -35,6 +49,25 @@ export class MongoDB {
     return collection.findOneAndReplace(
       { uniqueId: payload.uniqueId },
       { ...rest }
+    );
+  }
+
+  // FOR UPDATING SPECIFIC DOCS, NOT REPLACING
+
+  updateDocAdjusted({
+    payload,
+    collectionId,
+    routeName,
+    key,
+  }: UpdateDocAdjustedParams) {
+    if (!payload) {
+      return;
+    }
+    const collection = this.getCollection(collectionId);
+    return collection.findOneAndUpdate(
+      { routeName },
+      { $set: { [key]: payload } },
+      { upsert: true }
     );
   }
 

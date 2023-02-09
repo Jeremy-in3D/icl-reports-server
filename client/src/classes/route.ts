@@ -2,6 +2,7 @@ import { ReportDetails } from "../components/report/survey/survey-machine";
 import { MachineFilter } from "../components/report/route-view";
 import { Engineering, Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
+import { v4 as uuidv4 } from "uuid";
 
 export class Route {
   type?: "survey" | "engineering" | null;
@@ -93,7 +94,7 @@ export class Route {
   ): MachineData {
     return {
       completed: false,
-      uniqueId: `${this.reportId}: ${machineName}`,
+      uniqueId: `${this.reportId}: ${machineName}: ${uuidv4()}`,
       michlolName,
       michlolId,
       machineName,

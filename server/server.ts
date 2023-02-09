@@ -8,6 +8,7 @@ import { streamToBuffer } from "./helpers/streamToBuffer.js";
 import { MongoDB } from "./mongodb.js";
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
+import dayjs from "dayjs";
 
 //Client for pulling public key for use with verifying jwt
 const JwksClient = jwksClient({
@@ -65,9 +66,26 @@ app.post("/upload-image", async (req, res) => {
 
 app.post("/save-machine", async (req, res) => {
   const data: MachineData = req.body;
+  const dataToSave: ReportDataCurrent = {
+    michlolName: data.michlolName,
+    michlolId: data.michlolId,
+    createdAt: dayjs().format(),
+    data: data.data,
+  };
   try {
     //Update machine in collection
     const updateResult = await mongo.updateDoc(data, "machines");
+    try {
+      const updateReport = await mongo.updateDocAdjusted({
+        payload: dataToSave,
+        collectionId: "reports",
+        routeName: data.routeName,
+        key: data.machineName,
+      });
+    } catch (e) {
+      console.log("something went wrong, ", e);
+    }
+
     //Save machine to collection
     if (!updateResult.value) await mongo.insertDoc(data, "machines");
     //Refactor to promise.all
@@ -115,22 +133,29 @@ app.get("/get-routes", async (req, res) => {
 app.post("/create-report", async (req, res) => {
   const data: ReportData = req.body;
   try {
-    const inserted = await mongo.insertDoc(data, "reports");
+    const inserted = await mongo.insertDoc(data, "reports_history");
     res.status(200).send(inserted.insertedId.toString());
   } catch (e) {
     res.status(500).send("Error" + e);
   }
 });
 
-app.post("/update-alert", async (req, res) => {
-  const data = req.body;
-  try {
-    await mongo.updateAlert(data, "alerts");
-    res.status(200).send();
-  } catch (e) {
-    res.status(500).send("Error" + e);
-  }
-});
+// app.get("/get-current-report", async (req, res) => {
+//   console.log("at least we got something eh");
+//   const string = "this is our secret codeword!";
+//   res.send(string);
+// });
+
+// app.post("/update-alert", async (req, res) => {
+//   const data = req.body;
+//   console.log("trying to update alert", data);
+//   try {
+//     await mongo.updateAlert(data, "alerts");
+//     res.status(200).send();
+//   } catch (e) {
+//     res.status(500).send("Error" + e);
+//   }
+// });
 
 app.post("/delete-report", async (req, res) => {
   const id = req.body;
@@ -149,7 +174,7 @@ app.post("/delete-report", async (req, res) => {
 app.post("/search-reports", async (req, res) => {
   const data = req.body;
   try {
-    const results = await mongo.searchDocs(data, "reports");
+    const results = await mongo.searchDocs(data, "reports_history");
     console.log(`Database was searched successfully`);
     res.status(200).json(results);
   } catch (e) {
@@ -207,6 +232,13 @@ async function validateJwt(req: any, res: any, next: NextFunction) {
     res.status(401).send("No authorization token provided");
   }
 }
+
+export type ReportDataCurrent = {
+  michlolName: string | undefined;
+  michlolId: string | undefined;
+  createdAt: string | object;
+  data: any;
+};
 
 export type MachineData = {
   uniqueId: string;
