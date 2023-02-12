@@ -3,6 +3,7 @@ import { Route } from "../../classes/route";
 import { Routes } from "../../data/reports-data";
 import { ShowError } from "../misc/show-error";
 import { RouteView } from "./route-view";
+import { reportTypes } from "./common/reportTypes";
 
 export const Report: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -53,7 +54,8 @@ export const Report: React.FC<{
                   route,
                   reportInstance,
                   setRouteView,
-                  setErrorMessage
+                  setErrorMessage,
+                  idx
                 );
               }}
             >
@@ -69,9 +71,10 @@ async function createReport(
   route: Routes[number],
   reportInstance: Route,
   setRouteView: React.Dispatch<React.SetStateAction<boolean>>,
-  setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>
+  setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>,
+  idx: number
 ) {
-  console.log("we clicked on one of the buttons we want");
+  console.log("inside createReport", idx);
   //Creates new report on the instance using the route
   const newReport = reportInstance.newReport(route);
   console.log(newReport);
@@ -91,27 +94,17 @@ async function createReport(
   // } catch (e) {
   //   if (e instanceof Error) setErrorMessage(`Error: ${e.message}`);
   // }
-  console.log("1");
+
   try {
-    console.log("1 + 1/2");
+    const reportToFetch = { report: reportTypes[idx], testData: "yabbabadabo" };
     const reportResponse = await fetch("/get-current-report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: "",
-      //   });
-      //   if (reportResponse.status === 200) {
-      //     //If the new report has successfully opened within the database, then it instantiates locally
-      //   } else {
-      //     throw new Error("Failed to create new report");
+      body: JSON.stringify(reportToFetch),
     });
-    console.log("2");
-    console.log(reportResponse);
-
-    const res = await reportResponse.json();
-    console.log("our res! ", res);
+    const response = await reportResponse.json();
+    console.log("2", response);
   } catch (e) {
     if (e instanceof Error) setErrorMessage(`Error: ${e.message}`);
-    console.log("3");
   }
-  console.log("4");
 }

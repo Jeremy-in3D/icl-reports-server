@@ -73,6 +73,7 @@ app.post("/save-machine", async (req, res) => {
     data: data.data,
   };
   try {
+    const saveToReportsHistory = mongo.insertDoc(data, "reports_history");
     //Update machine in collection
     const updateResult = await mongo.updateDoc(data, "machines");
     try {
@@ -107,7 +108,7 @@ app.post("/save-machine", async (req, res) => {
           machineName: data.machineName,
           michlolName: data.michlolName,
           michlolId: data.michlolId,
-          dateCreated: data.dateCreated,
+          createdAt: data.createdAt,
           completed: false,
           data: alertData,
         };
@@ -140,11 +141,19 @@ app.post("/create-report", async (req, res) => {
   }
 });
 
-// app.get("/get-current-report", async (req, res) => {
-//   console.log("at least we got something eh");
-//   const string = "this is our secret codeword!";
-//   res.send(string);
-// });
+app.post("/get-current-report", async (req, res) => {
+  try {
+    const data: ReportTypes = req.body;
+
+    const currentReport = await mongo.find(
+      { routeName: data.report },
+      "reports"
+    );
+    res.status(200).send(JSON.stringify(currentReport));
+  } catch (e) {
+    res.status(500).send("Error" + e);
+  }
+});
 
 // app.post("/update-alert", async (req, res) => {
 //   const data = req.body;
@@ -248,7 +257,7 @@ export type MachineData = {
   michlolName: string | undefined;
   michlolId: string | undefined;
   machineName: string;
-  dateCreated: number | null;
+  createdAt: number | null;
   data: {
     [partName: string]: FormSubmission;
   };
@@ -261,8 +270,13 @@ type FormSubmission = {
 };
 
 export type ReportData = {
-  dateCreated: number;
+  createdAt: number;
   routeId: string;
   routeName: string;
   reportId: string;
+};
+
+type ReportTypes = {
+  report: number;
+  testData: string;
 };

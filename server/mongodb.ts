@@ -71,6 +71,13 @@ export class MongoDB {
     );
   }
 
+  find(identifier: any, collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId)
+      .find(identifier)
+      .toArray();
+    return collection;
+  }
+
   removeDoc(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     return collection.deleteOne({ reportId: id });
@@ -84,16 +91,16 @@ export class MongoDB {
   getDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     if (id.length) {
-      const find = collection.find({ reportId: id }).sort({ dateCreated: -1 });
+      const find = collection.find({ reportId: id }).sort({ createdAt: -1 });
       return find.toArray();
     }
-    const find = collection.find().sort({ dateCreated: -1 });
+    const find = collection.find().sort({ createdAt: -1 });
     return find.toArray();
   }
 
   getAlerts(collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    const find = collection.find().sort({ dateCreated: 1 });
+    const find = collection.find().sort({ createdAt: 1 });
     return find.toArray();
   }
 
@@ -116,9 +123,9 @@ export class MongoDB {
     const collection = this.getCollection(collectionId);
     const find = collection
       .find({
-        dateCreated: { $gt: startDate, $lt: endDate },
+        createdAt: { $gt: startDate, $lt: endDate },
       })
-      .sort({ dateCreated: -1 });
+      .sort({ createdAt: -1 });
     return find.toArray();
   }
 }

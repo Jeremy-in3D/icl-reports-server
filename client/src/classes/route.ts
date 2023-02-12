@@ -3,14 +3,15 @@ import { MachineFilter } from "../components/report/route-view";
 import { Engineering, Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
 import { v4 as uuidv4 } from "uuid";
+import dayjs from "../common/dayjs";
 
 export class Route {
   type?: "survey" | "engineering" | null;
   reportId?: string | null;
   routeId?: string;
   routeName?: string;
-  dateCreated?: number | null;
-  date?: string;
+  createdAt?: number | string | null;
+  date?: string | number;
   michlolim?: Routes[number]["michlolim"];
   machines?: string[];
   data: {
@@ -22,12 +23,12 @@ export class Route {
   }
 
   newReport(report: Routes[number] | Engineering[number]): ReportData {
-    const timestamp = Date.now();
+    const timestamp = dayjs().format();
     if (report.type === "survey") {
       return {
         type: report.type,
-        dateCreated: timestamp,
-        date: getDateString(new Date(Date.now())),
+        createdAt: dayjs().format(),
+        date: dayjs().format("YYYY-MM-DD"),
         reportId: `${report.routeId}-${timestamp}`,
         routeId: report.routeId,
         routeName: report.routeName,
@@ -37,7 +38,7 @@ export class Route {
     } else {
       return {
         type: report.type,
-        dateCreated: timestamp,
+        createdAt: timestamp,
         date: getDateString(new Date(Date.now())),
         reportId: `${report.routeId}-${timestamp}`,
         routeId: report.routeId,
@@ -53,7 +54,7 @@ export class Route {
     this.reportId = report.reportId;
     this.routeId = report.routeId;
     this.routeName = report.routeName;
-    this.dateCreated = report.dateCreated;
+    this.createdAt = report.createdAt;
     this.date = report.date;
     if (report.michlolim) {
       this.michlolim = report.michlolim;
@@ -102,7 +103,7 @@ export class Route {
       routeName: this.routeName!,
       routeId: this.routeId!,
       reportId: this.reportId!,
-      dateCreated: this.dateCreated!,
+      createdAt: this.createdAt!,
       data: {},
     };
   }
@@ -115,7 +116,7 @@ export class Route {
       routeName: this.routeName!,
       routeId: this.routeId!,
       reportId: this.reportId!,
-      dateCreated: this.dateCreated!,
+      createdAt: this.createdAt!,
       data: {},
     };
   }
@@ -163,8 +164,8 @@ export type ReportData = {
   reportId: string;
   routeId: string;
   routeName: string;
-  dateCreated: number;
-  date: string;
+  createdAt: number | string;
+  date: string | number;
   michlolim?: Routes[number]["michlolim"];
   machines?: string[];
   data: {
@@ -189,7 +190,7 @@ export type MachineData = {
   michlolId: string | undefined;
   equipmentUnit: string;
   machineName: string;
-  dateCreated: number | null;
+  createdAt: number | string | null;
   data:
     | {
         [partName: string]: FormSubmission;
@@ -206,7 +207,7 @@ export type AlertData = {
   routeName: string;
   routeId: string;
   reportId: string;
-  dateCreated: number | null;
+  createdAt: number | null;
   data: {
     [partName: string]: FormSubmission;
   };

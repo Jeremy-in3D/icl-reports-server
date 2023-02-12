@@ -35,7 +35,7 @@ export const Search: React.FC<{
               <div className="search-item" key={item.reportId}>
                 <h2>{item.reportId}</h2>
                 <p>{item.routeName}</p>
-                <p>{new Date(item.dateCreated).toDateString()}</p>
+                <p>{new Date(item.createdAt).toDateString()}</p>
                 <div className="search-item-options">
                   <SearchOption
                     text={"פתיחה"}
