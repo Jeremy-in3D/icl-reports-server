@@ -74,6 +74,8 @@ export class MongoDB {
   find(identifier: any, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId)
       .find(identifier)
+      .sort({ createdAt: -1 })
+      .limit(1)
       .toArray();
     return collection;
   }
