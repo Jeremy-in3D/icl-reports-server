@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useRef, useState } from "react";
 import { Loading } from "./components/loading";
 import { Login } from "./components/login";
-import AppContext, { Context } from "./context/context";
+import AppContext from "./context/context";
 
 const Content = lazy(() =>
   import("./content").then((module) => ({ default: module.Content }))
@@ -10,7 +10,7 @@ const Content = lazy(() =>
 export const App: React.FC = () => {
   const [authorized, setAuthorized] = useState<boolean>(true);
   const [user, setUser] = useState(false);
-  const [report, setReport] = useState();
+  const [reports, setReports] = useState([]);
   const [extra, setExtra] = useState();
 
   const accessToken = useRef<string>();
@@ -18,7 +18,7 @@ export const App: React.FC = () => {
   return (
     <div className="app">
       <AppContext.Provider
-        value={{ user, setUser, report, setReport, extra, setExtra }}
+        value={{ user, setUser, reports, setReports, extra, setExtra }}
       >
         <Suspense fallback={<Loading />}>
           {authorized ? (
