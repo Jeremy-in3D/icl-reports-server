@@ -43,7 +43,12 @@ export const Content: React.FC = () => {
       );
       break;
     case "status":
-      display = <StatusScreen />;
+      display = (
+        <StatusScreen
+          setScreen={setShowScreen}
+          reportInstance={reportInstance.current}
+        />
+      );
       break;
     default:
       display = <PageNotFound />;

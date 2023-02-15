@@ -13,7 +13,7 @@ export const Export: React.FC = () => {
     async function exportExcel() {
       // const pullResult = await fetch("/get-docs", {
       //   method: "POST",
-      //   body: reportId,
+      //   body: JSON.stringify({reportId}),
       // });
       // if (pullResult.status === 200) {
       // const response = await pullResult.json();

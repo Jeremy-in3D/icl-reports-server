@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AlertData } from "../classes/route";
 import { checkmarkIcon, lookatAlert, minusIcon } from "../data/imports";
+import { ReportData, Route } from "../classes/route";
 
-export const StatusScreen: React.FC = () => {
+export const StatusScreen: React.FC<{
+  setScreen: React.Dispatch<React.SetStateAction<string>>;
+  reportInstance: Route;
+}> = ({ setScreen, reportInstance }) => {
   const [alerts, setAlerts] = useState<AlertData[]>();
 
   async function getAlerts() {
@@ -29,7 +33,13 @@ export const StatusScreen: React.FC = () => {
                   <img
                     className={"alert-item-view"}
                     src={lookatAlert.href}
-                    onClick={() => {}}
+                    onClick={() => {
+                      handleViewReport(
+                        setScreen,
+                        reportInstance,
+                        alert.reportId
+                      );
+                    }}
                   ></img>
                   <img
                     className={`alert-item-btn ${
@@ -70,4 +80,20 @@ export const StatusScreen: React.FC = () => {
       </div>
     </div>
   );
+};
+
+const handleViewReport = async (
+  setScreen: Dispatch<SetStateAction<string>>,
+  reportInstance: Route,
+  reportId: string
+) => {
+  const result = await fetch("/get-docs", {
+    method: "POST",
+    body: JSON.stringify({ reportId, isFromAlerts: true }),
+  });
+
+  const data = await result.json();
+  reportInstance.instantiateReport(data.reportHistoryresults[0]);
+  reportInstance.loadMachines(data.results);
+  setScreen("report");
 };
