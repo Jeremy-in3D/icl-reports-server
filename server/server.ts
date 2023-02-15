@@ -71,11 +71,13 @@ app.post("/save-machine", async (req, res) => {
     michlolId: data.michlolId,
     createdAt: dayjs().format(),
     data: data.data,
+    user: data.user,
   };
   try {
-    const saveToReportsHistory = mongo.insertDoc(data, "reports_history");
+    // const saveToReportsHistory = mongo.insertDoc(data, "reports_history");
     //Update machine in collection
     const updateResult = await mongo.updateDoc(data, "machines");
+    //#3 and #4 is just try-catch for updating reports doc
     try {
       const updateReport = await mongo.updateDocAdjusted({
         payload: dataToSave,
@@ -111,6 +113,7 @@ app.post("/save-machine", async (req, res) => {
           createdAt: data.createdAt,
           completed: false,
           data: alertData,
+          user: data.user,
         };
         await mongo.insertDoc(alert, "alerts");
       });
@@ -145,11 +148,27 @@ app.post("/get-current-report", async (req, res) => {
   try {
     const data: ReportTypes = req.body;
 
+    const reportAndMachines: ReportAndMachines = {
+      report: null,
+      machines: null,
+    };
+
     const currentReport = await mongo.find(
       { routeName: data.report },
-      "reports"
+      "reports_history"
     );
-    res.status(200).send(JSON.stringify(currentReport));
+
+    if (currentReport[0]) {
+      reportAndMachines.report = currentReport[0];
+
+      const machinesToMatchReport = await mongo.getDocs(
+        currentReport[0].reportId,
+        "machines"
+      );
+      reportAndMachines.machines = machinesToMatchReport;
+    }
+
+    res.status(200).send(JSON.stringify(reportAndMachines));
   } catch (e) {
     res.status(500).send("Error" + e);
   }
@@ -182,21 +201,51 @@ app.post("/delete-report", async (req, res) => {
 
 app.post("/search-reports", async (req, res) => {
   const data = req.body;
+  // console.log("our req.body ", req.body);
   try {
-    const results = await mongo.searchDocs(data, "reports_history");
-    console.log(`Database was searched successfully`);
-    res.status(200).json(results);
+    const reportHistoryresults = await mongo.searchDocs(
+      data,
+      "reports_history"
+    );
+    // prepareReportId(reportHistoryresults);
+    const machineHistoryResults = await mongo.searchDocs(data, "machines");
+    console.log(`results Database was searched successfully `);
+    // console.log("reportHistoryresults ", reportHistoryresults);
+    // console.log("this goes in between!!!@!");
+    // console.log("machineHistoryResults ", machineHistoryResults);
+
+    res.status(200).json(reportHistoryresults);
   } catch (e) {
     res.status(500).send(e);
   }
 });
 
 app.post("/get-docs", async (req, res) => {
-  const id = req.body;
+  console.log("at least we made it in");
+  let data;
   try {
-    const results = await mongo.getDocs(id, "machines");
-    console.log(`Report queried successfully with id ${id}`);
-    res.status(200).json(results);
+    data = JSON.parse(req.body);
+  } catch (e) {
+    console.log(e);
+  }
+
+  const { reportId, isFromAlerts } = data;
+  const reponseToSendForAlerts: any = {};
+  try {
+    const results = await mongo.getDocs(reportId, "machines");
+    if (isFromAlerts) {
+      const reportHistoryresults = await mongo.getDocs(
+        reportId,
+        "reports_history"
+      );
+
+      reponseToSendForAlerts.results = results;
+      reponseToSendForAlerts.reportHistoryresults = reportHistoryresults;
+    }
+
+    const resultsToSend = isFromAlerts ? reponseToSendForAlerts : results;
+    console.log(`Report queried successfully with id ${reportId}`);
+    res.status(200).json(resultsToSend);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -247,6 +296,7 @@ export type ReportDataCurrent = {
   michlolId: string | undefined;
   createdAt: string | object;
   data: any;
+  user?: User;
 };
 
 export type MachineData = {
@@ -261,6 +311,7 @@ export type MachineData = {
   data: {
     [partName: string]: FormSubmission;
   };
+  user?: User;
 };
 
 type FormSubmission = {
@@ -276,7 +327,17 @@ export type ReportData = {
   reportId: string;
 };
 
+type User = {
+  name: string;
+  username: string;
+};
+
 type ReportTypes = {
   report: number;
   testData: string;
+};
+
+type ReportAndMachines = {
+  report: object | null;
+  machines: any;
 };

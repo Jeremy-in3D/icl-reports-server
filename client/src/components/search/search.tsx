@@ -14,8 +14,6 @@ export const Search: React.FC<{
   const [searchResults, setSearchResults] = useState<any>(null);
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
-  console.log(reportInstance);
-  console.log("search results", searchResults);
 
   return (
     <div className="search">
@@ -43,15 +41,12 @@ export const Search: React.FC<{
                     text={"פתיחה"}
                     href={viewIcon.href}
                     onClick={async () => {
-                      console.log("this is item...", item);
-                      console.log("we clicked on open doc!");
                       reportInstance.instantiateReport(item);
                       const result = await fetch("/get-docs", {
                         method: "POST",
                         body: JSON.stringify({ reportId: item.reportId }),
                       });
                       const data = await result.json();
-                      console.log("this is our data from the search ", data);
                       reportInstance.loadMachines(data);
                       setScreen("report");
                     }}

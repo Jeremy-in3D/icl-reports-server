@@ -1,3 +1,5 @@
+import { User } from "../classes/route";
+
 export const michlolim: MichlolContents[] = [
   //#region Route 1
   {
@@ -1457,6 +1459,7 @@ export type Routes = {
   routeId: string;
   routeName: string;
   michlolim: MichlolContents[];
+  user?: User;
 }[];
 
 export type Engineering = {
@@ -1464,4 +1467,5 @@ export type Engineering = {
   routeId: string;
   routeName: string;
   machines: string[];
+  user?: User;
 }[];

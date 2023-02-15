@@ -2,7 +2,6 @@ import { ReportDetails } from "../components/report/survey/survey-machine";
 import { MachineFilter } from "../components/report/route-view";
 import { Engineering, Routes } from "../data/reports-data";
 import { getDateString } from "../helpers/dates";
-import { v4 as uuidv4 } from "uuid";
 import dayjs from "../common/dayjs";
 
 export class Route {
@@ -17,6 +16,7 @@ export class Route {
   data: {
     [machineName: string]: MachineData;
   };
+  user?: User;
 
   constructor() {
     this.data = {};
@@ -34,6 +34,7 @@ export class Route {
         routeName: report.routeName,
         michlolim: report.michlolim,
         data: {},
+        user: report.user,
       };
     } else {
       return {
@@ -61,6 +62,9 @@ export class Route {
     }
     if (report.machines) {
       this.machines = report.machines;
+    }
+    if (report.user) {
+      this.user = report.user;
     }
   }
 
@@ -95,7 +99,7 @@ export class Route {
   ): MachineData {
     return {
       completed: false,
-      uniqueId: `${this.reportId}: ${machineName}: ${uuidv4()}`,
+      uniqueId: `${this.reportId}: ${machineName}`,
       michlolName,
       michlolId,
       machineName,
@@ -171,6 +175,12 @@ export type ReportData = {
   data: {
     [machineName: string]: MachineData;
   };
+  user?: User;
+};
+
+export type User = {
+  name: string;
+  email: string;
 };
 
 export type FormSubmission = {
@@ -191,6 +201,8 @@ export type MachineData = {
   equipmentUnit: string;
   machineName: string;
   createdAt: number | string | null;
+  updatedAt?: number | string | null;
+  user?: User;
   data:
     | {
         [partName: string]: FormSubmission;
@@ -211,4 +223,5 @@ export type AlertData = {
   data: {
     [partName: string]: FormSubmission;
   };
+  user?: User;
 };

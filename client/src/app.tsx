@@ -8,8 +8,7 @@ const Content = lazy(() =>
 );
 
 export const App: React.FC = () => {
-  const [authorized, setAuthorized] = useState<boolean>(true);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const [reports, setReports] = useState([]);
   const [extra, setExtra] = useState();
 
@@ -21,13 +20,14 @@ export const App: React.FC = () => {
         value={{ user, setUser, reports, setReports, extra, setExtra }}
       >
         <Suspense fallback={<Loading />}>
-          {authorized ? (
-            <Content />
-          ) : (
-            <Login setAuthorized={setAuthorized} tokenRef={accessToken} />
-          )}
+          {user ? <Content /> : <Login tokenRef={accessToken} />}
         </Suspense>
       </AppContext.Provider>
     </div>
   );
 };
+
+interface User {
+  name: string;
+  username: string;
+}
