@@ -46,18 +46,13 @@ export const publishReport = async (
     console.log("No reports to publish");
     return;
   }
-  console.log("1");
   try {
-    console.log("2");
-
     const response = await fetch("/publish-report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reports),
     });
-    console.log("3");
 
-    console.log(response);
     if (response.status === 200) {
       setReports([]);
       console.log("first thing is indeed a success!");
