@@ -42,6 +42,11 @@ export class MongoDB {
     return collection.insertOne(payload);
   }
 
+  insertMany(payload: [], collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId);
+    return collection.insertMany(payload);
+  }
+
   updateDoc(payload: MachineData, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     //@ts-ignore //TO DO: Remove the _id from being sent with an existing machine data in first place
@@ -50,6 +55,11 @@ export class MongoDB {
       { uniqueId: payload.uniqueId },
       { ...rest }
     );
+  }
+
+  clearCollection(collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId);
+    return collection.deleteMany({});
   }
 
   // FOR UPDATING SPECIFIC DOCS, NOT REPLACING

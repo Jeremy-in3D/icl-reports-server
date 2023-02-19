@@ -130,6 +130,17 @@ body,
   padding: 1em;
 }
 
+.publish-report-btn {
+  margin-top: 50px;
+  background: var(--radial-gradient);
+  color: white;
+  padding: 0.5em;
+  border-radius: 6px;
+  font-size: 2em;
+  text-align: center;
+  box-shadow: 2px 2px 5px black;
+}
+
 /* Reports */
 .reports {
   max-width: 120ch;

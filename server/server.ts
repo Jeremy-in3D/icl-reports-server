@@ -74,10 +74,8 @@ app.post("/save-machine", async (req, res) => {
     user: data.user,
   };
   try {
-    // const saveToReportsHistory = mongo.insertDoc(data, "reports_history");
     //Update machine in collection
     const updateResult = await mongo.updateDoc(data, "machines");
-    //#3 and #4 is just try-catch for updating reports doc
     try {
       const updateReport = await mongo.updateDocAdjusted({
         payload: dataToSave,
@@ -137,38 +135,8 @@ app.get("/get-routes", async (req, res) => {
 app.post("/create-report", async (req, res) => {
   const data: ReportData = req.body;
   try {
-    const inserted = await mongo.insertDoc(data, "reports_history");
+    const inserted = await mongo.insertDoc(data, "reports");
     res.status(200).send(inserted.insertedId.toString());
-  } catch (e) {
-    res.status(500).send("Error" + e);
-  }
-});
-
-app.post("/get-current-report", async (req, res) => {
-  try {
-    const data: ReportTypes = req.body;
-
-    const reportAndMachines: ReportAndMachines = {
-      report: null,
-      machines: null,
-    };
-
-    const currentReport = await mongo.find(
-      { routeName: data.report },
-      "reports_history"
-    );
-
-    if (currentReport[0]) {
-      reportAndMachines.report = currentReport[0];
-
-      const machinesToMatchReport = await mongo.getDocs(
-        currentReport[0].reportId,
-        "machines"
-      );
-      reportAndMachines.machines = machinesToMatchReport;
-    }
-
-    res.status(200).send(JSON.stringify(reportAndMachines));
   } catch (e) {
     res.status(500).send("Error" + e);
   }
@@ -185,34 +153,31 @@ app.post("/get-current-report", async (req, res) => {
 //   }
 // });
 
-app.post("/delete-report", async (req, res) => {
-  const id = req.body;
-  try {
-    const deleted = await mongo.removeDoc(id, "reports");
-    if (deleted) {
-      await mongo.removeDocs(id, "machines");
-      await mongo.removeDocs(id, "alerts");
-    }
-    res.status(200).send("Report deleted Successfully");
-  } catch {
-    res.status(500).send("Report Deletion Failed");
-  }
-});
+//   DELETE REPORT
+
+// app.post("/delete-report", async (req, res) => {
+//   const id = req.body;
+//   try {
+//     const deleted = await mongo.removeDoc(id, "reports");
+//     if (deleted) {
+//       await mongo.removeDocs(id, "machines");
+//       await mongo.removeDocs(id, "alerts");
+//     }
+//     res.status(200).send("Report deleted Successfully");
+//   } catch {
+//     res.status(500).send("Report Deletion Failed");
+//   }
+// });
 
 app.post("/search-reports", async (req, res) => {
   const data = req.body;
-  // console.log("our req.body ", req.body);
   try {
     const reportHistoryresults = await mongo.searchDocs(
       data,
       "reports_history"
     );
-    // prepareReportId(reportHistoryresults);
     const machineHistoryResults = await mongo.searchDocs(data, "machines");
     console.log(`results Database was searched successfully `);
-    // console.log("reportHistoryresults ", reportHistoryresults);
-    // console.log("this goes in between!!!@!");
-    // console.log("machineHistoryResults ", machineHistoryResults);
 
     res.status(200).json(reportHistoryresults);
   } catch (e) {
@@ -221,16 +186,12 @@ app.post("/search-reports", async (req, res) => {
 });
 
 app.post("/get-docs", async (req, res) => {
-  console.log("at least we made it in");
-  let data;
-  try {
-    data = JSON.parse(req.body);
-  } catch (e) {
-    console.log(e);
-  }
+  const { reportId, isFromAlerts } = req.body || {};
 
-  const { reportId, isFromAlerts } = data;
   const reponseToSendForAlerts: any = {};
+  if (!reportId) {
+    throw new Error("reportId is required");
+  }
   try {
     const results = await mongo.getDocs(reportId, "machines");
     if (isFromAlerts) {
@@ -255,6 +216,33 @@ app.get("/get-alerts", async (req, res) => {
   try {
     const results = await mongo.getAlerts("alerts");
     res.status(200).json(results);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
+app.post("/get-current-reports", async (req, res) => {
+  const currentReports = await mongo.getDocs("", "reports");
+  res.status(200).send(currentReports);
+});
+
+app.post("/publish-report", async (req, res) => {
+  const reports = req.body;
+
+  if (!reports || !reports.length) {
+    console.log("never made it out of the return");
+    return;
+  }
+
+  reports.forEach((report: any) => {
+    delete report._id;
+  });
+  try {
+    const publishReports = await mongo.insertMany(reports, "reports_history");
+
+    if (publishReports.acknowledged === true) {
+      mongo.clearCollection("reports");
+    }
   } catch (e) {
     res.status(500).send(e);
   }
@@ -330,14 +318,4 @@ export type ReportData = {
 type User = {
   name: string;
   username: string;
-};
-
-type ReportTypes = {
-  report: number;
-  testData: string;
-};
-
-type ReportAndMachines = {
-  report: object | null;
-  machines: any;
 };

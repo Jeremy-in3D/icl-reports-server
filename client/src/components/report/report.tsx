@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Route } from "../../classes/route";
 import { Routes } from "../../data/reports-data";
 import { ShowError } from "../misc/show-error";
 import { RouteView } from "./route-view";
-import { reportTypes } from "./common/reportTypes";
+import AppContext, { Context } from "../../context/context";
+import { isShouldCreateNewReport } from "./logic/isShouldCreateNewReport";
+import {
+  createNewReport,
+  getMachines,
+  publishReport,
+} from "../../routes/routes";
 
 export const Report: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -12,9 +18,9 @@ export const Report: React.FC<{
 }> = ({ setScreen, routes, reportInstance }) => {
   const [routeView, setRouteView] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const appContext = useContext<Context>(AppContext);
 
   useEffect(() => {
-    //Error message with timeout to appear if needed
     if (errorMessage) {
       const timeoutId = setTimeout(() => {
         setErrorMessage(undefined);
@@ -24,12 +30,10 @@ export const Report: React.FC<{
     }
   }, [errorMessage]);
 
-  //If reportInstance has a picked reportID, then setView to this
   useEffect(() => {
     if (reportInstance.reportId) setRouteView(true);
   }, []);
 
-  //If routeview is true, show the routeview component
   if (routeView)
     return (
       <div className="report">
@@ -55,7 +59,7 @@ export const Report: React.FC<{
                   reportInstance,
                   setRouteView,
                   setErrorMessage,
-                  idx
+                  appContext
                 );
               }}
             >
@@ -63,6 +67,14 @@ export const Report: React.FC<{
             </button>
           ))}
       </div>
+      <button
+        onClick={() =>
+          handlePublishReport(appContext.reports, appContext.setReports)
+        }
+        className="publish-report-btn"
+      >
+        publish
+      </button>
     </div>
   );
 };
@@ -72,39 +84,43 @@ async function createReport(
   reportInstance: Route,
   setRouteView: React.Dispatch<React.SetStateAction<boolean>>,
   setErrorMessage: React.Dispatch<React.SetStateAction<string | undefined>>,
-  idx: number
+  appContext: Context
 ) {
-  console.log("inside createReport", idx);
   //Creates new report on the instance using the route
   const newReport = reportInstance.newReport(route);
-  console.log(newReport);
-  // try {
-  //   const reportResponse = await fetch("/create-report", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(newReport),
-  //   });
-  //   if (reportResponse.status === 200) {
-  //     //If the new report has successfully opened within the database, then it instantiates locally
-  reportInstance.instantiateReport(newReport);
-  setRouteView(true);
-  //   } else {
-  //     throw new Error("Failed to create new report");
-  //   }
-  // } catch (e) {
-  //   if (e instanceof Error) setErrorMessage(`Error: ${e.message}`);
-  // }
 
+  const maxNumberOfReports = 7;
   try {
-    const reportToFetch = { report: reportTypes[idx], testData: "yabbabadabo" };
-    const reportResponse = await fetch("/get-current-report", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(reportToFetch),
-    });
-    const response = await reportResponse.json();
-    console.log("2", response);
+    const shouldCreateNewReport = isShouldCreateNewReport(
+      appContext.reports,
+      route.routeName
+    );
+
+    if (
+      appContext.reports.length <= maxNumberOfReports &&
+      shouldCreateNewReport
+    ) {
+      await createNewReport(reportInstance, newReport, appContext);
+    } else {
+      let reportId;
+      const instantiateReport = appContext.reports.map((report: any) => {
+        if (report.routeName == route.routeName) {
+          reportId = report.reportId;
+          reportInstance.instantiateReport(report);
+        }
+      });
+      await getMachines(reportId, reportInstance);
+    }
   } catch (e) {
     if (e instanceof Error) setErrorMessage(`Error: ${e.message}`);
   }
+
+  setRouteView(true);
+}
+
+async function handlePublishReport(
+  reports: [],
+  setReports: React.Dispatch<React.SetStateAction<[]>>
+) {
+  await publishReport(reports, setReports);
 }

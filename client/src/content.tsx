@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import { PageNotFound } from "./components/misc/page-not-found";
 import { Report } from "./components/report/report";
 import { Search } from "./components/search/search";
@@ -7,11 +7,31 @@ import { Routes } from "./data/reports-data";
 import { Home } from "./home";
 import { Route } from "./classes/route";
 import { StatusScreen } from "./components/status-screen";
+import AppContext from "./context/context";
 
 export const Content: React.FC = () => {
   const [showScreen, setShowScreen] = useState("home");
   const [routes, setRoutes] = useState<Routes | undefined>();
   const reportInstance = useRef(new Route());
+  const appContext = useContext(AppContext);
+
+  useEffect(() => {
+    if (!appContext.reports.length) {
+      fetch("get-current-reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const reportsContextCopy = [...appContext.reports, ...data];
+          appContext.setReports(reportsContextCopy);
+        })
+        .catch((error) => {
+          console.log("error: ", error);
+        });
+    }
+  }, [appContext.user]);
 
   //Display screen based on showScreen state
   let display;
