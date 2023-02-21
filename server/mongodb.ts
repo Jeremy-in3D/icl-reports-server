@@ -1,12 +1,18 @@
 import { Collection, MongoClient } from "mongodb";
-import { MachineData, ReportData, ReportDataCurrent } from "./server";
+import {
+  MachineData,
+  ReportData,
+  ReportDataCurrent,
+  PublishedReportDirectory,
+} from "./server";
 
 type CollectionIds =
   | "reports"
   | "machines"
   | "alerts"
   | "routes"
-  | "reports_history";
+  | "reports_history"
+  | "published_reports_directory";
 
 type RouteName = string | number;
 type MachineName = string | number;
@@ -37,7 +43,18 @@ export class MongoDB {
     return this.client.db("icl").collection(id);
   }
 
-  insertDoc(payload: MachineData | ReportData, collectionId: CollectionIds) {
+  incValue(identifier: string, collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId);
+    return collection.updateOne(
+      { reportId: identifier },
+      { $inc: { completedMachines: 1 } }
+    );
+  }
+
+  insertDoc(
+    payload: MachineData | PublishedReportDirectory | ReportData,
+    collectionId: CollectionIds
+  ) {
     const collection = this.getCollection(collectionId);
     return collection.insertOne(payload);
   }
@@ -135,7 +152,7 @@ export class MongoDB {
     const collection = this.getCollection(collectionId);
     const find = collection
       .find({
-        createdAt: { $gt: startDate, $lt: endDate },
+        publishedAt: { $gt: startDate, $lt: endDate },
       })
       .sort({ createdAt: -1 });
     return find.toArray();

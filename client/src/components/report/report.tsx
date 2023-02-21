@@ -31,7 +31,9 @@ export const Report: React.FC<{
   }, [errorMessage]);
 
   useEffect(() => {
-    if (reportInstance.reportId) setRouteView(true);
+    if (reportInstance.reportId && !appContext.selectedReport) {
+      setRouteView(true);
+    }
   }, []);
 
   if (routeView)
@@ -69,11 +71,15 @@ export const Report: React.FC<{
       </div>
       <button
         onClick={() =>
-          handlePublishReport(appContext.reports, appContext.setReports)
+          handlePublishReport(
+            appContext.reports,
+            appContext.setReports,
+            setScreen
+          )
         }
         className="publish-report-btn"
       >
-        publish
+        {appContext.selectedReport ? "Edit" : "publish"}
       </button>
     </div>
   );
@@ -89,17 +95,35 @@ async function createReport(
   //Creates new report on the instance using the route
   const newReport = reportInstance.newReport(route);
 
-  const maxNumberOfReports = 7;
+  if (appContext.selectedReport) {
+    // set with server. Right now, the selected report is an array of the completed-semi completed
+    // report, so any not on the list is "red" or not completed. We need this reportId and machines from the server. start
+    // by setting them and then add the css colours so we start to have that down.
+    const selectedReportReport = await fetch("/get-published-report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        route: route.routeName,
+        report: appContext.selectedReport,
+      }),
+    });
+    const { reportFromReportHistory, machinesForReport } =
+      await selectedReportReport.json();
+
+    reportInstance.instantiateReport(reportFromReportHistory);
+    reportInstance.loadMachines(machinesForReport);
+
+    setRouteView(true);
+    return;
+  }
+
   try {
     const shouldCreateNewReport = isShouldCreateNewReport(
       appContext.reports,
       route.routeName
     );
 
-    if (
-      appContext.reports.length <= maxNumberOfReports &&
-      shouldCreateNewReport
-    ) {
+    if (shouldCreateNewReport) {
       await createNewReport(reportInstance, newReport, appContext);
     } else {
       let reportId;
@@ -120,7 +144,8 @@ async function createReport(
 
 async function handlePublishReport(
   reports: [],
-  setReports: React.Dispatch<React.SetStateAction<[]>>
+  setReports: React.Dispatch<React.SetStateAction<[]>>,
+  setScreen: React.Dispatch<React.SetStateAction<string>>
 ) {
-  await publishReport(reports, setReports);
+  await publishReport(reports, setReports, setScreen);
 }

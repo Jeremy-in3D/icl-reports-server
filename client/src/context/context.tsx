@@ -7,15 +7,19 @@ const AppContext = React.createContext<Context>({
   setReports: () => {},
   extra: {},
   setExtra: () => {},
+  selectedReport: "",
+  setSelectedReport: () => {},
 });
 
 export default AppContext;
 
 export interface Context {
   user: any;
-  setUser: any;
+  setUser: (user: any) => void;
   reports: any;
-  setReports: any;
+  setReports: (report: any) => void;
   extra: any;
-  setExtra: any;
+  setExtra: (extra: any) => void;
+  selectedReport: any;
+  setSelectedReport: (selectedReport: any) => void;
 }

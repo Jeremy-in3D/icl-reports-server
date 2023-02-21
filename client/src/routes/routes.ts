@@ -39,13 +39,16 @@ export const getMachines = async (
 
 export const publishReport = async (
   reports: [],
-  setReports: React.Dispatch<React.SetStateAction<[]>>
+  setReports: React.Dispatch<React.SetStateAction<[]>>,
+  setScreen: React.Dispatch<React.SetStateAction<string>>
 ) => {
-  alert("Are you sure you want to publish the report?");
+  confirm("Are you sure you want to publish the report?");
+
   if (!reports.length) {
     console.log("No reports to publish");
     return;
   }
+
   try {
     const response = await fetch("/publish-report", {
       method: "POST",
@@ -55,8 +58,7 @@ export const publishReport = async (
 
     if (response.status === 200) {
       setReports([]);
-      console.log("first thing is indeed a success!");
-      console.log("our reports after setReports, ", reports);
+      setScreen("home");
     }
   } catch (err) {
     console.log("error publishing report", err);

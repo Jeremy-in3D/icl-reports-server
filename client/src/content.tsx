@@ -58,6 +58,7 @@ export const Content: React.FC = () => {
       display = (
         <Search
           reportInstance={reportInstance.current}
+          setRoutes={setRoutes}
           setScreen={setShowScreen}
         />
       );
