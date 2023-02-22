@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Route } from "../../../classes/route";
+import AppContext, { Context } from "../../../context/context";
 import { MachineDetails, MachineFilter } from "../route-view";
 import { EngineeringOilForm } from "./engineering-oil-form";
 import { EngineeringQuakeForm } from "./engineering-quake-form";
@@ -18,6 +19,8 @@ export const EngineeringMachine: React.FC<{
   const [machineComplete, setMachineComplete] = useState(
     reportInstance.getMachineComplete(machineName)
   );
+  const appContext = useContext<Context>(AppContext);
+
   const openStyle = `${isOpen ? "opened" : "closed"}`;
 
   let machineForm;
@@ -39,6 +42,18 @@ export const EngineeringMachine: React.FC<{
       />
     );
   }
+
+  const addCompletedMachineToReports = () => {
+    appContext.reports.map((report: any) => {
+      if (report.routeName == reportInstance.routeName) {
+        if (!report.completedMachines) {
+          report.completedMachines = 1;
+        } else {
+          report.completedMachines++;
+        }
+      }
+    });
+  };
 
   return (
     <div className="machine">
@@ -68,6 +83,7 @@ export const EngineeringMachine: React.FC<{
                       reportInstance.getMachineComplete(machineName)
                     );
                   }
+                  addCompletedMachineToReports();
                   setIsOpen(false);
                 }
               }}

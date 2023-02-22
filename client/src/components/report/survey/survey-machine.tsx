@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Route } from "../../../classes/route";
 import { questionBank } from "../../../data/question-bank";
 import { SurveyMachineForm } from "./survey-machine-form";
 import { SurveyMachinePartsList } from "./survey-machine-parts-list";
 import { MachineDetails, MachineFilter } from "../route-view";
+import AppContext, { Context } from "../../../context/context";
 
 function getMachineStyle(machineState: MachineFilter) {
   if (machineState === "הושלם") return "completed";
@@ -24,6 +25,8 @@ export const SurveyMachine: React.FC<{
     reportInstance.getMachineComplete(machineName)
   );
   const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
+  const appContext = useContext<Context>(AppContext);
+
   const openStyle = `${isOpen ? "opened" : "closed"}`;
   //Get parts from question bank online
   const machineQuestions = parts!.map(
@@ -36,6 +39,18 @@ export const SurveyMachine: React.FC<{
     machineName,
     equipmentUnit: equipmentUnit!,
     partName: currentQuestion.partName,
+  };
+
+  const addCompletedMachineToReports = () => {
+    appContext.reports.map((report: any) => {
+      if (report.routeName == reportInstance.routeName) {
+        if (!report.completedMachines) {
+          report.completedMachines = 1;
+        } else {
+          report.completedMachines++;
+        }
+      }
+    });
   };
 
   return (
@@ -80,6 +95,7 @@ export const SurveyMachine: React.FC<{
                       reportInstance.getMachineComplete(machineName)
                     );
                   }
+                  addCompletedMachineToReports();
                   setIsOpen(false);
                 }
               }}
