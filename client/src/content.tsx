@@ -68,6 +68,7 @@ export const Content: React.FC = () => {
         <StatusScreen
           setScreen={setShowScreen}
           reportInstance={reportInstance.current}
+          user={appContext.user}
         />
       );
       break;
@@ -77,7 +78,7 @@ export const Content: React.FC = () => {
   return (
     <div className="app ">
       {/* Top Bar to always show, and then display component follows */}
-      <TopBar setScreen={setShowScreen} />
+      <TopBar setScreen={setShowScreen} user={appContext.user} />
       {display}
     </div>
   );

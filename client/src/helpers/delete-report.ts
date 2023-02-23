@@ -6,7 +6,9 @@ export async function deleteReport(
   idx: number,
   setResults: React.Dispatch<React.SetStateAction<any>>
 ) {
-  const answer = confirm("אתה רוצה למחוק את הדוח?");
+  const answer = confirm(
+    "אתה רוצה למחוק את הדוח?\n This will permanently delete the report"
+  );
   if (answer) {
     const deleteResult = await fetch("/delete-report", {
       method: "POST",

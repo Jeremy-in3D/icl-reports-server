@@ -66,6 +66,7 @@ app.post("/upload-image", async (req, res) => {
 
 app.post("/save-machine", async (req, res) => {
   const data: MachineData = req.body;
+  console.log(data);
   const dataToSave: ReportDataCurrent = {
     michlolName: data.michlolName,
     michlolId: data.michlolId,
@@ -74,21 +75,16 @@ app.post("/save-machine", async (req, res) => {
     user: data.user,
   };
   try {
-    //Update machine in collection
-    const updateResult = await mongo.updateDoc(data, "machines");
-    try {
-      const updateReport = await mongo.updateDocAdjusted({
-        payload: dataToSave,
-        collectionId: "reports",
-        routeName: data.routeName,
-        key: data.machineName,
-      });
-    } catch (e) {
-      console.log("something went wrong, ", e);
+    if (data.completed) {
+      const updateCompletedMachinesInReports = await mongo.incValue(
+        data.reportId,
+        "reports"
+      );
     }
+    const updateMachines = await mongo.updateDoc(data, "machines");
 
     //Save machine to collection
-    if (!updateResult.value) await mongo.insertDoc(data, "machines");
+    if (!updateMachines.value) await mongo.insertDoc(data, "machines");
     //Refactor to promise.all
     //Check if any of saved data raised an alert
     const machines = Object.entries(data.data);
@@ -174,10 +170,9 @@ app.post("/search-reports", async (req, res) => {
   try {
     const reportHistoryresults = await mongo.searchDocs(
       data,
-      "reports_history"
+      "published_reports_directory"
     );
-    const machineHistoryResults = await mongo.searchDocs(data, "machines");
-    console.log(`results Database was searched successfully `);
+    // const machineHistoryResults = await mongo.searchDocs(data, "machines");
 
     res.status(200).json(reportHistoryresults);
   } catch (e) {
@@ -186,10 +181,21 @@ app.post("/search-reports", async (req, res) => {
 });
 
 app.post("/get-docs", async (req, res) => {
-  const { reportId, isFromAlerts } = req.body || {};
+  console.log(typeof req.body, req.body);
+
+  let value = req.body;
+  if (typeof value == "string") {
+    console.log("we in hereee");
+    value = JSON.parse(value);
+    console.log(value.reportId);
+  }
+  // const value = JSON.parse(req.body);
+  const { reportId, isFromAlerts } = value || {};
+  console.log(reportId);
 
   const reponseToSendForAlerts: any = {};
   if (!reportId) {
+    console.log("why are we stuck hereeee");
     throw new Error("reportId is required");
   }
   try {
@@ -234,18 +240,69 @@ app.post("/publish-report", async (req, res) => {
     return;
   }
 
+  const publishedAt = dayjs().format();
+
+  const publishedReportReference = reports.map((report: any) => {
+    return {
+      type: report.type,
+      date: report.date,
+      createdAt: report.createdAt,
+      reportId: report.reportId,
+      routeName: report.routeName,
+      routeId: report.routeId,
+      completedMachines: report.completedMachines,
+    };
+  });
+
   reports.forEach((report: any) => {
     delete report._id;
+    report.publishedAt = publishedAt;
   });
   try {
     const publishReports = await mongo.insertMany(reports, "reports_history");
 
     if (publishReports.acknowledged === true) {
-      mongo.clearCollection("reports");
+      await mongo.insertDoc(
+        { publishedAt, publishedReport: publishedReportReference },
+        "published_reports_directory"
+      );
+
+      await mongo.clearCollection("reports");
     }
+    res.status(200).send(publishReports);
   } catch (e) {
     res.status(500).send(e);
   }
+});
+
+app.post("/get-published-report", async (req, res) => {
+  const resToSend: any = {};
+
+  const { report, route } = req.body;
+
+  if (!report || !route) return;
+
+  const getRouteNameAndIdForReport = report.publishedReport.map(
+    async (routeFromPublishedReport: any, index: Number) => {
+      if (route == routeFromPublishedReport.routeName) {
+        const reportFromReportHistory = await mongo.find(
+          { reportId: routeFromPublishedReport.reportId },
+          "reports_history"
+        );
+        const machinesForReport = await mongo.getDocs(
+          routeFromPublishedReport.reportId,
+          "machines"
+        );
+
+        resToSend.reportFromReportHistory = reportFromReportHistory[0];
+        resToSend.machinesForReport = machinesForReport;
+      }
+    }
+  );
+
+  await Promise.all(getRouteNameAndIdForReport);
+
+  res.status(200).send(resToSend);
 });
 
 (async () => {
@@ -279,6 +336,20 @@ async function validateJwt(req: any, res: any, next: NextFunction) {
   }
 }
 
+export interface PublishedReportDirectory {
+  publishedAt: string;
+  publishedReport: PublishPrep[];
+}
+
+type PublishPrep = {
+  type: string;
+  date: string;
+  createdAt: string;
+  reportId: string;
+  routeName: string;
+  routeId: string;
+};
+
 export type ReportDataCurrent = {
   michlolName: string | undefined;
   michlolId: string | undefined;
@@ -300,6 +371,8 @@ export type MachineData = {
     [partName: string]: FormSubmission;
   };
   user?: User;
+  completed?: boolean;
+  isFromPublishedReport?: string | number | boolean;
 };
 
 type FormSubmission = {

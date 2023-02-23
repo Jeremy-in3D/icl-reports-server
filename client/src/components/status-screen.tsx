@@ -2,11 +2,14 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AlertData } from "../classes/route";
 import { checkmarkIcon, lookatAlert, minusIcon } from "../data/imports";
 import { ReportData, Route } from "../classes/route";
+import { User } from "../app";
+import BasicModal from "../common/Modal";
 
 export const StatusScreen: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
   reportInstance: Route;
-}> = ({ setScreen, reportInstance }) => {
+  user: User;
+}> = ({ setScreen, reportInstance, user }) => {
   const [alerts, setAlerts] = useState<AlertData[]>();
 
   async function getAlerts() {
@@ -28,7 +31,8 @@ export const StatusScreen: React.FC<{
             alert.completed ? null : (
               <div className="alert-item" key={alert.uniqueId + i}>
                 <div>{alert.routeName}</div>
-                <div>{alert.machineName}</div>
+                <div>Published by: {user.name}</div>
+                <BasicModal alert={alert} />
                 <div>
                   <img
                     className={"alert-item-view"}

@@ -119,7 +119,7 @@ export class MongoDB {
 
   getDocs(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
-    if (id.length) {
+    if (id?.length) {
       const find = collection.find({ reportId: id }).sort({ createdAt: -1 });
       return find.toArray();
     }

@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
+import { User } from "../../app";
 import AppContext, { Context } from "../../context/context";
 import { logo } from "../../data/imports";
 
 export const TopBar: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ setScreen }) => {
+  user: User;
+}> = ({ setScreen, user }) => {
   const appContext = useContext<Context>(AppContext);
 
   return (
@@ -17,6 +19,7 @@ export const TopBar: React.FC<{
           setScreen("home");
         }}
       ></img>
+      <span>ברוכים הבאים {user.name}</span>
     </div>
   );
 };

@@ -369,6 +369,19 @@ textarea {
   background: linear-gradient(rgba(219, 165, 18, 0.6), rgba(221, 192, 61, 0.6));
 }
 
+.completed {
+  background: linear-gradient(rgba(31, 139, 58, 0.6), rgba(70, 129, 95, 0.6));
+}
+.incomplete {
+  background: linear-gradient(
+    rgba(219, 18, 18, 0.603),
+    rgba(221, 80, 61, 0.671)
+  );
+}
+.partial {
+  background: linear-gradient(rgba(219, 165, 18, 0.6), rgba(221, 192, 61, 0.6));
+}
+
 .m-question-marker {
   display: inline-flex;
   justify-content: center;

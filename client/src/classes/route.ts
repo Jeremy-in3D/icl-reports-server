@@ -17,7 +17,7 @@ export class Route {
     [machineName: string]: MachineData;
   };
   user?: User;
-
+  completedMachines?: number;
   constructor() {
     this.data = {};
   }
@@ -65,6 +65,9 @@ export class Route {
     }
     if (report.user) {
       this.user = report.user;
+    }
+    if (report.completedMachines) {
+      this.completedMachines = report.completedMachines;
     }
   }
 
@@ -145,9 +148,16 @@ export class Route {
     return false;
   }
 
-  sendMachineData(machineName: string) {
+  sendMachineData(machineName: string, isFromPublishedReport: any, user: User) {
     const machine = this.data?.[machineName];
-    if (machine) return JSON.stringify({ ...machine, completed: true });
+    if (machine)
+      return JSON.stringify({
+        ...machine,
+        completed: true,
+        lastEdit: isFromPublishedReport
+          ? { editedBy: user.name, editedAt: dayjs().format() }
+          : null,
+      });
   }
 
   getMachineComplete(machineName: string): MachineFilter {
@@ -176,6 +186,9 @@ export type ReportData = {
     [machineName: string]: MachineData;
   };
   user?: User;
+  publishedAt?: any;
+  _id?: string;
+  completedMachines?: number;
 };
 
 export type User = {

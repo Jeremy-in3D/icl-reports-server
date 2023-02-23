@@ -75,7 +75,11 @@ export const EngineeringMachine: React.FC<{
                   const machineResponse = await fetch("/save-machine", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: reportInstance.sendMachineData(machineName),
+                    body: reportInstance.sendMachineData(
+                      machineName,
+                      appContext.selectedReport?.length,
+                      appContext.user
+                    ),
                   });
                   if (machineResponse.status === 200) {
                     reportInstance.setMachineComplete(machineName);

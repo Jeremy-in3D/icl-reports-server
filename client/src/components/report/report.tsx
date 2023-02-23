@@ -10,6 +10,8 @@ import {
   getMachines,
   publishReport,
 } from "../../routes/routes";
+import { getMachineComplete } from "./logic/getMachineComplete";
+import dayjs from "dayjs";
 
 export const Report: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -39,7 +41,11 @@ export const Report: React.FC<{
   if (routeView)
     return (
       <div className="report">
-        <RouteView reportInstance={reportInstance} setScreen={setScreen} />
+        <RouteView
+          reportInstance={reportInstance}
+          setScreen={setScreen}
+          setRouteView={setRouteView}
+        />
       </div>
     );
 
@@ -54,7 +60,11 @@ export const Report: React.FC<{
           routes.map((route, idx) => (
             <button
               key={idx}
-              className="routes-selection-btn"
+              className={`routes-selection-btn ${getMachineComplete(
+                route,
+                appContext.reports,
+                appContext.selectedReport
+              )}`}
               onClick={() => {
                 createReport(
                   route,
@@ -69,18 +79,27 @@ export const Report: React.FC<{
             </button>
           ))}
       </div>
-      <button
-        onClick={() =>
-          handlePublishReport(
-            appContext.reports,
-            appContext.setReports,
-            setScreen
-          )
-        }
-        className="publish-report-btn"
-      >
-        {appContext.selectedReport ? "Edit" : "publish"}
-      </button>
+      {appContext.selectedReport ? (
+        <div style={{ marginTop: 180 }}>
+          Last Edited: {dayjs().format("MM/DD/YYYY HH:mm:ss")} by{" "}
+          {appContext.user.name}
+        </div>
+      ) : (
+        <button
+          onClick={async () =>
+            await publishReport(
+              appContext.reports,
+              appContext.setReports,
+              setScreen,
+              reportInstance,
+              routes
+            )
+          }
+          className="publish-report-btn"
+        >
+          {"publish"}
+        </button>
+      )}
     </div>
   );
 };
@@ -96,9 +115,6 @@ async function createReport(
   const newReport = reportInstance.newReport(route);
 
   if (appContext.selectedReport) {
-    // set with server. Right now, the selected report is an array of the completed-semi completed
-    // report, so any not on the list is "red" or not completed. We need this reportId and machines from the server. start
-    // by setting them and then add the css colours so we start to have that down.
     const selectedReportReport = await fetch("/get-published-report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -127,7 +143,7 @@ async function createReport(
       await createNewReport(reportInstance, newReport, appContext);
     } else {
       let reportId;
-      const instantiateReport = appContext.reports.map((report: any) => {
+      const instantiateReport = await appContext.reports.map((report: any) => {
         if (report.routeName == route.routeName) {
           reportId = report.reportId;
           reportInstance.instantiateReport(report);
@@ -140,12 +156,4 @@ async function createReport(
   }
 
   setRouteView(true);
-}
-
-async function handlePublishReport(
-  reports: [],
-  setReports: React.Dispatch<React.SetStateAction<[]>>,
-  setScreen: React.Dispatch<React.SetStateAction<string>>
-) {
-  await publishReport(reports, setReports, setScreen);
 }

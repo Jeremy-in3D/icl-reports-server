@@ -1460,6 +1460,7 @@ export type Routes = {
   routeName: string;
   michlolim: MichlolContents[];
   user?: User;
+  completedMachines?: number;
 }[];
 
 export type Engineering = {
@@ -1468,4 +1469,5 @@ export type Engineering = {
   routeName: string;
   machines: string[];
   user?: User;
+  completedMachines?: number;
 }[];
