@@ -33,7 +33,10 @@ export const Report: React.FC<{
   }, [errorMessage]);
 
   useEffect(() => {
-    if (reportInstance.reportId && !appContext.selectedReport) {
+    if (
+      (reportInstance.reportId && !appContext.selectedReport) ||
+      appContext.extra?.isFromAlertAndMachine
+    ) {
       setRouteView(true);
     }
   }, []);
@@ -92,12 +95,13 @@ export const Report: React.FC<{
               appContext.setReports,
               setScreen,
               reportInstance,
-              routes
+              routes,
+              appContext.user
             )
           }
           className="publish-report-btn"
         >
-          {"publish"}
+          {`לפרסם דו"ח`}
         </button>
       )}
     </div>
@@ -125,7 +129,6 @@ async function createReport(
     });
     const { reportFromReportHistory, machinesForReport } =
       await selectedReportReport.json();
-
     reportInstance.instantiateReport(reportFromReportHistory);
     reportInstance.loadMachines(machinesForReport);
 

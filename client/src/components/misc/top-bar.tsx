@@ -16,10 +16,11 @@ export const TopBar: React.FC<{
         src={logo.href}
         onClick={() => {
           appContext.setSelectedReport(null);
+          appContext.setExtra({ isFromAlertAndMachine: false });
           setScreen("home");
         }}
       ></img>
-      <span>ברוכים הבאים {user.name}</span>
+      <span>ברוכים הבאים: {user.name}</span>
     </div>
   );
 };

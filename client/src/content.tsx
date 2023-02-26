@@ -67,6 +67,8 @@ export const Content: React.FC = () => {
       display = (
         <StatusScreen
           setScreen={setShowScreen}
+          setRoutes={setRoutes}
+          routes={routes}
           reportInstance={reportInstance.current}
           user={appContext.user}
         />

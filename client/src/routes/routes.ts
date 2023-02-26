@@ -2,7 +2,7 @@ import { Route } from "../classes/route";
 import { arrayOfRouteNames } from "../components/report/common/reportTypes";
 import { Context } from "../context/context";
 import { Routes } from "../data/reports-data";
-
+import { User } from "../app";
 export const createNewReport = async (
   reportInstance: Route,
   newReport: any,
@@ -20,6 +20,12 @@ export const createNewReport = async (
   } else {
     throw new Error("Failed to create new report");
   }
+};
+
+export const getRoutes = async () => {
+  const response = await fetch("/get-routes");
+  const data = await response.json();
+  return data;
 };
 
 export const getMachines = async (
@@ -44,7 +50,8 @@ export const publishReport = async (
   setReports: React.Dispatch<React.SetStateAction<[]>>,
   setScreen: React.Dispatch<React.SetStateAction<string>>,
   reportInstance: Route,
-  routes: Routes | undefined
+  routes: Routes | undefined,
+  user: User
 ) => {
   if (!reports.length) {
     alert("No reports to publish");
@@ -79,7 +86,7 @@ export const publishReport = async (
     const response = await fetch("/publish-report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(reportsCopy),
+      body: JSON.stringify({ reports: reportsCopy, user }),
     });
 
     if (response.status === 200) {

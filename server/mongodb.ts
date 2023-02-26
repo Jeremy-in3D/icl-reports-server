@@ -23,6 +23,11 @@ interface UpdateDocAdjustedParams {
   key: MachineName;
 }
 
+interface GetDocIdentifier {
+  reportId: string;
+  routeName?: string;
+}
+
 export class MongoDB {
   client: MongoClient;
 
@@ -107,6 +112,14 @@ export class MongoDB {
     return collection;
   }
 
+  findGeneric(identifier: any, collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId)
+      .find(identifier)
+      .sort({ createdAt: -1 })
+      .toArray();
+    return collection;
+  }
+
   removeDoc(id: string, collectionId: CollectionIds) {
     const collection = this.getCollection(collectionId);
     return collection.deleteOne({ reportId: id });
@@ -117,10 +130,19 @@ export class MongoDB {
     return collection.deleteMany({ reportId: id });
   }
 
-  getDocs(id: string, collectionId: CollectionIds) {
+  getDocs(
+    id: string,
+    collectionId: CollectionIds,
+    routeName?: string,
+    isFromAlerts?: boolean
+  ) {
     const collection = this.getCollection(collectionId);
     if (id?.length) {
-      const find = collection.find({ reportId: id }).sort({ createdAt: -1 });
+      const docToFind: GetDocIdentifier = { reportId: id };
+      if (routeName) docToFind.routeName = routeName;
+      const find = collection
+        .find(isFromAlerts && !routeName ? {} : docToFind)
+        .sort({ createdAt: -1 });
       return find.toArray();
     }
     const find = collection.find().sort({ createdAt: -1 });

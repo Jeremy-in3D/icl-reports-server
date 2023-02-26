@@ -154,9 +154,7 @@ export class Route {
       return JSON.stringify({
         ...machine,
         completed: true,
-        lastEdit: isFromPublishedReport
-          ? { editedBy: user.name, editedAt: dayjs().format() }
-          : null,
+        lastEditBy: user,
       });
   }
 

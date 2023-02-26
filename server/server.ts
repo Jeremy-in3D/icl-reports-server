@@ -66,7 +66,6 @@ app.post("/upload-image", async (req, res) => {
 
 app.post("/save-machine", async (req, res) => {
   const data: MachineData = req.body;
-  console.log(data);
   const dataToSave: ReportDataCurrent = {
     michlolName: data.michlolName,
     michlolId: data.michlolId,
@@ -185,29 +184,51 @@ app.post("/get-docs", async (req, res) => {
 
   let value = req.body;
   if (typeof value == "string") {
-    console.log("we in hereee");
     value = JSON.parse(value);
-    console.log(value.reportId);
   }
-  // const value = JSON.parse(req.body);
-  const { reportId, isFromAlerts } = value || {};
-  console.log(reportId);
 
+  const { reportId, isFromAlerts, isAlertFromCurrentReport, isShowFullReport } =
+    value || {};
   const reponseToSendForAlerts: any = {};
+
   if (!reportId) {
-    console.log("why are we stuck hereeee");
     throw new Error("reportId is required");
   }
+
   try {
     const results = await mongo.getDocs(reportId, "machines");
+
     if (isFromAlerts) {
-      const reportHistoryresults = await mongo.getDocs(
-        reportId,
-        "reports_history"
-      );
+      if (isAlertFromCurrentReport && isShowFullReport) {
+        const routesToReturn = await mongo.getDocs("", "reports");
+        reponseToSendForAlerts.reportHistoryResults = routesToReturn;
+      }
+      if (isAlertFromCurrentReport && !isShowFullReport) {
+        const relevantReport = await mongo.findGeneric({ reportId }, "reports");
+        reponseToSendForAlerts.reportHistoryResults = relevantReport[0];
+      }
+
+      if (!isAlertFromCurrentReport && isShowFullReport) {
+        const publishedReportFromAlert = await mongo.findGeneric(
+          {
+            publishedReport: {
+              $elemMatch: { reportId },
+            },
+          },
+          "published_reports_directory"
+        );
+        reponseToSendForAlerts.reportHistoryResults = publishedReportFromAlert;
+      }
+
+      if (!isAlertFromCurrentReport && !isShowFullReport) {
+        const relevantReport = await mongo.findGeneric(
+          { reportId },
+          "reports_history"
+        );
+        reponseToSendForAlerts.reportHistoryResults = relevantReport[0];
+      }
 
       reponseToSendForAlerts.results = results;
-      reponseToSendForAlerts.reportHistoryresults = reportHistoryresults;
     }
 
     const resultsToSend = isFromAlerts ? reponseToSendForAlerts : results;
@@ -233,7 +254,7 @@ app.post("/get-current-reports", async (req, res) => {
 });
 
 app.post("/publish-report", async (req, res) => {
-  const reports = req.body;
+  const { reports, user } = req.body || {};
 
   if (!reports || !reports.length) {
     console.log("never made it out of the return");
@@ -257,13 +278,18 @@ app.post("/publish-report", async (req, res) => {
   reports.forEach((report: any) => {
     delete report._id;
     report.publishedAt = publishedAt;
+    report.publishedBy = user.username;
   });
   try {
     const publishReports = await mongo.insertMany(reports, "reports_history");
 
     if (publishReports.acknowledged === true) {
       await mongo.insertDoc(
-        { publishedAt, publishedReport: publishedReportReference },
+        {
+          publishedBy: user.username,
+          publishedAt,
+          publishedReport: publishedReportReference,
+        },
         "published_reports_directory"
       );
 
@@ -373,6 +399,7 @@ export type MachineData = {
   user?: User;
   completed?: boolean;
   isFromPublishedReport?: string | number | boolean;
+  publishedBy?: string;
 };
 
 type FormSubmission = {
