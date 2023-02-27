@@ -11,8 +11,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "80%",
-  height: "60%",
+  width: "55%",
+  height: "55%",
   bgcolor: "background.paper",
   border: "2px solid green",
   boxShadow: 24,
@@ -26,6 +26,8 @@ export default function BasicModal({ alert }: any) {
     console.log(alert);
   };
   const handleClose = () => setOpen(false);
+
+  const detailsStyle = { fontSize: "1em", fontWeight: "bold" };
 
   return (
     <div>
@@ -41,18 +43,41 @@ export default function BasicModal({ alert }: any) {
             פרטים נוספים:
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Machine Saved At:{" "}
-            {dayjs(alert.createdAt).format("MM/DD/YYYY HH:mm:ss")}
+            שם מכונה: <span style={detailsStyle}>{alert.machineName}</span>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Edited by: {alert.lastEditBy}
+            שם מחלול: <span style={detailsStyle}>{alert.michlolName}</span>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Free Text: {alert?.data?.text ? alert.data.text : ""}
+            נשמר ב:{" "}
+            <span style={detailsStyle}>
+              {dayjs(alert.createdAt).format("HH:mm:ss MM/DD/YYYY")}
+            </span>
           </Typography>
-          <Button onClick={handleClose}>Close</Button>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            נערך על ידי: <span style={detailsStyle}>{alert.lastEditBy}</span>
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            טקסט חופשי:{" "}
+            <span style={detailsStyle}>
+              {alert?.data?.text ? alert.data.text : ""}
+            </span>
+          </Typography>
+
+          <Button style={{ marginTop: 15 }} onClick={handleClose}>
+            Close
+          </Button>
         </Box>
       </Modal>
     </div>
   );
 }
+
+// text-align: center;
+// font-size: 2em;
+// font-weight: bold;
+// background-color: rgba(0, 0, 0, 0.7);
+// color: white;
+// min-height: 50vh;
+// text-shadow: 0px 0px 5px var(--blue5);
+// padding-top: 0.5em;

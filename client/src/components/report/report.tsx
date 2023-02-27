@@ -11,7 +11,7 @@ import {
   publishReport,
 } from "../../routes/routes";
 import { getMachineComplete } from "./logic/getMachineComplete";
-import dayjs from "dayjs";
+import { ColourExplanation } from "./ColourExplanation";
 
 export const Report: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -83,10 +83,7 @@ export const Report: React.FC<{
           ))}
       </div>
       {appContext.selectedReport ? (
-        <div style={{ marginTop: 180 }}>
-          Last Edited: {dayjs().format("MM/DD/YYYY HH:mm:ss")} by{" "}
-          {appContext.user.name}
-        </div>
+        <ColourExplanation appContext={appContext} />
       ) : (
         <button
           onClick={async () =>

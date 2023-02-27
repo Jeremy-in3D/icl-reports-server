@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Route } from "../../../classes/route";
 import { questionBank } from "../../../data/question-bank";
 import { SurveyMachineForm } from "./survey-machine-form";
@@ -15,9 +15,11 @@ function getMachineStyle(machineState: MachineFilter) {
 export const SurveyMachine: React.FC<{
   reportInstance: Route;
   machine: MachineDetails;
+  isFromAlerts: boolean;
 }> = ({
   reportInstance,
   machine: { machineName, michlolId, michlolName, parts, equipmentUnit },
+  isFromAlerts,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState(0);
@@ -26,6 +28,14 @@ export const SurveyMachine: React.FC<{
   );
   const [partsComplete, setPartsComplete] = useState<boolean[] | undefined>();
   const appContext = useContext<Context>(AppContext);
+
+  if (
+    isFromAlerts &&
+    appContext.extra?.selectedAlert &&
+    appContext.extra?.selectedAlert !== machineName
+  ) {
+    return null;
+  }
 
   const openStyle = `${isOpen ? "opened" : "closed"}`;
   //Get parts from question bank online
@@ -40,6 +50,12 @@ export const SurveyMachine: React.FC<{
     equipmentUnit: equipmentUnit!,
     partName: currentQuestion.partName,
   };
+
+  useEffect(() => {
+    if (isFromAlerts && appContext.extra?.selectedAlert == machineName) {
+      setIsOpen(true);
+    }
+  }, []);
 
   const addCompletedMachineToReports = () => {
     appContext.reports.map((report: any) => {

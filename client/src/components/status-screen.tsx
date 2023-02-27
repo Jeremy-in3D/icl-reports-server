@@ -1,16 +1,29 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import { AlertData } from "../classes/route";
 import { checkmarkIcon, lookatAlert, minusIcon } from "../data/imports";
-import { ReportData, Route } from "../classes/route";
+import { Route } from "../classes/route";
 import { User } from "../app";
 import BasicModal from "../common/Modal";
+import AppContext, { Context } from "../context/context";
+import { Routes } from "../data/reports-data";
+import { getRoutes } from "../routes/routes";
+import dayjs from "dayjs";
 
 export const StatusScreen: React.FC<{
   setScreen: React.Dispatch<React.SetStateAction<string>>;
+  routes: any;
+  setRoutes: React.Dispatch<React.SetStateAction<any>>;
   reportInstance: Route;
   user: User;
-}> = ({ setScreen, reportInstance, user }) => {
+}> = ({ setScreen, reportInstance, user, routes, setRoutes }) => {
   const [alerts, setAlerts] = useState<AlertData[]>();
+  const appContext = useContext<Context>(AppContext);
 
   async function getAlerts() {
     const alertsResponse = await fetch("/get-alerts");
@@ -31,17 +44,44 @@ export const StatusScreen: React.FC<{
             alert.completed ? null : (
               <div className="alert-item" key={alert.uniqueId + i}>
                 <div>{alert.routeName}</div>
-                <div>Published by: {user.name}</div>
+                <div>
+                  {dayjs(alert.createdAt).format("MM/DD/YYYY HH:mm:ss")}
+                </div>
+                <div
+                  onClick={() => {
+                    handleViewAlert(
+                      setScreen,
+                      reportInstance,
+                      alert.reportId,
+                      true,
+                      appContext.reports,
+                      alert.routeName,
+                      routes,
+                      setRoutes,
+                      appContext,
+                      alert.machineName
+                    );
+                  }}
+                >
+                  Full Report
+                </div>
                 <BasicModal alert={alert} />
                 <div>
                   <img
                     className={"alert-item-view"}
                     src={lookatAlert.href}
                     onClick={() => {
-                      handleViewReport(
+                      handleViewAlert(
                         setScreen,
                         reportInstance,
-                        alert.reportId
+                        alert.reportId,
+                        false,
+                        appContext.reports,
+                        alert.routeName,
+                        routes,
+                        setRoutes,
+                        appContext,
+                        alert.machineName
                       );
                     }}
                   ></img>
@@ -86,18 +126,57 @@ export const StatusScreen: React.FC<{
   );
 };
 
-const handleViewReport = async (
+const handleViewAlert = async (
   setScreen: Dispatch<SetStateAction<string>>,
   reportInstance: Route,
-  reportId: string
+  reportId: string,
+  isShowFullReport: boolean,
+  currentReports: any[],
+  routeName: string,
+  routes: Routes,
+  setRoutes: Dispatch<SetStateAction<any>>,
+  appContext: any,
+  machineName: string
 ) => {
+  if (!routes) {
+    const routesToSet = await getRoutes();
+    setRoutes(routesToSet);
+  }
+  let isAlertFromCurrentReport;
+  const checkIsAlertFromCurrentReport = currentReports.map((report) => {
+    if (report.reportId == reportId) isAlertFromCurrentReport = true;
+  });
+
   const result = await fetch("/get-docs", {
     method: "POST",
-    body: JSON.stringify({ reportId, isFromAlerts: true }),
+    body: JSON.stringify({
+      reportId,
+      isFromAlerts: true,
+      isAlertFromCurrentReport,
+      isShowFullReport,
+    }),
   });
 
   const data = await result.json();
-  reportInstance.instantiateReport(data.reportHistoryresults[0]);
-  reportInstance.loadMachines(data.results);
+
+  const { reportHistoryResults, results } = data || {};
+
+  if (isShowFullReport) {
+    const extra = { ...appContext.extra };
+    appContext.setExtra({ ...extra, selectedAlert: "" });
+    appContext.extra?.selectedAlert !== machineName;
+    appContext.setSelectedReport(reportHistoryResults[0]);
+  } else {
+    const extra = { ...appContext.extra };
+    appContext.setExtra({
+      ...extra,
+      isFromAlertAndMachine: true,
+      selectedAlert: machineName,
+    });
+
+    reportInstance.instantiateReport(reportHistoryResults);
+    reportInstance.loadMachines(results);
+  }
+
   setScreen("report");
 };

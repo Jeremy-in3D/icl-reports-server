@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Route } from "../../../classes/route";
 import AppContext, { Context } from "../../../context/context";
 import { MachineDetails, MachineFilter } from "../route-view";
@@ -14,12 +14,21 @@ function getMachineStyle(machineState: MachineFilter) {
 export const EngineeringMachine: React.FC<{
   reportInstance: Route;
   machine: MachineDetails;
-}> = ({ reportInstance, machine: { machineName } }) => {
+  isFromAlerts: boolean;
+}> = ({ reportInstance, machine: { machineName }, isFromAlerts }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [machineComplete, setMachineComplete] = useState(
     reportInstance.getMachineComplete(machineName)
   );
   const appContext = useContext<Context>(AppContext);
+
+  if (
+    isFromAlerts &&
+    appContext.extra?.selectedAlert &&
+    appContext.extra?.selectedAlert !== machineName
+  ) {
+    return null;
+  }
 
   const openStyle = `${isOpen ? "opened" : "closed"}`;
 
@@ -42,6 +51,12 @@ export const EngineeringMachine: React.FC<{
       />
     );
   }
+
+  useEffect(() => {
+    if (isFromAlerts && appContext.extra?.selectedAlert == machineName) {
+      setIsOpen(true);
+    }
+  }, []);
 
   const addCompletedMachineToReports = () => {
     appContext.reports.map((report: any) => {
