@@ -3,6 +3,7 @@ import { arrayOfRouteNames } from "../components/report/common/reportTypes";
 import { Context } from "../context/context";
 import { Routes } from "../data/reports-data";
 import { User } from "../app";
+
 export const createNewReport = async (
   reportInstance: Route,
   newReport: any,
@@ -48,10 +49,10 @@ export const getMachines = async (
 export const publishReport = async (
   reports: [],
   setReports: React.Dispatch<React.SetStateAction<[]>>,
-  setScreen: React.Dispatch<React.SetStateAction<string>>,
   reportInstance: Route,
   routes: Routes | undefined,
-  user: User
+  user: User,
+  navigate: any
 ) => {
   if (!reports.length) {
     alert("No reports to publish");
@@ -91,9 +92,29 @@ export const publishReport = async (
 
     if (response.status === 200) {
       setReports([]);
-      setScreen("home");
+      navigate("/");
     }
   } catch (err) {
     console.log("error publishing report", err);
+  }
+};
+
+export const getCurrentReport = async (appContext: Context) => {
+  try {
+    fetch("get-current-reports", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const reportsContextCopy = [...appContext.reports, ...data];
+        appContext.setReports(reportsContextCopy);
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      });
+  } catch (err) {
+    console.log("error getting current report", err);
   }
 };

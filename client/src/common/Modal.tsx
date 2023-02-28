@@ -30,7 +30,7 @@ export default function BasicModal({ alert }: any) {
   const detailsStyle = { fontSize: "1em", fontWeight: "bold" };
 
   return (
-    <div>
+    <div style={{ flex: 1 }}>
       <Button onClick={handleOpen}>פרטים</Button>
       <Modal
         open={open}
@@ -65,7 +65,7 @@ export default function BasicModal({ alert }: any) {
           </Typography>
 
           <Button style={{ marginTop: 15 }} onClick={handleClose}>
-            Close
+            חזור
           </Button>
         </Box>
       </Modal>

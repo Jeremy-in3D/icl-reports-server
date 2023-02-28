@@ -3,13 +3,14 @@ import { Route } from "./classes/route";
 import { HomeSelection } from "./components/misc/home-selection";
 import { Context } from "./context/context";
 import { createIcon, searchIcon, viewIcon } from "./data/imports";
+import { useNavigate } from "react-router-dom";
 
 export const Home: React.FC<{
-  setScreen: React.Dispatch<React.SetStateAction<string>>;
-  setRoutes: React.Dispatch<React.SetStateAction<any>>;
   reportInstanceRef: React.MutableRefObject<Route>;
   appContext: Context;
-}> = ({ setScreen, setRoutes, reportInstanceRef, appContext }) => {
+}> = ({ reportInstanceRef, appContext }) => {
+  const navigate = useNavigate();
+
   //What the different buttons in home are, their image, and onClick event
   const buttons = [
     {
@@ -17,14 +18,11 @@ export const Home: React.FC<{
       imgPath: createIcon.href,
       onClick: async () => {
         reportInstanceRef.current = new Route();
-        //On click, fetches the routes, once fetched, sets routes data, and screen to report
-        const response = await fetch("/get-routes");
-        const data = await response.json();
-        setRoutes(data);
         const extra = { ...appContext.extra };
         appContext.setExtra({ ...extra, screen: "report" });
-        setScreen("report");
+        navigate("/reports");
       },
+      pathTo: "reports",
     },
     {
       text: "חיפוש דוחות",
@@ -32,8 +30,10 @@ export const Home: React.FC<{
       onClick: async () => {
         const extra = { ...appContext.extra };
         appContext.setExtra({ ...extra, screen: "search" });
-        setScreen("search");
+        navigate("/search-reports");
       },
+
+      pathTo: "search-reports",
     },
     {
       text: "מסך סטטוס",
@@ -41,19 +41,20 @@ export const Home: React.FC<{
       onClick: async () => {
         const extra = { ...appContext.extra };
         appContext.setExtra({ ...extra, screen: "status" });
-        setScreen("status");
+        navigate("/alerts");
       },
+      pathTo: "alerts",
     },
   ];
   return (
     <div className="home-screen">
-      {/* Maps the buttons */}
       {buttons.map((item, idx) => (
         <HomeSelection
           text={item.text}
           imgPath={item.imgPath}
           key={idx}
           onClick={item.onClick}
+          pathTo={item.pathTo}
         />
       ))}
     </div>

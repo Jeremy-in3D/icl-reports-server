@@ -263,7 +263,7 @@ app.post("/publish-report", async (req, res) => {
 
   const publishedAt = dayjs().format();
 
-  const publishedReportReference = reports.map((report: any) => {
+  const publishedReportReference = reports?.map((report: any) => {
     return {
       type: report.type,
       date: report.date,
@@ -275,7 +275,7 @@ app.post("/publish-report", async (req, res) => {
     };
   });
 
-  reports.forEach((report: any) => {
+  reports?.forEach((report: any) => {
     delete report._id;
     report.publishedAt = publishedAt;
     report.publishedBy = user.username;

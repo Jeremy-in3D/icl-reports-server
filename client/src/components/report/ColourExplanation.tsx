@@ -2,11 +2,19 @@ import dayjs from "dayjs";
 
 export function ColourExplanation(appContext: any) {
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ marginTop: 50 }}>
+    <div
+      style={{
+        display: "flex",
+        position: "fixed",
+        bottom: "0px",
+        right: "0px",
+        padding: "5px",
+      }}
+    >
+      <div>
         <div className="color-explanation-wrapper">
           <div className="color-explanation-part">
-            שלם{" "}
+            הושלם{" "}
             <div
               style={{
                 width: 20,
@@ -18,7 +26,7 @@ export function ColourExplanation(appContext: any) {
           </div>
 
           <div className="color-explanation-part">
-            Partial{" "}
+            הושלם חלקית{" "}
             <div
               style={{
                 width: 20,
@@ -30,7 +38,7 @@ export function ColourExplanation(appContext: any) {
           </div>
 
           <div className="color-explanation-part">
-            Incomplete{" "}
+            לא שלם{" "}
             <div
               style={{
                 width: 20,
@@ -41,8 +49,9 @@ export function ColourExplanation(appContext: any) {
             ></div>
           </div>
         </div>
-        Last Edited: {dayjs().format("MM/DD/YYYY HH:mm:ss")} by{" "}
-        {appContext?.user?.name}
+        נערך ב-: {dayjs().format("MM/DD/YYYY HH:mm:ss")}
+        {/* by{" "}
+        {appContext?.user?.name} */}
       </div>
     </div>
   );

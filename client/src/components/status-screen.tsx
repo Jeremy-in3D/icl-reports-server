@@ -4,26 +4,29 @@ import React, {
   useEffect,
   useState,
   useContext,
+  useRef,
 } from "react";
 import { AlertData } from "../classes/route";
 import { checkmarkIcon, lookatAlert, minusIcon } from "../data/imports";
 import { Route } from "../classes/route";
-import { User } from "../app";
 import BasicModal from "../common/Modal";
 import AppContext, { Context } from "../context/context";
 import { Routes } from "../data/reports-data";
 import { getRoutes } from "../routes/routes";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
-export const StatusScreen: React.FC<{
-  setScreen: React.Dispatch<React.SetStateAction<string>>;
-  routes: any;
-  setRoutes: React.Dispatch<React.SetStateAction<any>>;
-  reportInstance: Route;
-  user: User;
-}> = ({ setScreen, reportInstance, user, routes, setRoutes }) => {
+export const StatusScreen: React.FC<{}> = () => {
   const [alerts, setAlerts] = useState<AlertData[]>();
   const appContext = useContext<Context>(AppContext);
+  const navigate = useNavigate();
+
+  const routes = appContext.routes;
+  console.log(appContext.reportInstance?.current);
+  const reportInstance = appContext.reportInstance?.current
+    ? appContext.reportInstance?.current
+    : useRef(new Route()).current;
+  console.count("alerts screen");
 
   async function getAlerts() {
     const alertsResponse = await fetch("/get-alerts");
@@ -43,48 +46,63 @@ export const StatusScreen: React.FC<{
           alerts.map((alert, i) =>
             alert.completed ? null : (
               <div className="alert-item" key={alert.uniqueId + i}>
-                <div>{alert.routeName}</div>
-                <div>
+                <div style={{ flex: 1 }}>{alert.routeName}</div>
+                <div style={{ flex: 1 }}>
                   {dayjs(alert.createdAt).format("MM/DD/YYYY HH:mm:ss")}
                 </div>
                 <div
+                  style={{ flex: 1 }}
                   onClick={() => {
                     handleViewAlert(
-                      setScreen,
                       reportInstance,
                       alert.reportId,
                       true,
                       appContext.reports,
-                      alert.routeName,
                       routes,
-                      setRoutes,
+                      appContext.setRoutes,
                       appContext,
-                      alert.machineName
+                      alert.machineName,
+                      navigate
                     );
                   }}
                 >
-                  Full Report
+                  צפייה בדו"ח
                 </div>
                 <BasicModal alert={alert} />
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <img
                     className={"alert-item-view"}
                     src={lookatAlert.href}
                     onClick={() => {
                       handleViewAlert(
-                        setScreen,
                         reportInstance,
                         alert.reportId,
                         false,
                         appContext.reports,
-                        alert.routeName,
                         routes,
-                        setRoutes,
+                        appContext.setRoutes,
                         appContext,
-                        alert.machineName
+                        alert.machineName,
+                        navigate
                       );
                     }}
                   ></img>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <img
                     className={`alert-item-btn ${
                       alert.completed ? "completed" : ""
@@ -127,16 +145,15 @@ export const StatusScreen: React.FC<{
 };
 
 const handleViewAlert = async (
-  setScreen: Dispatch<SetStateAction<string>>,
   reportInstance: Route,
   reportId: string,
   isShowFullReport: boolean,
   currentReports: any[],
-  routeName: string,
-  routes: Routes,
+  routes: Routes | undefined,
   setRoutes: Dispatch<SetStateAction<any>>,
   appContext: any,
-  machineName: string
+  machineName: string,
+  navigate: any
 ) => {
   if (!routes) {
     const routesToSet = await getRoutes();
@@ -178,5 +195,5 @@ const handleViewAlert = async (
     reportInstance.loadMachines(results);
   }
 
-  setScreen("report");
+  navigate("/reports");
 };

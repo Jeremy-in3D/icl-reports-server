@@ -1,4 +1,6 @@
 import React from "react";
+import { Route } from "../classes/route";
+import { Routes } from "../data/reports-data";
 
 const AppContext = React.createContext<Context>({
   user: "",
@@ -9,6 +11,10 @@ const AppContext = React.createContext<Context>({
   setExtra: () => {},
   selectedReport: "",
   setSelectedReport: () => {},
+  routes: [],
+  setRoutes: () => {},
+  reportInstance: {},
+  setReportInstance: () => {},
 });
 
 export default AppContext;
@@ -22,4 +28,8 @@ export interface Context {
   setExtra: (extra: any) => void;
   selectedReport: any;
   setSelectedReport: (selectedReport: any) => void;
+  routes: Routes | undefined;
+  setRoutes: (routes: any) => void;
+  reportInstance: any;
+  setReportInstance: (route: any) => void;
 }

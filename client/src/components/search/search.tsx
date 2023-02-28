@@ -8,16 +8,19 @@ import { downloadIcon, viewIcon, deleteIcon } from "../../data/imports";
 import { ReportData, Route } from "../../classes/route";
 import dayjs from "dayjs";
 import AppContext, { Context } from "../../context/context";
+import { useNavigate } from "react-router-dom";
 
-export const Search: React.FC<{
-  setScreen: React.Dispatch<React.SetStateAction<string>>;
-  setRoutes: React.Dispatch<React.SetStateAction<any>>;
-  reportInstance: Route;
-}> = ({ setScreen, reportInstance, setRoutes }) => {
+export const Search: React.FC = () => {
   const [searchResults, setSearchResults] = useState<any>(null);
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
   const appContext = useContext<Context>(AppContext);
+  const navigate = useNavigate();
+
+  let reportInstance: Route = appContext.reportInstance?.current
+    ? appContext.reportInstance?.current
+    : useRef(new Route()).current;
+  console.count("search screen");
 
   return (
     <div className="search">
@@ -38,9 +41,9 @@ export const Search: React.FC<{
             searchResults.map((item: ReportData, idx: number) => (
               <div className="search-item" key={item._id}>
                 <h2>{item.reportId}</h2>
-                <p>Published by: {appContext.user.username}</p>
+                <p>נוצר על ידי: {appContext.user.username}</p>
                 <p>
-                  Published:{" "}
+                  מפורסם ב:{" "}
                   {dayjs(item.publishedAt).format("MM/DD/YYYY HH:mm:ss")}
                 </p>
                 <div className="search-item-options">
@@ -53,8 +56,8 @@ export const Search: React.FC<{
                       //On click, fetches the routes, once fetched, sets routes data, and screen to report
                       const response = await fetch("/get-routes");
                       const data = await response.json();
-                      setRoutes(data);
-                      setScreen("report");
+                      appContext.setRoutes(data);
+                      navigate("/reports");
                     }}
                   />
                   <SearchOption

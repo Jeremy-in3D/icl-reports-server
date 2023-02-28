@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { Route } from "../../classes/route";
 import { Routes } from "../../data/reports-data";
 import { ShowError } from "../misc/show-error";
@@ -7,20 +7,27 @@ import AppContext, { Context } from "../../context/context";
 import { isShouldCreateNewReport } from "./logic/isShouldCreateNewReport";
 import {
   createNewReport,
+  getCurrentReport,
   getMachines,
+  getRoutes,
   publishReport,
 } from "../../routes/routes";
 import { getMachineComplete } from "./logic/getMachineComplete";
 import { ColourExplanation } from "./ColourExplanation";
+import { useNavigate } from "react-router-dom";
 
-export const Report: React.FC<{
-  setScreen: React.Dispatch<React.SetStateAction<string>>;
-  routes: Routes | undefined;
-  reportInstance: Route;
-}> = ({ setScreen, routes, reportInstance }) => {
+export const Report: React.FC<{}> = () => {
   const [routeView, setRouteView] = useState(false);
+  const [helper, setHelper] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const appContext = useContext<Context>(AppContext);
+  const navigate = useNavigate();
+
+  const routes = appContext.routes;
+  const reportInstance = appContext.reportInstance?.current
+    ? appContext.reportInstance?.current
+    : useRef(new Route()).current;
+  console.count("reports screen");
 
   useEffect(() => {
     if (errorMessage) {
@@ -32,22 +39,42 @@ export const Report: React.FC<{
     }
   }, [errorMessage]);
 
+  async function getNewRoutes() {
+    if (!appContext.routes?.length) {
+      return await getRoutes();
+    }
+  }
+
   useEffect(() => {
-    if (
-      (reportInstance.reportId && !appContext.selectedReport) ||
-      appContext.extra?.isFromAlertAndMachine
-    ) {
-      setRouteView(true);
+    if (!appContext.routes?.length) {
+      getNewRoutes().then((response) => {
+        appContext.setRoutes(response);
+      });
+
+      if (!appContext.reports?.length) {
+        getCurrentReport(appContext).then((res) => console.log(res));
+      }
+      console.log("well what about the first?");
     }
   }, []);
 
+  if (
+    (!routeView &&
+      reportInstance?.reportId &&
+      !appContext.selectedReport &&
+      !helper) ||
+    (appContext.extra?.isFromAlertAndMachine && !routeView && !helper)
+  ) {
+    setRouteView(true);
+  }
   if (routeView)
     return (
       <div className="report">
         <RouteView
           reportInstance={reportInstance}
-          setScreen={setScreen}
           setRouteView={setRouteView}
+          appContext={appContext}
+          setHelper={setHelper}
         />
       </div>
     );
@@ -59,8 +86,8 @@ export const Report: React.FC<{
       <p className="page-title">יצור דו"ח</p>
       <div className="routes-selections">
         {/* Show the different routes pulled as options, with a dynamic onclick based on the route */}
-        {routes &&
-          routes.map((route, idx) => (
+        {appContext.routes &&
+          appContext.routes.map((route, idx) => (
             <button
               key={idx}
               className={`routes-selection-btn ${getMachineComplete(
@@ -90,10 +117,10 @@ export const Report: React.FC<{
             await publishReport(
               appContext.reports,
               appContext.setReports,
-              setScreen,
               reportInstance,
               routes,
-              appContext.user
+              appContext.user,
+              navigate
             )
           }
           className="publish-report-btn"
@@ -113,7 +140,11 @@ async function createReport(
   appContext: Context
 ) {
   //Creates new report on the instance using the route
-  const newReport = reportInstance.newReport(route);
+  if (!reportInstance.newReport) {
+    console.log("no report isntance");
+    return;
+  }
+  const newReport = reportInstance?.newReport(route);
 
   if (appContext.selectedReport) {
     const selectedReportReport = await fetch("/get-published-report", {
