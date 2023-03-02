@@ -20,7 +20,10 @@ export const Search: React.FC = () => {
   let reportInstance: Route = appContext.reportInstance?.current
     ? appContext.reportInstance?.current
     : useRef(new Route()).current;
-  console.count("search screen");
+
+  const handleExcelDownload = async (report: any) => {
+    exportExcel(report);
+  };
 
   return (
     <div className="search">
@@ -63,13 +66,12 @@ export const Search: React.FC = () => {
                   <SearchOption
                     text={"הורדה"}
                     href={downloadIcon.href}
-                    onClick={() => {
-                      const id = "R2-2023-02-23T14:58:44+02:00";
-                      const name = "משלוחים";
-                      const type = "survey";
-                      exportExcel(id, name, type);
+                    onClick={
+                      () => {
+                        handleExcelDownload(item.publishedReport);
+                      }
                       // exportExcel(item.reportId, item.routeName, item.type);
-                    }}
+                    }
                   />
                   <SearchOption
                     text={"מחיקה"}

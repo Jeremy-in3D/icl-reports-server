@@ -4,6 +4,7 @@ import { FormInput } from "../inputs/form-input";
 import { QuestionBank } from "../../../data/question-bank";
 import { ReportDetails } from "./survey-machine";
 import { MachineFilter } from "../route-view";
+import { TakePicture } from "../../misc/blob-handlers";
 
 export const SurveyMachineForm: React.FC<{
   reportInstance: Route;
@@ -89,6 +90,7 @@ export const SurveyMachineForm: React.FC<{
           defaultValue={textAreastring}
         ></textarea>
       </form>
+      <TakePicture reportId={reportInstance?.reportId} />
     </>
   );
 };

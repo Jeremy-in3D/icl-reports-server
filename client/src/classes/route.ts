@@ -187,6 +187,7 @@ export type ReportData = {
   publishedAt?: any;
   _id?: string;
   completedMachines?: number;
+  publishedReport?: any[] | undefined;
 };
 
 export type User = {
@@ -235,4 +236,5 @@ export type AlertData = {
     [partName: string]: FormSubmission;
   };
   user?: User;
+  lastEditBy?: User;
 };

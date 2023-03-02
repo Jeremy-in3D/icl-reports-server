@@ -23,14 +23,13 @@ export default function BasicModal({ alert }: any) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
-    console.log(alert);
   };
   const handleClose = () => setOpen(false);
 
   const detailsStyle = { fontSize: "1em", fontWeight: "bold" };
 
   return (
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1, textAlign: "center" }}>
       <Button onClick={handleOpen}>פרטים</Button>
       <Modal
         open={open}
@@ -55,7 +54,8 @@ export default function BasicModal({ alert }: any) {
             </span>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            נערך על ידי: <span style={detailsStyle}>{alert.lastEditBy}</span>
+            נערך על ידי:{" "}
+            <span style={detailsStyle}>{alert?.lastEditBy?.name}</span>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             טקסט חופשי:{" "}

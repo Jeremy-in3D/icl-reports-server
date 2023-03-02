@@ -179,4 +179,10 @@ export class MongoDB {
       .sort({ createdAt: -1 });
     return find.toArray();
   }
+
+  SearchForMultipleDocs(reportIds: any[], collectionId: CollectionIds) {
+    const collection = this.getCollection(collectionId);
+    const relevantReports = collection.find({ reportId: { $in: reportIds } });
+    return relevantReports.toArray();
+  }
 }

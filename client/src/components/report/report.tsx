@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Report: React.FC<{}> = () => {
   const [routeView, setRouteView] = useState(false);
-  const [helper, setHelper] = useState(false);
+  const [routeViewHelper, setRouteViewHelper] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const appContext = useContext<Context>(AppContext);
   const navigate = useNavigate();
@@ -27,7 +27,6 @@ export const Report: React.FC<{}> = () => {
   const reportInstance = appContext.reportInstance?.current
     ? appContext.reportInstance?.current
     : useRef(new Route()).current;
-  console.count("reports screen");
 
   useEffect(() => {
     if (errorMessage) {
@@ -54,7 +53,6 @@ export const Report: React.FC<{}> = () => {
       if (!appContext.reports?.length) {
         getCurrentReport(appContext).then((res) => console.log(res));
       }
-      console.log("well what about the first?");
     }
   }, []);
 
@@ -62,8 +60,8 @@ export const Report: React.FC<{}> = () => {
     (!routeView &&
       reportInstance?.reportId &&
       !appContext.selectedReport &&
-      !helper) ||
-    (appContext.extra?.isFromAlertAndMachine && !routeView && !helper)
+      !routeViewHelper) ||
+    (appContext.extra?.isFromAlertAndMachine && !routeView && !routeViewHelper)
   ) {
     setRouteView(true);
   }
@@ -74,7 +72,7 @@ export const Report: React.FC<{}> = () => {
           reportInstance={reportInstance}
           setRouteView={setRouteView}
           appContext={appContext}
-          setHelper={setHelper}
+          setRouteViewHelper={setRouteViewHelper}
         />
       </div>
     );

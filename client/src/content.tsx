@@ -7,8 +7,6 @@ export const Content: React.FC = () => {
   const reportInstance = useRef(new Route());
   const appContext = useContext(AppContext);
 
-  console.count("homepage");
-
   useEffect(() => {
     if (!appContext.reports.length) {
       fetch("get-current-reports", {

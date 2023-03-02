@@ -75,7 +75,7 @@ export const SurveyMachine: React.FC<{
         onClick={() => setIsOpen((prevState) => !prevState)}
         className={`bar ${getMachineStyle(machineComplete)} ${openStyle}`}
       >
-        {machineName}
+        {michlolName} - {machineName}
       </div>
       <div className={`michlol-contents ${machineComplete} ${openStyle}`}>
         {isOpen && (
@@ -100,6 +100,14 @@ export const SurveyMachine: React.FC<{
               onClick={async () => {
                 const answer = confirm("אתה רוצה לסיים את הדוח ולשלוח לשרת?");
                 if (answer) {
+                  console.log(appContext.user);
+                  console.log(
+                    reportInstance.sendMachineData(
+                      machineName,
+                      appContext.selectedReport,
+                      appContext.user
+                    )
+                  );
                   const machineResponse = await fetch("/save-machine", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

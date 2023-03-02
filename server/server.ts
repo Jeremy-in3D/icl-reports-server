@@ -9,6 +9,8 @@ import { MongoDB } from "./mongodb.js";
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
 import dayjs from "dayjs";
+import fs from "fs";
+import multer from "multer";
 
 //Client for pulling public key for use with verifying jwt
 const JwksClient = jwksClient({
@@ -37,42 +39,64 @@ const BLOB_CONNECTION_STRING = process.env.BLOB_CONNECTION_STRING || "";
 const blobServiceClient = BlobServiceClient.fromConnectionString(
   BLOB_CONNECTION_STRING
 );
+const upload = multer({ dest: "uploads/" });
 
 //Route to get image buffer and send to client
 app.post("/get-image", async (req, res) => {
-  const containerClient = blobServiceClient.getContainerClient("images");
-  const blobClient = containerClient.getBlobClient(req.body);
-  const downloadBlockBlobResponse = await blobClient.download();
-  const downloaded = await streamToBuffer(
-    downloadBlockBlobResponse.readableStreamBody
-  );
-  res.send(downloaded);
+  try {
+    const containerName = "icl-reports-blob";
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blobClient = containerClient.getBlobClient(`${req.body}_image.png`);
+    const downloadBlockBlobResponse = await blobClient.download();
+    const downloaded = await streamToBuffer(
+      downloadBlockBlobResponse.readableStreamBody
+    );
+    res.send(downloaded);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
 });
 
 //Route to upload image
-app.post("/upload-image", async (req, res) => {
-  if (req.files) {
-    //@ts-ignore
-    const buffer = req.files["imgFile"].data;
-    const containerClient = blobServiceClient.getContainerClient("images");
-    const blobName = "blob-" + Date.now();
-    const blobClient = containerClient.getBlockBlobClient(blobName);
-    const uploadBlobResponse = await blobClient.upload(buffer, buffer.length);
-    const blobId = uploadBlobResponse.requestId;
-    console.log(`Upload block blob ${blobName} successfully - ${blobId}`);
-    res.send(`Upload block blob ${blobName} successfully - ${blobId}`);
+app.post("/upload-image", upload.single("imgFile"), async (req, res) => {
+  const containerName = "icl-reports-blob";
+  const containerClient = blobServiceClient.getContainerClient(containerName);
+  const file = req.file;
+
+  const { reportId } = req.body;
+
+  if (!file) {
+    console.log("tooo bad, no fiule!");
+    res.sendStatus(400);
+    return;
+  }
+
+  const blobName = `${reportId}_image.png`;
+  const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+  try {
+    const data = await fs.promises.readFile(file.path);
+    await blockBlobClient.uploadData(data);
+    // Clean up the temporary file
+    await fs.promises.unlink(file.path);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
   }
 });
 
 app.post("/save-machine", async (req, res) => {
   const data: MachineData = req.body;
-  const dataToSave: ReportDataCurrent = {
-    michlolName: data.michlolName,
-    michlolId: data.michlolId,
-    createdAt: dayjs().format(),
-    data: data.data,
-    user: data.user,
-  };
+  // const dataToSave: ReportDataCurrent = {
+  //   michlolName: data.michlolName,
+  //   michlolId: data.michlolId,
+  //   createdAt: dayjs().format(),
+  //   data: data.data,
+  //   user: data.user,
+  // };
   try {
     if (data.completed) {
       const updateCompletedMachinesInReports = await mongo.incValue(
@@ -106,7 +130,7 @@ app.post("/save-machine", async (req, res) => {
           createdAt: data.createdAt,
           completed: false,
           data: alertData,
-          user: data.user,
+          lastEditBy: data.lastEditBy,
         };
         await mongo.insertDoc(alert, "alerts");
       });
@@ -180,8 +204,6 @@ app.post("/search-reports", async (req, res) => {
 });
 
 app.post("/get-docs", async (req, res) => {
-  console.log(typeof req.body, req.body);
-
   let value = req.body;
   if (typeof value == "string") {
     value = JSON.parse(value);
@@ -203,6 +225,7 @@ app.post("/get-docs", async (req, res) => {
         const routesToReturn = await mongo.getDocs("", "reports");
         reponseToSendForAlerts.reportHistoryResults = routesToReturn;
       }
+
       if (isAlertFromCurrentReport && !isShowFullReport) {
         const relevantReport = await mongo.findGeneric({ reportId }, "reports");
         reponseToSendForAlerts.reportHistoryResults = relevantReport[0];
@@ -331,6 +354,52 @@ app.post("/get-published-report", async (req, res) => {
   res.status(200).send(resToSend);
 });
 
+app.post("/download-report", async (req, res) => {
+  let publishedReport;
+  const reportIds: any[] = [];
+  const resToSend: any = {};
+  try {
+    if (typeof req.body === "string") {
+      publishedReport = JSON.parse(req.body);
+    } else {
+      publishedReport = req.body;
+    }
+    // console.log("our published report! ", publishedReport);
+    if (!publishedReport || !publishedReport.length) {
+      return;
+    }
+    publishedReport.forEach((report: any) => reportIds.push(report.reportId));
+    // const reportFromReportHistory = await mongo.SearchForMultipleDocs(
+    //   reportIds,
+    //   "reports_history"
+    // );
+    const machinesForReport = await mongo.SearchForMultipleDocs(
+      reportIds,
+      "machines"
+    );
+
+    machinesForReport.forEach((machine) => {
+      const engineeringReport = ['דו"ח רעידות', 'דו"ח מערכת שמן'];
+      const machineToSend = {
+        routeName: machine.routeName,
+        lastEditBy: machine.lastEditBy?.name,
+        equipmentUnit: machine.equipmentUnit,
+        data: machine.data,
+        michlolName: machine.machlolName,
+        completed: machine.completed,
+        surveyType: engineeringReport.includes(machine.routeName)
+          ? "engineering"
+          : "survey",
+      };
+      resToSend[machine.routeName] = machineToSend;
+    });
+
+    res.status(200).send(resToSend);
+  } catch {}
+  // const currentReports = await mongo.getDocs("", "reports");
+  // res.status(200).send(resToSend);
+});
+
 (async () => {
   try {
     await mongo.connect();
@@ -400,6 +469,7 @@ export type MachineData = {
   completed?: boolean;
   isFromPublishedReport?: string | number | boolean;
   publishedBy?: string;
+  lastEditBy?: User;
 };
 
 type FormSubmission = {

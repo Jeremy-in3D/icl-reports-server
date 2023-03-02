@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route } from "../../classes/route";
+import { Context } from "../../context/context";
 import { Filter } from "./filter";
 import { MachinesList } from "./machines-list";
 
@@ -7,9 +8,10 @@ const filterItems: MachineFilter[] = ["הכל", "הושלם", "חלקי", "לא 
 
 export const RouteView: React.FC<{
   reportInstance: Route;
-  setScreen: React.Dispatch<React.SetStateAction<string>>;
   setRouteView: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ reportInstance, setScreen, setRouteView }) => {
+  appContext: Context;
+  setRouteViewHelper: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ reportInstance, setRouteView, appContext, setRouteViewHelper }) => {
   const [machineFilter, setMachineFilter] = useState<MachineFilter>("הכל");
   const machines: MachineDetails[] = [];
   //For each michlol, push a machine object with the michlol details
@@ -63,6 +65,10 @@ export const RouteView: React.FC<{
       <button
         className="route-submit-btn"
         onClick={() => {
+          if (appContext.selectedReport) {
+            // appContext.setSelectedReport("");
+          }
+          setRouteViewHelper(true);
           setRouteView(false);
         }}
       >

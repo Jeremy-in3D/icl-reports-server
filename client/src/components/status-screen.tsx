@@ -15,18 +15,19 @@ import { Routes } from "../data/reports-data";
 import { getRoutes } from "../routes/routes";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { Filter } from "./search/AlertFilter";
+import { arrayOfRouteNames } from "./report/common/reportTypes";
 
 export const StatusScreen: React.FC<{}> = () => {
   const [alerts, setAlerts] = useState<AlertData[]>();
+  const [filterOption, setFilterOption] = useState<string[]>(arrayOfRouteNames);
   const appContext = useContext<Context>(AppContext);
   const navigate = useNavigate();
 
   const routes = appContext.routes;
-  console.log(appContext.reportInstance?.current);
   const reportInstance = appContext.reportInstance?.current
     ? appContext.reportInstance?.current
     : useRef(new Route()).current;
-  console.count("alerts screen");
 
   async function getAlerts() {
     const alertsResponse = await fetch("/get-alerts");
@@ -41,43 +42,69 @@ export const StatusScreen: React.FC<{}> = () => {
   return (
     <div className="alerts-screen">
       <h2 className="alerts-title">התראות</h2>
+      <Filter
+        setAlerts={setAlerts}
+        alerts={alerts}
+        setFilterOption={setFilterOption}
+      />
       <div className="alerts">
         {alerts?.length ? (
-          alerts.map((alert, i) =>
-            alert.completed ? null : (
-              <div className="alert-item" key={alert.uniqueId + i}>
-                <div style={{ flex: 1 }}>{alert.routeName}</div>
-                <div style={{ flex: 1 }}>
-                  {dayjs(alert.createdAt).format("MM/DD/YYYY HH:mm:ss")}
-                </div>
-                <div
-                  style={{ flex: 1 }}
-                  onClick={() => {
-                    handleViewAlert(
-                      reportInstance,
-                      alert.reportId,
-                      true,
-                      appContext.reports,
-                      routes,
-                      appContext.setRoutes,
-                      appContext,
-                      alert.machineName,
-                      navigate
-                    );
-                  }}
-                >
-                  צפייה בדו"ח
-                </div>
-                <BasicModal alert={alert} />
-                <div
-                  style={{
-                    display: "flex",
-                    flex: 1,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img
+          alerts
+            .filter((alert) => filterOption.includes(alert.routeName))
+            .map((alert, i) =>
+              alert.completed ? null : (
+                <div className="alert-item" key={alert.uniqueId + i}>
+                  <div style={{ flex: 1, textAlign: "center" }}>
+                    {alert.routeName}
+                  </div>
+                  <div style={{ flex: 1, textAlign: "center" }}>
+                    {dayjs(alert.createdAt).format("MM/DD/YYYY HH:mm:ss")}
+                  </div>
+                  <div style={{ flex: 1, textAlign: "center" }}>
+                    {alert.lastEditBy?.name}
+                  </div>
+                  <div
+                    style={{ flex: 1, textAlign: "center" }}
+                    onClick={() => {
+                      handleViewAlert(
+                        reportInstance,
+                        alert.reportId,
+                        true,
+                        appContext.reports,
+                        routes,
+                        appContext.setRoutes,
+                        appContext,
+                        alert.machineName,
+                        navigate
+                      );
+                    }}
+                  >
+                    צפייה בדו"ח
+                  </div>
+                  <BasicModal alert={alert} />
+                  <div
+                    style={{
+                      display: "flex",
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    onClick={() => {
+                      handleViewAlert(
+                        reportInstance,
+                        alert.reportId,
+                        false,
+                        appContext.reports,
+                        routes,
+                        appContext.setRoutes,
+                        appContext,
+                        alert.machineName,
+                        navigate
+                      );
+                    }}
+                  >
+                    למכונה
+                    {/* <img
                     className={"alert-item-view"}
                     src={lookatAlert.href}
                     onClick={() => {
@@ -93,47 +120,49 @@ export const StatusScreen: React.FC<{}> = () => {
                         navigate
                       );
                     }}
-                  ></img>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img
-                    className={`alert-item-btn ${
-                      alert.completed ? "completed" : ""
-                    }`}
-                    src={alert.completed ? checkmarkIcon.href : minusIcon.href}
-                    onClick={async () => {
-                      const answer = confirm(
-                        `Would you like to mark alert as ${
-                          alert.completed ? "incomplete" : "complete"
-                        }?`
-                      );
-                      if (answer) {
-                        const payload = {
-                          uniqueId: alert.uniqueId,
-                          completed: !alert.completed,
-                        };
-                        const updateResponse = await fetch("/update-alert", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify(payload),
-                        });
-                        if (updateResponse.status === 200) {
-                          getAlerts();
-                        }
-                      }
+                  ></img> */}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
-                  ></img>
+                  >
+                    <img
+                      className={`alert-item-btn ${
+                        alert.completed ? "completed" : ""
+                      }`}
+                      src={
+                        alert.completed ? checkmarkIcon.href : minusIcon.href
+                      }
+                      onClick={async () => {
+                        const answer = confirm(
+                          `Would you like to mark alert as ${
+                            alert.completed ? "incomplete" : "complete"
+                          }?`
+                        );
+                        if (answer) {
+                          const payload = {
+                            uniqueId: alert.uniqueId,
+                            completed: !alert.completed,
+                          };
+                          const updateResponse = await fetch("/update-alert", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload),
+                          });
+                          if (updateResponse.status === 200) {
+                            getAlerts();
+                          }
+                        }
+                      }}
+                    ></img>
+                  </div>
                 </div>
-              </div>
+              )
             )
-          )
         ) : (
           <div className="alert-item-default">
             <p>אין התראות</p>
