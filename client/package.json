@@ -1,11 +1,14 @@
 {
   "name": "icl-reports",
   "version": "1.0.0",
+  "homepage": "https://Jeremy-in3D.github.io/reporting-icl",
   "keywords": [],
   "author": "In3DTech",
   "license": "ISC",
   "description": "Reporting web app for ICL",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "webpack",
     "watch": "webpack --watch",
     "dev": "webpack serve --open"
@@ -29,6 +32,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/uuid": "^9.0.0",
     "css-loader": "^6.7.3",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.2",
     "ts-loader": "^9.4.2",

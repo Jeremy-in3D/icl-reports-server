@@ -1,40 +1,103 @@
 import { utils, WorkSheet, writeFile } from "xlsx";
 import { ReportData } from "../classes/route";
+import { arrayOfRouteNames } from "../components/report/common/reportTypes";
+
+// const id = "R2-2023-02-23T14:58:44+02:00";
+// const name = "משלוחים";
+// const type = "survey";
 
 export async function exportExcel(
-  reportId: string,
-  routeName: string,
-  type: ReportData["type"]
+  // reportId: string,
+  // routeName: string,
+  // type: ReportData["type"]
+  report: any[] | undefined
 ) {
-  const pullResult = await fetch("/get-docs", {
-    method: "POST",
-    body: JSON.stringify({ reportId }),
-  });
-  if (pullResult.status === 200) {
-    const response = await pullResult.json();
-    const workbook = utils.book_new();
-    const worksheet = utils.json_to_sheet([]);
-
-    //Add titles to the Worksheet
-    utils.sheet_add_json(worksheet, [{}], {
-      header: ['מספר דו"ח:', reportId],
-      origin: "A1",
-    });
-    utils.sheet_add_json(worksheet, [{}], {
-      header: ["שם מסלול:", routeName],
-      origin: "A2",
+  try {
+    const pullResult = await fetch("/download-report", {
+      method: "POST",
+      body: JSON.stringify(report),
     });
 
-    if (type === "survey") {
-      handleSurveyExport(response, worksheet);
-    } else if (type === "engineering") {
-      handleEngineeringExport(response, worksheet);
+    if (pullResult.status === 200) {
+      const response = await pullResult.json();
+      console.log({ response });
+
+      const responseArray = [];
+      for (const [key, value] of Object.entries(response)) {
+        responseArray.push({ [key]: value });
+      }
+      const workbook = utils.book_new();
+      const worksheet = utils.json_to_sheet([]);
+
+      arrayOfRouteNames.forEach((route, index) => {
+        if (!response[route]) {
+          index = index - 1;
+          return;
+        }
+        console.log(response[route]);
+        utils.sheet_add_json(worksheet, [{}], {
+          header: ["שם מסלול:", route],
+          origin: `A${index * 5 + 1}`,
+        });
+        utils.sheet_add_json(worksheet, [{}], {
+          header: ["יחידת ציוד:", response[route]?.equipmentUnit],
+          origin: `A${index * 8 + 2}`,
+        });
+        // const cellAddress = utils.encode_cell({ r: index * 8 + 2, c: 0 });
+        // // Set the fill color of the cell
+        // worksheet[cellAddress].s = {
+        //   fill: {
+        //     type: "pattern",
+        //     patternType: "solid",
+        //     fgColor: { rgb: "FFFF0000" },
+        //   },
+        // };
+        utils.sheet_add_json(worksheet, [{}], {
+          header: ["עריכה אחרונה על ידי:", response[route]?.lastEditBy],
+          origin: `A${index * 8 + 3}`,
+        });
+        if (!response[route].data) {
+          index = index - 1;
+          return;
+        }
+        let count = 4;
+        for (const [key, value] of Object.entries(response[route].data)) {
+          const stringified = JSON.stringify(response[route].data);
+          utils.sheet_add_json(worksheet, [{}], {
+            header: [`${key}`, stringified],
+            origin: `B${index * 8 + count}`,
+          });
+          count++;
+        }
+        // utils.sheet_add_json(worksheet, [{}], {
+        //   header: ["data", response[route]?.JSON.stringify(data)],
+        //   origin: `A${index * 10 + 3}`,
+        // });
+      });
+
+      //Add titles to the Worksheet
+      // utils.sheet_add_json(worksheet, [{}], {
+      //   header: ['מספר דו"ח:', "hello"],
+      //   origin: "A1",
+      // });
+      // utils.sheet_add_json(worksheet, [{}], {
+      //   header: ["שם מסלול:", "world"],
+      //   origin: "A2",
+      // });
+
+      // if (type === "survey") {
+      //   handleSurveyExport(response, worksheet);
+      // } else if (type === "engineering") {
+      //   handleEngineeringExport(response, worksheet);
+      // }
+
+      utils.book_append_sheet(workbook, worksheet, "Data");
+      writeFile(workbook, `${"icl_report"}.xlsx`, {
+        compression: true,
+      });
     }
-
-    utils.book_append_sheet(workbook, worksheet, "Data");
-    writeFile(workbook, `${reportId}.xlsx`, {
-      compression: true,
-    });
+  } catch (e) {
+    console.error(e);
   }
 }
 

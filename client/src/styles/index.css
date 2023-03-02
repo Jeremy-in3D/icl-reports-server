@@ -719,11 +719,13 @@ textarea {
   display: none;
 }
 .alerts {
+  margin-top: 15px;
   min-height: 50vh;
   background-image: url("../../assets/icl-symbol.png");
   background-size: contain;
   background-position: bottom;
   background-repeat: no-repeat;
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
   overflow: scroll;
 }
 

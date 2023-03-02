@@ -32,12 +32,15 @@ export const Login: React.FC<{
       });
       //Save the token received in the resposne to a reference to be easily used in rest of application
       tokenRef.current = loginResponse.accessToken;
-      console.log(loginResponse.account?.name);
       const userRes = {
         name: loginResponse.account?.name,
         username: loginResponse.account?.username,
       };
       appContext.setUser(userRes);
+      // appContext.setUser({
+      //   name: "Jeremy Wesfield",
+      //   username: "jwes@in3d-tech.com",
+      // });
       // setAuthorized(true);
     } catch (err) {
       console.log("Error: " + err);
