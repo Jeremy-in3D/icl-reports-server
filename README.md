@@ -29,3 +29,8 @@ Machines: The underlying data being saved, each machine is saved and stored sepe
 Alerts: Used to store all alerts raised from saving machines. The specification of what raises an alert is based on the question itself.
 Along with the text data being saved in these collections, each machine will be able to store an image. These images will be stored seperately in an Azure AD Blob Storage.
 When wanting to export data.
+
+    // "build": "npx tsc",
+    // "build-watch": "npx tsc --watch",
+    // "start": "node ./output/server.js",
+    // "server-watch": "node --watch ./output/server.js"

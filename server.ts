@@ -11,6 +11,8 @@ import jwksClient from "jwks-rsa";
 import dayjs from "dayjs";
 import fs from "fs";
 import multer from "multer";
+import cors from "cors";
+import helmet from "helmet";
 
 //Client for pulling public key for use with verifying jwt
 const JwksClient = jwksClient({
@@ -25,8 +27,8 @@ const mongo = new MongoDB(mongoUri);
 //Initialize express
 const port = process.env.PORT || 80;
 const app = express();
-const cors = require("cors");
-const helmet = require("helmet");
+// const cors = require("cors");
+// const helmet = require("helmet");
 //Get relative path for static hosting
 const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
 
