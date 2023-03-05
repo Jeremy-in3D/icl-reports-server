@@ -273,13 +273,10 @@ app.get("/get-alerts", async (req, res) => {
   }
 });
 
-app.post(
-  "https://icl-reports-client-xpyw.vercel.app/get-current-reports/get-current-reports",
-  async (req, res) => {
-    const currentReports = await mongo.getDocs("", "reports");
-    res.status(200).send(currentReports);
-  }
-);
+app.post("/get-current-reports", async (req, res) => {
+  const currentReports = await mongo.getDocs("", "reports");
+  res.status(200).send(currentReports);
+});
 
 app.post("/publish-report", async (req, res) => {
   const { reports, user } = req.body || {};
