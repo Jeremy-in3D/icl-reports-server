@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "heroku-prebuild": "npm install --dev",
     "build": "npx tsc",
     "build-watch": "npx tsc --watch",
     "start": "node ./output/server.js",
