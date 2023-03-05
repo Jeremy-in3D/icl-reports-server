@@ -25,7 +25,7 @@ dotenv.config();
 const mongoUri = process.env.MONGO_URI || "";
 const mongo = new MongoDB(mongoUri);
 //Initialize express
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8080;
 const app = express();
 // const cors = require("cors");
 // const helmet = require("helmet");
@@ -41,27 +41,30 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "dist")));
 app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://icl-report-client.vercel.app"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "icl-reports-client-pmsri4vcr-jeremy-in3d.vercel.app"
-  );
+  res.header("Access-Control-Allow-Origin", [
+    "http://localhost:8081",
+    "https://icl-reports-client-pmsri4vcr-jeremy-in3d.vercel.app",
+    "https://icl-reports-client.vercel.app",
+  ]);
+
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
 });
+
+// app.use((req, res, next) => {
+//   res.header(
+//     "Access-Control-Allow-Origin",
+//     "icl-reports-client-pmsri4vcr-jeremy-in3d.vercel.app"
+//   );
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 app.use(express.json());
 app.use(express.text());
 
