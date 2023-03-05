@@ -25,10 +25,12 @@ const mongo = new MongoDB(mongoUri);
 //Initialize express
 const port = process.env.PORT || 8080;
 const app = express();
+var cors = require("cors");
 //Get relative path for static hosting
 const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
 
 //Express Middleware
+app.use(cors());
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
