@@ -5,12 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "build": "npx tsc",
+    "build-watch": "npx tsc --watch",
+    "start": "node ./output/server.js",
+    "server-watch": "node --watch ./output/server.js"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.12.0",
@@ -23,8 +21,7 @@
     "jsonwebtoken": "^9.0.0",
     "jwks-rsa": "^3.0.0",
     "mongodb": "^4.13.0",
-    "multer": "^1.4.5-lts.1",
-    "serve": "^14.2.0"
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
@@ -35,8 +32,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "engines": {
-    "node": "18.1"
-  }
+  "license": "ISC"
 }
