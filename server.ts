@@ -32,7 +32,11 @@ const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
 
 //Express Middleware
 app.use(cors());
-app.use(helmet());
+app.use(
+  helmet({
+    referrerPolicy: { policy: "unsafe-url" },
+  })
+);
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.json());
 app.use(express.text());
