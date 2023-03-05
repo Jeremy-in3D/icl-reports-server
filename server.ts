@@ -23,7 +23,7 @@ dotenv.config();
 const mongoUri = process.env.MONGO_URI || "";
 const mongo = new MongoDB(mongoUri);
 //Initialize express
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 80;
 const app = express();
 var cors = require("cors");
 //Get relative path for static hosting
