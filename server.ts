@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 
 app.use(function (req, res, next) {
   const allowedOrigins = ["http://localhost:8080"];
-  const origin = req.headers.origin;
+  const origin = req.headers?.origin || "";
   if (allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
