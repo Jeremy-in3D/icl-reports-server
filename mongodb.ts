@@ -103,11 +103,11 @@ export class MongoDB {
     );
   }
 
-  find(identifier: any, collectionId: CollectionIds) {
+  find(identifier: any, collectionId: CollectionIds, limit?: number) {
     const collection = this.getCollection(collectionId)
       .find(identifier)
       .sort({ createdAt: -1 })
-      .limit(1)
+      .limit(limit ? limit : 1)
       .toArray();
     return collection;
   }
@@ -120,9 +120,16 @@ export class MongoDB {
     return collection;
   }
 
-  removeDoc(id: string, collectionId: CollectionIds) {
+  removeDoc(
+    id: string,
+    collectionId: CollectionIds,
+    isDeleteReport?: boolean | undefined
+  ) {
     const collection = this.getCollection(collectionId);
-    return collection.deleteOne({ reportId: id });
+    const itemToDelete = isDeleteReport
+      ? { publishedAt: id }
+      : { reportId: id };
+    return collection.deleteOne(itemToDelete);
   }
 
   removeDocs(id: string, collectionId: CollectionIds) {
@@ -156,13 +163,15 @@ export class MongoDB {
   }
 
   updateAlert(
-    payload: { uniqueId: string; completed: boolean },
+    uniqueId: string,
+    completed: boolean,
+    alert: string | boolean,
     collectionId: CollectionIds
   ) {
     const collection = this.getCollection(collectionId);
     return collection.findOneAndUpdate(
-      { uniqueId: payload.uniqueId },
-      { $set: { completed: payload.completed } }
+      { reportId: uniqueId },
+      { $set: { completed, "data.alert": alert } }
     );
   }
 

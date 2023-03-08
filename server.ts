@@ -53,34 +53,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", [
-//     "http://localhost:8081",
-//     "https://icl-reports-client-pmsri4vcr-jeremy-in3d.vercel.app",
-//     "https://icl-reports-client.vercel.app",
-//   ]);
-
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
-
-// app.use((req, res, next) => {
-//   res.header(
-//     "Access-Control-Allow-Origin",
-//     "icl-reports-client-pmsri4vcr-jeremy-in3d.vercel.app"
-//   );
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
 app.use(express.json());
 app.use(express.text());
-
 app.use(express.urlencoded({ extended: true }));
 
 //Blob initilization for images saving in Azure
@@ -102,7 +76,6 @@ app.post("/get-image", async (req, res) => {
     );
     res.send(downloaded);
   } catch (e) {
-    console.log(e);
     res.sendStatus(500);
   }
 });
@@ -116,8 +89,7 @@ app.post("/upload-image", upload.single("imgFile"), async (req, res) => {
   const { reportId } = req.body;
 
   if (!file) {
-    console.log("tooo bad, no fiule!");
-    res.sendStatus(400);
+    res.sendStatus(500);
     return;
   }
 
@@ -132,20 +104,13 @@ app.post("/upload-image", upload.single("imgFile"), async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    console.error(error);
     res.sendStatus(500);
   }
 });
 
 app.post("/save-machine", async (req, res) => {
   const data: MachineData = req.body;
-  // const dataToSave: ReportDataCurrent = {
-  //   michlolName: data.michlolName,
-  //   michlolId: data.michlolId,
-  //   createdAt: dayjs().format(),
-  //   data: data.data,
-  //   user: data.user,
-  // };
+
   try {
     if (data.completed) {
       const updateCompletedMachinesInReports = await mongo.incValue(
@@ -153,8 +118,61 @@ app.post("/save-machine", async (req, res) => {
         "reports"
       );
     }
-    const updateMachines = await mongo.updateDoc(data, "machines");
 
+    const engineeringRoutes: string[] = ['דו"ח מערכת שמן', 'דו"ח רעידות'];
+
+    if (engineeringRoutes.includes(data.routeName)) {
+      const machineFromPreviousReport = await mongo.find(
+        { machineName: data.machineName },
+        "machines",
+        2
+      );
+      const compareMachineFromCurrentReportWithLast =
+        machineFromPreviousReport.map(async (machine, index) => {
+          if (!machine?.reportId || machine.reportId == data.reportId) {
+            return;
+          }
+
+          if (machineFromPreviousReport.length == 2) {
+            if (machineFromPreviousReport[0].reportId != data.reportId) {
+              if (index == 1) return;
+            }
+          }
+
+          const machineStatus = {
+            נורמלי: 1,
+            גבולי: 2,
+            גבוה: 3,
+            קריטי: 4,
+          };
+          for (const [dataKey, dataValue] of Object.entries(data.data)) {
+            for (const [machineKey, machineValue] of Object.entries(
+              machine.data
+            )) {
+              if (machineKey == dataKey) {
+                const currentCriticalLevel = dataValue || 10;
+                const previousCriticalValue = machineValue || 0;
+                if (
+                  machineStatus[
+                    previousCriticalValue as keyof typeof machineStatus
+                  ] <
+                  machineStatus[
+                    currentCriticalLevel as unknown as keyof typeof machineStatus
+                  ]
+                ) {
+                  data.completed = false;
+                  (data.data as any).alert = "true";
+                }
+              }
+            }
+          }
+        });
+      if ((data.data as any).alert == "true") {
+        await mongo.insertDoc(data, "alerts");
+      }
+    }
+
+    const updateMachines = await mongo.updateDoc(data, "machines");
     //Save machine to collection
     if (!updateMachines.value) await mongo.insertDoc(data, "machines");
     //Refactor to promise.all
@@ -210,32 +228,54 @@ app.post("/create-report", async (req, res) => {
   }
 });
 
-// app.post("/update-alert", async (req, res) => {
-//   const data = req.body;
-//   console.log("trying to update alert", data);
-//   try {
-//     await mongo.updateAlert(data, "alerts");
-//     res.status(200).send();
-//   } catch (e) {
-//     res.status(500).send("Error" + e);
-//   }
-// });
+app.post("/update-alert", async (req, res) => {
+  const data = req.body;
+
+  try {
+    const machineData = await mongo.find({ reportId: data }, "machines");
+    if (machineData[0]) {
+      const machine = { ...machineData[0] };
+      machine.completed = true;
+      for (const [key, value] of Object.entries(machine.data)) {
+        if (typeof value === "string") {
+          machine.data.alert = false;
+          continue;
+        }
+        for (const [dataKey, dataValue] of Object.entries(
+          value as { [s: string]: unknown }
+        )) {
+          if (key == "alert") {
+            machine.data[dataKey].alert = "false";
+          }
+        }
+      }
+    }
+    await mongo.removeDoc(data, "alerts");
+    res.status(200).send();
+  } catch (e) {
+    res.status(500).send(`Error + ${e}`);
+  }
+});
 
 //   DELETE REPORT
 
-// app.post("/delete-report", async (req, res) => {
-//   const id = req.body;
-//   try {
-//     const deleted = await mongo.removeDoc(id, "reports");
-//     if (deleted) {
-//       await mongo.removeDocs(id, "machines");
-//       await mongo.removeDocs(id, "alerts");
-//     }
-//     res.status(200).send("Report deleted Successfully");
-//   } catch {
-//     res.status(500).send("Report Deletion Failed");
-//   }
-// });
+app.post("/delete-report", async (req, res) => {
+  const id = req.body;
+  try {
+    const deleted = await mongo.removeDoc(
+      id,
+      "published_reports_directory",
+      true
+    );
+    // if (deleted) {
+    //   await mongo.removeDocs(id, "machines");
+    //   await mongo.removeDocs(id, "alerts");
+    // }
+    res.status(200).send("Report deleted Successfully");
+  } catch {
+    res.status(500).send("Report Deletion Failed");
+  }
+});
 
 app.post("/search-reports", async (req, res) => {
   const data = req.body;
@@ -413,7 +453,6 @@ app.post("/download-report", async (req, res) => {
     } else {
       publishedReport = req.body;
     }
-    // console.log("our published report! ", publishedReport);
     if (!publishedReport || !publishedReport.length) {
       return;
     }
