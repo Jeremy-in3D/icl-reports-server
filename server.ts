@@ -135,7 +135,9 @@ app.post("/save-machine", async (req, res) => {
 
           if (machineFromPreviousReport.length == 2) {
             if (machineFromPreviousReport[0].reportId != data.reportId) {
-              if (index == 1) return;
+              if (index == 1) {
+                return;
+              }
             }
           }
 
@@ -147,10 +149,10 @@ app.post("/save-machine", async (req, res) => {
           };
 
           const quakeStatus = {
-            Acceptable: 1,
-            Monitor: 2,
-            Alarm: 3,
-            Danger: 4,
+            acceptable: 1,
+            monitor: 2,
+            alarm: 3,
+            danger: 4,
           };
 
           for (const [dataKey, dataValue] of Object.entries(data.data)) {
@@ -158,9 +160,9 @@ app.post("/save-machine", async (req, res) => {
               machine.data
             )) {
               if (machineKey == dataKey) {
-                const currentCriticalLevel = dataValue || 10;
-                const previousCriticalValue = machineValue || 0;
                 if (data.routeName == 'דו"ח מערכת שמן') {
+                  const currentCriticalLevel = dataValue || 10;
+                  const previousCriticalValue = machineValue || 0;
                   if (
                     machineStatus[
                       previousCriticalValue as keyof typeof machineStatus
@@ -175,12 +177,13 @@ app.post("/save-machine", async (req, res) => {
                 }
                 if (data.routeName == 'דו"ח רעידות') {
                   if (
-                    quakeStatus[
-                      previousCriticalValue as keyof typeof quakeStatus
-                    ] <
-                    quakeStatus[
-                      currentCriticalLevel as unknown as keyof typeof quakeStatus
-                    ]
+                    (machineKey == "סטטוס" &&
+                      quakeStatus[machineValue as keyof typeof quakeStatus] >
+                        quakeStatus[
+                          dataValue as unknown as keyof typeof quakeStatus
+                        ]) ||
+                    (machineKey == "MHI" &&
+                      Number(dataValue) > Number(machineValue))
                   ) {
                     data.completed = false;
                     (data.data as any).alert = "true";
