@@ -145,6 +145,14 @@ app.post("/save-machine", async (req, res) => {
             גבוה: 3,
             קריטי: 4,
           };
+
+          const quakeStatus = {
+            Acceptable: 1,
+            Monitor: 2,
+            Alarm: 3,
+            Danger: 4,
+          };
+
           for (const [dataKey, dataValue] of Object.entries(data.data)) {
             for (const [machineKey, machineValue] of Object.entries(
               machine.data
@@ -152,16 +160,31 @@ app.post("/save-machine", async (req, res) => {
               if (machineKey == dataKey) {
                 const currentCriticalLevel = dataValue || 10;
                 const previousCriticalValue = machineValue || 0;
-                if (
-                  machineStatus[
-                    previousCriticalValue as keyof typeof machineStatus
-                  ] <
-                  machineStatus[
-                    currentCriticalLevel as unknown as keyof typeof machineStatus
-                  ]
-                ) {
-                  data.completed = false;
-                  (data.data as any).alert = "true";
+                if (data.routeName == 'דו"ח מערכת שמן') {
+                  if (
+                    machineStatus[
+                      previousCriticalValue as keyof typeof machineStatus
+                    ] <
+                    machineStatus[
+                      currentCriticalLevel as unknown as keyof typeof machineStatus
+                    ]
+                  ) {
+                    data.completed = false;
+                    (data.data as any).alert = "true";
+                  }
+                }
+                if (data.routeName == 'דו"ח רעידות') {
+                  if (
+                    quakeStatus[
+                      previousCriticalValue as keyof typeof quakeStatus
+                    ] <
+                    quakeStatus[
+                      currentCriticalLevel as unknown as keyof typeof quakeStatus
+                    ]
+                  ) {
+                    data.completed = false;
+                    (data.data as any).alert = "true";
+                  }
                 }
               }
             }
