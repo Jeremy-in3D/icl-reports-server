@@ -27,8 +27,7 @@ const mongo = new MongoDB(mongoUri);
 //Initialize express
 const port = process.env.PORT || 8080;
 const app = express();
-// const cors = require("cors");
-// const helmet = require("helmet");
+
 //Get relative path for static hosting
 const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
 
@@ -110,6 +109,7 @@ app.post("/upload-image", upload.single("imgFile"), async (req, res) => {
 
 app.post("/save-machine", async (req, res) => {
   const data: MachineData = req.body;
+  data.createdAt = dayjs().format();
 
   try {
     if (data.completed) {
@@ -175,7 +175,10 @@ app.post("/save-machine", async (req, res) => {
                     (data.data as any).alert = "true";
                   }
                 }
-                if (data.routeName == 'דו"ח רעידות') {
+                if (
+                  data.routeName == 'דו"ח רעידות' ||
+                  data.routeName == 'דו"ח רעידות'
+                ) {
                   if (
                     (machineKey == "סטטוס" &&
                       quakeStatus[machineValue as keyof typeof quakeStatus] >
@@ -204,9 +207,11 @@ app.post("/save-machine", async (req, res) => {
     //Refactor to promise.all
     //Check if any of saved data raised an alert
     const machines = Object.entries(data.data);
+    let alertKey: string;
     const filteredAlerts = machines
       .map((machine) => {
         const [key, value] = machine as any;
+        alertKey = key;
         return value.alert === "true" ? value : null;
       })
       .filter((parts) => parts !== null);
@@ -224,6 +229,7 @@ app.post("/save-machine", async (req, res) => {
           completed: false,
           data: alertData,
           lastEditBy: data.lastEditBy,
+          alertSource: alertKey,
         };
         await mongo.insertDoc(alert, "alerts");
       });
@@ -575,7 +581,7 @@ export type MachineData = {
   michlolName: string | undefined;
   michlolId: string | undefined;
   machineName: string;
-  createdAt: number | null;
+  createdAt: number | null | string;
   data: {
     [partName: string]: FormSubmission;
   };
