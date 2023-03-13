@@ -4,27 +4,39 @@ import express, { NextFunction } from "express";
 import path from "path";
 import http from "http";
 import { BlobServiceClient } from "@azure/storage-blob";
-import { streamToBuffer } from "./helpers/streamToBuffer.js";
+// import { streamToBuffer } from "./helpers/streamToBuffer.js";
 import { MongoDB } from "./mongodb.js";
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
-import dayjs from "dayjs";
-import fs from "fs";
+// import dayjs from "dayjs";
+// import fs from "fs";
 import multer from "multer";
 import cors from "cors";
 import helmet from "helmet";
+import { getRoutes } from "./routes/getRoutes/index.js";
+import { saveMachine } from "./routes/saveMachine/index.js";
+import { createReport } from "./routes/createReport/index.js";
+import { updateAlert } from "./routes/updateAlert/index.js";
+import { deleteReport } from "./routes/deleteReport/index.js";
+import { searchReports } from "./routes/searchReports/searchReports.js";
+import { getImage, uploadImage } from "./routes/handleImages/index.js";
+import { getDocs } from "./routes/getDocs/index.js";
+import { getAlerts } from "./routes/getAlerts/index.js";
+import { publishReport } from "./routes/publishReport/index.js";
+import { getCurrentReport } from "./routes/getCurrentReport/index.js";
+import { getPublishedReport } from "./routes/getPublishedReport/index.js";
+import { downloadReport } from "./routes/downloadReport/index.js";
 
 //Client for pulling public key for use with verifying jwt
 const JwksClient = jwksClient({
   jwksUri: "https://login.microsoftonline.com/common/discovery/v2.0/keys",
 });
 
-//Loads .env environment variables
 dotenv.config();
-//Load mongoClient
+
 const mongoUri = process.env.MONGO_URI || "";
-const mongo = new MongoDB(mongoUri);
-//Initialize express
+export const mongo = new MongoDB(mongoUri);
+
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -33,14 +45,12 @@ const __dirname = url.fileURLToPath(new URL("../../", import.meta.url));
 
 //Express Middleware
 app.use(cors());
-
 app.use(
   helmet({
     referrerPolicy: { policy: "unsafe-url" },
   })
 );
 app.use(express.static(path.join(__dirname, "dist")));
-
 app.use(function (req, res, next) {
   const allowedOrigins = ["http://localhost:8080"];
   const origin = req.headers?.origin || "";
@@ -51,474 +61,50 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
-
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 
 //Blob initilization for images saving in Azure
 const BLOB_CONNECTION_STRING = process.env.BLOB_CONNECTION_STRING || "";
-const blobServiceClient = BlobServiceClient.fromConnectionString(
+export const blobServiceClient = BlobServiceClient.fromConnectionString(
   BLOB_CONNECTION_STRING
 );
 const upload = multer({ dest: "uploads/" });
 
-//Route to get image buffer and send to client
-app.post("/get-image", async (req, res) => {
-  try {
-    const containerName = "icl-reports-blob";
-    const containerClient = blobServiceClient.getContainerClient(containerName);
-    const blobClient = containerClient.getBlobClient(`${req.body}_image.png`);
-    const downloadBlockBlobResponse = await blobClient.download();
-    const downloaded = await streamToBuffer(
-      downloadBlockBlobResponse.readableStreamBody
-    );
-    res.send(downloaded);
-  } catch (e) {
-    res.sendStatus(500);
-  }
-});
+app.post("/get-image", async (req, res) => getImage(req, res));
 
-//Route to upload image
-app.post("/upload-image", upload.single("imgFile"), async (req, res) => {
-  const containerName = "icl-reports-blob";
-  const containerClient = blobServiceClient.getContainerClient(containerName);
-  const file = req.file;
+app.post("/upload-image", upload.single("imgFile"), async (req, res) =>
+  uploadImage(req, res)
+);
 
-  const { reportId } = req.body;
+app.post("/save-machine", async (req, res) => saveMachine(req, res));
 
-  if (!file) {
-    res.sendStatus(500);
-    return;
-  }
+app.get("/get-routes", async (req, res) => getRoutes(req, res));
 
-  const blobName = `${reportId}_image.png`;
-  const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+app.post("/create-report", async (req, res) => createReport(req, res));
 
-  try {
-    const data = await fs.promises.readFile(file.path);
-    await blockBlobClient.uploadData(data);
-    // Clean up the temporary file
-    await fs.promises.unlink(file.path);
+app.post("/update-alert", async (req, res) => updateAlert(req, res));
 
-    res.sendStatus(200);
-  } catch (error) {
-    res.sendStatus(500);
-  }
-});
+app.post("/delete-report", async (req, res) => deleteReport(req, res));
 
-app.post("/save-machine", async (req, res) => {
-  const data: MachineData = req.body;
-  data.createdAt = dayjs().format();
+app.post("/search-reports", async (req, res) => searchReports(req, res));
 
-  try {
-    if (data.completed) {
-      const updateCompletedMachinesInReports = await mongo.incValue(
-        data.reportId,
-        "reports"
-      );
-    }
+app.post("/get-docs", async (req, res) => getDocs(req, res));
 
-    const engineeringRoutes: string[] = ['דו"ח מערכת שמן', 'דו"ח רעידות'];
+app.get("/get-alerts", async (req, res) => getAlerts(req, res));
 
-    if (engineeringRoutes.includes(data.routeName)) {
-      const machineFromPreviousReport = await mongo.find(
-        { machineName: data.machineName },
-        "machines",
-        2
-      );
-      const compareMachineFromCurrentReportWithLast =
-        machineFromPreviousReport.map(async (machine, index) => {
-          if (!machine?.reportId || machine.reportId == data.reportId) {
-            return;
-          }
+app.post("/get-current-reports", async (req, res) =>
+  getCurrentReport(req, res)
+);
 
-          if (machineFromPreviousReport.length == 2) {
-            if (machineFromPreviousReport[0].reportId != data.reportId) {
-              if (index == 1) {
-                return;
-              }
-            }
-          }
+app.post("/publish-report", async (req, res) => publishReport(req, res));
 
-          const machineStatus = {
-            נורמלי: 1,
-            גבולי: 2,
-            גבוה: 3,
-            קריטי: 4,
-          };
+app.post("/get-published-report", async (req, res) =>
+  getPublishedReport(req, res)
+);
 
-          const quakeStatus = {
-            acceptable: 1,
-            monitor: 2,
-            alarm: 3,
-            danger: 4,
-          };
-
-          for (const [dataKey, dataValue] of Object.entries(data.data)) {
-            for (const [machineKey, machineValue] of Object.entries(
-              machine.data
-            )) {
-              if (machineKey == dataKey) {
-                if (data.routeName == 'דו"ח מערכת שמן') {
-                  const currentCriticalLevel = dataValue || 10;
-                  const previousCriticalValue = machineValue || 0;
-                  if (
-                    machineStatus[
-                      previousCriticalValue as keyof typeof machineStatus
-                    ] <
-                    machineStatus[
-                      currentCriticalLevel as unknown as keyof typeof machineStatus
-                    ]
-                  ) {
-                    data.completed = false;
-                    (data.data as any).alert = "true";
-                  }
-                }
-                if (
-                  data.routeName == 'דו"ח רעידות' ||
-                  data.routeName == 'דו"ח רעידות'
-                ) {
-                  if (
-                    (machineKey == "סטטוס" &&
-                      quakeStatus[machineValue as keyof typeof quakeStatus] >
-                        quakeStatus[
-                          dataValue as unknown as keyof typeof quakeStatus
-                        ]) ||
-                    (machineKey == "MHI" &&
-                      Number(dataValue) > Number(machineValue))
-                  ) {
-                    data.completed = false;
-                    (data.data as any).alert = "true";
-                  }
-                }
-              }
-            }
-          }
-        });
-      if ((data.data as any).alert == "true") {
-        await mongo.insertDoc(data, "alerts");
-      }
-    }
-
-    const updateMachines = await mongo.updateDoc(data, "machines");
-    //Save machine to collection
-    if (!updateMachines.value) await mongo.insertDoc(data, "machines");
-    //Refactor to promise.all
-    //Check if any of saved data raised an alert
-    const machines = Object.entries(data.data);
-    let alertKey: string;
-    const filteredAlerts = machines
-      .map((machine) => {
-        const [key, value] = machine as any;
-        alertKey = key;
-        return value.alert === "true" ? value : null;
-      })
-      .filter((parts) => parts !== null);
-    if (filteredAlerts.length) {
-      filteredAlerts.forEach(async (alertData) => {
-        const alert = {
-          uniqueId: data.uniqueId,
-          reportId: data.reportId,
-          routeName: data.routeName,
-          routeId: data.routeId,
-          machineName: data.machineName,
-          michlolName: data.michlolName,
-          michlolId: data.michlolId,
-          createdAt: data.createdAt,
-          completed: false,
-          data: alertData,
-          lastEditBy: data.lastEditBy,
-          alertSource: alertKey,
-        };
-        await mongo.insertDoc(alert, "alerts");
-      });
-    }
-    res.status(200).send();
-  } catch (e) {
-    res.status(500).send("Error" + e);
-  }
-});
-
-app.get("/get-routes", async (req, res) => {
-  const data: ReportData = req.body;
-  try {
-    const docs = await mongo.getDocs("", "routes");
-    res.status(200).json(docs);
-  } catch (e) {
-    res.status(500).send("Error" + e);
-  }
-});
-
-app.post("/create-report", async (req, res) => {
-  const data: ReportData = req.body;
-  try {
-    const inserted = await mongo.insertDoc(data, "reports");
-    res.status(200).send(inserted.insertedId.toString());
-  } catch (e) {
-    res.status(500).send("Error" + e);
-  }
-});
-
-app.post("/update-alert", async (req, res) => {
-  const data = req.body;
-
-  try {
-    const machineData = await mongo.find({ reportId: data }, "machines");
-    if (machineData[0]) {
-      const machine = { ...machineData[0] };
-      machine.completed = true;
-      for (const [key, value] of Object.entries(machine.data)) {
-        if (typeof value === "string") {
-          machine.data.alert = false;
-          continue;
-        }
-        for (const [dataKey, dataValue] of Object.entries(
-          value as { [s: string]: unknown }
-        )) {
-          if (key == "alert") {
-            machine.data[dataKey].alert = "false";
-          }
-        }
-      }
-    }
-    await mongo.removeDoc(data, "alerts");
-    res.status(200).send();
-  } catch (e) {
-    res.status(500).send(`Error + ${e}`);
-  }
-});
-
-//   DELETE REPORT
-
-app.post("/delete-report", async (req, res) => {
-  const id = req.body;
-  try {
-    const deleted = await mongo.removeDoc(
-      id,
-      "published_reports_directory",
-      true
-    );
-    // if (deleted) {
-    //   await mongo.removeDocs(id, "machines");
-    //   await mongo.removeDocs(id, "alerts");
-    // }
-    res.status(200).send("Report deleted Successfully");
-  } catch {
-    res.status(500).send("Report Deletion Failed");
-  }
-});
-
-app.post("/search-reports", async (req, res) => {
-  const data = req.body;
-  try {
-    const reportHistoryresults = await mongo.searchDocs(
-      data,
-      "published_reports_directory"
-    );
-    // const machineHistoryResults = await mongo.searchDocs(data, "machines");
-
-    res.status(200).json(reportHistoryresults);
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
-app.post("/get-docs", async (req, res) => {
-  let value = req.body;
-  if (typeof value == "string") {
-    value = JSON.parse(value);
-  }
-
-  const { reportId, isFromAlerts, isAlertFromCurrentReport, isShowFullReport } =
-    value || {};
-  const reponseToSendForAlerts: any = {};
-
-  if (!reportId) {
-    throw new Error("reportId is required");
-  }
-
-  try {
-    const results = await mongo.getDocs(reportId, "machines");
-
-    if (isFromAlerts) {
-      if (isAlertFromCurrentReport && isShowFullReport) {
-        const routesToReturn = await mongo.getDocs("", "reports");
-        reponseToSendForAlerts.reportHistoryResults = routesToReturn;
-      }
-
-      if (isAlertFromCurrentReport && !isShowFullReport) {
-        const relevantReport = await mongo.findGeneric({ reportId }, "reports");
-        reponseToSendForAlerts.reportHistoryResults = relevantReport[0];
-      }
-
-      if (!isAlertFromCurrentReport && isShowFullReport) {
-        const publishedReportFromAlert = await mongo.findGeneric(
-          {
-            publishedReport: {
-              $elemMatch: { reportId },
-            },
-          },
-          "published_reports_directory"
-        );
-        reponseToSendForAlerts.reportHistoryResults = publishedReportFromAlert;
-      }
-
-      if (!isAlertFromCurrentReport && !isShowFullReport) {
-        const relevantReport = await mongo.findGeneric(
-          { reportId },
-          "reports_history"
-        );
-        reponseToSendForAlerts.reportHistoryResults = relevantReport[0];
-      }
-
-      reponseToSendForAlerts.results = results;
-    }
-
-    const resultsToSend = isFromAlerts ? reponseToSendForAlerts : results;
-    console.log(`Report queried successfully with id ${reportId}`);
-    res.status(200).json(resultsToSend);
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
-app.get("/get-alerts", async (req, res) => {
-  try {
-    const results = await mongo.getAlerts("alerts");
-    res.status(200).json(results);
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
-app.post("/get-current-reports", async (req, res) => {
-  const currentReports = await mongo.getDocs("", "reports");
-  res.status(200).send(currentReports);
-});
-
-app.post("/publish-report", async (req, res) => {
-  const { reports, user } = req.body || {};
-
-  if (!reports || !reports.length) {
-    console.log("never made it out of the return");
-    return;
-  }
-
-  const publishedAt = dayjs().format();
-
-  const publishedReportReference = reports?.map((report: any) => {
-    return {
-      type: report.type,
-      date: report.date,
-      createdAt: report.createdAt,
-      reportId: report.reportId,
-      routeName: report.routeName,
-      routeId: report.routeId,
-      completedMachines: report.completedMachines,
-    };
-  });
-
-  reports?.forEach((report: any) => {
-    delete report._id;
-    report.publishedAt = publishedAt;
-    report.publishedBy = user.username;
-  });
-  try {
-    const publishReports = await mongo.insertMany(reports, "reports_history");
-
-    if (publishReports.acknowledged === true) {
-      await mongo.insertDoc(
-        {
-          publishedBy: user.username,
-          publishedAt,
-          publishedReport: publishedReportReference,
-        },
-        "published_reports_directory"
-      );
-
-      await mongo.clearCollection("reports");
-    }
-    res.status(200).send(publishReports);
-  } catch (e) {
-    res.status(500).send(e);
-  }
-});
-
-app.post("/get-published-report", async (req, res) => {
-  const resToSend: any = {};
-
-  const { report, route } = req.body;
-
-  if (!report || !route) return;
-
-  const getRouteNameAndIdForReport = report.publishedReport.map(
-    async (routeFromPublishedReport: any, index: Number) => {
-      if (route == routeFromPublishedReport.routeName) {
-        const reportFromReportHistory = await mongo.find(
-          { reportId: routeFromPublishedReport.reportId },
-          "reports_history"
-        );
-        const machinesForReport = await mongo.getDocs(
-          routeFromPublishedReport.reportId,
-          "machines"
-        );
-
-        resToSend.reportFromReportHistory = reportFromReportHistory[0];
-        resToSend.machinesForReport = machinesForReport;
-      }
-    }
-  );
-
-  await Promise.all(getRouteNameAndIdForReport);
-
-  res.status(200).send(resToSend);
-});
-
-app.post("/download-report", async (req, res) => {
-  let publishedReport;
-  const reportIds: any[] = [];
-  const resToSend: any = {};
-  try {
-    if (typeof req.body === "string") {
-      publishedReport = JSON.parse(req.body);
-    } else {
-      publishedReport = req.body;
-    }
-    if (!publishedReport || !publishedReport.length) {
-      return;
-    }
-    publishedReport.forEach((report: any) => reportIds.push(report.reportId));
-    // const reportFromReportHistory = await mongo.SearchForMultipleDocs(
-    //   reportIds,
-    //   "reports_history"
-    // );
-    const machinesForReport = await mongo.SearchForMultipleDocs(
-      reportIds,
-      "machines"
-    );
-
-    machinesForReport.forEach((machine) => {
-      const engineeringReport = ['דו"ח רעידות', 'דו"ח מערכת שמן'];
-      const machineToSend = {
-        routeName: machine.routeName,
-        lastEditBy: machine.lastEditBy?.name,
-        equipmentUnit: machine.equipmentUnit,
-        data: machine.data,
-        michlolName: machine.machlolName,
-        completed: machine.completed,
-        surveyType: engineeringReport.includes(machine.routeName)
-          ? "engineering"
-          : "survey",
-      };
-      resToSend[machine.routeName] = machineToSend;
-    });
-
-    res.status(200).send(resToSend);
-  } catch {}
-  // const currentReports = await mongo.getDocs("", "reports");
-  // res.status(200).send(resToSend);
-});
+app.post("/download-report", async (req, res) => downloadReport(req, res));
 
 (async () => {
   try {
@@ -574,6 +160,8 @@ export type ReportDataCurrent = {
 };
 
 export type MachineData = {
+  alertFromHmi?: { previousVal: number; currentVal: number };
+  alertFromDeteriorate?: { previousVal: Number; currentVal: Number };
   uniqueId: string;
   reportId: string;
   routeName: string;
